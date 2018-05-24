@@ -20,10 +20,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/PanJiaChen/vue-element-admin.git"
+    "url": "git+https://github.com/zhangfan6385/Dgyt_test1.git"
   },
   "bugs": {
-    "url": "https://github.com/PanJiaChen/vue-element-admin/issues"
+    "url": "https://github.com/zhangfan6385/Dgyt_test1/issues"
   },
   "dependencies": {
     "axios": "0.17.1",
