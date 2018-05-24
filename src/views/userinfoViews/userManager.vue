@@ -6,7 +6,7 @@
       <el-select clearable style="width: 120px" class="filter-item" v-model="listQuery.flag" :placeholder="$t('userTable.flag')">
         <el-option v-for="item in flagOptions" :key="item.key" :label="item.flag_name" :value="item.key">
         </el-option>
-      </el-select>
+      </el-select> 
        <el-select @change='handleFilter' style="width: 120px" class="filter-item" v-model="listQuery.sort">
         <el-option v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key">
         </el-option>
@@ -183,6 +183,7 @@ import { parseTime } from "@/utils";
   { key: '1', flag_name: 'yes' } 
 ]
 // arr to obj ,such as { CN : "China", US : "USA" }
+//测试
 const flagOptionsKeyValue = flagOptions.reduce((acc, cur) => {
   acc[cur.key] = cur.flag_name  
   return acc
