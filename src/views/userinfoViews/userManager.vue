@@ -183,7 +183,7 @@ import { parseTime } from "@/utils";
   { key: '1', flag_name: 'yes' } 
 ]
 // arr to obj ,such as { CN : "China", US : "USA" }
-//测试
+//试一试
 const flagOptionsKeyValue = flagOptions.reduce((acc, cur) => {
   acc[cur.key] = cur.flag_name  
   return acc
