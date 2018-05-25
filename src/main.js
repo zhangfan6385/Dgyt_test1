@@ -5,19 +5,19 @@ import 'normalize.css/normalize.css'// A modern alternative to CSS resets
 import Element from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
-import '@/styles/index.scss' // global css
+import '@/frame_src/styles/index.scss' // global css
 
-import App from './App'
-import router from './router'
-import store from './store'
+import App from './frame_src/App'
+import router from './frame_src/router'
+import store from './frame_src/store'
 
-import i18n from './lang' // Internationalization
-import './icons' // icon
-import './errorLog'// error log
-import './permission' // permission control
-import './mock' // simulation data
+import i18n from './frame_src/lang' // Internationalization
+import './frame_src/icons' // icon
+import './frame_src/errorLog'// error log
+import './frame_src/permission' // permission control
+import './frame_src/mock' // simulation data
 
-import * as filters from './filters' // global filters
+import * as filters from './frame_src/filters' // global filters
 
 Vue.use(Element, {
   size: 'medium', // set element-ui default size
