@@ -1,7 +1,7 @@
 const findFromTree = (treeArray, id, idPropName = 'id', childrenPropName = 'children') => {
   if (!treeArray || treeArray == null || treeArray.length <= 0) return null
   for (var i = 0; i < treeArray.length; i++) {
-    if (treeArray[i][idPropName] == id) {
+    if (treeArray[i][idPropName] === id) {
       return treeArray[i]
     } else {
       const result = findFromTree(treeArray[i][childrenPropName], id, idPropName, childrenPropName)
@@ -26,7 +26,7 @@ const appendTreeNode = (treeArray, item, idPropName = 'id', parentPropName = 'pa
   }
   for (var j = 0; j < treeArray.length; j++) {
     var value = treeArray[j]
-    if (item[parentPropName] == value[idPropName]) {
+    if (item[parentPropName] === value[idPropName]) {
       if (value[childrenPropName] && value[childrenPropName].length > 0) {
         // let i = value[childrenPropName].findIndex(p => p.sort > item.sort)
         // if (i == -1) {
@@ -48,11 +48,11 @@ const appendTreeNode = (treeArray, item, idPropName = 'id', parentPropName = 'pa
 const deleteFromTree = (list, id, idPropName = 'id', childrenPropName = 'children') => {
   if (!list || list == null || list.length <= 0) return true
   for (var i = 0; i < list.length; i++) {
-    if (list[i][idPropName] == id) {
+    if (list[i][idPropName] === id) {
       list.splice(i, 1)
       return true
     } else {
-      const result = deleteFromTree(list[i][childrenPropName], id, idPropName, childrenPropName)
+      // const result = deleteFromTree(list[i][childrenPropName], id, idPropName, childrenPropName)
       // if (result) {
       //   return result;
       // }
@@ -65,7 +65,7 @@ const batchDeleteFromTree = (list, ids, idPropName = 'id', childrenPropName = 'c
   if (!list || list == null || list.length <= 0) return
   if (!ids || ids == null || ids.length <= 0) return
   for (var i = 0; i < list.length; i++) {
-    if (ids.findIndex(x => x == list[i][idPropName]) > -1) {
+    if (ids.findIndex(x => x === list[i][idPropName]) > -1) {
       list.splice(i, 1)
       i--
       continue
@@ -78,7 +78,7 @@ const batchDeleteFromTree = (list, ids, idPropName = 'id', childrenPropName = 'c
 const updateTreeNode = (list, item, idPropName = 'id', childrenPropName = 'children') => {
   if (!list || list == null || list.length <= 0) return false
   for (var i = 0; i < list.length; i++) {
-    if (list[i][idPropName] == item[idPropName]) {
+    if (list[i][idPropName] === item[idPropName]) {
       console.log(list[i][idPropName], item[idPropName])
       list.splice(i, 1, item)
       return true

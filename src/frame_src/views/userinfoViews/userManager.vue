@@ -331,7 +331,7 @@ export default {
       updateUserArticle(this.listUpdate).then(response => {
         this.message = '删除失败'
         this.title = '失败'
-        if (response.data.result == true) {
+        if (response.data.result === true) {
           const index = this.list.indexOf(row)
           this.list.splice(index, 1)
           // this.getList();
@@ -373,7 +373,7 @@ export default {
       updateUserArticle(this.listUpdate).then(response => {
         this.message = '修改失败'
         this.title = '失败'
-        if (response.data.result == true) {
+        if (response.data.result === true) {
           row.flag = status
           // this.getList();
           this.title = '成功'

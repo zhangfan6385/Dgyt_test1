@@ -28,11 +28,11 @@
               {{$t('navbar.dashboard')}}
             </el-dropdown-item>
           </router-link>
-          <a target='_blank' href="https://github.com/zhangfan6385/Dgyt_test1/">
+          <!-- <a target='_blank' href="https://github.com/zhangfan6385/Dgyt_test1/">
             <el-dropdown-item>
               {{$t('navbar.github')}}
             </el-dropdown-item>
-          </a>
+          </a> -->
           <el-dropdown-item divided>
             <span @click="logout" style="display:block;">{{$t('navbar.logOut')}}</span>
           </el-dropdown-item>

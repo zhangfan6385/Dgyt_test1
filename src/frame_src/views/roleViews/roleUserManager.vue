@@ -223,7 +223,7 @@ export default {
         updateUserRoleArticle(this.listUpdate).then(response => {
           this.message = '分配成功'
           this.title = '成功'
-          if (response.data.result == true) {
+          if (response.data.result === true) {
             this.getList()
             this.load()
           }

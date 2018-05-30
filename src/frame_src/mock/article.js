@@ -104,7 +104,7 @@ export default {
     const { flag, userName, page = 1, limit = 20, sort } = param2Obj(config.url)
 
     let mockList = UserList.filter(item => {
-      if (flag && item.flag != flag) return false
+      if (flag && item.flag !== flag) return false
       if (userName && item.userName.indexOf(userName) < 0) return false
       return true
     })
@@ -123,10 +123,10 @@ export default {
     const { flag, userName, page = 1, limit = 20, sort, roleId } = param2Obj(config.url)
 
     let mockList = UserRoleList.filter(item => {
-      if (flag && item.flag != flag) return false
+      if (flag && item.flag !== flag) return false
       if (userName && item.userName.indexOf(userName) < 0) return false
-      if (roleId == 26) {
-        if (item.groupName != '超级管理员') return false
+      if (roleId === 26) {
+        if (item.groupName !== '超级管理员') return false
       }
       return true
     })
@@ -147,7 +147,7 @@ export default {
     let mockList = UserList.filter(item => {
       if (flag && item.flag !== flag) return false
       if (userName && item.userName.indexOf(userName) < 0) return false
-      if (deleteStatus && item.deleteStatus != deleteStatus) return false // 如果是数字型，！==虽然不报错了，但是不好使
+      if (deleteStatus && item.deleteStatus !== deleteStatus) return false // 如果是数字型，！==虽然不报错了，但是不好使
       if (sysCode && item.sysCode !== sysCode) return false
       return true
     })
@@ -198,7 +198,7 @@ export default {
   }, getFetchRoleList: config => {
     const { sysCode } = param2Obj(config.url)
 
-    if (sysCode == '2') {
+    if (sysCode === '2') {
       return { items: [{
         'id': 26,
         'parentId': null,

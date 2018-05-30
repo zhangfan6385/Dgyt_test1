@@ -170,7 +170,7 @@ export default {
       updateRoleArticle(this.listUpdate).then(response => {
         this.message = '删除失败'
         this.title = '失败'
-        if (response.data.result == true) {
+        if (response.data.result === true) {
           //   this.newAdd();
           //  this.load2();
           this.deleteFromTree(this.roleTree, this.form.id, 'id')

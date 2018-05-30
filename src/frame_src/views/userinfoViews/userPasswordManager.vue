@@ -35,7 +35,7 @@ export default {
       } else {
         if (this.pwdForm.surepassword !== '') {
           this.$refs.pwdForm.validateField('surepassword')
-        } else if (value == this.pwdForm.password) {
+        } else if (value === this.pwdForm.password) {
           callback(new Error('新密码不能跟老密码一致!'))
         }
         callback()
@@ -46,7 +46,7 @@ export default {
         callback(new Error('请输入确认密码'))
       } else if (value !== this.pwdForm.newpassword) {
         callback(new Error('两次输入密码不一致!'))
-      } else if (value == this.pwdForm.password) {
+      } else if (value === this.pwdForm.password) {
         callback(new Error('新密码不能跟老密码一致!'))
       } else {
         callback()
@@ -90,7 +90,7 @@ export default {
             this.message = '修改成功'
             this.title = '成功'
             this.type = 'success'
-            if (response.data.result == true) {
+            if (response.data.result === true) {
               this.resetForm(formName)
             } else {
               this.title = '失败'

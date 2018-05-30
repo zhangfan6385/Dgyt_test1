@@ -16,10 +16,10 @@
 </template>
 <script type="text/javascript">
   export default{
-    name:"ImpPanel",
+    name: 'ImpPanel',
     props: {
-      widthBorder:{
-          type:Boolean
+      widthBorder: {
+        type: Boolean
       },
       title: {
         type: String
