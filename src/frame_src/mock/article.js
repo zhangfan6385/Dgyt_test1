@@ -166,6 +166,8 @@ export default {
     const { field, flag, userId } = param2Obj(config.url)
     if (field === 'deletaStatus') {
       return {
+        aa: flag,
+        bb: userId,
         message: '删除成功',
         result: true
       }
@@ -179,6 +181,7 @@ export default {
     const { field, id } = param2Obj(config.url)
     if (field === 'deletaStatus') {
       return {
+        aa: id,
         message: '删除成功',
         result: true
       }
@@ -187,13 +190,17 @@ export default {
     const { multipleSelection, roleId } = param2Obj(config.url)
     return {
       message: '分配成功',
-      result: true
+      result: true,
+      aa: multipleSelection,
+      bb: roleId
     }
   }, getUpdatePasswordData: config => {
     const { password, newpassword } = param2Obj(config.url)
     return {
       message: '修改成功',
-      result: true
+      result: true,
+      aa: password,
+      bb: newpassword
     }
   }, getFetchRoleList: config => {
     const { sysCode } = param2Obj(config.url)
