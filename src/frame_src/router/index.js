@@ -176,7 +176,34 @@ export const asyncRouterMap = [
       { path: 'tab/index', icon: 'tab', component: _import('example/tab/index'), name: 'tab', meta: { title: 'tab' }}
     ]
   },
-
+  {
+    path: '/userinfoViews',
+    component: Layout,
+    redirect: 'noredirect',
+    name: 'userinfoViews',
+    meta: {
+      title: 'userinfoViews',
+      icon: 'table'
+    },
+    children: [
+      { path: 'user-manager', component: _import('userinfoViews/userManager'), name: 'userManager', meta: { title: 'userManager', icon: 'table' }},
+      { path: 'user-password-manager', component: _import('userinfoViews/userPasswordManager'), name: 'userPasswordManager', meta: { title: 'userPasswordManager', icon: 'table' }}
+    ]
+  },
+  {
+    path: '/roleViews',
+    component: Layout,
+    redirect: 'noredirect',
+    name: 'roleViews',
+    meta: {
+      title: 'roleViews',
+      icon: 'table'
+    },
+    children: [
+      { path: 'role-manager', component: _import('roleViews/roleManager'), name: 'roleManager', meta: { title: 'roleManager', icon: 'table' }},
+      { path: 'role-user-manager', component: _import('roleViews/roleUserManager'), name: 'roleUserManager', meta: { title: 'roleUserManager', icon: 'table' }}
+    ]
+  },
   {
     path: '/form',
     component: Layout,

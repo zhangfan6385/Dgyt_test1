@@ -2,6 +2,8 @@ import Mock from 'mockjs'
 import { param2Obj } from '@/frame_src/utils'
 
 const List = []
+const UserList = []
+const UserRoleList = []
 const count = 100
 
 for (let i = 0; i < count; i++) {
@@ -16,6 +18,37 @@ for (let i = 0; i < count; i++) {
     'type|1': ['CN', 'US', 'JP', 'EU'],
     'status|1': ['published', 'draft', 'deleted'],
     display_time: '@datetime',
+    pageviews: '@integer(300, 5000)'
+  }))
+  UserList.push(Mock.mock({
+    userId: '@increment',
+    userCode: '@integer(1000000,60000000)',
+    userName: '@first',
+    userAlias: '@first',
+    userPass: '111111',
+    phoneMobile: '@integer(100000000,90000000)',
+    phoneOffice: '@integer(100000000,90000000)',
+    phoneOrg: '@integer(100000000,90000000)',
+    userEmail: '@integer(100000000,90000000)',
+    emailOffice: '@integer(1,9)',
+    userIp: '@integer(1,9)',
+    'flag|1': [0, 1],
+    userDomain: '@first',
+    remark: '@title(5,10)',
+    title: '@title(1,9)',
+    forecast: '@float(0, 100, 2, 2)',
+    'type|1': ['CN', 'US', 'JP', 'EU'],
+    'status|1': ['published', 'draft', 'deleted'],
+    pageviews: '@integer(300, 5000)'
+  }))
+  UserRoleList.push(Mock.mock({
+    userId: '@increment',
+    userCode: '@integer(1000000,60000000)',
+    userName: '@first',
+    remark: '@title(5,10)',
+    'flag|1': [0, 1],
+    'groupName|1': ['超级管理员', '', '客服主管'],
+    'roleId|1': [27, 28],
     pageviews: '@integer(300, 5000)'
   }))
 }
@@ -65,6 +98,194 @@ export default {
     data: 'success'
   }),
   updateArticle: () => ({
+    data: 'success'
+  }),
+  getFetchUserList: config => {
+    const { flag, userName, page = 1, limit = 20, sort } = param2Obj(config.url)
+
+    let mockList = UserList.filter(item => {
+      if (flag && item.flag != flag) return false
+      if (userName && item.userName.indexOf(userName) < 0) return false
+      return true
+    })
+
+    if (sort === '-userId') {
+      mockList = mockList.reverse()
+    }
+
+    const pageList = mockList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
+
+    return {
+      total: mockList.length,
+      items: pageList
+    }
+  }, getFetchUserRoleList: config => {
+    const { flag, userName, page = 1, limit = 20, sort, roleId } = param2Obj(config.url)
+
+    let mockList = UserRoleList.filter(item => {
+      if (flag && item.flag != flag) return false
+      if (userName && item.userName.indexOf(userName) < 0) return false
+      if (roleId == 26) {
+        if (item.groupName != '超级管理员') return false
+      }
+      return true
+    })
+
+    if (sort === '-userId') {
+      mockList = mockList.reverse()
+    }
+
+    const pageList = mockList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
+
+    return {
+      total: mockList.length,
+      items: pageList
+    }
+  }, getFetchGroupList: config => {
+    const { flag, userName, page = 1, limit = 20, sort, deleteStatus, sysCode } = param2Obj(config.url)
+
+    let mockList = UserList.filter(item => {
+      if (flag && item.flag !== flag) return false
+      if (userName && item.userName.indexOf(userName) < 0) return false
+      if (deleteStatus && item.deleteStatus != deleteStatus) return false // 如果是数字型，！==虽然不报错了，但是不好使
+      if (sysCode && item.sysCode !== sysCode) return false
+      return true
+    })
+
+    if (sort === '-userId') {
+      mockList = mockList.reverse()
+    }
+
+    const pageList = mockList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
+
+    return {
+      total: mockList.length,
+      items: pageList
+    }
+  }, getUpdateUserArticle: config => {
+    const { field, flag, userId } = param2Obj(config.url)
+    if (field === 'deletaStatus') {
+      return {
+        message: '删除成功',
+        result: true
+      }
+    } else if (field === 'flag') {
+      return {
+        message: '修改成功',
+        result: true
+      }
+    }
+  }, getUpdateRoleArticle: config => {
+    const { field, id } = param2Obj(config.url)
+    if (field === 'deletaStatus') {
+      return {
+        message: '删除成功',
+        result: true
+      }
+    }
+  }, getUpdateUserRoleArticle: config => {
+    const { multipleSelection, roleId } = param2Obj(config.url)
+    return {
+      message: '分配成功',
+      result: true
+    }
+  }, getUpdatePasswordData: config => {
+    const { password, newpassword } = param2Obj(config.url)
+    return {
+      message: '修改成功',
+      result: true
+    }
+  }, getFetchRoleList: config => {
+    const { sysCode } = param2Obj(config.url)
+
+    if (sysCode == '2') {
+      return { items: [{
+        'id': 26,
+        'parentId': null,
+        'groupName': '超级管理员',
+        'groupCode': 'super_manager',
+        'sysCode': '1',
+        'remark': '',
+        'children': [{
+          'id': 30,
+          'parentId': 26,
+          'groupName': '测试新增',
+          'groupCode': 'super_manager',
+          'sysCode': '1',
+          'remark': '',
+          'children': []
+        }]
+      }, {
+        'id': 27,
+        'parentId': null,
+        'groupName': '客服主管',
+        'groupCode': 'server_manager',
+        'sysCode': '1',
+        'remark': '',
+        'children': [{
+          'id': 28,
+          'parentId': 27,
+          'groupName': '售后客服',
+          'groupCode': 'server1',
+          'sysCode': '1',
+          'remark': '',
+          'children': []
+        }, {
+          'id': 29,
+          'parentId': 27,
+          'groupName': '售前客服',
+          'groupCode': 'server2',
+          'sysCode': '1',
+          'remark': '',
+          'children': []
+        }]
+      }] }
+    } else {
+      return { items: [{
+        'id': 26,
+        'parentId': null,
+        'groupName': '超级管理员',
+        'groupCode': 'super_manager',
+        'sysCode': '1',
+        'remark': '',
+        'children': []
+      }, {
+        'id': 27,
+        'parentId': null,
+        'groupName': '客服主管',
+        'groupCode': 'server_manager',
+        'sysCode': '1',
+        'remark': '',
+        'children': [{
+          'id': 28,
+          'parentId': 27,
+          'groupName': '售后客服',
+          'groupCode': 'server1',
+          'sysCode': '1',
+          'remark': '',
+          'children': []
+        }, {
+          'id': 29,
+          'parentId': 27,
+          'groupName': '售前客服',
+          'groupCode': 'server2',
+          'sysCode': '1',
+          'remark': '',
+          'children': []
+        }]
+      }] }
+    }
+  },
+  createUserArticle: () => ({
+    data: 'success'
+  }),
+  getUpdateUserData: () => ({
+    data: 'success'
+  }),
+  createRoleArticle: () => ({
+    data: 'success'
+  }),
+  getUpdateRoleData: () => ({
     data: 'success'
   })
 }

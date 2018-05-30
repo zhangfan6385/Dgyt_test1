@@ -20,6 +20,20 @@ Mock.mock(/\/article\/pv/, 'get', articleAPI.getPv)
 Mock.mock(/\/article\/create/, 'post', articleAPI.createArticle)
 Mock.mock(/\/article\/update/, 'post', articleAPI.updateArticle)
 
+// 用户管理界面
+Mock.mock(/\/article\/fetchUserList/, 'get', articleAPI.getFetchUserList)
+Mock.mock(/\/article\/updateUserArticle/, 'get', articleAPI.getUpdateUserArticle)
+Mock.mock(/\/article\/createUserArticle/, 'post', articleAPI.createUserArticle)
+Mock.mock(/\/article\/updateUserData/, 'post', articleAPI.getUpdateUserData)
+// 角色管理界面
+Mock.mock(/\/article\/fetchRoleList/, 'get', articleAPI.getFetchRoleList)
+Mock.mock(/\/article\/createRoleArticle/, 'post', articleAPI.createRoleArticle)
+Mock.mock(/\/article\/updateRoleArticle/, 'get', articleAPI.getUpdateRoleArticle)
+Mock.mock(/\/article\/updateRoleData/, 'post', articleAPI.getUpdateRoleData)
+Mock.mock(/\/article\/fetchUserRoleList/, 'get', articleAPI.getFetchUserRoleList)
+Mock.mock(/\/article\/updateUserRoleArticle/, 'get', articleAPI.getUpdateUserRoleArticle)
+Mock.mock(/\/article\/updatePasswordData/, 'get', articleAPI.getUpdatePasswordData)
+
 // 搜索相关
 Mock.mock(/\/search\/user/, 'get', remoteSearchAPI.searchUser)
 
