@@ -32,7 +32,7 @@ for (let i = 0; i < count; i++) {
     userEmail: '@integer(100000000,90000000)',
     emailOffice: '@integer(1,9)',
     userIp: '@integer(1,9)',
-    'flag|1': [0, 1],
+    'flag|1': ['0', '1'],
     userDomain: '@first',
     remark: '@title(5,10)',
     title: '@title(1,9)',
@@ -46,7 +46,7 @@ for (let i = 0; i < count; i++) {
     userCode: '@integer(1000000,60000000)',
     userName: '@first',
     remark: '@title(5,10)',
-    'flag|1': [0, 1],
+    'flag|1': ['0', '1'],
     'groupName|1': ['超级管理员', '', '客服主管'],
     'roleId|1': [27, 28],
     pageviews: '@integer(300, 5000)'
