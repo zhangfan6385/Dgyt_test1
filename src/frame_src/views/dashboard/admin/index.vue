@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard-editor-container">
-    <github-corner></github-corner>
+    <!-- <github-corner></github-corner>
 
     <panel-group @handleSetLineChartData="handleSetLineChartData"></panel-group>
 
@@ -36,8 +36,10 @@
       <el-col :xs="{span: 24}" :sm="{span: 12}" :md="{span: 12}" :lg="{span: 6}" :xl="{span: 5}" style="margin-bottom:30px;" >
         <box-card></box-card>
       </el-col>
-    </el-row>
-
+    </el-row> -->
+    <div class="home-content">
+      <img src="../../../../frame_src/imgs/logo.png" >
+    </div>
   </div>
 </template>
 
@@ -100,11 +102,15 @@ export default {
 <style rel="stylesheet/scss" lang="scss" scoped>
 .dashboard-editor-container {
   padding: 32px;
-  background-color: rgb(240, 242, 245);
+  //background-color: rgb(240, 242, 245);
   .chart-wrapper {
     background: #fff;
     padding: 16px 16px 0;
     margin-bottom: 32px;
   }
+}
+
+.home-content{
+  text-align: center;
 }
 </style>
