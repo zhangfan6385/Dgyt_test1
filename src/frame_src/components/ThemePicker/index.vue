@@ -133,7 +133,7 @@ export default {
 }
 </script>
 
-<style>
+<style rel="stylesheet/scss" lang="scss" scoped>
 .theme-picker .el-color-picker__trigger {
   vertical-align: middle;
 }

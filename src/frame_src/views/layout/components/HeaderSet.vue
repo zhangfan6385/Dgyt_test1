@@ -1,20 +1,16 @@
 <template>
-  <el-menu class="navbar" mode="horizontal">
-    <hamburger class="hamburger-container" :toggleClick="toggleSideBar" :isActive="sidebar.opened"></hamburger>
-
-    <breadcrumb class="breadcrumb-container"></breadcrumb>
+  <el-menu class="navbar-set" mode="horizontal">
 
     <div class="right-menu">
-      <error-log class="errLog-container right-menu-item"></error-log>
+      <!-- <error-log class="errLog-container right-menu-item"></error-log> -->
 
-      <!-- <el-tooltip effect="dark" :content="$t('navbar.screenfull')" placement="bottom">
+      <el-tooltip effect="dark" :content="$t('navbar.screenfull')" placement="bottom">
         <screenfull class="screenfull right-menu-item"></screenfull>
       </el-tooltip>
 
-      <lang-select class="international right-menu-item"></lang-select>
-
       <el-tooltip effect="dark" :content="$t('navbar.theme')" placement="bottom">
-        <theme-picker class="theme-switch right-menu-item"></theme-picker>
+        <!-- <theme-picker class="theme-switch right-menu-item"></theme-picker> -->
+        <theme-picker class="right-menu-item"></theme-picker>
       </el-tooltip>
 
       <el-dropdown class="avatar-container right-menu-item" trigger="click">
@@ -28,37 +24,28 @@
               {{$t('navbar.dashboard')}}
             </el-dropdown-item>
           </router-link>
-          <a target='_blank' href="https://github.com/zhangfan6385/Dgyt_test1/">
-            <el-dropdown-item>
-              {{$t('navbar.github')}}
-            </el-dropdown-item>
-          </a>
+
           <el-dropdown-item divided>
             <span @click="logout" style="display:block;">{{$t('navbar.logOut')}}</span>
           </el-dropdown-item>
         </el-dropdown-menu>
-      </el-dropdown> -->
+      </el-dropdown>
     </div>
   </el-menu>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
-import Breadcrumb from '@/frame_src/components/Breadcrumb'
-import Hamburger from '@/frame_src/components/Hamburger'
+
 import ErrorLog from '@/frame_src/components/ErrorLog'
-// import Screenfull from '@/frame_src/components/Screenfull'
-// import LangSelect from '@/frame_src/components/LangSelect'
-// import ThemePicker from '@/frame_src/components/ThemePicker'
+import Screenfull from '@/frame_src/components/Screenfull'
+import ThemePicker from '@/frame_src/components/ThemePicker'
 
 export default {
   components: {
-    Breadcrumb,
-    Hamburger,
-    ErrorLog
-    // Screenfull,
-    // LangSelect,
-    // ThemePicker
+    ErrorLog,
+    Screenfull,
+    ThemePicker
   },
   computed: {
     ...mapGetters([
@@ -81,19 +68,19 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-.navbar {
+.el-menu--horizontal{
+  border-right: none;
+  border-bottom: none;
+}
+
+
+.navbar-set {
+  background-color: transparent;
+  margin-top: 2px;
   height: 50px;
   line-height: 50px;
   border-radius: 0px !important;
-  .hamburger-container {
-    line-height: 58px;
-    height: 50px;
-    float: left;
-    padding: 0 10px;
-  }
-  .breadcrumb-container{
-    float: left;
-  }
+
   .errLog-container {
     display: inline-block;
     vertical-align: top;
@@ -114,9 +101,9 @@ export default {
     .international{
       vertical-align: top;
     }
-    .theme-switch {
-      vertical-align: 15px;
-    }
+    // .theme-switch {
+    //   vertical-align: 15px;
+    // }
     .avatar-container {
       height: 50px;
       margin-right: 30px;
@@ -134,6 +121,7 @@ export default {
           right: -20px;
           top: 25px;
           font-size: 12px;
+          color: #fff;
         }
       }
     }

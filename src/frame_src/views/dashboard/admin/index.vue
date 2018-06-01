@@ -38,7 +38,7 @@
       </el-col>
     </el-row> -->
     <div class="home-content">
-      <img src="../../../../frame_src/imgs/logo.png" >
+      <img src="../../../../frame_src/imgs/welcome.png" >
     </div>
   </div>
 </template>

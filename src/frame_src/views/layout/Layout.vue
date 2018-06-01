@@ -7,6 +7,7 @@
         <!-- <img src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif"> -->
         <span>大港油田软件开发平台</span>
       </div>
+      <header-set style="float:right;"></header-set>
     </div>
     <div>
       <sidebar class="sidebar-container"></sidebar>
@@ -20,7 +21,7 @@
 </template>
 
 <script>
-import { Navbar, Sidebar, AppMain, TagsView } from './components'
+import { Navbar, Sidebar, AppMain, TagsView, HeaderSet } from './components'
 import ResizeMixin from './mixin/ResizeHandler'
 
 export default {
@@ -29,7 +30,8 @@ export default {
     Navbar,
     Sidebar,
     AppMain,
-    TagsView
+    TagsView,
+    HeaderSet
   },
   mixins: [ResizeMixin],
   computed: {
@@ -82,23 +84,23 @@ export default {
     margin: 0 auto;
     line-height: 55px; /*设置line-height与父级元素的height相等*/
     overflow: hidden; /*防止内容超出容器或者产生自动换行*/
-  }
 
-  .header .logo{
-    margin: 0 20px;
-  }
+    .logo{
+      float: left;
+      margin: 0 20px;
+      span{
+        margin-left: 8px;
+        font-size:18px;
+        font-weight: bold;
+        color: #ffffff;
+      }
 
-  .header .logo span{
-    margin-left: 8px;
-    font-size:18px;
-    font-weight: bold;
-    color: #ffffff;
-  }
-
-  .header .logo img{
-    vertical-align: top;
-    margin-top: 13px;
-    height: 30px;
-    width: 30px;
+      img{
+        vertical-align: top;
+        margin-top: 13px;
+        height: 30px;
+        width: 30px;
+      }
+    }
   }
 </style>
