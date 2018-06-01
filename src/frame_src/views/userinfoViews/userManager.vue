@@ -152,9 +152,9 @@
         </el-form-item>
       </el-form> 
         <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">{{$t('table.cancel')}}</el-button>
-        <el-button v-if="dialogStatus=='create'" type="primary" @click="createData">{{$t('table.confirm')}}</el-button>
-        <el-button v-else type="primary" @click="updateData">{{$t('table.confirm')}}</el-button>
+        <el-button @click="dialogFormVisible = false">{{$t('userTable.cancel')}}</el-button>
+        <el-button v-if="dialogStatus=='create'" type="primary" @click="createData">{{$t('userTable.confirm')}}</el-button>
+        <el-button v-else type="primary" @click="updateData">{{$t('userTable.confirm')}}</el-button>
       </div>
     </el-dialog>
  
@@ -399,18 +399,18 @@ export default {
       this.downloadLoading = true
       import('@/frame_src/vendor/Export2Excel').then(excel => {
         const tHeader = [
-          'userCode',
-          'userName',
-          'userAlias',
-          'phoneMobile',
-          'phoneOffice',
-          'phoneOrg',
-          'userEmail',
-          'emailOffice',
-          'userIp',
-          'flag',
-          'userDomain',
-          'remark'
+          '用户编号',
+          '用户名称',
+          '用户别名',
+          '电话-移动',
+          '电话-办公',
+          '电话-分机号',
+          '电子邮箱-常用',
+          '电子邮箱-办公',
+          'IP地址列表',
+          '是否激活',
+          '域账户',
+          '备注'
         ]
         const filterVal = [
           'userCode',

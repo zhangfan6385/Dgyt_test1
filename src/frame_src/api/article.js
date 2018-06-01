@@ -38,63 +38,56 @@ export function updateArticle(data) {
     data
   })
 }
-export function fetchUserList(query) {
+export function fetchUserList(query) { // 查询用户
   return request({
     url: '/article/fetchUserList',
     method: 'get',
     params: query
   })
 }
-export function updateUserList(query) {
-  return request({
-    url: '/article/userList',
-    method: 'get',
-    params: query
-  })
-}
-export function updateUserArticle(data) {
+export function updateUserArticle(data) { // 修改用户信息-删除或者激活用户
   return request({
     url: '/article/updateUserArticle',
     method: 'get',
     params: data
   })
 }
-export function createUserArticle(data) {
+export function createUserArticle(data) { // 创建用户
   return request({
     url: '/article/createUserArticle',
     method: 'post',
     data
   })
 }
-export function updateUserData(data) {
+export function updateUserData(data) { // 修改用户信息-
   return request({
     url: '/article/updateUserData',
     method: 'post',
     data
   })
 }
-export function updateRoleData(data) {
+export function updateRoleData(data) { // 修改角色
   return request({
     url: '/article/updateRoleData',
     method: 'post',
     data
   })
 }
-export function fetchRoleList(query) {
+export function fetchRoleList(query) { // 查询角色信息
   return request({
     url: '/article/fetchRoleList',
     method: 'get',
     params: query
   })
 }
-export function createRoleArticle(data) {
+export function createRoleArticle(data) { // 创建角色
   return request({
     url: '/article/createRoleArticle',
     method: 'post',
     data
   })
 }
-export function updateRoleArticle(data) {
+export function updateRoleArticle(data) { // 修改角色信息-删除
   return request({
     url: '/article/updateRoleArticle',
     method: 'get',
@@ -108,16 +101,44 @@ export function fetchUserRoleList(query) { // 根据查询带rolename的 用户�
     params: query
   })
 }
-export function updateUserRoleArticle(data) {
+export function updateUserRoleArticle(data) { // 关联用户与角色
   return request({
     url: '/article/updateUserRoleArticle',
     method: 'get',
     params: data
   })
 }
-export function updatePasswordData(data) {
+export function updatePasswordData(data) { // 修改密码
   return request({
     url: '/article/updatePasswordData',
+    method: 'get',
+    params: data
+  })
+}
+export function fetchConfigList(query) { // 基础信息配置查询
+  return request({
+    url: '/article/fetchConfigList',
+    method: 'get',
+    params: query
+  })
+}
+export function createConfigArticle(data) { // 创建基础信息
+  return request({
+    url: '/article/createConfigArticle',
+    method: 'post',
+    data
+  })
+}
+export function updateConfigData(data) { // 修改基础信息配置-
+  return request({
+    url: '/article/updateConfigData',
+    method: 'post',
+    data
+  })
+}
+export function updateConfigArticle(data) { // 修改基础信息-删除
+  return request({
+    url: '/article/updateConfigArticle',
     method: 'get',
     params: data
   })

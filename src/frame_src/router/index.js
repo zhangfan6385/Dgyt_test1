@@ -191,6 +191,19 @@ export const asyncRouterMap = [
     ]
   },
   {
+    path: '/uidpConfigViews',
+    component: Layout,
+    redirect: 'noredirect',
+    name: 'uidpConfigViews',
+    meta: {
+      title: 'uidpConfigViews',
+      icon: 'table'
+    },
+    children: [
+      { path: 'uidp-config-manager', component: _import('uidpConfigViews/uidpConfigManager'), name: 'uidpConfigManager', meta: { title: 'uidpConfigManager', icon: 'table' }}
+    ]
+  },
+  {
     path: '/roleViews',
     component: Layout,
     redirect: 'noredirect',

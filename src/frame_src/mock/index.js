@@ -33,6 +33,12 @@ Mock.mock(/\/article\/updateRoleData/, 'post', articleAPI.getUpdateRoleData)
 Mock.mock(/\/article\/fetchUserRoleList/, 'get', articleAPI.getFetchUserRoleList)
 Mock.mock(/\/article\/updateUserRoleArticle/, 'get', articleAPI.getUpdateUserRoleArticle)
 Mock.mock(/\/article\/updatePasswordData/, 'get', articleAPI.getUpdatePasswordData)
+// 基础信息配置界面
+
+Mock.mock(/\/article\/fetchConfigList/, 'get', articleAPI.getFetchConfigList)
+Mock.mock(/\/article\/createConfigArticle/, 'post', articleAPI.getCreateConfigArticle)
+Mock.mock(/\/article\/updateConfigData/, 'post', articleAPI.getUpdateConfigData)
+Mock.mock(/\/article\/updateConfigArticle/, 'get', articleAPI.getUpdateConfigArticle)
 
 // 搜索相关
 Mock.mock(/\/search\/user/, 'get', remoteSearchAPI.searchUser)

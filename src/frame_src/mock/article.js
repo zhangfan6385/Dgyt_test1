@@ -4,6 +4,7 @@ import { param2Obj } from '@/frame_src/utils'
 const List = []
 const UserList = []
 const UserRoleList = []
+const ConfigList = []
 const count = 100
 
 for (let i = 0; i < count; i++) {
@@ -49,6 +50,13 @@ for (let i = 0; i < count; i++) {
     'flag|1': ['0', '1'],
     'groupName|1': ['超级管理员', '', '客服主管'],
     'roleId|1': [27, 28],
+    pageviews: '@integer(300, 5000)'
+  }))
+
+  ConfigList.push(Mock.mock({
+    confValue: '@integer(0, 10)',
+    confCode: '@first',
+    confName: '@csentence(3, 5)',
     pageviews: '@integer(300, 5000)'
   }))
 }
@@ -141,21 +149,13 @@ export default {
       total: mockList.length,
       items: pageList
     }
-  }, getFetchGroupList: config => {
-    const { flag, userName, page = 1, limit = 20, sort, deleteStatus, sysCode } = param2Obj(config.url)
+  }, getFetchConfigList: config => {
+    const { confName, page = 1, limit = 20 } = param2Obj(config.url)
 
-    let mockList = UserList.filter(item => {
-      if (flag && item.flag !== flag) return false
-      if (userName && item.userName.indexOf(userName) < 0) return false
-      if (deleteStatus && item.deleteStatus !== deleteStatus) return false // 如果是数字型，！==虽然不报错了，但是不好使
-      if (sysCode && item.sysCode !== sysCode) return false
+    const mockList = ConfigList.filter(item => {
+      if (confName && item.confName.indexOf(confName) < 0) return false
       return true
     })
-
-    if (sort === '-userId') {
-      mockList = mockList.reverse()
-    }
-
     const pageList = mockList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
 
     return {
@@ -174,6 +174,15 @@ export default {
     } else if (field === 'flag') {
       return {
         message: '修改成功',
+        result: true
+      }
+    }
+  }, getUpdateConfigArticle: config => {
+    const { field, confCode } = param2Obj(config.url)
+    if (field === 'deletaStatus') {
+      return {
+        bb: confCode,
+        message: '删除成功',
         result: true
       }
     }
@@ -286,7 +295,13 @@ export default {
   createUserArticle: () => ({
     data: 'success'
   }),
+  getCreateConfigArticle: () => ({
+    data: 'success'
+  }),
   getUpdateUserData: () => ({
+    data: 'success'
+  }),
+  getUpdateConfigData: () => ({
     data: 'success'
   }),
   createRoleArticle: () => ({

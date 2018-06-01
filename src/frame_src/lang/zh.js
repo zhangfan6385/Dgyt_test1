@@ -56,7 +56,9 @@ export default {
     roleManager: '注册角色',
     roleUserManager: '角色挂载',
     userinfoViews: '用户管理',
-    roleViews: '角色管理'
+    roleViews: '角色管理',
+    uidpConfigManager: '基础信息配置',
+    uidpConfigViews: '基础信息管理'
   },
   navbar: {
     logOut: '退出登录',
@@ -198,6 +200,26 @@ export default {
     status: '状态',
     actions: '操作',
     edit: '保存',
+    delete: '删除',
+    cancel: '取 消',
+    confirm: '确 定',
+    author: '操作人',
+    mount: '分配'
+  },
+  configTable: {
+    dynamicTips1: '固定表头, 按照表头顺序排序',
+    dynamicTips2: '不固定表头, 按照点击顺序排序',
+    dragTips1: '默认顺序',
+    dragTips2: '拖拽后顺序',
+    confCode: '配置项',
+    confName: '配置项说明',
+    confValue: '配置值',
+    search: '搜索',
+    add: '添加',
+    export: '导出',
+    status: '状态',
+    actions: '操作',
+    edit: '修改',
     delete: '删除',
     cancel: '取 消',
     confirm: '确 定',
