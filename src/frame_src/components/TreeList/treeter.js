@@ -52,7 +52,8 @@ const deleteFromTree = (list, id, idPropName = 'id', childrenPropName = 'childre
       list.splice(i, 1)
       return true
     } else {
-      // const result = deleteFromTree(list[i][childrenPropName], id, idPropName, childrenPropName)
+      // const result =
+      deleteFromTree(list[i][childrenPropName], id, idPropName, childrenPropName)
       // if (result) {
       //   return result;
       // }

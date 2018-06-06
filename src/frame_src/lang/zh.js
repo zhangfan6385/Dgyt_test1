@@ -58,7 +58,10 @@ export default {
     userinfoViews: '用户管理',
     roleViews: '角色管理',
     uidpConfigManager: '基础信息配置',
-    uidpConfigViews: '基础信息管理'
+    uidpConfigViews: '基础信息管理',
+    orgViews: '组织机构管理',
+    orgManager: '组织机构配置',
+    orgUserManager: '组织机构挂载'
   },
   navbar: {
     logOut: '退出登录',
@@ -177,7 +180,8 @@ export default {
     cancel: '取 消',
     confirm: '确 定',
     author: '操作人',
-    groupName: '角色名称'
+    groupName: '角色名称',
+    orgName: '组织结构名称'
 
   },
   roleTable: {
@@ -220,6 +224,35 @@ export default {
     status: '状态',
     actions: '操作',
     edit: '修改',
+    delete: '删除',
+    cancel: '取 消',
+    confirm: '确 定',
+    author: '操作人',
+    mount: '分配'
+  },
+  orgTable: {
+    dynamicTips1: '固定表头, 按照表头顺序排序',
+    dynamicTips2: '不固定表头, 按照点击顺序排序',
+    dragTips1: '默认顺序',
+    dragTips2: '拖拽后顺序',
+    id: '角色ID',
+    orgCode: '组织机构代码',
+    orgName: '组织机构名称',
+    parentId: '上级组织机构代码',
+    orgNameFull: '组织结构全称',
+    phone: '电话',
+    phoneS: '服务电话',
+    phoneFax: '传真',
+    orgAddr: '所在地址',
+    remark: '备注',
+    parent: '父级',
+    importance: '重要性',
+    search: '搜索',
+    add: '添加',
+    export: '导出',
+    status: '状态',
+    actions: '操作',
+    edit: '保存',
     delete: '删除',
     cancel: '取 消',
     confirm: '确 定',

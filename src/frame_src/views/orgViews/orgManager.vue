@@ -2,7 +2,7 @@
  <div class="app-container calendar-list-container"> 
   <imp-panel>
     <h3 class="box-title" slot="header" style="width: 100%;"> 
- <el-button class="filter-item" style="margin-left: 10px;" @click="newAdd" type="primary" icon="el-icon-edit">{{$t('roleTable.add')}}</el-button>
+ <el-button class="filter-item" style="margin-left: 10px;" @click="newAdd" type="primary" icon="el-icon-edit">{{$t('orgTable.add')}}</el-button>
      
     </h3>
     <el-row slot="body" :gutter="24" style="margin-bottom: 20px;">
@@ -18,32 +18,64 @@
         <el-card class="box-card">
           <div class="text item">
             <el-form :rules="rules"  :model="form" ref="form" >
-              <el-form-item  :label="$t('roleTable.parent')" :label-width="formLabelWidth">
+              <el-form-item  :label="$t('orgTable.parent')" :label-width="formLabelWidth">
                 <!--<el-input v-model="form.parentId" auto-complete="off"></el-input>-->
                 <el-select-tree v-model="form.parentId" :treeData="roleTree" :propNames="defaultProps" clearable
                                 placeholder="请选择父级">
                 </el-select-tree>
               </el-form-item>
-              <el-form-item :label="$t('roleTable.groupCode')" prop="groupCode" :label-width="formLabelWidth">
-                <el-input v-model="form.groupCode" auto-complete="off"></el-input>
-              </el-form-item>
-              <el-form-item :label="$t('roleTable.groupName')" prop="groupName" :label-width="formLabelWidth">
-                <el-input v-model="form.groupName" auto-complete="off"></el-input>
-              </el-form-item>
-               <el-form-item :label="$t('roleTable.remark')"  :label-width="formLabelWidth">
+              <el-col :span="12" :xs="24" :sm="24" :md="9" :lg="9" :xl="9">
+                <el-form-item :label="$t('orgTable.orgCode')" prop="orgCode" :label-width="formLabelWidth">
+                <el-input v-model="form.orgCode" auto-complete="off"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12" :xs="24" :sm="24" :md="9" :lg="9" :xl="9">
+                <el-form-item :label="$t('orgTable.orgName')" prop="orgName" :label-width="formLabelWidth">
+                <el-input v-model="form.orgName" auto-complete="off"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12" :xs="24" :sm="24" :md="9" :lg="9" :xl="9">
+                <el-form-item :label="$t('orgTable.orgNameFull')" prop="orgNameFull" :label-width="formLabelWidth">
+                <el-input v-model="form.orgNameFull" auto-complete="off"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12" :xs="24" :sm="24" :md="9" :lg="9" :xl="9">
+                <el-form-item :label="$t('orgTable.orgAddr')" prop="orgAddr" :label-width="formLabelWidth">
+                <el-input v-model="form.orgAddr" auto-complete="off"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12" :xs="24" :sm="24" :md="9" :lg="9" :xl="9">
+                <el-form-item :label="$t('orgTable.phone')" prop="phone" :label-width="formLabelWidth">
+                <el-input v-model="form.phone" auto-complete="off"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12" :xs="24" :sm="24" :md="9" :lg="9" :xl="9">
+                <el-form-item :label="$t('orgTable.phoneS')" prop="phoneS" :label-width="formLabelWidth">
+                <el-input v-model="form.phoneS" auto-complete="off"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12" :xs="24" :sm="24" :md="9" :lg="9" :xl="9">
+                <el-form-item :label="$t('orgTable.phoneFax')" prop="phoneFax" :label-width="formLabelWidth">
+                <el-input v-model="form.phoneFax" auto-complete="off"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12" :xs="24" :sm="24" :md="9" :lg="9" :xl="9">
+                <el-form-item :label="$t('orgTable.remark')"  :label-width="formLabelWidth">
                 <el-input v-model="form.remark" auto-complete="off"></el-input>
-              </el-form-item>
-             <el-form-item :label="$t('roleTable.sysCode')"  :label-width="formLabelWidth">
-                <el-input v-model="form.sysCode" auto-complete="off"></el-input>
-              </el-form-item>
+                </el-form-item>
+              </el-col>
+               <el-col :span="12" :xs="24" :sm="24" :md="9" :lg="9" :xl="9">
               <el-form-item label="" :label-width="formLabelWidth"> 
-            <el-button v-if="form.id==null" size="mini" type="primary"    @click="onOkSubmit">{{$t('roleTable.add')}}
-             </el-button>
-              <el-button  v-if="form.id!=null"   size="mini" type="primary"   @click="onUpdateSubmit" >{{$t('roleTable.edit')}}
-             </el-button> 
-              <el-button size="mini" type="danger" @click="deleteSelected" v-show="form.id && form.id!=null" >{{$t('roleTable.delete')}}
-            </el-button> 
+              
+              <el-button v-if="form.id==null" size="mini" type="primary"    @click="onOkSubmit">{{$t('orgTable.add')}}
+              </el-button>
+                <el-button  v-if="form.id!=null"   size="mini" type="primary"   @click="onUpdateSubmit" >{{$t('orgTable.edit')}}
+              </el-button> 
+                <el-button size="mini" type="danger" @click="deleteSelected" v-show="form.id && form.id!=null" >{{$t('orgTable.delete')}}
+              </el-button> 
+            
               </el-form-item>
+                </el-col>
             </el-form>
           </div>
         </el-card>
@@ -56,7 +88,7 @@
     </div>
 </template>
 <script>
-import { fetchRoleList, createRoleArticle, updateRoleArticle, updateRoleData } from '@/frame_src/api/article'
+import { fetchOrgList, createOrgArticle, updateOrgArticle, updateOrgData } from '@/frame_src/api/article'
 import panel from '@/frame_src/components/TreeList/panel.vue'
 import selectTree from '@/frame_src/components/TreeList/selectTree.vue'
 import treeter from '@/frame_src/components/TreeList/treeter'
@@ -70,10 +102,10 @@ export default {
     return {
       dialogLoading: false,
       dialogVisible: false,
-      formLabelWidth: '100px',
+      formLabelWidth: '120px',
       defaultProps: {
         children: 'children',
-        label: 'groupName',
+        label: 'orgName',
         id: 'id'
       },
       listUpdate: {
@@ -83,28 +115,30 @@ export default {
       roleTree: [],
       rules: {
 
-        groupCode: [
-          { required: true, message: '角色编号不能为空', trigger: 'change' }
+        orgCode: [
+          { required: true, message: '组织结构代码不能为空', trigger: 'change' }
         ],
-        groupName: [
-          { required: true, message: '角色名称不能为空', trigger: 'change' }
+        orgName: [
+          { required: true, message: '组织结构名称不能为空', trigger: 'change' }
         ]
       },
       resourceTree: [],
       maxId: 700000,
 
       listQuery: {
-        sysCode: undefined
+        sysCode: undefined// 回头注释掉
       },
       form: {
         id: null, // id: null,
-        parentId: null, // parentId  groupIdUpper
-        groupCode: '', // name: '',
-        groupName: '', // enName
-        remark: '',
-        sysCode: ''
-        // sort: 0,
-        // usable: '1'
+        parentId: null, // parentId  orgid
+        orgCode: '', // name: '',
+        orgName: '', // enName
+        orgNameFull: '', // enName
+        orgAddr: '', // enName
+        phone: '', // enName
+        phoneS: '', // enName
+        phoneFax: '',
+        remark: ''
       }
     }
   },
@@ -116,18 +150,21 @@ export default {
     newAdd() {
       this.form = {
         id: null,
-        parentId: null,
-        groupCode: '',
-        groupName: '',
-        remark: '',
-        sysCode: ''
-        // remarks
+        parentId: null, // parentId  orgid
+        orgCode: '', // name: '',
+        orgName: '', // enName
+        orgNameFull: '', // enName
+        orgAddr: '', // enName
+        phone: '', // enName
+        phoneS: '', // enName
+        phoneFax: '',
+        remark: ''
       }
     },
     onOkSubmit() {
       this.$refs['form'].validate((valid) => {
         if (valid) {
-          createRoleArticle(this.form).then(response => {
+          createOrgArticle(this.form).then(response => {
             this.newAdd()
             this.load2()
 
@@ -143,7 +180,7 @@ export default {
     }, onUpdateSubmit() {
       this.$refs['form'].validate((valid) => {
         if (valid) {
-          updateRoleData(this.form).then(response => {
+          updateOrgData(this.form).then(response => {
             this.newAdd()
             this.load2()
 
@@ -158,8 +195,8 @@ export default {
       })
     },
     load2() {
-      this.listQuery.sysCode = '2'
-      fetchRoleList(this.listQuery).then(response => {
+      this.listQuery.sysCode = '2'// 回头注释掉
+      fetchOrgList(this.listQuery).then(response => {
         this.roleTree = response.data.items
       })
       // this.roleTree.push(...defaultValue.roleList);
@@ -167,7 +204,7 @@ export default {
     deleteSelected(id) {
       this.listUpdate.id = this.form.id
       this.listUpdate.field = 'deletaStatus'
-      updateRoleArticle(this.listUpdate).then(response => {
+      updateOrgArticle(this.listUpdate).then(response => {
         this.message = '删除失败'
         this.title = '失败'
         if (response.data.result === true) {
@@ -188,8 +225,8 @@ export default {
       // this.load();
     },
     load() {
-      this.listQuery.sysCode = '1'
-      fetchRoleList(this.listQuery).then(response => {
+      this.listQuery.sysCode = '1'// 回头注释掉
+      fetchOrgList(this.listQuery).then(response => {
         this.roleTree = response.data.items
         // this.roleTree.push(...defaultValue.roleList);
       })

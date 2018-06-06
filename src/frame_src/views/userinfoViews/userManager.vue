@@ -169,7 +169,7 @@ import {
 } from '@/frame_src/api/article'
 import waves from '@/frame_src/directive/waves' // 水波纹指令
 // import { parseTime } from '@/frame_src/utils'
-const flagOptions = [{ key: 0, flag_name: 'no' }, { key: 1, flag_name: 'yes' }]
+const flagOptions = [{ key: 0, flag_name: '否' }, { key: 1, flag_name: '是' }]
 // arr to obj ,such as { CN : "China", US : "USA" }
 const flagOptionsKeyValue = flagOptions.reduce((acc, cur) => {
   acc[cur.key] = cur.flag_name

@@ -58,9 +58,9 @@
           <span>{{scope.row.remark}}</span>
         </template>
        </el-table-column>
-       <el-table-column min-width="110px"  align="center" :label="$t('userTable.groupName')">
+       <el-table-column min-width="110px"  align="center" :label="$t('userTable.orgName')">
         <template slot-scope="scope">
-          <span>{{scope.row.groupName}}</span>
+          <span>{{scope.row.orgName}}</span>
         </template>
        </el-table-column>
     </el-table>
@@ -76,7 +76,7 @@
   </div>
 </template>
 <script>
-import { fetchRoleList, fetchUserRoleList, updateUserRoleArticle } from '@/frame_src/api/article'
+import { fetchOrgList, fetchUserOrgList, updateUserOrgArticle } from '@/frame_src/api/article'
 import waves from '@/frame_src/directive/waves' // 水波纹指令
 // import { parseTime } from '@/frame_src/utils'
 import panel from '@/frame_src/components/TreeList/panel.vue'
@@ -111,7 +111,7 @@ export default {
         flag: undefined,
         importance: undefined,
         sort: '+userId',
-        roleId: undefined
+        orgId: undefined
       },
       flagOptions,
       sortOptions: [
@@ -134,18 +134,18 @@ export default {
         flag: '',
         userDomain: '',
         remark: '',
-        groupName: '',
-        roleId: ''
+        orgName: '',
+        orgId: ''
 
       }, listUpdate: {
 
-        roleId: undefined,
+        orgId: undefined,
         multipleSelection: []
       },
       roleTree: [],
       defaultProps: {
         children: 'children',
-        label: 'groupName',
+        label: 'orgName',
         id: 'id'
       }, treeListQuery: {
         sysCode: undefined
@@ -167,14 +167,14 @@ export default {
   methods: {
     getList() {
       this.listLoading = true
-      fetchUserRoleList(this.listQuery).then(response => {
+      fetchUserOrgList(this.listQuery).then(response => {
         this.list = response.data.items
         this.total = response.data.total
         this.listLoading = false
       })
     }, load() {
       this.treeListQuery.sysCode = '2'
-      fetchRoleList(this.treeListQuery).then(response => {
+      fetchOrgList(this.treeListQuery).then(response => {
         this.roleTree = response.data.items
       })
       // this.roleTree.push(...defaultValue.roleList);
@@ -202,9 +202,9 @@ export default {
         </span>)
     }, handleNodeClick(data) {
       this.listLoading = true
-      this.listQuery.roleId = this.$refs.roleTree.getCurrentKey()
+      this.listQuery.orgId = this.$refs.roleTree.getCurrentKey()
 
-      fetchUserRoleList(this.listQuery).then(response => {
+      fetchUserOrgList(this.listQuery).then(response => {
         this.list = response.data.items
         this.total = response.data.total
         this.listLoading = false
@@ -218,9 +218,9 @@ export default {
           duration: 2000
         })
       } else {
-        this.listUpdate.roleId = this.$refs.roleTree.getCurrentKey()
+        this.listUpdate.orgId = this.$refs.roleTree.getCurrentKey()
         this.listUpdate.multipleSelection = this.multipleSelection
-        updateUserRoleArticle(this.listUpdate).then(response => {
+        updateUserOrgArticle(this.listUpdate).then(response => {
           this.message = '分配成功'
           this.title = '成功'
           if (response.data.result === true) {

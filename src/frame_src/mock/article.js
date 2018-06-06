@@ -5,6 +5,7 @@ const List = []
 const UserList = []
 const UserRoleList = []
 const ConfigList = []
+const UserOrgList = []
 const count = 100
 
 for (let i = 0; i < count; i++) {
@@ -49,10 +50,19 @@ for (let i = 0; i < count; i++) {
     'remark|1': ['自开发人员', '业务人员', '办公室人员', '企业领导'],
     'flag|1': ['0', '1'],
     'groupName|1': ['超级管理员', '', '客服主管'],
-    'roleId|1': [27, 28],
+    'roleId|1': [26, 28],
     pageviews: '@integer(300, 5000)'
   }))
-
+  UserOrgList.push(Mock.mock({
+    userId: '@increment',
+    userCode: '@integer(1000000,60000000)',
+    userName: '@cname',
+    'remark|1': ['自开发人员', '业务人员', '办公室人员', '企业领导'],
+    'flag|1': ['0', '1'],
+    'orgName|1': ['大港油田一部', '', '大港油田财务'],
+    'orgId|1': [26, 28],
+    pageviews: '@integer(300, 5000)'
+  }))
   ConfigList.push(Mock.mock({
     confValue: '@integer(0, 10)',
     confCode: '@first',
@@ -133,8 +143,30 @@ export default {
     let mockList = UserRoleList.filter(item => {
       if (flag && item.flag !== flag) return false
       if (userName && item.userName.indexOf(userName) < 0) return false
-      if (roleId === 26) {
+      if (roleId === '26') {
         if (item.groupName !== '超级管理员') return false
+      }
+      return true
+    })
+
+    if (sort === '-userId') {
+      mockList = mockList.reverse()
+    }
+
+    const pageList = mockList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
+
+    return {
+      total: mockList.length,
+      items: pageList
+    }
+  }, getFetchUserOrgList: config => {
+    const { flag, userName, page = 1, limit = 20, sort, orgId } = param2Obj(config.url)
+
+    let mockList = UserOrgList.filter(item => {
+      if (flag && item.flag !== flag) return false
+      if (userName && item.userName.indexOf(userName) < 0) return false
+      if (orgId === '26') {
+        if (item.orgName !== '大港油田一部') return false
       }
       return true
     })
@@ -203,6 +235,14 @@ export default {
       aa: multipleSelection,
       bb: roleId
     }
+  }, getUpdateUserOrgArticle: config => {
+    const { multipleSelection, roleId } = param2Obj(config.url)
+    return {
+      message: '分配成功',
+      result: true,
+      aa: multipleSelection,
+      bb: roleId
+    }
   }, getUpdatePasswordData: config => {
     const { password, newpassword } = param2Obj(config.url)
     return {
@@ -210,6 +250,15 @@ export default {
       result: true,
       aa: password,
       bb: newpassword
+    }
+  }, getUpdateOrgArticle: config => {
+    const { field, id } = param2Obj(config.url)
+    if (field === 'deletaStatus') {
+      return {
+        aa: id,
+        message: '删除成功',
+        result: true
+      }
     }
   }, getFetchRoleList: config => {
     const { sysCode } = param2Obj(config.url)
@@ -292,6 +341,106 @@ export default {
       }] }
     }
   },
+  getFetchOrgList: config => {
+    const { sysCode } = param2Obj(config.url)
+
+    if (sysCode === '2') {
+      return { items: [{
+        'id': 26,
+        'parentId': null,
+        'orgName': '大港油田一部',
+        'orgCode': '1401',
+        'remark': '1级单位',
+        'phone': '1361088982',
+        'phoneS': '15432222123',
+        'phoneFax': '024-2349874',
+        'orgAddr': '天津大港油田石油大街',
+        'children': [{
+          'id': 2601,
+          'parentId': 26,
+          'orgName': '大港油田财务',
+          'orgCode': '140101',
+          'remark': '',
+          'children': []
+        }]
+      }, {
+        'id': 27,
+        'parentId': null,
+        'orgName': '大港油田二部',
+        'orgCode': '1501',
+        'remark': '2级单位',
+        'phone': '1361088982',
+        'phoneS': '15432222123',
+        'phoneFax': '024-2349874',
+        'orgAddr': '天津大港油田石油大街',
+        'children': [{
+          'id': 2701,
+          'parentId': 27,
+          'orgName': '大港油田财务',
+          'orgCode': '150101',
+          'remark': '',
+          'children': []
+        }, {
+          'id': 2702,
+          'parentId': 27,
+          'orgName': '大港油田信息科',
+          'orgCode': '150102',
+          'remark': '一级单位',
+          'phone': '1361088982',
+          'phoneS': '15432222123',
+          'phoneFax': '024-2349874',
+          'orgAddr': '天津大港油田石油大街',
+          'children': []
+        }]
+      }] }
+    } else {
+      return { items: [{
+        'id': 26,
+        'parentId': null,
+        'orgName': '大港油田三部',
+        'orgCode': '1403',
+        'remark': '一级单位',
+        'phone': '1361088982',
+        'phoneS': '15432222123',
+        'phoneFax': '024-2349874',
+        'orgAddr': '天津大港油田石油大街',
+        'children': []
+      }, {
+        'id': 27,
+        'parentId': null,
+        'orgName': '大港油田四部',
+        'orgCode': '1404',
+        'remark': '一级单位',
+        'phone': '1361088982',
+        'phoneS': '15432222123',
+        'phoneFax': '024-2349874',
+        'orgAddr': '天津大港油田石油大街',
+        'children': [{
+          'id': 2701,
+          'parentId': 27,
+          'orgName': '大港油田财务部',
+          'orgCode': '140401',
+          'remark': '一级单位',
+          'phone': '1361088982',
+          'phoneS': '15432222123',
+          'phoneFax': '024-2349874',
+          'orgAddr': '天津大港油田石油大街',
+          'children': []
+        }, {
+          'id': 2702,
+          'parentId': 27,
+          'orgName': '大港油田信息科',
+          'orgCode': '140402',
+          'remark': '一级单位',
+          'phone': '1361088982',
+          'phoneS': '15432222123',
+          'phoneFax': '024-2349874',
+          'orgAddr': '天津大港油田石油大街',
+          'children': []
+        }]
+      }] }
+    }
+  },
   createUserArticle: () => ({
     data: 'success'
   }),
@@ -307,7 +456,13 @@ export default {
   createRoleArticle: () => ({
     data: 'success'
   }),
+  createOrgArticle: () => ({
+    data: 'success'
+  }),
   getUpdateRoleData: () => ({
+    data: 'success'
+  }),
+  getUpdateOrgData: () => ({
     data: 'success'
   })
 }

@@ -218,6 +218,20 @@ export const asyncRouterMap = [
     ]
   },
   {
+    path: '/orgViews',
+    component: Layout,
+    redirect: 'noredirect',
+    name: 'orgViews',
+    meta: {
+      title: 'orgViews',
+      icon: 'table'
+    },
+    children: [
+      { path: 'org-manager', component: _import('orgViews/orgManager'), name: 'orgManager', meta: { title: 'orgManager', icon: 'table' }},
+      { path: 'org-user-manager', component: _import('orgViews/orgUserManager'), name: 'orgUserManager', meta: { title: 'orgUserManager', icon: 'table' }}
+    ]
+  },
+  {
     path: '/form',
     component: Layout,
     redirect: 'noredirect',

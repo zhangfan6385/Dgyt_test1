@@ -58,7 +58,10 @@ export default {
     userinfoViews: 'UserinfoViews',
     roleViews: 'RoleViews',
     uidpConfigManager: 'Uidp Config Manager',
-    uidpConfigViews: 'Uidp Config Views'
+    uidpConfigViews: 'Uidp Config Views',
+    orgViews: 'Org Views',
+    orgManager: 'Org Manager',
+    orgUserManager: 'Org User Manager'
   },
   navbar: {
     logOut: 'Log Out',
@@ -177,7 +180,8 @@ export default {
     cancel: 'Cancel',
     confirm: 'Confirm',
     author: 'author',
-    groupName: 'GroupName'
+    groupName: 'GroupName',
+    orgName: 'OrgName'
   }, roleTable: {
     dynamicTips1: 'Fixed header, sorted by header order',
     dynamicTips2: 'Not fixed header, sorted by click order',
@@ -211,6 +215,34 @@ export default {
     confName: 'ConfName',
     confValue: 'ConfValue',
     search: 'Search',
+    add: 'Add',
+    export: 'Export',
+    status: 'Status',
+    actions: 'Actions',
+    edit: 'Edit',
+    publish: 'Publish',
+    draft: 'Draft',
+    delete: 'Delete',
+    cancel: 'Cancel',
+    confirm: 'Confirm',
+    author: 'Author',
+    mount: 'Mount'
+  },
+  orgTable: {
+    dynamicTips1: 'Fixed header, sorted by header order',
+    dynamicTips2: 'Not fixed header, sorted by click order',
+    dragTips1: 'The default order',
+    dragTips2: 'The after dragging order',
+    id: 'Id',
+    orgCode: 'orgCode',
+    orgName: 'orgName',
+    parentId: 'ParentId',
+    orgNameFull: 'orgNameFull',
+    phone: 'phone',
+    phoneS: 'phoneS',
+    phoneFax: 'phoneFax',
+    orgAddr: 'orgAddr',
+    remark: 'Remark',
     add: 'Add',
     export: 'Export',
     status: 'Status',
