@@ -1,6 +1,7 @@
 import Mock from 'mockjs'
 import loginAPI from './login'
 import articleAPI from './article'
+import logInfoAPI from './logInfo'
 import remoteSearchAPI from './remoteSearch'
 import transactionAPI from './transaction'
 
@@ -47,6 +48,9 @@ Mock.mock(/\/article\/updateOrgArticle/, 'get', articleAPI.getUpdateOrgArticle)
 Mock.mock(/\/article\/updateOrgData/, 'post', articleAPI.getUpdateOrgData)
 Mock.mock(/\/article\/fetchUserOrgList/, 'get', articleAPI.getFetchUserOrgList)
 Mock.mock(/\/article\/updateUserOrgArticle/, 'get', articleAPI.getUpdateUserOrgArticle)
+// 日志管理模块
+
+Mock.mock(/\/logInfo\/fetchLogInfoList/, 'get', logInfoAPI.getFetchLogInfoList)
 // 搜索相关
 Mock.mock(/\/search\/user/, 'get', remoteSearchAPI.searchUser)
 

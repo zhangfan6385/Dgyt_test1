@@ -61,7 +61,9 @@ export default {
     uidpConfigViews: '基础信息管理',
     orgViews: '组织机构管理',
     orgManager: '组织机构配置',
-    orgUserManager: '组织机构挂载'
+    orgUserManager: '组织机构挂载',
+    logInfoViews: '日志管理',
+    logInfoManager: '日志查看'
   },
   navbar: {
     logOut: '退出登录',
