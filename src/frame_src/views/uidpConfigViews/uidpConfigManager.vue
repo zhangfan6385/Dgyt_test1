@@ -69,7 +69,7 @@
 <script>
 import {
   fetchConfigList,
-  createConfigArticle ,
+  createConfigArticle,
   updateConfigData,
   updateConfigArticle
 } from '@/frame_src/api/article'
@@ -88,20 +88,20 @@ export default {
       total: null,
       listLoading: true,
       listUpdate: {
-        field: undefined, 
+        field: undefined,
         confCode: undefined
       },
       listQuery: {
         page: 1,
         limit: 15,
-        confName: undefined,  
+        confName: undefined,
         importance: undefined
       },
       statusOptions: ['published', 'draft', 'deleted'],
-      
+
       editConfig: false,
       temp: {
-       confCode: '',
+        confCode: '',
         confName: '',
         confValue: ''
       },
@@ -114,7 +114,7 @@ export default {
       dialogPvVisible: false,
       pvData: [],
       rules: {
-       
+
         confCode: [
           { required: true, message: '配置项不能为空', trigger: 'change' }
         ],
@@ -233,7 +233,7 @@ export default {
       this.downloadLoading = true
       import('@/frame_src/vendor/Export2Excel').then(excel => {
         const tHeader = [
-         '配置项说明',
+          '配置项说明',
           '配置项',
           '配置值'
         ]
@@ -254,7 +254,7 @@ export default {
     formatJson(filterVal, jsonData) {
       return jsonData.map(v =>
         filterVal.map(j => {
-            return v[j]
+          return v[j]
         })
       )
     },
@@ -264,6 +264,9 @@ export default {
     }
   },
   created() {
+    // var token = this.$store.state.user.name;
+    // var status = this.$store.getters.name;
+    // alert(token+"ddd"+status);
     this.getList()
   }
 }

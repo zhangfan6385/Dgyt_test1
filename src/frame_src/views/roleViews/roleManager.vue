@@ -84,10 +84,10 @@ export default {
       rules: {
 
         groupCode: [
-          { required: true, message: 'groupCode is required', trigger: 'change' }
+          { required: true, message: '角色编号不能为空', trigger: 'change' }
         ],
         groupName: [
-          { required: true, message: 'groupName is required', trigger: 'change' }
+          { required: true, message: '角色名称不能为空', trigger: 'change' }
         ]
       },
       resourceTree: [],

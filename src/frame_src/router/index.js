@@ -183,7 +183,7 @@ export const asyncRouterMap = [
     name: 'userinfoViews',
     meta: {
       title: 'userinfoViews',
-      icon: 'table'
+      icon: 'example'
     },
     children: [
       { path: 'user-manager', component: _import('userinfoViews/userManager'), name: 'userManager', meta: { title: 'userManager', icon: 'table' }},
@@ -197,7 +197,7 @@ export const asyncRouterMap = [
     name: 'uidpConfigViews',
     meta: {
       title: 'uidpConfigViews',
-      icon: 'table'
+      icon: 'example'
     },
     children: [
       { path: 'uidp-config-manager', component: _import('uidpConfigViews/uidpConfigManager'), name: 'uidpConfigManager', meta: { title: 'uidpConfigManager', icon: 'table' }}
@@ -210,7 +210,7 @@ export const asyncRouterMap = [
     name: 'roleViews',
     meta: {
       title: 'roleViews',
-      icon: 'table'
+      icon: 'example'
     },
     children: [
       { path: 'role-manager', component: _import('roleViews/roleManager'), name: 'roleManager', meta: { title: 'roleManager', icon: 'table' }},
@@ -230,6 +230,31 @@ export const asyncRouterMap = [
       { path: 'menu-manager', component: _import('menu/menuManager'), name: 'menuManager', meta: { title: 'menuManager', icon: 'table' }}
       // { path: 'menu-permission-manager', component: _import('menu/menuPermissionManager'), name: 'menuPermissionManager', meta: { title: 'menuPermissionManager', icon: 'table' }}
     ]
+  },
+  {
+    path: '/orgViews',
+    component: Layout,
+    redirect: 'noredirect',
+    name: 'orgViews',
+    meta: {
+      title: 'orgViews',
+      icon: 'example'
+    },
+    children: [
+      { path: 'org-manager', component: _import('orgViews/orgManager'), name: 'orgManager', meta: { title: 'orgManager', icon: 'table' }},
+      { path: 'org-user-manager', component: _import('orgViews/orgUserManager'), name: 'orgUserManager', meta: { title: 'orgUserManager', icon: 'table' }}
+    ]
+  },
+  {
+    path: '/logInfoViews',
+    component: Layout,
+    redirect: 'noredirect',
+    name: 'logInfoViews',
+    meta: {
+      title: 'logInfoViews',
+      icon: 'form'
+    },
+    children: [{ path: 'log-info-manager', component: _import('logInfoViews/logInfoManager'), name: 'logInfoManager', meta: { title: 'logInfoManager', icon: 'table' }}]
   },
   {
     path: '/form',
