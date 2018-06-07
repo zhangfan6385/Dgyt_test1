@@ -3,6 +3,7 @@ import loginAPI from './login'
 import articleAPI from './article'
 import remoteSearchAPI from './remoteSearch'
 import transactionAPI from './transaction'
+import menuAPI from './menu'
 
 // Mock.setup({
 //   timeout: '350-600'
@@ -46,4 +47,10 @@ Mock.mock(/\/search\/user/, 'get', remoteSearchAPI.searchUser)
 // 账单相关
 Mock.mock(/\/transaction\/list/, 'get', transactionAPI.getList)
 
+// 菜单管理界面
+Mock.mock(/\/menu\/fetchMenuList/, 'get', menuAPI.getMenuList)
+Mock.mock(/\/menu\/fetchMenuDetail/, 'get', menuAPI.getMenuDetail)
+Mock.mock(/\/menu\/updateMenu/, 'post', menuAPI.updateMenu)
+Mock.mock(/\/menu\/createMenu/, 'post', menuAPI.createMenu)
+Mock.mock(/\/menu\/deleteMenu/, 'post', menuAPI.deleteMenu)
 export default Mock

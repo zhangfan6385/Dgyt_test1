@@ -128,9 +128,21 @@ export default {
       this.$refs['form'].validate((valid) => {
         if (valid) {
           createRoleArticle(this.form).then(response => {
-            this.newAdd()
-            this.load2()
-
+            console.log('add')
+            this.title = '成功'
+            this.maxId += 1
+            // this.$message('操作成功')
+            this.form.id = this.maxId
+            var ddd = {
+              id: this.form.id,
+              groupCode: this.form.groupCode,
+              groupName: this.form.groupName,
+              parentId: this.form.parentId,
+              children: []
+            }
+            this.appendTreeNode(this.roleTree, ddd)
+            this.roleTree.push({})
+            this.roleTree.pop()
             this.$notify({
               title: '成功',
               message: '创建成功',

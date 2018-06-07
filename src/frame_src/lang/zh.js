@@ -58,7 +58,10 @@ export default {
     userinfoViews: '用户管理',
     roleViews: '角色管理',
     uidpConfigManager: '基础信息配置',
-    uidpConfigViews: '基础信息管理'
+    uidpConfigViews: '基础信息管理',
+    menu: '菜单权限',
+    menuManager: '菜单管理',
+    menuPermissionManager: '权限分配'
   },
   navbar: {
     logOut: '退出登录',

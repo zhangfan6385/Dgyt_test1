@@ -218,6 +218,20 @@ export const asyncRouterMap = [
     ]
   },
   {
+    path: '/menu',
+    component: Layout,
+    redirect: 'noredirect',
+    name: 'menu',
+    meta: {
+      title: 'menu',
+      icon: 'table'
+    },
+    children: [
+      { path: 'menu-manager', component: _import('menu/menuManager'), name: 'menuManager', meta: { title: 'menuManager', icon: 'table' }}
+      // { path: 'menu-permission-manager', component: _import('menu/menuPermissionManager'), name: 'menuPermissionManager', meta: { title: 'menuPermissionManager', icon: 'table' }}
+    ]
+  },
+  {
     path: '/form',
     component: Layout,
     redirect: 'noredirect',
