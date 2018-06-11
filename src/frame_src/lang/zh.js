@@ -263,5 +263,29 @@ export default {
     confirm: '确 定',
     author: '操作人',
     mount: '分配'
+  },
+  logInfoTable: {
+    dynamicTips1: '固定表头, 按照表头顺序排序',
+    dynamicTips2: '不固定表头, 按照点击顺序排序',
+    dragTips1: '默认顺序',
+    dragTips2: '拖拽后顺序',
+    accessTime: '访问时间',
+    userId: '用户ID',
+    userName: '用户名称',
+    ipAddr: 'IP地址',
+    logType: '操作类型',
+    logContent: '操作内容',
+    remark: '备注',
+    search: '搜索',
+    add: '添加',
+    export: '导出',
+    status: '状态',
+    actions: '操作',
+    edit: '保存',
+    delete: '删除',
+    cancel: '取 消',
+    confirm: '确 定',
+    author: '操作人',
+    mount: '分配'
   }
 }

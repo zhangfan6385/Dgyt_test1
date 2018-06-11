@@ -7,7 +7,7 @@ const count = 100
 for (let i = 0; i < count; i++) {
   ConfigList.push(Mock.mock({
     userId: '@increment',
-    accessTime: +Mock.Random.date('T'),
+    accessTime: '@datetime',
     userName: '@cname',
     ipAddr: '@ip',
     'logType|1': ['用户管理', '业务操作', '角色配置', '增加用户'],
@@ -19,10 +19,12 @@ for (let i = 0; i < count; i++) {
 
 export default {
   getFetchLogInfoList: config => {
-    const { usarName, page = 1, limit = 20 } = param2Obj(config.url)
+    const { userName, logType, accessTime, page = 1, limit = 20 } = param2Obj(config.url)
 
     const mockList = ConfigList.filter(item => {
-      if (usarName && item.usarName.indexOf(usarName) < 0) return false
+      if (userName && item.userName.indexOf(userName) < 0) return false
+      if (logType && item.logType.indexOf(logType) < 0) return false
+      if (accessTime && item.accessTime.indexOf(accessTime) < 0) return false
       return true
     })
     const pageList = mockList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
