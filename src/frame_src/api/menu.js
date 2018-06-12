@@ -15,6 +15,14 @@ export function fetchMenuDetail() {
   })
 }
 
+export function fetchRoleMenuList(query) {
+  return request({
+    url: '/menu/fetchRoleMenuList',
+    method: 'get',
+    params: query
+  })
+}
+
 export function createMenu(data) {
   return request({
     url: '/menu/createMenu',
@@ -34,6 +42,14 @@ export function updateMenu(data) {
 export function deleteMenu(data) {
   return request({
     url: '/menu/deleteMenu',
+    method: 'post',
+    params: data
+  })
+}
+
+export function setRoleMenus(data) {
+  return request({
+    url: '/menu/setRoleMenus',
     method: 'post',
     params: data
   })

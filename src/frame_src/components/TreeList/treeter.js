@@ -16,28 +16,25 @@ const findFromTree = (treeArray, id, idPropName = 'id', childrenPropName = 'chil
 const appendTreeNode = (treeArray, item, idPropName = 'id', parentPropName = 'parentId', childrenPropName = 'children') => {
   if (treeArray == null || treeArray.length <= 0) return
   if (!item[parentPropName] || item[parentPropName] == null) {
-    // let i = treeArray.findIndex(p => p.sort > item.sort)
-    // if (i == -1) {
-    const i = treeArray.length
-    // }
-    var value2 = treeArray
-    value2.splice(i, 0, item)
+    let i = treeArray.findIndex(p => p.sort > item.sort)
+    if (i === -1) {
+      i = treeArray.length
+    }
+    treeArray.splice(i, 0, item)
     return
   }
   for (var j = 0; j < treeArray.length; j++) {
     var value = treeArray[j]
     if (item[parentPropName] === value[idPropName]) {
       if (value[childrenPropName] && value[childrenPropName].length > 0) {
-        // let i = value[childrenPropName].findIndex(p => p.sort > item.sort)
-        // if (i == -1) {
-        const i = value[childrenPropName].length
-        // }
+        let i = value[childrenPropName].findIndex(p => p.sort > item.sort)
+        if (i === -1) {
+          i = value[childrenPropName].length
+        }
         value[childrenPropName].splice(i, 0, item)
-        return
       } else {
-        // value[childrenPropName] = []
-        value[childrenPropName].splice(0, 0, item)
-        return
+        value[childrenPropName] = []
+        value[childrenPropName].push(item)
       }
     } else {
       appendTreeNode(value[childrenPropName], item, idPropName, parentPropName, childrenPropName)

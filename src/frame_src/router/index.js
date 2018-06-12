@@ -227,8 +227,8 @@ export const asyncRouterMap = [
       icon: 'table'
     },
     children: [
-      { path: 'menu-manager', component: _import('menu/menuManager'), name: 'menuManager', meta: { title: 'menuManager', icon: 'table' }}
-      // { path: 'menu-permission-manager', component: _import('menu/menuPermissionManager'), name: 'menuPermissionManager', meta: { title: 'menuPermissionManager', icon: 'table' }}
+      { path: 'menu-manager', component: _import('menu/menuManager'), name: 'menuManager', meta: { title: 'menuManager', icon: 'table' }},
+      { path: 'menu-permission-manager', component: _import('menu/menuPermissionManager'), name: 'menuPermissionManager', meta: { title: 'menuPermissionManager', icon: 'table' }}
     ]
   },
   {

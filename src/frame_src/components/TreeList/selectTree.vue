@@ -32,7 +32,7 @@
       @click="handleIconClick"
       @mouseenter.native="inputHovering = true"
       @mouseleave.native="inputHovering = false"
-      :icon="iconClass">
+      :suffix-icon="iconClass">
     </el-input>
     <transition
       name="el-zoom-in-top"
@@ -91,7 +91,7 @@ export default {
           this.inputHovering && !this.multiple &&
           this.value !== undefined && this.value != null &&
           this.value !== ''
-        return criteria ? 'circle-close is-show-close' : 'caret-top'
+        return criteria ? 'circle-close is-show-close' : 'el-icon-caret-bottom'
       },
 
       emptyText() {
@@ -190,14 +190,28 @@ export default {
       handleIconHide() {
         const icon = this.$el.querySelector('.el-input__icon')
         if (icon) {
-          removeClass(icon, 'is-reverse')
+          // removeClass(icon, 'is-reverse')
+          if (hasClass(icon, 'el-icon-caret-top')) {
+            addClass(icon, 'el-icon-caret-bottom')
+            removeClass(icon, 'el-icon-caret-top')
+          } else {
+            addClass(icon, 'el-icon-caret-top')
+            removeClass(icon, 'el-icon-caret-bottom')
+          }
         }
       },
 
       handleIconShow() {
         const icon = this.$el.querySelector('.el-input__icon')
         if (icon && !hasClass(icon, 'el-icon-circle-close')) {
-          addClass(icon, 'is-reverse')
+          // addClass(icon, 'is-reverse')
+          if (hasClass(icon, 'el-icon-caret-bottom')) {
+            addClass(icon, 'el-icon-caret-top')
+            removeClass(icon, 'el-icon-caret-bottom')
+          } else {
+            addClass(icon, 'el-icon-caret-bottom')
+            removeClass(icon, 'el-icon-caret-top')
+          }
         }
       },
 

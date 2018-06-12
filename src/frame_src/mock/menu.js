@@ -95,10 +95,31 @@ export default {
     }
   },
 
+  // 设置角色权限
+  setRoleMenus: (config) => {
+    const { roleId, menuIds } = param2Obj(config.url)
+    return {
+      roleId: roleId,
+      menuIds: menuIds,
+      message: '配置成功',
+      result: true
+    }
+  },
+
   // 获取菜单列表
   getMenuList: config => {
     return {
       items: menuList
+    }
+  },
+
+  // 根据角色获取对应角色下的菜单列表
+  getRoleMenuList: config => {
+    const { roleId } = param2Obj(config.url)
+    const pageList = menuList.filter((item) => item.parentId === roleId)
+    return {
+      items: pageList
+
     }
   }
 }
