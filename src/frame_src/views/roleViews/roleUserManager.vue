@@ -28,7 +28,7 @@
       <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">{{$t('userTable.search')}}</el-button>
       <el-button class="filter-item"  @click="updateRole" type="primary" icon="el-icon-edit">{{$t('roleTable.mount')}}</el-button>
      </div>
-      <el-table :key='tableKey' :data="list"  @selection-change="handleSelectionChange" v-loading="listLoading" element-loading-text="给我一点时间" border fit highlight-current-row
+      <el-table :key='tableKey' :data="list" :header-cell-class-name="tableRowClassName"  @selection-change="handleSelectionChange" v-loading="listLoading" element-loading-text="给我一点时间" border fit highlight-current-row
       style="width: 100%">
    
          <el-table-column 
@@ -76,7 +76,8 @@
   </div>
 </template>
 <script>
-import { fetchRoleList, fetchUserRoleList, updateUserRoleArticle } from '@/frame_src/api/article'
+import { fetchRoleList, updateUserRoleArticle } from '@/frame_src/api/role'
+import { fetchUserRoleList } from '@/frame_src/api/user'
 import waves from '@/frame_src/directive/waves' // 水波纹指令
 // import { parseTime } from '@/frame_src/utils'
 import panel from '@/frame_src/components/TreeList/panel.vue'
@@ -238,6 +239,11 @@ export default {
       }
     }, handleSelectionChange(val) {
       this.multipleSelection = val
+    }, tableRowClassName({ row, rowIndex }) {
+      if (rowIndex === 0) {
+        return 'el-button--primary is-active'// 'warning-row'
+      } // 'el-button--primary is-plain'// 'warning-row'
+      return ''
     }
   },
   created() {

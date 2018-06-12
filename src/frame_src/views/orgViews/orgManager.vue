@@ -88,7 +88,7 @@
     </div>
 </template>
 <script>
-import { fetchOrgList, createOrgArticle, updateOrgArticle, updateOrgData } from '@/frame_src/api/article'
+import { fetchOrgList, createOrgArticle, updateOrgArticle, updateOrgData } from '@/frame_src/api/org'
 import panel from '@/frame_src/components/TreeList/panel.vue'
 import selectTree from '@/frame_src/components/TreeList/selectTree.vue'
 import treeter from '@/frame_src/components/TreeList/treeter'
