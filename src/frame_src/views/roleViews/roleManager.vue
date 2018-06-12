@@ -56,7 +56,7 @@
     </div>
 </template>
 <script>
-import { fetchRoleList, createRoleArticle, updateRoleArticle, updateRoleData } from '@/frame_src/api/article'
+import { fetchRoleList, createRoleArticle, updateRoleArticle, updateRoleData } from '@/frame_src/api/role'
 import panel from '@/frame_src/components/TreeList/panel.vue'
 import selectTree from '@/frame_src/components/TreeList/selectTree.vue'
 import treeter from '@/frame_src/components/TreeList/treeter'

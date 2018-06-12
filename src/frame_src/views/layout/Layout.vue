@@ -1,7 +1,7 @@
 <template>
   <div class="app-wrapper" :class="classObj">
     <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside"></div>
-    <div class="header">
+    <div class="header el-button--primary is-active">
       <div class="logo">
         <img src="../../../frame_src/imgs/logo.png">
         <!-- <img src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif"> -->
@@ -74,13 +74,12 @@ export default {
     position: absolute;
     z-index: 999;
   }
-
   .header{
     position: fixed;
     z-index: 1999;
     min-width: 100%;
     height:55px;
-    background:#007AC4;
+   // background:#007AC4;
     margin: 0 auto;
     line-height: 55px; /*设置line-height与父级元素的height相等*/
     overflow: hidden; /*防止内容超出容器或者产生自动换行*/

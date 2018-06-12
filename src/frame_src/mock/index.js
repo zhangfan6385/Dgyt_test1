@@ -2,6 +2,10 @@ import Mock from 'mockjs'
 import loginAPI from './login'
 import articleAPI from './article'
 import logInfoAPI from './logInfo'
+import userAPI from './user'
+import roleAPI from './role'
+import orgAPI from './org'
+import configAPI from './config'
 import remoteSearchAPI from './remoteSearch'
 import transactionAPI from './transaction'
 import menuAPI from './menu'
@@ -23,32 +27,33 @@ Mock.mock(/\/article\/create/, 'post', articleAPI.createArticle)
 Mock.mock(/\/article\/update/, 'post', articleAPI.updateArticle)
 
 // 用户管理模块
-Mock.mock(/\/article\/fetchUserList/, 'get', articleAPI.getFetchUserList)
-Mock.mock(/\/article\/updateUserArticle/, 'get', articleAPI.getUpdateUserArticle)
-Mock.mock(/\/article\/createUserArticle/, 'post', articleAPI.createUserArticle)
-Mock.mock(/\/article\/updateUserData/, 'post', articleAPI.getUpdateUserData)
+Mock.mock(/\/user\/fetchUserList/, 'get', userAPI.getFetchUserList)
+Mock.mock(/\/user\/updateUserArticle/, 'get', userAPI.getUpdateUserArticle)
+Mock.mock(/\/user\/createUserArticle/, 'post', userAPI.createUserArticle)
+Mock.mock(/\/user\/updateUserData/, 'post', userAPI.getUpdateUserData)
+Mock.mock(/\/user\/updatePasswordData/, 'get', userAPI.getUpdatePasswordData)
 // 角色管理模块
-Mock.mock(/\/article\/fetchRoleList/, 'get', articleAPI.getFetchRoleList)
-Mock.mock(/\/article\/createRoleArticle/, 'post', articleAPI.createRoleArticle)
-Mock.mock(/\/article\/updateRoleArticle/, 'get', articleAPI.getUpdateRoleArticle)
-Mock.mock(/\/article\/updateRoleData/, 'post', articleAPI.getUpdateRoleData)
-Mock.mock(/\/article\/fetchUserRoleList/, 'get', articleAPI.getFetchUserRoleList)
-Mock.mock(/\/article\/updateUserRoleArticle/, 'get', articleAPI.getUpdateUserRoleArticle)
-Mock.mock(/\/article\/updatePasswordData/, 'get', articleAPI.getUpdatePasswordData)
+Mock.mock(/\/role\/fetchRoleList/, 'get', roleAPI.getFetchRoleList)
+Mock.mock(/\/role\/createRoleArticle/, 'post', roleAPI.createRoleArticle)
+Mock.mock(/\/role\/updateRoleArticle/, 'get', roleAPI.getUpdateRoleArticle)
+Mock.mock(/\/role\/updateRoleData/, 'post', roleAPI.getUpdateRoleData)
+Mock.mock(/\/user\/fetchUserRoleList/, 'get', userAPI.getFetchUserRoleList)
+Mock.mock(/\/role\/updateUserRoleArticle/, 'get', roleAPI.getUpdateUserRoleArticle)
+
 // 基础信息配置模块
 
-Mock.mock(/\/article\/fetchConfigList/, 'get', articleAPI.getFetchConfigList)
-Mock.mock(/\/article\/createConfigArticle/, 'post', articleAPI.getCreateConfigArticle)
-Mock.mock(/\/article\/updateConfigData/, 'post', articleAPI.getUpdateConfigData)
-Mock.mock(/\/article\/updateConfigArticle/, 'get', articleAPI.getUpdateConfigArticle)
+Mock.mock(/\/config\/fetchConfigList/, 'get', configAPI.getFetchConfigList)
+Mock.mock(/\/config\/createConfigArticle/, 'post', configAPI.getCreateConfigArticle)
+Mock.mock(/\/config\/updateConfigData/, 'post', configAPI.getUpdateConfigData)
+Mock.mock(/\/config\/updateConfigArticle/, 'get', configAPI.getUpdateConfigArticle)
 // 组织结构配置模块
 
-Mock.mock(/\/article\/fetchOrgList/, 'get', articleAPI.getFetchOrgList)
-Mock.mock(/\/article\/createOrgArticle/, 'post', articleAPI.createOrgArticle)
-Mock.mock(/\/article\/updateOrgArticle/, 'get', articleAPI.getUpdateOrgArticle)
-Mock.mock(/\/article\/updateOrgData/, 'post', articleAPI.getUpdateOrgData)
-Mock.mock(/\/article\/fetchUserOrgList/, 'get', articleAPI.getFetchUserOrgList)
-Mock.mock(/\/article\/updateUserOrgArticle/, 'get', articleAPI.getUpdateUserOrgArticle)
+Mock.mock(/\/org\/fetchOrgList/, 'get', orgAPI.getFetchOrgList)
+Mock.mock(/\/org\/createOrgArticle/, 'post', orgAPI.createOrgArticle)
+Mock.mock(/\/org\/updateOrgArticle/, 'get', orgAPI.getUpdateOrgArticle)
+Mock.mock(/\/org\/updateOrgData/, 'post', orgAPI.getUpdateOrgData)
+Mock.mock(/\/user\/fetchUserOrgList/, 'get', userAPI.getFetchUserOrgList)
+Mock.mock(/\/org\/updateUserOrgArticle/, 'get', orgAPI.getUpdateUserOrgArticle)
 // 日志管理模块
 
 Mock.mock(/\/logInfo\/fetchLogInfoList/, 'get', logInfoAPI.getFetchLogInfoList)

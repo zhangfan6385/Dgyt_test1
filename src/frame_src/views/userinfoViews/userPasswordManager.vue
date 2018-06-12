@@ -24,7 +24,7 @@
           
 </template>
 <script>
-import { updatePasswordData } from '@/frame_src/api/article'
+import { updatePasswordData } from '@/frame_src/api/user'
 
 export default {
   data() {

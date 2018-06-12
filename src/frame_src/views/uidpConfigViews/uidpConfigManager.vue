@@ -10,7 +10,7 @@
  
     </div>
     <el-card class="box-card">
-      <el-table :key='tableKey' :data="list" v-loading="listLoading" element-loading-text="给我一点时间" border fit highlight-current-row
+      <el-table :key='tableKey' :data="list" :header-cell-class-name="tableRowClassName"   v-loading="listLoading" element-loading-text="给我一点时间" border fit highlight-current-row
       style="width: 100%">
        <el-table-column width="140px" align="center" :label="$t('configTable.confName')">
         <template slot-scope="scope">
@@ -72,7 +72,7 @@ import {
   createConfigArticle,
   updateConfigData,
   updateConfigArticle
-} from '@/frame_src/api/article'
+} from '@/frame_src/api/config'
 import waves from '@/frame_src/directive/waves' // 水波纹指令
 // import { parseTime } from '@/frame_src/utils'
 
@@ -261,6 +261,11 @@ export default {
     handleFilter() {
       this.listQuery.page = 1
       this.getList()
+    }, tableRowClassName({ row, rowIndex }) {
+      if (rowIndex === 0) {
+        return 'el-button--primary is-active'// 'warning-row'
+      } // 'el-button--primary is-plain'// 'warning-row'
+      return ''
     }
   },
   created() {
