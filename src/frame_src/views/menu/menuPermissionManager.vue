@@ -7,7 +7,7 @@
             <el-tree v-if="roleTree"
                     :data="roleTree"
                     ref="roleTree"
-                    default-expand-all='true'
+                    :default-expand-all=true
                     :expand-on-click-node='false'
                     :show-checkbox='false'
                     highlight-current
@@ -20,7 +20,7 @@
                     <el-tree
                         :data="resourceTree"
                         ref="resourceTree"
-                        default-expand-all='true'
+                        :default-expand-all=true
                         show-checkbox
                         check-strictly
                         node-key="id"
@@ -28,7 +28,7 @@
                         :props="defaultMenuProps">
                     </el-tree>
                 </div>
-                <hr style="color:#F2F6FC;margin-top:10px;margin-top:30px;">
+                <div style="margin-top:15px;border:1px solid #D3DCE6"></div>
                 <el-button type="primary" style="margin:20px;" @click="configRoleResources">保存</el-button>
             </el-card>
         </el-col>
@@ -40,7 +40,7 @@
   import panel from '@/frame_src/components/TreeList/panel.vue'
   import treeter from '@/frame_src/components/TreeList/treeter'
   import { fetchMenuList, setRoleMenus, fetchRoleMenuList } from '@/frame_src/api/menu'
-  import { fetchRoleList } from '@/frame_src/api/article'
+  import { fetchRoleList } from '@/frame_src/api/role'
 
   export default {
     mixins: [treeter],
@@ -132,7 +132,7 @@
         return (
           <span>
             <span class='render-content'>
-              <i class='fa fa-wrench' title='配置资源' on-click={(e) => this.settingResource(e, data.id)}></i>
+              <i class='el-icon-edit' title='配置资源' on-click={(e) => this.settingResource(e, data.id)}></i>
             </span>
             <span>
               <span>{node.label}</span>
@@ -161,10 +161,11 @@
 
           }) */
         this.menuListQuery.sysCode = '1'
-        this.menuListQuery.roleId = id
+        this.menuListQuery.roleId = Number(id)
+        if (id === undefined) return
         fetchRoleMenuList(this.menuListQuery).then(response => {
-          // this.resourceTree = response.data.items
-          this.$refs.resourceTree.setCheckedKeys([912, 913])
+          if (response.data.items[0] === undefined) return
+          this.$refs.resourceTree.setCheckedKeys(response.data.items[0].id)
         })
       }
     },
