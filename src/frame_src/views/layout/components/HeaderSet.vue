@@ -3,21 +3,30 @@
 
     <div class="right-menu">
       <!-- <error-log class="errLog-container right-menu-item"></error-log> -->
+      <div class="logo">
+        <img src="../../../../frame_src/imgs/avatar.png">
+        <span>Admin</span>
+
+        <span style="margin-left:15px;">单位：大港油田信息管理部</span>
+      </div>
+
 
       <el-tooltip effect="dark" :content="$t('navbar.screenfull')" placement="bottom">
-        <screenfull class="screenfull right-menu-item"></screenfull>
+        <screenfull class="screenfull right-menu-item" style="vertical-align: middle;"></screenfull>
       </el-tooltip>
 
       <el-tooltip effect="dark" :content="$t('navbar.theme')" placement="bottom">
         <!-- <theme-picker class="theme-switch right-menu-item"></theme-picker> -->
-        <theme-picker class="right-menu-item"></theme-picker>
+        <theme-picker class="right-menu-item noborder" style="vertical-align: middle;"></theme-picker>
       </el-tooltip>
 
       <el-dropdown class="avatar-container right-menu-item" trigger="click">
-        <div class="avatar-wrapper">
+        <!-- <div class="avatar-wrapper">
           <img class="user-avatar" :src="avatar+'?imageView2/1/w/80/h/80'">
           <i class="el-icon-caret-bottom"></i>
-        </div>
+        </div> -->
+
+        <svg-icon icon-class="user" style="color:white;width:25px;height:25px;vertical-align: middle;cursor: pointer;"/>
         <el-dropdown-menu slot="dropdown">
           <router-link to="/">
             <el-dropdown-item>
@@ -68,11 +77,38 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
+.noborder{
+  .el-color-picker__trigger{
+    border: none;
+  }
+}
+
+.theme-picker .el-color-picker__trigger{
+  border: none;
+}
+
 .el-menu--horizontal{
   border-right: none;
   border-bottom: none;
 }
 
+.logo {
+    float: left;
+    margin: 0 20px;
+    span {
+      margin-left: 8px;
+      font-size: 15px;
+      font-weight: bold;
+      color: #ffffff;
+    }
+
+    img {
+      vertical-align: top;
+      margin-top: 10px;
+      height: 30px;
+      width: 30px;
+    }
+  }
 
 .navbar-set {
   background-color: transparent;

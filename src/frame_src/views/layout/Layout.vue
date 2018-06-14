@@ -2,12 +2,24 @@
   <div class="app-wrapper" :class="classObj">
     <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside"></div>
     <div class="header el-button--primary is-active">
-      <div class="logo">
-        <img src="../../../frame_src/imgs/logo.png">
-        <!-- <img src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif"> -->
-        <span>大港油田软件开发平台</span>
-      </div>
-      <header-set style="float:right;"></header-set>
+      <el-col :span="6">
+        <div class="logo">
+          <img src="../../../frame_src/imgs/logo.png">
+          <!-- <img src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif"> -->
+          <span>大港油田软件开发平台</span>
+        </div>
+      </el-col>
+      <el-col :span="6" style="text-aligh:center;">
+        <el-input style="width:300px;"
+          size="mini"
+          placeholder=""
+          suffix-icon="el-icon-search"
+          v-model="input9">
+        </el-input>
+      </el-col>
+      <el-col :span="12">
+        <header-set></header-set>
+      </el-col>
     </div>
     <div>
       <sidebar class="sidebar-container"></sidebar>
@@ -21,8 +33,8 @@
 </template>
 
 <script>
-import { Navbar, Sidebar, AppMain, TagsView, HeaderSet } from './components'
-import ResizeMixin from './mixin/ResizeHandler'
+import { Navbar, Sidebar, AppMain, TagsView, HeaderSet } from './components';
+import ResizeMixin from './mixin/ResizeHandler';
 
 export default {
   name: 'layout',
@@ -58,48 +70,48 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-  @import "src/frame_src/styles/mixin.scss";
-  .app-wrapper {
-    @include clearfix;
-    position: relative;
-    height: 100%;
-    width: 100%;
-  }
-  .drawer-bg {
-    background: #000;
-    opacity: 0.3;
-    width: 100%;
-    top: 0;
-    height: 100%;
-    position: absolute;
-    z-index: 999;
-  }
-  .header{
-    position: fixed;
-    z-index: 1999;
-    min-width: 100%;
-    height:55px;
-   // background:#007AC4;
-    margin: 0 auto;
-    line-height: 55px; /*设置line-height与父级元素的height相等*/
-    overflow: hidden; /*防止内容超出容器或者产生自动换行*/
+@import "src/frame_src/styles/mixin.scss";
+.app-wrapper {
+  @include clearfix;
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+.drawer-bg {
+  background: #000;
+  opacity: 0.3;
+  width: 100%;
+  top: 0;
+  height: 100%;
+  position: absolute;
+  z-index: 999;
+}
+.header {
+  position: fixed;
+  z-index: 1999;
+  min-width: 100%;
+  height: 55px;
+  // background:#007AC4;
+  margin: 0 auto;
+  line-height: 55px; /*设置line-height与父级元素的height相等*/
+  overflow: hidden; /*防止内容超出容器或者产生自动换行*/
 
-    .logo{
-      float: left;
-      margin: 0 20px;
-      span{
-        margin-left: 8px;
-        font-size:18px;
-        font-weight: bold;
-        color: #ffffff;
-      }
+  .logo {
+    float: left;
+    margin: 0 20px;
+    span {
+      margin-left: 8px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #ffffff;
+    }
 
-      img{
-        vertical-align: top;
-        margin-top: 13px;
-        height: 30px;
-        width: 30px;
-      }
+    img {
+      vertical-align: top;
+      margin-top: 13px;
+      height: 30px;
+      width: 30px;
     }
   }
+}
 </style>

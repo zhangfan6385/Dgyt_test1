@@ -35,6 +35,18 @@ const menuList = [
     'isShow': '1'
   }]
 
+const roleMenuList = [
+  {
+    'id': [1, 31, 912, 913, 92, 93], 'roleId': 26
+  },
+  {
+    'id': [102, 103], 'roleId': 27
+  },
+  {
+    'id': [6, 108, 7, 8, 9], 'roleId': 28
+  }
+]
+
 export default {
   getPv: () => ({
     pvData: [{ key: 'PC', pv: 1024 }, { key: 'mobile', pv: 1024 }, { key: 'ios', pv: 1024 }, { key: 'android', pv: 1024 }]
@@ -116,10 +128,10 @@ export default {
   // 根据角色获取对应角色下的菜单列表
   getRoleMenuList: config => {
     const { roleId } = param2Obj(config.url)
-    const pageList = menuList.filter((item) => item.parentId === roleId)
+    console.log(roleId)
+    const pageList = roleMenuList.filter((item) => item.roleId === roleId)
     return {
       items: pageList
-
     }
   }
 }
