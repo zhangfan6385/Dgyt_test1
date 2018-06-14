@@ -1,28 +1,28 @@
 import request from '@/frame_src/utils/request'
-export function fetchConfigList(query) { // 基础信息配置查询
+export function fetchSysInfoList(query) { // 基础信息配置查询
   return request({
-    url: '/sysinfo/fetchConfigList',
+    url: '/sysinfo/fetchSysInfoList',
     method: 'get',
     params: query
   })
 }
-export function createConfigArticle(data) { // 创建基础信息
+export function createSysInfoArticle(data) { // 创建基础信息
   return request({
-    url: '/sysinfo/createConfigArticle',
+    url: '/sysinfo/createSysInfoArticle',
     method: 'post',
     data
   })
 }
-export function updateConfigData(data) { // 修改基础信息配置-
+export function updateSysInfoData(data) { // 修改基础信息配置-
   return request({
-    url: '/sysinfo/updateConfigData',
+    url: '/sysinfo/updateSysInfoData',
     method: 'post',
     data
   })
 }
-export function updateConfigArticle(data) { // 修改基础信息-删除
+export function updateSysInfoArticle(data) { // 修改基础信息-删除
   return request({
-    url: '/sysinfo/updateConfigArticle',
+    url: '/sysinfo/updateSysInfoArticle',
     method: 'get',
     params: data
   })

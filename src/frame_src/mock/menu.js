@@ -25,7 +25,8 @@ const menuList1 = [
   {
     'id': 31, 'path': '/uidpConfigViews', 'routeName': 'uidpConfigViews', 'parentId': null, 'sort': 1, 'name': '基础信息管理', 'href': 'uidpConfigViews', 'icon': 'fa fa-upload', 'children':
       [
-        { 'id': 93, 'path': 'uidp-config-manager', 'routeName': 'uidpConfigManager', 'parentId': 31, 'sort': 0, 'name': '基础信息配置', 'href': 'uidpConfigViews/uidpConfigManager', 'icon': 'fa fa-area-chart', 'children': [], 'isShow': '1', 'roleId': [26, 27] }
+        { 'id': 93, 'path': 'uidp-config-manager', 'routeName': 'uidpConfigManager', 'parentId': 31, 'sort': 0, 'name': '平台信息管理', 'href': 'uidpConfigViews/uidpConfigManager', 'icon': 'fa fa-area-chart', 'children': [], 'isShow': '1', 'roleId': [26, 27] },
+        { 'id': 93, 'path': 'uidp-sys-info-manager', 'routeName': 'uidpSysInfoManager', 'parentId': 31, 'sort': 0, 'name': '在建系统信息管理', 'href': 'uidpConfigViews/uidpSysInfoManager', 'icon': 'fa fa-area-chart', 'children': [], 'isShow': '1', 'roleId': [26, 27] }
       ],
     'isShow': '1', 'roleId': [26, 27]
   },

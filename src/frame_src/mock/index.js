@@ -49,10 +49,10 @@ Mock.mock(/\/config\/updateConfigData/, 'post', configAPI.getUpdateConfigData)
 Mock.mock(/\/config\/updateConfigArticle/, 'get', configAPI.getUpdateConfigArticle)
 // 平台在建系统配置模块
 
-Mock.mock(/\/sysinfo\/fetchConfigList/, 'get', sysinfoAPI.getFetchConfigList)
-Mock.mock(/\/sysinfo\/createConfigArticle/, 'post', sysinfoAPI.getCreateConfigArticle)
-Mock.mock(/\/sysinfo\/updateConfigData/, 'post', sysinfoAPI.getUpdateConfigData)
-Mock.mock(/\/sysinfo\/updateConfigArticle/, 'get', sysinfoAPI.getUpdateConfigArticle)
+Mock.mock(/\/sysinfo\/fetchSysInfoList/, 'get', sysinfoAPI.getFetchSysInfoList)
+Mock.mock(/\/sysinfo\/createSysInfoArticle/, 'post', sysinfoAPI.getCreateSysInfoArticle)
+Mock.mock(/\/sysinfo\/updateSysInfoData/, 'post', sysinfoAPI.getUpdateSysInfoData)
+Mock.mock(/\/sysinfo\/updateSysInfoArticle/, 'get', sysinfoAPI.getUpdateSysInfoArticle)
 // 组织结构配置模块
 
 Mock.mock(/\/org\/fetchOrgList/, 'get', orgAPI.getFetchOrgList)

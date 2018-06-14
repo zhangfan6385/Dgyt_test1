@@ -1,7 +1,7 @@
 <template>
     <div class="app-container calendar-list-container"> 
     <div class="filter-container">
-       <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" :placeholder="$t('sysInfoTable.confName')" v-model="listQuery.confName">
+       <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" :placeholder="$t('sysInfoTable.sysName')" v-model="listQuery.sysName">
       </el-input> 
       
       <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">{{$t('sysInfoTable.search')}}</el-button>
@@ -63,19 +63,31 @@
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
     
       <el-form :rules="rules" ref="dataForm" :model="temp" label-position="left" label-width="120px" style='width: 400px; margin-left:20px;'>
-     <el-form-item  :label="$t('sysInfoTable.confName')" prop="confName">
-          <el-input v-model="temp.confName"></el-input>
+     
+    <el-form-item v-if="dialogStatus=='create'"  :label="$t('sysInfoTable.sysCode')" prop="sysCode">
+       <el-input v-model="temp.sysCode"></el-input>
+    </el-form-item>
+    <el-form-item v-else  :label="$t('sysInfoTable.sysCode')" prop="sysCode">
+     <span>{{temp.sysCode}}</span>
+    </el-form-item>
+    <el-form-item  :label="$t('sysInfoTable.sysName')" prop="sysName">
+          <el-input v-model="temp.sysName"></el-input>
     </el-form-item> 
-    <el-form-item v-if="dialogStatus=='create'"  :label="$t('sysInfoTable.confCode')" prop="confCode">
-       <el-input v-model="temp.confCode"></el-input>
+    <el-form-item :label="$t('sysInfoTable.sysStyle')" prop="sysStyle">
+      <el-input v-model="temp.sysStyle" ></el-input>
     </el-form-item>
-    <el-form-item v-else  :label="$t('sysInfoTable.confCode')" prop="confCode">
-     <span>{{temp.confCode}}</span>
+       <el-form-item :label="$t('sysInfoTable.sysLogo')" prop="sysLogo">
+      <el-input v-model="temp.sysLogo" ></el-input>
     </el-form-item>
-    <el-form-item :label="$t('sysInfoTable.confValue')" prop="confValue">
-      <el-input v-model="temp.confValue" ></el-input>
+     <el-form-item :label="$t('sysInfoTable.sysUrl')" prop="sysUrl">
+      <el-input v-model="temp.sysUrl" ></el-input>
     </el-form-item>
-         
+     <el-form-item :label="$t('sysInfoTable.sysOrder')" prop="sysOrder">
+      <el-input v-model="temp.sysOrder" ></el-input>
+    </el-form-item>
+     <el-form-item :label="$t('sysInfoTable.sysAdmin')" prop="sysAdmin">
+      <el-input v-model="temp.sysAdmin" ></el-input>
+    </el-form-item>   
       </el-form> 
         <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">{{$t('sysInfoTable.cancel')}}</el-button>
@@ -88,10 +100,10 @@
 </template>
 <script>
 import {
-  fetchConfigList,
-  createConfigArticle,
-  updateConfigData,
-  updateConfigArticle
+  fetchSysInfoList,
+  createSysInfoArticle,
+  updateSysInfoData,
+  updateSysInfoArticle
 } from '@/frame_src/api/sysinfo'
 import waves from '@/frame_src/directive/waves' // 水波纹指令
 // import { parseTime } from '@/frame_src/utils'
@@ -109,21 +121,23 @@ export default {
       listLoading: true,
       listUpdate: {
         field: undefined,
-        confCode: undefined
+        sysCode: undefined
       },
       listQuery: {
         page: 1,
-        limit: 15,
-        confName: undefined,
+        limit: 5,
+        sysName: undefined,
         importance: undefined
       },
-      statusOptions: ['published', 'draft', 'deleted'],
-
       editConfig: false,
       temp: {
-        confCode: '',
-        confName: '',
-        confValue: ''
+        sysCode: '', // 系统代码
+        sysName: '', // 系统名称
+        sysStyle: '', // 系统主题风格
+        sysLogo: '', // logo图标URL
+        sysUrl: '', // 系统URL
+        sysOrder: '', // 顺序
+        sysAdmin: '' // 管理员ID
       },
       dialogFormVisible: false,
       dialogStatus: '',
@@ -135,11 +149,11 @@ export default {
       pvData: [],
       rules: {
 
-        confCode: [
-          { required: true, message: '配置项不能为空', trigger: 'change' }
+        sysCode: [
+          { required: true, message: '系统代码不能为空', trigger: 'change' }
         ],
-        confValue: [
-          { required: true, message: '配置值不能为空', trigger: 'change' }
+        sysName: [
+          { required: true, message: '系统名称不能为空', trigger: 'change' }
         ]
       },
       downloadLoading: false
@@ -148,7 +162,7 @@ export default {
   methods: {
     getList() {
       this.listLoading = true
-      fetchConfigList(this.listQuery).then(response => {
+      fetchSysInfoList(this.listQuery).then(response => {
         this.list = response.data.items
         this.total = response.data.total
         this.listLoading = false
@@ -186,7 +200,7 @@ export default {
       this.$refs['dataForm'].validate(valid => {
         if (valid) {
           const tempData = Object.assign({}, this.temp) // 这样就不会共用同一个对象
-          updateConfigData(tempData).then(response => {
+          updateSysInfoData(tempData).then(response => {
             var message = response.data.message
             var title = '失败'
             var type = 'error'
@@ -194,7 +208,7 @@ export default {
               title = '成功'
               type = 'success'
               for (const v of this.list) {
-                if (v.confCode === this.temp.confCode) {
+                if (v.sysCode === this.temp.sysCode) {
                   const index = this.list.indexOf(v)
                   this.list.splice(index, 1, this.temp)
                   break
@@ -214,9 +228,9 @@ export default {
     },
     handleDelete(row) {
       this.temp = Object.assign({}, row) // copy obj
-      this.listUpdate.confCode = this.temp.confCode
+      this.listUpdate.sysCode = this.temp.sysCode
       this.listUpdate.field = 'deletaStatus'
-      updateConfigArticle(this.listUpdate).then(response => {
+      updateSysInfoArticle(this.listUpdate).then(response => {
         this.message = response.data.message
         this.title = '失败'
         this.type = 'error'
@@ -240,7 +254,7 @@ export default {
         if (valid) {
           // this.temp.userId = parseInt(Math.random() * 100) + 1024 // mock a id
           // this.temp.author = "ppp" //当前登陆人
-          createConfigArticle(this.temp).then(response => {
+          createSysInfoArticle(this.temp).then(response => {
             var message = response.data.message
             var title = '失败'
             var type = 'error'
@@ -272,14 +286,22 @@ export default {
       this.downloadLoading = true
       import('@/frame_src/vendor/Export2Excel').then(excel => {
         const tHeader = [
-          '配置项说明',
-          '配置项',
-          '配置值'
+          '系统代码',
+          '系统名称',
+          '系统主题风格',
+          'logo图标URL',
+          '系统URL',
+          '顺序',
+          '管理员ID'
         ]
         const filterVal = [
-          'confName',
-          'confCode',
-          'confValue'
+          'sysCode', // 系统代码
+          'sysName', // 系统名称
+          'sysStyle', // 系统主题风格
+          'sysLogo', // logo图标URL
+          'sysUrl', // 系统URL
+          'sysOrder', // 顺序
+          'sysAdmin' // 管理员ID
         ]
         const data = this.formatJson(filterVal, this.list)
         excel.export_json_to_excel({

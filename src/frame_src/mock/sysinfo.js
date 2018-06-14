@@ -17,11 +17,11 @@ for (let i = 0; i < count; i++) {
 }
 
 export default {
-  getFetchConfigList: config => {
-    const { confName, page = 1, limit = 20 } = param2Obj(config.url)
+  getFetchSysInfoList: config => {
+    const { sysName, page = 1, limit = 20 } = param2Obj(config.url)
 
     const mockList = ConfigList.filter(item => {
-      if (confName && item.confName.indexOf(confName) < 0) return false
+      if (sysName && item.sysName.indexOf(sysName) < 0) return false
       return true
     })
     const pageList = mockList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
@@ -30,21 +30,21 @@ export default {
       total: mockList.length,
       items: pageList
     }
-  }, getUpdateConfigArticle: config => {
-    const { field, confCode } = param2Obj(config.url)
+  }, getUpdateSysInfoArticle: config => {
+    const { field, sysCode } = param2Obj(config.url)
     if (field === 'deletaStatus') {
       return {
-        bb: confCode,
+        bb: sysCode,
         message: '删除成功',
         result: true
       }
     }
   },
-  getCreateConfigArticle: () => ({
+  getCreateSysInfoArticle: () => ({
     message: '创建成功',
     result: true
   }),
-  getUpdateConfigData: () => ({
+  getUpdateSysInfoData: () => ({
     message: '修改成功',
     result: true
   })
