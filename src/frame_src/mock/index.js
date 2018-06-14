@@ -78,5 +78,5 @@ Mock.mock(/\/menu\/updateMenu/, 'post', menuAPI.updateMenu)
 Mock.mock(/\/menu\/createMenu/, 'post', menuAPI.createMenu)
 Mock.mock(/\/menu\/deleteMenu/, 'post', menuAPI.deleteMenu)
 Mock.mock(/\/menu\/setRoleMenus/, 'post', menuAPI.setRoleMenus)
-
+Mock.mock(/\/menu\/fetchPermission/, 'get', menuAPI.getPermission)
 export default Mock

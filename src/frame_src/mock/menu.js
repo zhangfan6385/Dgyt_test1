@@ -1,40 +1,5 @@
 import { param2Obj } from '@/frame_src/utils'
-const menuList = [
-  {
-    'id': 1, 'parentId': null, 'sort': 0, 'name': '仪表盘', 'href': '/index', 'icon': 'fa fa-dashboard', 'children': [],
-    'isShow': '1'
-  },
-  {
-    'id': 31, 'parentId': null, 'sort': 1, 'name': '测试1', 'href': '/test/1', 'icon': 'fa fa-upload', 'children':
-      [
-        {
-          'id': 92, 'parentId': 31, 'sort': 0, 'name': '测试1-1', 'href': '/test/1/1', 'icon': 'fa fa-bank', 'children': [
-            { 'id': 912, 'parentId': 92, 'sort': 0, 'name': '测试1-1-1', 'href': '/test/1/1/1', 'icon': 'fa fa-bank', 'children': [], 'isShow': '1' },
-            { 'id': 913, 'parentId': 92, 'sort': 0, 'name': '测试1-1-2', 'href': '/test/1/1/2', 'icon': 'fa fa-area-chart', 'children': [], 'isShow': '1' }
-          ], 'isShow': '1'
-        },
-        { 'id': 93, 'parentId': 31, 'sort': 0, 'name': '测试1-2', 'href': '/test/1/2', 'icon': 'fa fa-area-chart', 'children': [], 'isShow': '1' }
-      ],
-    'isShow': '1'
-  },
-  {
-    'id': 102, 'parentId': null, 'sort': 3, 'name': '测试2', 'href': '/test/2', 'icon': 'fa fa-download', 'children':
-      [
-        { 'id': 103, 'parentId': 102, 'sort': 0, 'name': '测试2-1', 'href': '/test/2/1', 'icon': 'fa fa-image', 'children': [], 'isShow': '1' }
-      ],
-    'isShow': '1'
-  },
-  {
-    'id': 6, 'parentId': null, 'sort': 6, 'name': '系统管理', 'href': '/sys', 'icon': 'fa fa-cog', 'children':
-      [
-        { 'id': 108, 'parentId': 6, 'sort': 0, 'name': ' 资源管理', 'href': '/sys/resource', 'icon': 'fa fa-database', 'children': [], 'isShow': '1' },
-        { 'id': 7, 'parentId': 6, 'sort': 1, 'name': '菜单管理', 'href': '/sys/menuList', 'icon': 'fa fa-navicon', 'children': [], 'isShow': '1' },
-        { 'id': 8, 'parentId': 6, 'sort': 2, 'name': '角色管理', 'href': '/sys/roleList', 'icon': 'fa fa-universal-access', 'children': [], 'isShow': '1' },
-        { 'id': 9, 'parentId': 6, 'sort': 3, 'name': '用户管理', 'href': '/sys/userList', 'icon': 'fa fa-user-plus', 'children': [], 'isShow': '1' }
-      ],
-    'isShow': '1'
-  }]
-
+import merge from 'element-ui/src/utils/merge'
 const roleMenuList = [
   {
     'id': [1, 31, 912, 913, 92, 93], 'roleId': 26
@@ -47,31 +12,79 @@ const roleMenuList = [
   }
 ]
 
-export default {
-  getPv: () => ({
-    pvData: [{ key: 'PC', pv: 1024 }, { key: 'mobile', pv: 1024 }, { key: 'ios', pv: 1024 }, { key: 'android', pv: 1024 }]
-  }),
-  getMenuDetail: () => ({
-    id: 120000000001,
-    author: { key: 'mockPan' },
-    source_name: '原创作者',
-    category_item: [{ key: 'global', name: '全球' }],
-    comment_disabled: true,
-    content: '<p>我是测试数据我是测试数据</p><p><img class="wscnph" src="https://wpimg.wallstcn.com/4c69009c-0fd4-4153-b112-6cb53d1cf943" data-wscntype="image" data-wscnh="300" data-wscnw="400" data-mce-src="https://wpimg.wallstcn.com/4c69009c-0fd4-4153-b112-6cb53d1cf943"></p>"',
-    content_short: '我是测试数据',
-    display_time: +new Date(),
-    image_uri: 'https://wpimg.wallstcn.com/e4558086-631c-425c-9430-56ffb46e70b3',
-    platforms: ['a-platform'],
-    source_uri: 'https://github.com/zhangfan6385/Dgyt_test1',
-    status: 'published',
-    tags: [],
-    title: 'vue-element-admin'
-  }),
+const menuList1 = [
+  {
+    'id': 1, 'path': '/userinfoViews', 'routeName': 'userinfoViews', 'parentId': null, 'sort': 0, 'name': '用户管理', 'href': 'userinfoViews', 'icon': 'fa fa-dashboard', 'children': [
+      {
+        'id': 92, 'path': 'user-manager', 'routeName': 'userManager', 'parentId': 31, 'sort': 0, 'name': '注册用户', 'href': 'userinfoViews/userManager', 'icon': 'fa fa-bank', 'children': [], 'isShow': '1', 'roleId': [26, 27]
+      },
+      { 'id': 93, 'path': 'user-password-manager', 'routeName': 'userPasswordManager', 'parentId': 31, 'sort': 0, 'name': '修改密码', 'href': 'userinfoViews/userPasswordManager', 'icon': 'fa fa-area-chart', 'children': [], 'isShow': '1', 'roleId': [26, 27] }
+    ],
+    'isShow': '1', 'roleId': [26, 27]
+  },
+  {
+    'id': 31, 'path': '/uidpConfigViews', 'routeName': 'uidpConfigViews', 'parentId': null, 'sort': 1, 'name': '基础信息管理', 'href': 'uidpConfigViews', 'icon': 'fa fa-upload', 'children':
+      [
+        { 'id': 93, 'path': 'uidp-config-manager', 'routeName': 'uidpConfigManager', 'parentId': 31, 'sort': 0, 'name': '基础信息配置', 'href': 'uidpConfigViews/uidpConfigManager', 'icon': 'fa fa-area-chart', 'children': [], 'isShow': '1', 'roleId': [26, 27] }
+      ],
+    'isShow': '1', 'roleId': [26, 27]
+  },
+  {
+    'id': 102, 'path': '/roleViews', 'routeName': 'roleViews', 'parentId': null, 'sort': 3, 'name': '角色管理', 'href': 'roleViews', 'icon': 'fa fa-download', 'children':
+      [
+        { 'id': 103, 'path': 'role-manager', 'routeName': 'roleManager', 'parentId': 102, 'sort': 0, 'name': '注册角色', 'href': 'roleViews/roleManager', 'icon': 'fa fa-image', 'children': [], 'isShow': '1', 'roleId': [27] },
+        { 'id': 104, 'path': 'role-user-manager', 'routeName': 'roleUserManager', 'parentId': 102, 'sort': 0, 'name': '角色挂载', 'href': 'roleViews/roleUserManager', 'icon': 'fa fa-image', 'children': [], 'isShow': '1', 'roleId': [27] }
+      ],
+    'isShow': '1', 'roleId': [27]
+  },
+  {
+    'id': 6, 'path': '/menu', 'routeName': 'menu', 'parentId': null, 'sort': 6, 'name': '菜单权限', 'href': 'menu', 'icon': 'fa fa-cog', 'children':
+      [
+        { 'id': 108, 'path': 'menu-manager', 'routeName': 'menuManager', 'parentId': 6, 'sort': 0, 'name': ' 菜单管理', 'href': 'menu/menuManager', 'icon': 'fa fa-database', 'children': [], 'isShow': '1', 'roleId': [27, 28] },
+        { 'id': 109, 'path': 'menu-permission-manager', 'routeName': 'menuPermissionManager', 'parentId': 6, 'sort': 1, 'name': '权限分配', 'href': 'menu/menuPermissionManager', 'icon': 'fa fa-navicon', 'children': [], 'isShow': '1', 'roleId': [27, 28] }
+      ],
+    'isShow': '1', 'roleId': [27, 28]
+  },
+  {
+    'id': 7, 'path': '/orgViews', 'routeName': 'orgViews', 'parentId': null, 'sort': 6, 'name': '组织结构', 'href': 'orgViews', 'icon': 'fa fa-cog', 'children':
+      [
+        { 'id': 110, 'path': 'org-manager', 'routeName': 'orgManager', 'parentId': 7, 'sort': 2, 'name': '组织机构配置', 'href': 'orgViews/orgManager', 'icon': 'fa fa-universal-access', 'children': [], 'isShow': '1', 'roleId': [27, 28] },
+        { 'id': 111, 'path': 'org-user-manager', 'routeName': 'orgUserManager', 'parentId': 7, 'sort': 3, 'name': '组织机构挂载', 'href': 'orgViews/orgUserManager', 'icon': 'fa fa-user-plus', 'children': [], 'isShow': '1', 'roleId': [27, 28] }
+      ],
+    'isShow': '1', 'roleId': [27, 28]
+  },
+  {
+    'id': 8, 'path': '/logInfoViews', 'routeName': 'logInfoViews', 'parentId': null, 'sort': 6, 'name': '日志管理', 'href': 'logInfoViews', 'icon': 'fa fa-cog', 'children':
+      [
+        { 'id': 112, 'path': 'log-info-manager', 'routeName': 'logInfoManager', 'parentId': 8, 'sort': 2, 'name': '日志查看', 'href': 'logInfoViews/logInfoManager', 'icon': 'fa fa-universal-access', 'children': [], 'isShow': '1', 'roleId': [27, 28] }
+      ],
+    'isShow': '1', 'roleId': [27, 28]
+  }
+]
 
+export default {
   // 创建菜单
   createMenu: (config) => {
     const { field, operCode } = param2Obj(config.url)
     if (operCode === 'add') {
+      // var newMenu = {}
+      /* newMenu.id = field.id
+      newMenu.path=field.path
+      newMenu.parentId=field.parentId
+      newMenu.sort=field.sort
+      newMenu.name=field.name
+      newMenu.href=field.href
+      newMenu */
+      console.log(JSON.parse(field))
+      var newMenu = merge({}, JSON.parse(field))
+      newMenu.id = 99
+      newMenu.path = 'test'
+      newMenu.children = []
+      const parentMenu = menuList1.filter((item) => item.id === newMenu.parentId)
+      console.log(parentMenu)
+      parentMenu[0].children.push(newMenu)
+      localStorage.setItem('PERMISSION', JSON.stringify(menuList1))
+      console.log(localStorage.getItem('PERMISSION'))
       return {
         field: field,
         operCode: operCode,
@@ -85,6 +98,23 @@ export default {
   updateMenu: (config) => {
     const { field, operCode } = param2Obj(config.url)
     if (operCode === 'update') {
+      var currentRoute
+      var localRouteString = localStorage.getItem('PERMISSION')
+      var localRouteArray = []
+      if (localRouteString) {
+        localRouteArray = JSON.parse(localRouteString)
+        currentRoute = localRouteArray
+      } else {
+        currentRoute = menuList1
+      }
+
+      var updateMenu = merge({}, JSON.parse(field))
+      console.log(updateMenu)
+      const currentMenu = currentRoute.filter((item) => item.id === updateMenu.id)
+      currentMenu.name = updateMenu.name
+      currentMenu.icon = updateMenu.icon
+      localStorage.setItem('PERMISSION', JSON.stringify(currentRoute))
+      console.log(localStorage.getItem('PERMISSION'))
       return {
         operCode: operCode,
         field: field,
@@ -120,18 +150,34 @@ export default {
 
   // 获取菜单列表
   getMenuList: config => {
+    var currentRoute
+    var localRouteString = localStorage.getItem('PERMISSION')
+    var localRouteArray = []
+    if (localRouteString) {
+      localRouteArray = JSON.parse(localRouteString)
+      currentRoute = localRouteArray
+    } else {
+      currentRoute = menuList1
+    }
     return {
-      items: menuList
+      items: currentRoute
     }
   },
 
   // 根据角色获取对应角色下的菜单列表
   getRoleMenuList: config => {
-    const { roleId } = param2Obj(config.url)
-    console.log(roleId)
+    var { roleId } = param2Obj(config.url)
+    roleId = Number(roleId)
     const pageList = roleMenuList.filter((item) => item.roleId === roleId)
     return {
       items: pageList
+    }
+  },
+
+  // 获取对应角色下的权限菜单列表
+  getPermission: config => {
+    return {
+      items: menuList1
     }
   }
 }

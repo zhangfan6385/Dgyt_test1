@@ -6,15 +6,14 @@
         <div class="logo">
           <img src="../../../frame_src/imgs/logo.png">
           <!-- <img src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif"> -->
-          <span>大港油田软件开发平台</span>
+          <span>大港油田软件研发平台</span>
         </div>
       </el-col>
       <el-col :span="6" style="text-aligh:center;">
         <el-input style="width:300px;"
           size="mini"
           placeholder=""
-          suffix-icon="el-icon-search"
-          v-model="input9">
+          suffix-icon="el-icon-search">
         </el-input>
       </el-col>
       <el-col :span="12">
@@ -33,8 +32,8 @@
 </template>
 
 <script>
-import { Navbar, Sidebar, AppMain, TagsView, HeaderSet } from './components';
-import ResizeMixin from './mixin/ResizeHandler';
+import { Navbar, Sidebar, AppMain, TagsView, HeaderSet } from './components'
+import ResizeMixin from './mixin/ResizeHandler'
 
 export default {
   name: 'layout',

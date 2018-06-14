@@ -162,6 +162,7 @@
           }) */
         this.menuListQuery.sysCode = '1'
         this.menuListQuery.roleId = Number(id)
+        console.log(typeof (this.menuListQuery.roleId))
         if (id === undefined) return
         fetchRoleMenuList(this.menuListQuery).then(response => {
           if (response.data.items[0] === undefined) return

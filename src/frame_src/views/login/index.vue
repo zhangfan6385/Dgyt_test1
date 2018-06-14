@@ -1,5 +1,10 @@
 <template>
   <div class="login-container">
+    <div class="logo">
+      <img src="../../../frame_src/imgs/logo.png">
+      <!-- <img src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif"> -->
+      <span>大港油田软件研发平台</span>
+    </div>
     <el-form class="login-form" autoComplete="on" :model="loginForm" :rules="loginRules" ref="loginForm" label-position="left">
       <!-- <div class="title-container">
         <h3 class="title">{{$t('login.title')}}</h3>
@@ -142,6 +147,7 @@ $light_gray:#eee;
 
 /* reset element-ui css */
 .login-container {
+  padding: 100px 0;
   .el-input {
     display: inline-block;
     height: 47px;
@@ -166,6 +172,23 @@ $light_gray:#eee;
     border-radius: 5px;
     color: #454545;
   }
+  
+  .logo {
+    text-align: center;
+    line-height: 50px;
+    span {
+      margin-left: 8px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #ffffff;
+    }
+
+    img {
+      vertical-align: middle;
+      height: 30px;
+      width: 30px;
+    }
+  }
 }
 </style>
 
@@ -185,7 +208,7 @@ $light_gray:#eee;
     right: 0;
     width: 520px;
     padding: 35px 35px 15px 35px;
-    margin: 120px auto;
+    margin: 30px auto;
   }
   .tips {
     font-size: 14px;

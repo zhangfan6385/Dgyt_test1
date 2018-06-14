@@ -54,3 +54,11 @@ export function setRoleMenus(data) {
     params: data
   })
 }
+
+export function fetchPermission(query) {
+  return request({
+    url: '/menu/fetchPermission',
+    method: 'get',
+    params: query
+  })
+}
