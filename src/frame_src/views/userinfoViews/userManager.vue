@@ -243,10 +243,10 @@ export default {
           }
         ],
         userCode: [
-          { required: true, message: 'userCode is required', trigger: 'change' }
+          { required: true, message: '用户编号不能为空', trigger: 'change' }
         ],
         userName: [
-          { required: true, message: 'userName is required', trigger: 'change' }
+          { required: true, message: '用户名称不能为空', trigger: 'change' }
         ]
       },
       downloadLoading: false
@@ -284,7 +284,7 @@ export default {
         remark: ''
       }
     },
-    handleUpdate(row) {
+    handleUpdate(row) { // 打开修改表单
       this.temp = Object.assign({}, row) // copy obj
       this.temp.timestamp = new Date(this.temp.timestamp)
       this.dialogStatus = 'update'
@@ -293,7 +293,7 @@ export default {
         this.$refs['dataForm'].clearValidate()
       })
     },
-    handleCreate() {
+    handleCreate() { // 打开创建表单
       this.resetTemp()
       this.dialogStatus = 'create'
       this.dialogFormVisible = true
@@ -305,19 +305,26 @@ export default {
       this.$refs['dataForm'].validate(valid => {
         if (valid) {
           const tempData = Object.assign({}, this.temp) // 这样就不会共用同一个对象
-          updateUserData(tempData).then(() => {
-            for (const v of this.list) {
-              if (v.id === this.temp.id) {
-                const index = this.list.indexOf(v)
-                this.list.splice(index, 1, this.temp)
-                break
+          updateUserData(tempData).then(response => {
+            var message = response.data.message
+            var title = '失败'
+            var type = 'error'
+            if (response.data.result === true) {
+              title = '成功'
+              type = 'success'
+              for (const v of this.list) {
+                if (v.id === this.temp.id) {
+                  const index = this.list.indexOf(v)
+                  this.list.splice(index, 1, this.temp)
+                  break
+                }
               }
             }
             this.dialogFormVisible = false
             this.$notify({
-              title: '成功',
-              message: '更新成功',
-              type: 'success',
+              title: title,
+              message: message,
+              type: type,
               duration: 2000
             })
           })
@@ -329,19 +336,20 @@ export default {
       this.listUpdate.userId = this.temp.userId
       this.listUpdate.field = 'deletaStatus'
       updateUserArticle(this.listUpdate).then(response => {
-        this.message = '删除失败'
+        this.message = response.data.message
         this.title = '失败'
+        this.type = 'error'
         if (response.data.result === true) {
           const index = this.list.indexOf(row)
           this.list.splice(index, 1)
           // this.getList();
           this.title = '成功'
+          this.type = 'success'
         }
-        this.message = response.data.message
         this.$notify({
           title: this.title,
           message: this.message,
-          type: 'success',
+          type: this.type,
           duration: 2000
         })
       })
@@ -352,37 +360,46 @@ export default {
           // this.temp.userId = parseInt(Math.random() * 100) + 1024 // mock a id
           // this.temp.author = "ppp" //当前登陆人
           createUserArticle(this.temp).then(response => {
-            this.list.unshift(this.temp)
+            var message = response.data.message
+            var title = '失败'
+            var type = 'error'
+            if (response.data.result === true) {
+              title = '成功'
+              type = 'success'
+              this.list.unshift(this.temp)
+            }
             this.dialogFormVisible = false
             this.$notify({
-              title: '成功',
-              message: '创建成功',
-              type: 'success',
+              title: title,
+              message: message,
+              type: type,
               duration: 2000
             })
           })
         }
       })
     },
-    handleModifyStatus(row, status) {
+    handleModifyStatus(row, status) { // 修改是否激活
       this.temp = Object.assign({}, row) // copy obj
       this.listUpdate.userId = this.temp.userId
       this.listUpdate.field = 'flag'
       this.listUpdate.flag = status
 
       updateUserArticle(this.listUpdate).then(response => {
-        this.message = '修改失败'
+        this.message = response.data.message
         this.title = '失败'
+        this.type = 'error'
         if (response.data.result === true) {
           row.flag = status
           // this.getList();
           this.title = '成功'
+          this.type = 'success'
         }
-        this.message = response.data.message
+
         this.$notify({
           title: this.title,
           message: this.message,
-          type: 'success',
+          type: this.type,
           duration: 2000
         })
       })
@@ -395,7 +412,7 @@ export default {
       this.listQuery.page = val
       this.getList()
     },
-    handleDownload() {
+    handleDownload() { // 导出
       this.downloadLoading = true
       import('@/frame_src/vendor/Export2Excel').then(excel => {
         const tHeader = [
@@ -449,7 +466,7 @@ export default {
     handleFilter() {
       this.listQuery.page = 1
       this.getList()
-    }, tableRowClassName({ row, rowIndex }) {
+    }, tableRowClassName({ row, rowIndex }) { // 表头行的 className 的回调方法，也可以使用字符串为所有表头行设置一个固定的 className。
       if (rowIndex === 0) {
         return 'el-button--primary is-active'// 'warning-row'
       } // 'el-button--primary is-plain'// 'warning-row'

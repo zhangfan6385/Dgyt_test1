@@ -84,13 +84,13 @@ import panel from '@/frame_src/components/TreeList/panel.vue'
 import treeter from '@/frame_src/components/TreeList/treeter'
 const flagOptions = [{ key: 0, flag_name: '否' }, { key: 1, flag_name: '是' }]
 // arr to obj ,such as { CN : "China", US : "USA" }
-const flagOptionsKeyValue = flagOptions.reduce((acc, cur) => {
+const flagOptionsKeyValue = flagOptions.reduce((acc, cur) => { // 把cur的key值做成数组id，值是名称
   acc[cur.key] = cur.flag_name
   return acc
 }, {})
 
 export default {
-  mixins: [treeter],
+  mixins: [treeter], // 把对象混入，其实就是可以调用到树里的数据，树嵌入到当前页面
   components: {
     'imp-panel': panel
   },
@@ -153,12 +153,12 @@ export default {
       }
     }
   },
-  filters: {
-    typeFilter(type) {
+  filters: { // 本地过滤器
+    typeFilter(type) { // 调用方法把下拉数据进行重新拼装，并获取到名称的值
       return flagOptionsKeyValue[type]
     }
-  }, watch: {
-    multipleSelection: function() {
+  }, watch: { // 监听器，当multipleSelection 发生改变时
+    multipleSelection: function() { // 把选中的数据id放到数组里，以便后期传值用
       const arr = []
       for (const i in this.multipleSelection) {
         arr.push(this.multipleSelection[i].userId)
@@ -166,14 +166,14 @@ export default {
     }
   },
   methods: {
-    getList() {
+    getList() { // 查询组织结构对应的用户数据
       this.listLoading = true
       fetchUserOrgList(this.listQuery).then(response => {
         this.list = response.data.items
         this.total = response.data.total
         this.listLoading = false
       })
-    }, load() {
+    }, load() { // 查询组织结构数据
       this.treeListQuery.sysCode = '2'
       fetchOrgList(this.treeListQuery).then(response => {
         this.roleTree = response.data.items
@@ -191,17 +191,14 @@ export default {
     handleFilter() {
       this.listQuery.page = 1
       this.getList()
-    }, renderContent(h, { node, data, store }) {
+    }, renderContent(h, { node, data, store }) { // 给左边树进行遍历
       return (
         <span>
           <span>
             <span>{node.label}</span>
           </span>
-          <span class='render-content'>
-            <i class='fa fa-trash' on-click={ () => this.deleteSelected(data.id) }></i>
-          </span>
         </span>)
-    }, handleNodeClick(data) {
+    }, handleNodeClick(data) { // 点击左侧树查询对应的用户信息
       this.listLoading = true
       this.listQuery.orgId = this.$refs.roleTree.getCurrentKey()
 
@@ -210,43 +207,45 @@ export default {
         this.total = response.data.total
         this.listLoading = false
       })
-    }, updateRole() {
+    }, updateRole() { // 修改组织结构权限
       if (this.multipleSelection.length <= 0 || this.$refs.roleTree.getCurrentKey() == null) {
-        this.$notify({
+        this.$notify({// 判断右边记录的勾选数据 和左侧树选中的key值是否为0或者空
           title: '失败',
           message: '请选择角色和用户',
           type: 'error',
           duration: 2000
         })
       } else {
-        this.listUpdate.orgId = this.$refs.roleTree.getCurrentKey()
-        this.listUpdate.multipleSelection = this.multipleSelection
-        updateUserOrgArticle(this.listUpdate).then(response => {
-          this.message = '分配成功'
-          this.title = '成功'
+        this.listUpdate.orgId = this.$refs.roleTree.getCurrentKey() // 左侧树的key值
+        this.listUpdate.multipleSelection = this.multipleSelection // 右边选中的集合
+        updateUserOrgArticle(this.listUpdate).then(response => { // 给用户分配组织结构权限
+          var message = response.data.message
+          var title = '失败'
+          var type = 'error'
           if (response.data.result === true) {
+            title = '成功'
+            type = 'success'
             this.getList()
             this.load()
           }
-          this.message = response.data.message
           this.$notify({
-            title: this.title,
-            message: this.message,
-            type: 'success',
+            title: title,
+            message: message,
+            type: type,
             duration: 2000
           })
         })
       }
-    }, handleSelectionChange(val) {
+    }, handleSelectionChange(val) { // 勾选右边表格时记录勾选的数据
       this.multipleSelection = val
-    }, tableRowClassName({ row, rowIndex }) {
+    }, tableRowClassName({ row, rowIndex }) { // 通过右边表格的class名 挂载css样式
       if (rowIndex === 0) {
         return 'el-button--primary is-active'// 'warning-row'
       } // 'el-button--primary is-plain'// 'warning-row'
       return ''
     }
   },
-  created() {
+  created() { // 实例已经创建完成
     this.getList()
     this.load()
   }

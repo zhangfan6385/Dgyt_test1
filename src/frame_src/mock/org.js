@@ -137,9 +137,13 @@ export default {
     }
   },
   createOrgArticle: () => ({
-    data: 'success'
+
+    message: '创建成功',
+    result: true
+
   }),
   getUpdateOrgData: () => ({
-    data: 'success'
+    message: '修改成功',
+    result: true
   })
 }

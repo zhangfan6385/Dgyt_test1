@@ -81,22 +81,20 @@ export default {
     resetForm(formName) {
       this.$refs[formName].resetFields()
     },
-    submitForm(formName) {
+    submitForm(formName) { // 提交修改密码
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.listUpdate.password = this.pwdForm.password
           this.listUpdate.newpassword = this.pwdForm.newpassword
           updatePasswordData(this.listUpdate).then(response => {
-            this.message = '修改成功'
-            this.title = '成功'
-            this.type = 'success'
-            if (response.data.result === true) {
-              this.resetForm(formName)
-            } else {
-              this.title = '失败'
-              this.type = 'error'
-            }
             this.message = response.data.message
+            this.title = '失败'
+            this.type = 'error'
+            if (response.data.result === true) {
+              this.title = '成功'
+              this.type = 'success'
+              this.resetForm(formName)
+            }
             this.$notify({
               title: this.title,
               message: this.message,

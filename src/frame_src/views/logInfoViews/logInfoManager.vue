@@ -151,6 +151,7 @@ export default {
       this.listQuery.page = 1
       this.getList()
     }, tableRowClassName({ row, rowIndex }) {
+      // 可以通过指定 Table 组件的 :header-cell-class-name 表头行的 className 的回调方法，也可以使用字符串为所有表头行设置一个固定的 className属性来为 Table 中的某一行添加 class，表明该行处于某种状态
       if (rowIndex === 0) {
         return 'el-button--primary is-active'// 'warning-row'
       } // 'el-button--primary is-plain'// 'warning-row'
@@ -158,7 +159,7 @@ export default {
     }
 
   },
-  created() {
+  created() { // 获取登陆信息的俩种方式
     // var token = this.$store.state.user.name;
     // var status = this.$store.getters.name;
     // alert(token+"ddd"+status);

@@ -38,9 +38,11 @@ export default {
     }
   },
   getCreateConfigArticle: () => ({
-    data: 'success'
+    message: '创建成功',
+    result: true
   }),
   getUpdateConfigData: () => ({
-    data: 'success'
+    message: '修改成功',
+    result: true
   })
 }

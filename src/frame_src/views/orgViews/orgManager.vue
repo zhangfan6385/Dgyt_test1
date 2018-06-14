@@ -144,10 +144,10 @@ export default {
   },
   methods: {
 
-    handleNodeClick(data) {
+    handleNodeClick(data) { // 把左侧树的选中数据赋值到右边form表单里。
       this.form = data
     },
-    newAdd() {
+    newAdd() { // 增加新的角色数据
       this.form = {
         id: null,
         parentId: null, // parentId  orgid
@@ -161,60 +161,72 @@ export default {
         remark: ''
       }
     },
-    onOkSubmit() {
+    onOkSubmit() { // 创建成功按钮
       this.$refs['form'].validate((valid) => {
         if (valid) {
           createOrgArticle(this.form).then(response => {
-            this.newAdd()
-            this.load2()
-
+            var message = response.data.message
+            var title = '失败'
+            var type = 'error'
+            if (response.data.result === true) {
+              title = '成功'
+              type = 'success'
+              this.newAdd()
+              this.load2()
+            }
             this.$notify({
-              title: '成功',
-              message: '创建成功',
-              type: 'success',
+              title: title,
+              message: message,
+              type: type,
               duration: 2000
             })
           })
         }
       })
-    }, onUpdateSubmit() {
+    }, onUpdateSubmit() { // 修改角色信息方法
       this.$refs['form'].validate((valid) => {
         if (valid) {
-          updateOrgData(this.form).then(response => {
-            this.newAdd()
-            this.load2()
-
+          updateOrgData(this.form).then(response => { // 调用修改方法
+            var message = response.data.message
+            var title = '失败'
+            var type = 'error'
+            if (response.data.result === true) {
+              this.title = '成功'
+              this.type = 'success'
+              this.newAdd()
+              this.load2()
+            }
             this.$notify({
-              title: '成功',
-              message: '更新成功',
-              type: 'success',
+              title: title,
+              message: message,
+              type: type,
               duration: 2000
             })
           })
         }
       })
     },
-    load2() {
+    load2() { // 二次查询，为了查询出来不一样的假数据用
       this.listQuery.sysCode = '2'// 回头注释掉
       fetchOrgList(this.listQuery).then(response => {
         this.roleTree = response.data.items
       })
       // this.roleTree.push(...defaultValue.roleList);
     },
-    deleteSelected(id) {
-      this.listUpdate.id = this.form.id
-      this.listUpdate.field = 'deletaStatus'
+    deleteSelected(id) { // 删除方法
+      this.listUpdate.id = this.form.id // 传递id
+      this.listUpdate.field = 'deletaStatus' // 传递判断参数
       updateOrgArticle(this.listUpdate).then(response => {
         this.message = '删除失败'
         this.title = '失败'
+        this.message = response.data.message
         if (response.data.result === true) {
           //   this.newAdd();
           //  this.load2();
-          this.deleteFromTree(this.roleTree, this.form.id, 'id')
+          this.deleteFromTree(this.roleTree, this.form.id, 'id') // 调用删除假数据的树里的方法
           this.title = '成功'
           this.newAdd()
         }
-        this.message = response.data.message
         this.$notify({
           title: this.title,
           message: this.message,
@@ -224,14 +236,14 @@ export default {
       })
       // this.load();
     },
-    load() {
+    load() { // 查询数据
       this.listQuery.sysCode = '1'// 回头注释掉
       fetchOrgList(this.listQuery).then(response => {
         this.roleTree = response.data.items
         // this.roleTree.push(...defaultValue.roleList);
       })
     },
-    renderContent(h, { node, data, store }) {
+    renderContent(h, { node, data, store }) { // 左侧树的遍历
       return (
         <span>
           <span>
@@ -243,7 +255,7 @@ export default {
         </span>)
     }
   },
-  created() {
+  created() { // 创建页面的初始化方法
     this.load()
   }
 }
