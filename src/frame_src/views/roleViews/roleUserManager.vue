@@ -153,12 +153,12 @@ export default {
       }
     }
   },
-  filters: {
-    typeFilter(type) {
+  filters: { // 本地过滤器
+    typeFilter(type) { // 调用方法把下拉数据进行重新拼装，并获取到名称的值
       return flagOptionsKeyValue[type]
     }
-  }, watch: {
-    multipleSelection: function() {
+  }, watch: { // 监听器，当multipleSelection 发生改变时
+    multipleSelection: function() { // 把选中的数据id放到数组里，以便后期传值用
       const arr = []
       for (const i in this.multipleSelection) {
         arr.push(this.multipleSelection[i].userId)
@@ -168,7 +168,7 @@ export default {
   methods: {
     getList() {
       this.listLoading = true
-      fetchUserRoleList(this.listQuery).then(response => {
+      fetchUserRoleList(this.listQuery).then(response => { // 查询选中角色的用户信息
         this.list = response.data.items
         this.total = response.data.total
         this.listLoading = false
@@ -191,17 +191,14 @@ export default {
     handleFilter() {
       this.listQuery.page = 1
       this.getList()
-    }, renderContent(h, { node, data, store }) {
+    }, renderContent(h, { node, data, store }) { // 给左侧菜单遍历数据
       return (
         <span>
           <span>
             <span>{node.label}</span>
           </span>
-          <span class='render-content'>
-            <i class='fa fa-trash' on-click={ () => this.deleteSelected(data.id) }></i>
-          </span>
         </span>)
-    }, handleNodeClick(data) {
+    }, handleNodeClick(data) { // 为选中的角色查询出用户信息
       this.listLoading = true
       this.listQuery.roleId = this.$refs.roleTree.getCurrentKey()
 
@@ -210,7 +207,7 @@ export default {
         this.total = response.data.total
         this.listLoading = false
       })
-    }, updateRole() {
+    }, updateRole() { // 给用户分配角色权限
       if (this.multipleSelection.length <= 0 || this.$refs.roleTree.getCurrentKey() == null) {
         this.$notify({
           title: '失败',
@@ -222,24 +219,26 @@ export default {
         this.listUpdate.roleId = this.$refs.roleTree.getCurrentKey()
         this.listUpdate.multipleSelection = this.multipleSelection
         updateUserRoleArticle(this.listUpdate).then(response => {
-          this.message = '分配成功'
-          this.title = '成功'
+          var message = response.data.message
+          var title = '失败'
+          var type = 'error'
           if (response.data.result === true) {
+            title = '成功'
+            type = 'success'
             this.getList()
             this.load()
           }
-          this.message = response.data.message
           this.$notify({
-            title: this.title,
-            message: this.message,
-            type: 'success',
+            title: title,
+            message: message,
+            type: type,
             duration: 2000
           })
         })
       }
-    }, handleSelectionChange(val) {
+    }, handleSelectionChange(val) { // 点击右边表格数据时，把数据赋值给声明的数组中
       this.multipleSelection = val
-    }, tableRowClassName({ row, rowIndex }) {
+    }, tableRowClassName({ row, rowIndex }) { // 给table定义class名称，然后赋值给它scss样式
       if (rowIndex === 0) {
         return 'el-button--primary is-active'// 'warning-row'
       } // 'el-button--primary is-plain'// 'warning-row'

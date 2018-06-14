@@ -40,7 +40,7 @@
   import panel from '@/frame_src/components/TreeList/panel.vue'
   import treeter from '@/frame_src/components/TreeList/treeter'
   import { fetchMenuList, setRoleMenus, fetchRoleMenuList } from '@/frame_src/api/menu'
-  import { fetchRoleList } from '@/frame_src/api/article'
+  import { fetchRoleList } from '@/frame_src/api/role'
 
   export default {
     mixins: [treeter],

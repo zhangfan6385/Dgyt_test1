@@ -132,9 +132,11 @@ export default {
     }
   },
   createRoleArticle: () => ({
-    data: 'success'
+    message: '创建成功',
+    result: true
   }),
   getUpdateRoleData: () => ({
-    data: 'success'
+    message: '修改成功',
+    result: true
   })
 }

@@ -29,7 +29,7 @@ export function updateOrgData(data) { // 修改组织结构
 }
 export function updateUserOrgArticle(data) { // 关联用户与组织结构
   return request({
-    url: '/rog/updateUserOrgArticle',
+    url: '/org/updateUserOrgArticle',
     method: 'get',
     params: data
   })

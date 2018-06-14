@@ -141,7 +141,7 @@ export default {
         confValue: ''
       }
     },
-    handleUpdate(row) {
+    handleUpdate(row) { // 修改数据弹出修改表单
       this.temp = Object.assign({}, row) // copy obj
       this.temp.timestamp = new Date(this.temp.timestamp)
       this.dialogStatus = 'update'
@@ -150,7 +150,7 @@ export default {
         this.$refs['dataForm'].clearValidate()
       })
     },
-    handleCreate() {
+    handleCreate() { // 创建弹出表单
       this.resetTemp()
       this.dialogStatus = 'create'
       this.dialogFormVisible = true
@@ -162,19 +162,26 @@ export default {
       this.$refs['dataForm'].validate(valid => {
         if (valid) {
           const tempData = Object.assign({}, this.temp) // 这样就不会共用同一个对象
-          updateConfigData(tempData).then(() => {
-            for (const v of this.list) {
-              if (v.confCode === this.temp.confCode) {
-                const index = this.list.indexOf(v)
-                this.list.splice(index, 1, this.temp)
-                break
+          updateConfigData(tempData).then(response => {
+            var message = response.data.message
+            var title = '失败'
+            var type = 'error'
+            if (response.data.result === true) {
+              title = '成功'
+              type = 'success'
+              for (const v of this.list) {
+                if (v.confCode === this.temp.confCode) {
+                  const index = this.list.indexOf(v)
+                  this.list.splice(index, 1, this.temp)
+                  break
+                }
               }
             }
             this.dialogFormVisible = false
             this.$notify({
-              title: '成功',
-              message: '更新成功',
-              type: 'success',
+              title: title,
+              message: message,
+              type: type,
               duration: 2000
             })
           })
@@ -186,35 +193,43 @@ export default {
       this.listUpdate.confCode = this.temp.confCode
       this.listUpdate.field = 'deletaStatus'
       updateConfigArticle(this.listUpdate).then(response => {
-        this.message = '删除失败'
+        this.message = response.data.message
         this.title = '失败'
+        this.type = 'error'
         if (response.data.result === true) {
           const index = this.list.indexOf(row)
           this.list.splice(index, 1)
           // this.getList();
           this.title = '成功'
+          this.type = 'success'
         }
-        this.message = response.data.message
         this.$notify({
           title: this.title,
           message: this.message,
-          type: 'success',
+          type: this.type,
           duration: 2000
         })
       })
     },
-    createData() {
+    createData() { // 创建配置
       this.$refs['dataForm'].validate(valid => {
         if (valid) {
           // this.temp.userId = parseInt(Math.random() * 100) + 1024 // mock a id
           // this.temp.author = "ppp" //当前登陆人
           createConfigArticle(this.temp).then(response => {
-            this.list.unshift(this.temp)
+            var message = response.data.message
+            var title = '失败'
+            var type = 'error'
+            if (response.data.result === true) {
+              title = '成功'
+              type = 'success'
+              this.list.unshift(this.temp)
+            }
             this.dialogFormVisible = false
             this.$notify({
-              title: '成功',
-              message: '创建成功',
-              type: 'success',
+              title: title,
+              message: message,
+              type: type,
               duration: 2000
             })
           })
@@ -229,7 +244,7 @@ export default {
       this.listQuery.page = val
       this.getList()
     },
-    handleDownload() {
+    handleDownload() { // 导出
       this.downloadLoading = true
       import('@/frame_src/vendor/Export2Excel').then(excel => {
         const tHeader = [
@@ -269,7 +284,7 @@ export default {
     }
   },
   created() {
-    // var token = this.$store.state.user.name;
+    // var token = this.$store.state.user.name; 获取登陆信息的 俩种方式
     // var status = this.$store.getters.name;
     // alert(token+"ddd"+status);
     this.getList()

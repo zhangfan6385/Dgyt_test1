@@ -140,9 +140,11 @@ export default {
     }
   },
   createUserArticle: () => ({
-    data: 'success'
+    message: '创建成功',
+    result: true
   }),
   getUpdateUserData: () => ({
-    data: 'success'
+    message: '创建成功',
+    result: true
   })
 }

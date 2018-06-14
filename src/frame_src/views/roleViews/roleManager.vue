@@ -81,7 +81,7 @@ export default {
         id: undefined
       },
       roleTree: [],
-      rules: {
+      rules: {// 用于校验
 
         groupCode: [
           { required: true, message: 'groupCode is required', trigger: 'change' }
@@ -110,10 +110,10 @@ export default {
   },
   methods: {
 
-    handleNodeClick(data) {
+    handleNodeClick(data) { // 点击左侧树给右边form赋值
       this.form = data
     },
-    newAdd() {
+    newAdd() { // 新增
       this.form = {
         id: null,
         parentId: null,
@@ -124,33 +124,45 @@ export default {
         // remarks
       }
     },
-    onOkSubmit() {
+    onOkSubmit() { // 创建角色信息
       this.$refs['form'].validate((valid) => {
         if (valid) {
           createRoleArticle(this.form).then(response => {
-            this.newAdd()
-            this.load2()
-
+            var message = response.data.message
+            var title = '失败'
+            var type = 'error'
+            if (response.data.result === true) {
+              title = '成功'
+              type = 'success'
+              this.newAdd()
+              this.load2()
+            }
             this.$notify({
-              title: '成功',
-              message: '创建成功',
-              type: 'success',
+              title: title,
+              message: message,
+              type: type,
               duration: 2000
             })
           })
         }
       })
-    }, onUpdateSubmit() {
+    }, onUpdateSubmit() { // 修改角色信息
       this.$refs['form'].validate((valid) => {
         if (valid) {
           updateRoleData(this.form).then(response => {
-            this.newAdd()
-            this.load2()
-
+            var message = response.data.message
+            var title = '失败'
+            var type = 'error'
+            if (response.data.result === true) {
+              title = '成功'
+              type = 'success'
+              this.newAdd()
+              this.load2()
+            }
             this.$notify({
-              title: '成功',
-              message: '更新成功',
-              type: 'success',
+              title: title,
+              message: message,
+              type: type,
               duration: 2000
             })
           })
@@ -187,14 +199,14 @@ export default {
       })
       // this.load();
     },
-    load() {
+    load() { // 查询左边角色信息
       this.listQuery.sysCode = '1'
       fetchRoleList(this.listQuery).then(response => {
         this.roleTree = response.data.items
         // this.roleTree.push(...defaultValue.roleList);
       })
     },
-    renderContent(h, { node, data, store }) {
+    renderContent(h, { node, data, store }) { // 循环左侧树的数据
       return (
         <span>
           <span>
