@@ -7,7 +7,7 @@
         <img src="../../../../frame_src/imgs/avatar.png">
         <span>Admin</span>
 
-        <span style="margin-left:15px;">单位：大港油田信息管理部</span>
+        <span style="margin-left:15px;">单位：大港油田信息中心</span>
       </div>
 
 
