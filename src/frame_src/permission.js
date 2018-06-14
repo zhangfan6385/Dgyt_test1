@@ -61,16 +61,18 @@ router.beforeEach((to, from, next) => {
   NProgress.start() // 开始进度条
   fetchPermission().then(response => {
     const menus = response.data.items
-    let currentRoute
+    var currentRoute
     var localRouteString = localStorage.getItem('PERMISSION')
-    let localRouteArray = []
+    var localRouteArray = []
     if (localRouteString) {
       localRouteArray = JSON.parse(localRouteString)
-      console.log(localRouteArray)
       currentRoute = localRouteArray
+      console.log('local')
     } else {
       currentRoute = menus
+      console.log('remote')
     }
+    console.log(currentRoute)
 
     const routeStru = generateRouteStruc(currentRoute)
     if (routeStru) {
@@ -86,7 +88,7 @@ router.beforeEach((to, from, next) => {
           store.dispatch('GetUserInfo').then(res => { // 拉取user_info
             const roles = res.data.roles // note: roles 必须是一个数组 array! 像这样: ['editor','develop']
 
-            store.dispatch('GenerateRoutes', { 'roles': roles, 'routeMap': currentRoute }).then(() => { // 根据roles权限生成可访问的路由表
+            store.dispatch('GenerateRoutes', { 'roles': roles, 'routeMap': routeStru }).then(() => { // 根据roles权限生成可访问的路由表
               router.addRoutes(store.getters.addRouters) // 动态添加可访问路由表
               next({ ...to, replace: true }) // hack方法 确保addRoutes已完成 ,set the replace: true so the navigation will not leave a history record
             })

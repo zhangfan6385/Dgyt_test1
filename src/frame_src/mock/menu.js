@@ -77,6 +77,9 @@ export default {
       newMenu */
       console.log(JSON.parse(field))
       var newMenu = merge({}, JSON.parse(field))
+      newMenu.id = 99
+      newMenu.path = 'test'
+      newMenu.children = []
       const parentMenu = menuList1.filter((item) => item.id === newMenu.parentId)
       console.log(parentMenu)
       parentMenu[0].children.push(newMenu)
@@ -95,6 +98,23 @@ export default {
   updateMenu: (config) => {
     const { field, operCode } = param2Obj(config.url)
     if (operCode === 'update') {
+      var currentRoute
+      var localRouteString = localStorage.getItem('PERMISSION')
+      var localRouteArray = []
+      if (localRouteString) {
+        localRouteArray = JSON.parse(localRouteString)
+        currentRoute = localRouteArray
+      } else {
+        currentRoute = menuList1
+      }
+
+      var updateMenu = merge({}, JSON.parse(field))
+      console.log(updateMenu)
+      const currentMenu = currentRoute.filter((item) => item.id === updateMenu.id)
+      currentMenu.name = updateMenu.name
+      currentMenu.icon = updateMenu.icon
+      localStorage.setItem('PERMISSION', JSON.stringify(currentRoute))
+      console.log(localStorage.getItem('PERMISSION'))
       return {
         operCode: operCode,
         field: field,
@@ -130,8 +150,17 @@ export default {
 
   // 获取菜单列表
   getMenuList: config => {
+    var currentRoute
+    var localRouteString = localStorage.getItem('PERMISSION')
+    var localRouteArray = []
+    if (localRouteString) {
+      localRouteArray = JSON.parse(localRouteString)
+      currentRoute = localRouteArray
+    } else {
+      currentRoute = menuList1
+    }
     return {
-      items: menuList1
+      items: currentRoute
     }
   },
 
