@@ -76,7 +76,8 @@ export const asyncRouterMap = [
       icon: 'example'
     },
     children: [
-      { path: 'uidp-config-manager', component: _import('uidpConfigViews/uidpConfigManager'), name: 'uidpConfigManager', meta: { title: 'uidpConfigManager', icon: 'table' }}
+      { path: 'uidp-config-manager', component: _import('uidpConfigViews/uidpConfigManager'), name: 'uidpConfigManager', meta: { title: 'uidpConfigManager', icon: 'table' }},
+      { path: 'uidp-sys-info-manager', component: _import('uidpConfigViews/uidpSysInfoManager'), name: 'uidpSysInfoManager', meta: { title: 'uidpSysInfoManager', icon: 'table' }}
     ]
   },
   {

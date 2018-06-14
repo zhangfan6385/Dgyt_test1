@@ -6,6 +6,7 @@ import userAPI from './user'
 import roleAPI from './role'
 import orgAPI from './org'
 import configAPI from './config'
+import sysinfoAPI from './sysinfo'
 import remoteSearchAPI from './remoteSearch'
 import transactionAPI from './transaction'
 import menuAPI from './menu'
@@ -46,6 +47,12 @@ Mock.mock(/\/config\/fetchConfigList/, 'get', configAPI.getFetchConfigList)
 Mock.mock(/\/config\/createConfigArticle/, 'post', configAPI.getCreateConfigArticle)
 Mock.mock(/\/config\/updateConfigData/, 'post', configAPI.getUpdateConfigData)
 Mock.mock(/\/config\/updateConfigArticle/, 'get', configAPI.getUpdateConfigArticle)
+// 平台在建系统配置模块
+
+Mock.mock(/\/sysinfo\/fetchConfigList/, 'get', sysinfoAPI.getFetchConfigList)
+Mock.mock(/\/sysinfo\/createConfigArticle/, 'post', sysinfoAPI.getCreateConfigArticle)
+Mock.mock(/\/sysinfo\/updateConfigData/, 'post', sysinfoAPI.getUpdateConfigData)
+Mock.mock(/\/sysinfo\/updateConfigArticle/, 'get', sysinfoAPI.getUpdateConfigArticle)
 // 组织结构配置模块
 
 Mock.mock(/\/org\/fetchOrgList/, 'get', orgAPI.getFetchOrgList)
