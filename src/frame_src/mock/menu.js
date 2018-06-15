@@ -62,29 +62,67 @@ const menuList1 = [
   }
 ]
 
+/**
+ * 递归过滤异步路由表，返回符合用户角色权限的路由表
+ * @param asyncRouterMap
+ * @param roles
+ */
+function filterAsyncRouter(asyncRouterMap, updateMenu) {
+  asyncRouterMap.filter(route => {
+    if (route.id === updateMenu.id) {
+      route.name = updateMenu.name
+      if (updateMenu.icon.indexOf('fa+') >= 0) {
+        console.log('success')
+        route.icon = updateMenu.icon.replace('fa+', 'fa ')
+      } else {
+        route.icon = updateMenu.icon
+      }
+      return true
+    }
+    if (route.children && route.children.length) {
+      filterAsyncRouter(route.children, updateMenu)
+    }
+    return false
+  })
+  return asyncRouterMap
+}
+
+/**
+ * 递归过滤异步路由表，返回符合用户角色权限的路由表
+ * @param asyncRouterMap
+ * @param roles
+ */
+function filterAsyncRouterDelete(asyncRouterMap, menuId) {
+  for (let i = 0; i < asyncRouterMap.length; i++) {
+    var route = asyncRouterMap[i]
+    if (route.id === menuId) {
+      console.log('deleteSuccess')
+      asyncRouterMap.splice(i, 1)
+      return asyncRouterMap
+    }
+    if (route.children && route.children.length) {
+      filterAsyncRouterDelete(route.children, menuId)
+    }
+  }
+  return asyncRouterMap
+}
+
 export default {
   // 创建菜单
   createMenu: (config) => {
     const { field, operCode } = param2Obj(config.url)
     if (operCode === 'add') {
-      // var newMenu = {}
-      /* newMenu.id = field.id
-      newMenu.path=field.path
-      newMenu.parentId=field.parentId
-      newMenu.sort=field.sort
-      newMenu.name=field.name
-      newMenu.href=field.href
-      newMenu */
-      console.log(JSON.parse(field))
       var newMenu = merge({}, JSON.parse(field))
       newMenu.id = 99
       newMenu.path = 'test'
+      if (newMenu.icon.indexOf('fa+') >= 0) {
+        newMenu.icon = newMenu.icon.replace('fa+', 'fa ')
+      }
       newMenu.children = []
       const parentMenu = menuList1.filter((item) => item.id === newMenu.parentId)
       console.log(parentMenu)
       parentMenu[0].children.push(newMenu)
       localStorage.setItem('PERMISSION', JSON.stringify(menuList1))
-      console.log(localStorage.getItem('PERMISSION'))
       return {
         field: field,
         operCode: operCode,
@@ -107,14 +145,9 @@ export default {
       } else {
         currentRoute = menuList1
       }
-
       var updateMenu = merge({}, JSON.parse(field))
-      console.log(updateMenu)
-      const currentMenu = currentRoute.filter((item) => item.id === updateMenu.id)
-      currentMenu.name = updateMenu.name
-      currentMenu.icon = updateMenu.icon
-      localStorage.setItem('PERMISSION', JSON.stringify(currentRoute))
-      console.log(localStorage.getItem('PERMISSION'))
+      var accessedRouters = filterAsyncRouter(currentRoute, updateMenu)
+      localStorage.setItem('PERMISSION', JSON.stringify(accessedRouters))
       return {
         operCode: operCode,
         field: field,
@@ -126,12 +159,27 @@ export default {
 
   // 删除菜单
   deleteMenu: (config) => {
-    const { field, operCode } = param2Obj(config.url)
+    const { keyCode, operCode } = param2Obj(config.url)
     if (operCode === 'delete') {
+      var currentRoute
+      var localRouteString = localStorage.getItem('PERMISSION')
+      var localRouteArray = []
+      if (localRouteString) {
+        localRouteArray = JSON.parse(localRouteString)
+        currentRoute = localRouteArray
+      } else {
+        currentRoute = menuList1
+      }
+      console.log(keyCode)
+      console.log(typeof (keyCode))
+      var accessedRouters = filterAsyncRouterDelete(currentRoute, Number(keyCode))
+      localStorage.setItem('PERMISSION', JSON.stringify(accessedRouters))
+      console.log(accessedRouters)
+
       return {
         operCode: operCode,
-        field: field,
-        message: '修改成功',
+        keyCode: keyCode,
+        message: '删除成功',
         result: true
       }
     }

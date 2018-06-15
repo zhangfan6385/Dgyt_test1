@@ -557,7 +557,7 @@
         },
         listUpdate: {
           keyCode: undefined,
-          field: undefined,
+          field: {},
           operCode: undefined
         },
         query: {
@@ -610,6 +610,7 @@
             this.newAdd()
           }) */
         this.listUpdate.keyCode = this.form.id
+        console.log(typeof (this.form.id))
         this.listUpdate.operCode = 'delete'
         deleteMenu(this.listUpdate).then(response => {
           this.message = '删除失败'
@@ -753,6 +754,7 @@
           console.log('update')
           this.listUpdate.field = this.form
           this.listUpdate.operCode = 'update'
+          console.log(this.listUpdate.field.icon)
           updateMenu(this.listUpdate).then(response => {
             this.message = '更新失败'
             this.title = '失败'
