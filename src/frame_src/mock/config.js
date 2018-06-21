@@ -61,7 +61,9 @@ export default {
 
     return {
       total: mockList.length,
-      items: pageList
+      items: pageList,
+      code: '2000',
+      message: '查询成功'
     }
   }, getUpdateConfigArticle: config => {
     const { field, confCode } = param2Obj(config.url)

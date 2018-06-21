@@ -43,16 +43,16 @@ Mock.mock(/\/role\/updateUserRoleArticle/, 'get', roleAPI.getUpdateUserRoleArtic
 
 // 基础信息配置模块
 
-Mock.mock(/\/config\/fetchConfigList/, 'get', configAPI.getFetchConfigList)
-Mock.mock(/\/config\/createConfigArticle/, 'post', configAPI.getCreateConfigArticle)
-Mock.mock(/\/config\/updateConfigData/, 'post', configAPI.getUpdateConfigData)
-Mock.mock(/\/config\/updateConfigArticle/, 'get', configAPI.getUpdateConfigArticle)
+Mock.mock(/\/conf\/fetchConfigList/, 'get', configAPI.getFetchConfigList)
+Mock.mock(/\/conf\/createConfigArticle/, 'post', configAPI.getCreateConfigArticle)
+Mock.mock(/\/conf\/updateConfigData/, 'post', configAPI.getUpdateConfigData)
+Mock.mock(/\/conf\/updateConfigArticle/, 'post', configAPI.getUpdateConfigArticle)
 // 平台在建系统配置模块
 
 Mock.mock(/\/sysinfo\/fetchSysInfoList/, 'get', sysinfoAPI.getFetchSysInfoList)
 Mock.mock(/\/sysinfo\/createSysInfoArticle/, 'post', sysinfoAPI.getCreateSysInfoArticle)
 Mock.mock(/\/sysinfo\/updateSysInfoData/, 'post', sysinfoAPI.getUpdateSysInfoData)
-Mock.mock(/\/sysinfo\/updateSysInfoArticle/, 'get', sysinfoAPI.getUpdateSysInfoArticle)
+Mock.mock(/\/sysinfo\/updateSysInfoArticle/, 'post', sysinfoAPI.getUpdateSysInfoArticle)
 // 组织结构配置模块
 
 Mock.mock(/\/org\/fetchOrgList/, 'get', orgAPI.getFetchOrgList)

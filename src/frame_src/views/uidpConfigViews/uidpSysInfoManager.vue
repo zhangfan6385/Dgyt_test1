@@ -231,6 +231,7 @@ export default {
       this.listUpdate.sysCode = this.temp.sysCode
       this.listUpdate.field = 'deletaStatus'
       updateSysInfoArticle(this.listUpdate).then(response => {
+        alert(response.data.message)
         this.message = response.data.message
         this.title = '失败'
         this.type = 'error'
@@ -307,7 +308,7 @@ export default {
         excel.export_json_to_excel({
           header: tHeader,
           data,
-          filename: 'table-list'
+          filename: '平台在建系统信息记录'
         })
         this.downloadLoading = false
       })

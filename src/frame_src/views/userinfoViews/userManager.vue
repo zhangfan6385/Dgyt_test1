@@ -447,7 +447,7 @@ export default {
         excel.export_json_to_excel({
           header: tHeader,
           data,
-          filename: 'table-list'
+          filename: '用户信息表'
         })
         this.downloadLoading = false
       })

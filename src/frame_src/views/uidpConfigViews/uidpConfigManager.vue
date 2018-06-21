@@ -94,8 +94,7 @@ export default {
       listQuery: {
         page: 1,
         limit: 15,
-        confName: undefined,
-        importance: undefined
+        confName: undefined
       },
       statusOptions: ['published', 'draft', 'deleted'],
 
@@ -261,7 +260,7 @@ export default {
         excel.export_json_to_excel({
           header: tHeader,
           data,
-          filename: 'table-list'
+          filename: '平台基本配置信息表'
         })
         this.downloadLoading = false
       })
