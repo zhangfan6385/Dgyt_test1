@@ -131,11 +131,11 @@ export default {
             var message = response.data.message
             var title = '失败'
             var type = 'error'
-            if (response.data.result === true) {
+            if (response.data.code === 2000) {
               title = '成功'
               type = 'success'
               this.newAdd()
-              this.load2()
+              this.load()
             }
             this.$notify({
               title: title,
@@ -153,11 +153,11 @@ export default {
             var message = response.data.message
             var title = '失败'
             var type = 'error'
-            if (response.data.result === true) {
+            if (response.data.code === 2000) {
               title = '成功'
               type = 'success'
               this.newAdd()
-              this.load2()
+              this.load()
             }
             this.$notify({
               title: title,
@@ -169,20 +169,13 @@ export default {
         }
       })
     },
-    load2() {
-      this.listQuery.sysCode = '2'
-      fetchRoleList(this.listQuery).then(response => {
-        this.roleTree = response.data.items
-      })
-      // this.roleTree.push(...defaultValue.roleList);
-    },
     deleteSelected(id) {
       this.listUpdate.id = this.form.id
       this.listUpdate.field = 'deletaStatus'
       updateRoleArticle(this.listUpdate).then(response => {
         this.message = '删除失败'
         this.title = '失败'
-        if (response.data.result === true) {
+        if (response.data.code === 2000) {
           //   this.newAdd();
           //  this.load2();
           this.deleteFromTree(this.roleTree, this.form.id, 'id')
@@ -202,8 +195,18 @@ export default {
     load() { // 查询左边角色信息
       this.listQuery.sysCode = '1'
       fetchRoleList(this.listQuery).then(response => {
-        this.roleTree = response.data.items
-        // this.roleTree.push(...defaultValue.roleList);
+        if (response.data.code === 2000) {
+          this.roleTree = response.data.items
+          // this.roleTree.push(...defaultValue.roleList);
+        } else {
+          this.listLoading = false
+          this.$notify({
+            title: '失败',
+            message: response.data.message,
+            type: 'error',
+            duration: 2000
+          })
+        }
       })
     },
     renderContent(h, { node, data, store }) { // 循环左侧树的数据

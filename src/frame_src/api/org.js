@@ -16,7 +16,7 @@ export function createOrgArticle(data) { // 创建组织结构
 export function updateOrgArticle(data) { // 修改组织结构信息-删除
   return request({
     url: '/org/updateOrgArticle',
-    method: 'get',
+    method: 'post',
     params: data
   })
 }
@@ -30,7 +30,7 @@ export function updateOrgData(data) { // 修改组织结构
 export function updateUserOrgArticle(data) { // 关联用户与组织结构
   return request({
     url: '/org/updateUserOrgArticle',
-    method: 'get',
+    method: 'post',
     params: data
   })
 }

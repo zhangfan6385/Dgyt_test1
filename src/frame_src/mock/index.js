@@ -29,17 +29,18 @@ Mock.mock(/\/article\/update/, 'post', articleAPI.updateArticle)
 
 // 用户管理模块
 Mock.mock(/\/user\/fetchUserList/, 'get', userAPI.getFetchUserList)
-Mock.mock(/\/user\/updateUserArticle/, 'get', userAPI.getUpdateUserArticle)
+Mock.mock(/\/user\/updateUserArticle/, 'post', userAPI.getUpdateUserArticle)
+Mock.mock(/\/user\/updateUserFlag/, 'post', userAPI.getUpdateUserFlag)
 Mock.mock(/\/user\/createUserArticle/, 'post', userAPI.createUserArticle)
 Mock.mock(/\/user\/updateUserData/, 'post', userAPI.getUpdateUserData)
-Mock.mock(/\/user\/updatePasswordData/, 'get', userAPI.getUpdatePasswordData)
+Mock.mock(/\/user\/updatePasswordData/, 'post', userAPI.getUpdatePasswordData)
 // 角色管理模块
 Mock.mock(/\/role\/fetchRoleList/, 'get', roleAPI.getFetchRoleList)
 Mock.mock(/\/role\/createRoleArticle/, 'post', roleAPI.createRoleArticle)
-Mock.mock(/\/role\/updateRoleArticle/, 'get', roleAPI.getUpdateRoleArticle)
+Mock.mock(/\/role\/updateRoleArticle/, 'post', roleAPI.getUpdateRoleArticle)
 Mock.mock(/\/role\/updateRoleData/, 'post', roleAPI.getUpdateRoleData)
 Mock.mock(/\/user\/fetchUserRoleList/, 'get', userAPI.getFetchUserRoleList)
-Mock.mock(/\/role\/updateUserRoleArticle/, 'get', roleAPI.getUpdateUserRoleArticle)
+Mock.mock(/\/role\/updateUserRoleArticle/, 'post', roleAPI.getUpdateUserRoleArticle)
 
 // 基础信息配置模块
 
@@ -57,10 +58,10 @@ Mock.mock(/\/sysinfo\/updateSysInfoArticle/, 'post', sysinfoAPI.getUpdateSysInfo
 
 Mock.mock(/\/org\/fetchOrgList/, 'get', orgAPI.getFetchOrgList)
 Mock.mock(/\/org\/createOrgArticle/, 'post', orgAPI.createOrgArticle)
-Mock.mock(/\/org\/updateOrgArticle/, 'get', orgAPI.getUpdateOrgArticle)
+Mock.mock(/\/org\/updateOrgArticle/, 'post', orgAPI.getUpdateOrgArticle)
 Mock.mock(/\/org\/updateOrgData/, 'post', orgAPI.getUpdateOrgData)
 Mock.mock(/\/user\/fetchUserOrgList/, 'get', userAPI.getFetchUserOrgList)
-Mock.mock(/\/org\/updateUserOrgArticle/, 'get', orgAPI.getUpdateUserOrgArticle)
+Mock.mock(/\/org\/updateUserOrgArticle/, 'post', orgAPI.getUpdateUserOrgArticle)
 // 日志管理模块
 
 Mock.mock(/\/logInfo\/fetchLogInfoList/, 'get', logInfoAPI.getFetchLogInfoList)

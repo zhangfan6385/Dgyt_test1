@@ -1,9 +1,9 @@
 <template>
     <div class="app-container calendar-list-container"> 
     <div class="filter-container">
-       <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" :placeholder="$t('userTable.userName')" v-model="listQuery.userName">
+       <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" :placeholder="$t('userTable.USER_NAME')" v-model="listQuery.USER_NAME">
       </el-input>
-      <el-select clearable style="width: 120px" class="filter-item" v-model="listQuery.flag" :placeholder="$t('userTable.flag')">
+      <el-select clearable style="width: 120px" class="filter-item" v-model="listQuery.FLAG" :placeholder="$t('userTable.FLAG')">
         <el-option v-for="item in flagOptions" :key="item.key" :label="item.flag_name" :value="item.key">
         </el-option>
       </el-select>
@@ -18,82 +18,91 @@
     </div>
       <el-table :key='tableKey' :data="list" :header-cell-class-name="tableRowClassName"  v-loading="listLoading" element-loading-text="给我一点时间" border fit highlight-current-row
       style="width: 100%">
-      <el-table-column align="center" v-if='showUserPass'  :label="$t('userTable.userId')" width="65">
+      <el-table-column align="center" v-if='showUSER_PASS'  :label="$t('userTable.USER_ID')" width="65">
         <template slot-scope="scope">
-          <span>{{scope.row.userId}}</span>
+          <span>{{scope.row.USER_ID}}</span>
         </template>
       </el-table-column>
-      <el-table-column width="110px" align="center" :label="$t('userTable.userCode')">
+       <el-table-column width="110px" align="center" :label="$t('userTable.USER_DOMAIN')">
         <template slot-scope="scope">
-          <span>{{scope.row.userCode}}</span>
+          <span>{{scope.row.USER_DOMAIN}}</span>
+        </template>
+       </el-table-column>
+      <el-table-column width="110px" align="center" :label="$t('userTable.USER_CODE')">
+        <template slot-scope="scope">
+          <span>{{scope.row.USER_CODE}}</span>
         </template>
       </el-table-column>
-      <el-table-column width="110px" align="center" :label="$t('userTable.userName')">
+       <el-table-column width="110px" align="center" :label="$t('userTable.ORG_NAME')">
         <template slot-scope="scope">
-          <span>{{scope.row.userName}}</span>
+          <span>{{scope.row.ORG_NAME}}</span>
         </template>
       </el-table-column>
-        <el-table-column width="110px" align="center" :label="$t('userTable.userAlias')">
+
+      <el-table-column width="110px" align="center" :label="$t('userTable.USER_NAME')">
         <template slot-scope="scope">
-          <span>{{scope.row.userAlias}}</span>
+          <span>{{scope.row.USER_NAME}}</span>
         </template>
       </el-table-column>
-     <el-table-column width="110px" align="center" v-if='showUserPass'  :label="$t('userTable.userPass')" >
+        <!--<el-table-column width="110px" align="center" :label="$t('userTable.USER_ALIAS')">
+        <template slot-scope="scope">
+          <span>{{scope.row.USER_ALIAS}}</span>
+        </template>
+      </el-table-column>-->
+     <el-table-column width="110px" align="center" v-if='showUSER_PASS'  :label="$t('userTable.USER_PASS')" >
         <template slot-scope="scope" >
-          <span>{{scope.row.userPass}}</span>
+          <span>{{scope.row.USER_PASS}}</span>
         </template>
       </el-table-column>
-      <el-table-column width="110px" align="center" :label="$t('userTable.phoneMobile')">
+       
+      <el-table-column width="110px" align="center" :label="$t('userTable.PHONE_MOBILE')">
         <template slot-scope="scope">
-          <span>{{scope.row.phoneMobile}}</span>
+          <span>{{scope.row.PHONE_MOBILE}}</span>
         </template>
       </el-table-column>
-        <el-table-column width="110px" align="center" :label="$t('userTable.phoneOffice')">
+       <el-table-column width="110px" align="center" :label="$t('userTable.PHONE_OFFICE')">
         <template slot-scope="scope">
-          <span>{{scope.row.phoneOffice}}</span>
+          <span>{{scope.row.PHONE_OFFICE}}</span>
         </template>
        </el-table-column>
-       <el-table-column width="110px" align="center" :label="$t('userTable.phoneOrg')">
+      <!-- <el-table-column width="110px" align="center" :label="$t('userTable.PHONE_ORG')">
         <template slot-scope="scope">
-          <span>{{scope.row.phoneOrg}}</span>
+          <span>{{scope.row.PHONE_ORG}}</span>
+        </template>
+      </el-table-column>-->
+      <el-table-column width="110px" align="center" :label="$t('userTable.USER_EMAIL')">
+        <template slot-scope="scope">
+          <span>{{scope.row.USER_EMAIL}}</span>
         </template>
       </el-table-column>
-      <el-table-column width="110px" align="center" :label="$t('userTable.userEmail')">
+       <!--<el-table-column width="110px" align="center" :label="$t('userTable.EMAIL_OFFICE')">
         <template slot-scope="scope">
-          <span>{{scope.row.userEmail}}</span>
+          <span>{{scope.row.EMAIL_OFFICE}}</span>
         </template>
-      </el-table-column>
-       <el-table-column width="110px" align="center" :label="$t('userTable.emailOffice')">
+       </el-table-column>-->
+        <el-table-column width="110px" align="center" :label="$t('userTable.USER_IP')">
         <template slot-scope="scope">
-          <span>{{scope.row.emailOffice}}</span>
-        </template>
-       </el-table-column>
-        <el-table-column width="110px" align="center" :label="$t('userTable.userIp')">
-        <template slot-scope="scope">
-          <span>{{scope.row.userIp}}</span>
+          <span>{{scope.row.USER_IP}}</span>
         </template>
        </el-table-column>
-          <el-table-column width="110px" align="center" :label="$t('userTable.flag')">
+        
+          <el-table-column width="110px" align="center" :label="$t('userTable.FLAG')">
         <template slot-scope="scope">
-          <el-tag>{{scope.row.flag | typeFilter}}</el-tag>
+          <el-tag>{{scope.row.FLAG | typeFilter}}</el-tag>
         </template>
        </el-table-column>
-        <el-table-column width="110px" align="center" :label="$t('userTable.userDomain')">
+       <el-table-column min-width="180px"  align="center" :label="$t('userTable.REMARK')">
         <template slot-scope="scope">
-          <span>{{scope.row.userDomain}}</span>
+          <span>{{scope.row.REMARK}}</span>
         </template>
        </el-table-column>
-      <el-table-column min-width="180px"  align="center" :label="$t('userTable.remark')">
-        <template slot-scope="scope">
-          <span>{{scope.row.remark}}</span>
-        </template>
-       </el-table-column>
+     
       <el-table-column align="center" :label="$t('userTable.actions')" width="230" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">{{$t('userTable.edit')}}</el-button>
-          <el-button v-if="scope.row.flag==0" size="mini" type="success" @click="handleModifyStatus(scope.row,1)">{{$t('userTable.publish')}}
+          <el-button v-if="scope.row.FLAG==0" size="mini" type="success" @click="handleModifyStatus(scope.row,1)">{{$t('userTable.publish')}}
           </el-button>
-          <el-button  v-if="scope.row.flag==1"   size="mini" @click="handleModifyStatus(scope.row,0)">{{$t('userTable.draft')}}
+          <el-button  v-if="scope.row.FLAG==1"   size="mini" @click="handleModifyStatus(scope.row,0)">{{$t('userTable.draft')}}
           </el-button>
           <el-button size="mini" type="danger" @click="handleDelete(scope.row)">{{$t('userTable.delete')}}
           </el-button>
@@ -107,47 +116,49 @@
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
     
       <el-form :rules="rules" ref="dataForm" :model="temp" label-position="left" label-width="120px" style='width: 400px; margin-left:20px;'>
-     <el-form-item :label="$t('userTable.userCode')" prop="userCode">
-          <el-input v-model="temp.userCode"></el-input>
+       <el-form-item :label="$t('userTable.USER_DOMAIN')" prop="USER_DOMAIN">
+          <el-input v-model="temp.USER_DOMAIN"></el-input>
         </el-form-item>
-       <el-form-item :label="$t('userTable.userName')" prop="userName">
-          <el-input v-model="temp.userName"></el-input>
+        <el-form-item :label="$t('userTable.USER_CODE')" prop="USER_CODE">
+          <el-input v-model="temp.USER_CODE"></el-input>
         </el-form-item>
-       <el-form-item :label="$t('userTable.userAlias')" prop="userAlias">
-          <el-input v-model="temp.userAlias" ></el-input>
+       <el-form-item :label="$t('userTable.USER_NAME')" prop="USER_NAME">
+          <el-input v-model="temp.USER_NAME"></el-input>
         </el-form-item>
-          <el-form-item :label="$t('userTable.userPass')" prop="userPass">
-          <el-input v-model="temp.userPass"></el-input>
+       <!--<el-form-item :label="$t('userTable.USER_ALIAS')" prop="USER_ALIAS">
+          <el-input v-model="temp.USER_ALIAS" ></el-input>
+        </el-form-item>-->
+          <el-form-item :label="$t('userTable.USER_PASS')" prop="USER_PASS">
+          <el-input v-model="temp.USER_PASS"></el-input>
         </el-form-item>
-          <el-form-item :label="$t('userTable.phoneMobile')" prop="phoneMobile">
-          <el-input v-model="temp.phoneMobile"></el-input>
+        
+          <el-form-item :label="$t('userTable.PHONE_MOBILE')" prop="PHONE_MOBILE">
+          <el-input v-model="temp.PHONE_MOBILE"></el-input>
         </el-form-item>
-         <el-form-item :label="$t('userTable.phoneOffice')" prop="phoneOffice">
-          <el-input v-model="temp.phoneOffice"></el-input>
+         <el-form-item :label="$t('userTable.PHONE_OFFICE')" prop="PHONE_OFFICE">
+          <el-input v-model="temp.PHONE_OFFICE"></el-input>
         </el-form-item>
-         <el-form-item :label="$t('userTable.phoneOrg')" prop="phoneOrg">
-          <el-input v-model="temp.phoneOrg"></el-input>
+         <!--<el-form-item :label="$t('userTable.PHONE_ORG')" prop="PHONE_ORG">
+          <el-input v-model="temp.PHONE_ORG"></el-input>
+        </el-form-item>-->
+         <el-form-item :label="$t('userTable.USER_EMAIL')" prop="USER_EMAIL">
+          <el-input v-model="temp.USER_EMAIL"></el-input>
         </el-form-item>
-         <el-form-item :label="$t('userTable.userEmail')" prop="userEmail">
-          <el-input v-model="temp.userEmail"></el-input>
+         <!--<el-form-item :label="$t('userTable.EMAIL_OFFICE')" prop="EMAIL_OFFICE">
+          <el-input v-model="temp.EMAIL_OFFICE"></el-input>
+        </el-form-item>-->
+           <el-form-item :label="$t('userTable.USER_IP')" prop="USER_IP">
+          <el-input v-model="temp.USER_IP"></el-input>
         </el-form-item>
-         <el-form-item :label="$t('userTable.emailOffice')" prop="emailOffice">
-          <el-input v-model="temp.emailOffice"></el-input>
-        </el-form-item>
-           <el-form-item :label="$t('userTable.userIp')" prop="userIp">
-          <el-input v-model="temp.userIp"></el-input>
-        </el-form-item>
-           <el-form-item :label="$t('userTable.userDomain')" prop="userDomain">
-          <el-input v-model="temp.userDomain"></el-input>
-        </el-form-item>
-         <el-form-item :label="$t('userTable.flag')">
-          <el-select class="filter-item" v-model="temp.flag" placeholder="Please select">
+        
+         <el-form-item :label="$t('userTable.FLAG')">
+          <el-select class="filter-item" v-model="temp.FLAG" placeholder="Please select">
         <el-option v-for="item in flagOptions" :key="item.key" :label="item.flag_name" :value="item.key">
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item :label="$t('userTable.remark')">
-          <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="Please input" v-model="temp.remark">
+        <el-form-item :label="$t('userTable.REMARK')">
+          <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="Please input" v-model="temp.REMARK">
           </el-input>
         </el-form-item>
       </el-form> 
@@ -165,7 +176,8 @@ import {
   fetchUserList,
   createUserArticle,
   updateUserData,
-  updateUserArticle
+  updateUserArticle,
+  updateUserFlag
 } from '@/frame_src/api/user'
 import waves from '@/frame_src/directive/waves' // 水波纹指令
 // import { parseTime } from '@/frame_src/utils'
@@ -188,39 +200,39 @@ export default {
       listLoading: true,
       listUpdate: {
         field: undefined,
-        flag: undefined,
-        userId: undefined
+        FLAG: undefined,
+        USER_ID: undefined
       },
       listQuery: {
         page: 1,
         limit: 5,
-        userName: undefined,
-        flag: undefined,
-        importance: undefined,
-        sort: '+userId'
+        USER_NAME: undefined,
+        FLAG: undefined,
+        sort: '+USER_ID'
       },
       flagOptions,
       statusOptions: ['published', 'draft', 'deleted'],
       sortOptions: [
-        { label: '正序', key: '+userId' },
-        { label: '倒序', key: '-userId' }
+        { label: '正序', key: '+USER_ID' },
+        { label: '倒序', key: '-USER_ID' }
       ],
-      showUserPass: false,
+      showUSER_PASS: false,
       temp: {
-        userId: undefined,
-        userCode: '',
-        userName: '',
-        userAlias: '',
-        userPass: '',
-        phoneMobile: '',
-        phoneOffice: '',
-        phoneOrg: '',
-        userEmail: '',
-        emailOffice: '',
-        userIp: '',
-        flag: '',
-        userDomain: '',
-        remark: ''
+        USER_ID: undefined,
+        USER_CODE: '',
+        USER_NAME: '',
+        ORG_NAME: '',
+        USER_ALIAS: '',
+        USER_PASS: '',
+        PHONE_MOBILE: '',
+        PHONE_OFFICE: '',
+        PHONE_ORG: '',
+        USER_EMAIL: '',
+        EMAIL_OFFICE: '',
+        USER_IP: '',
+        FLAG: '',
+        USER_DOMAIN: '',
+        REMARK: ''
       },
       dialogFormVisible: false,
       dialogStatus: '',
@@ -231,8 +243,8 @@ export default {
       dialogPvVisible: false,
       pvData: [],
       rules: {
-        flag: [
-          { required: true, message: 'flag is required', trigger: 'change' }
+        FLAG: [
+          { required: true, message: 'FLAG is required', trigger: 'change' }
         ],
         timestamp: [
           {
@@ -242,10 +254,10 @@ export default {
             trigger: 'change'
           }
         ],
-        userCode: [
+        USER_CODE: [
           { required: true, message: '用户编号不能为空', trigger: 'change' }
         ],
-        userName: [
+        USER_NAME: [
           { required: true, message: '用户名称不能为空', trigger: 'change' }
         ]
       },
@@ -261,27 +273,37 @@ export default {
     getList() {
       this.listLoading = true
       fetchUserList(this.listQuery).then(response => {
-        this.list = response.data.items
-        this.total = response.data.total
-        this.listLoading = false
+        if (response.data.code === 2000) {
+          this.list = response.data.items
+          this.total = response.data.total
+          this.listLoading = false
+        } else {
+          this.listLoading = false
+          this.$notify({
+            title: '失败',
+            message: response.data.message,
+            type: 'error',
+            duration: 2000
+          })
+        }
       })
     },
     resetTemp() {
       this.temp = {
-        userId: undefined,
-        userCode: '',
-        userName: '',
-        userAlias: '',
-        userPass: '111111',
-        phoneMobile: '',
-        phoneOffice: '',
-        phoneOrg: '',
-        userEmail: '',
-        emailOffice: '',
-        userIp: '',
-        flag: 1,
-        userDomain: '',
-        remark: ''
+        USER_ID: undefined,
+        USER_CODE: '',
+        USER_NAME: '',
+        USER_ALIAS: '',
+        USER_PASS: '111111',
+        PHONE_MOBILE: '',
+        PHONE_OFFICE: '',
+        PHONE_ORG: '',
+        USER_EMAIL: '',
+        EMAIL_OFFICE: '',
+        USER_IP: '',
+        FLAG: 1,
+        USER_DOMAIN: '',
+        REMARK: ''
       }
     },
     handleUpdate(row) { // 打开修改表单
@@ -309,7 +331,7 @@ export default {
             var message = response.data.message
             var title = '失败'
             var type = 'error'
-            if (response.data.result === true) {
+            if (response.data.code === 2000) {
               title = '成功'
               type = 'success'
               for (const v of this.list) {
@@ -333,13 +355,13 @@ export default {
     },
     handleDelete(row) {
       this.temp = Object.assign({}, row) // copy obj
-      this.listUpdate.userId = this.temp.userId
+      this.listUpdate.USER_ID = this.temp.USER_ID
       this.listUpdate.field = 'deletaStatus'
       updateUserArticle(this.listUpdate).then(response => {
         this.message = response.data.message
         this.title = '失败'
         this.type = 'error'
-        if (response.data.result === true) {
+        if (response.data.code === 2000) {
           const index = this.list.indexOf(row)
           this.list.splice(index, 1)
           // this.getList();
@@ -357,13 +379,13 @@ export default {
     createData() {
       this.$refs['dataForm'].validate(valid => {
         if (valid) {
-          // this.temp.userId = parseInt(Math.random() * 100) + 1024 // mock a id
+          // this.temp.USER_ID = parseInt(Math.random() * 100) + 1024 // mock a id
           // this.temp.author = "ppp" //当前登陆人
           createUserArticle(this.temp).then(response => {
             var message = response.data.message
             var title = '失败'
             var type = 'error'
-            if (response.data.result === true) {
+            if (response.data.code === 2000) {
               title = '成功'
               type = 'success'
               this.list.unshift(this.temp)
@@ -381,16 +403,16 @@ export default {
     },
     handleModifyStatus(row, status) { // 修改是否激活
       this.temp = Object.assign({}, row) // copy obj
-      this.listUpdate.userId = this.temp.userId
-      this.listUpdate.field = 'flag'
-      this.listUpdate.flag = status
+      this.listUpdate.USER_ID = this.temp.USER_ID
+      this.listUpdate.field = 'FLAG'
+      this.listUpdate.FLAG = status
 
-      updateUserArticle(this.listUpdate).then(response => {
+      updateUserFlag(this.listUpdate).then(response => {
         this.message = response.data.message
         this.title = '失败'
         this.type = 'error'
-        if (response.data.result === true) {
-          row.flag = status
+        if (response.data.code === 2000) {
+          row.FLAG = status
           // this.getList();
           this.title = '成功'
           this.type = 'success'
@@ -430,18 +452,18 @@ export default {
           '备注'
         ]
         const filterVal = [
-          'userCode',
-          'userName',
-          'userAlias',
-          'phoneMobile',
-          'phoneOffice',
-          'phoneOrg',
-          'userEmail',
-          'emailOffice',
-          'userIp',
-          'flag',
-          'userDomain',
-          'remark'
+          'USER_CODE',
+          'USER_NAME',
+          'USER_ALIAS',
+          'PHONE_MOBILE',
+          'PHONE_OFFICE',
+          'PHONE_ORG',
+          'USER_EMAIL',
+          'EMAIL_OFFICE',
+          'USER_IP',
+          'FLAG',
+          'USER_DOMAIN',
+          'REMARK'
         ]
         const data = this.formatJson(filterVal, this.list)
         excel.export_json_to_excel({
@@ -455,7 +477,7 @@ export default {
     formatJson(filterVal, jsonData) {
       return jsonData.map(v =>
         filterVal.map(j => {
-          if (j === 'flag') {
+          if (j === 'FLAG') {
             return flagOptionsKeyValue[v[j]]
           } else {
             return v[j]

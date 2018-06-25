@@ -23,14 +23,14 @@ export function createRoleArticle(data) { // 创建角色
 export function updateRoleArticle(data) { // 修改角色信息-删除
   return request({
     url: '/role/updateRoleArticle',
-    method: 'get',
+    method: 'post',
     params: data
   })
 }
 export function updateUserRoleArticle(data) { // 关联用户与角色
   return request({
     url: '/role/updateUserRoleArticle',
-    method: 'get',
+    method: 'post',
     params: data
   })
 }
