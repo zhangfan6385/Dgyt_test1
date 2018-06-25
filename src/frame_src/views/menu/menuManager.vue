@@ -21,30 +21,30 @@
               <el-form :model="form" ref="form">
                 <el-form-item label="父级" :label-width="formLabelWidth">
                   <!--<el-input v-model="form.parentId" auto-complete="off"></el-input>-->
-                  <el-select-tree v-model="form.parentId" :treeData.sync="menuSelectTree" :propNames="defaultProps" clearable
+                  <el-select-tree v-model="form.MENU_ID_UPPER" :treeData.sync="menuSelectTree" :propNames="defaultProps" clearable
                                   placeholder="请选择父级">
                   </el-select-tree>
                 </el-form-item>
                 <el-form-item label="名称" :label-width="formLabelWidth">
-                  <el-input v-model="form.name" auto-complete="off"></el-input>
+                  <el-input v-model="form.MENU_NAME" auto-complete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="链接" :label-width="formLabelWidth">
-                  <el-input v-model="form.href" auto-complete="off"></el-input>
+                  <el-input v-model="form.MODULE_URL" auto-complete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="是否显示" :label-width="formLabelWidth">
-                  <el-radio class="radio" v-model="form.isShow" label="1">显示</el-radio>
-                  <el-radio class="radio" v-model="form.isShow" label="0">不显示</el-radio>
+                  <el-radio class="radio" v-model="form.MENU_PROP" label="1">显示</el-radio>
+                  <el-radio class="radio" v-model="form.MENU_PROP" label="0">不显示</el-radio>
                 </el-form-item>
                 <el-form-item label="图标" :label-width="formLabelWidth">
-                  <i :class="form.icon" ></i>
+                  <i :class="form.MENU_ICON" ></i>
                   <el-button type="text" @click="selectIconDialog=true">选择</el-button>
                 </el-form-item>
                 <el-form-item label="排序" :label-width="formLabelWidth">
-                  <el-slider v-model="form.sort"></el-slider>
+                  <el-slider v-model="form.MENU_ORDER"></el-slider>
                 </el-form-item>
                 <el-form-item label="" :label-width="formLabelWidth">
-                  <el-button type="primary" @click="onSubmit" v-text="form.id?'修改':'新增'"></el-button>
-                  <el-button type="danger" @click="deleteSelected" icon="delete" v-show="form.id && form.id!=null">删除
+                  <el-button type="primary" @click="onSubmit" v-text="form.MENU_ID?'修改':'新增'"></el-button>
+                  <el-button type="danger" @click="deleteSelected" icon="delete" v-show="form.MENU_ID && form.MENU_ID!=null">删除
                   </el-button>
                 </el-form-item>
               </el-form>
@@ -539,20 +539,20 @@
         formLabelWidth: '100px',
         defaultProps: {
           children: 'children',
-          label: 'name',
-          id: 'id'
+          label: 'MENU_NAME',
+          id: 'MENU_ID'
         },
         maxId: 7000000,
         menuTree: [],
         form: {
-          id: null,
-          name: '',
-          sort: 0,
-          icon: '',
-          href: '',
-          isShow: '',
+          MENU_ID: null,
+          MENU_NAME: '',
+          MENU_ORDER: 0,
+          MENU_ICON: '',
+          MODULE_URL: '',
+          MENU_PROP: '',
           delivery: false,
-          parentId: null,
+          MENU_ID_UPPER: null,
           desc: ''
         },
         listUpdate: {
@@ -574,49 +574,48 @@
     },
     methods: {
       selectIcon(event) {
-        this.form.icon = event.target.className
+        this.form.MENU_ICON = event.target.className
         this.selectIconDialog = false
       },
       renderContent(h, { node, data, store }) {
         return (
           <span>
             <span>
-              <span><i class={data.icon}></i>&nbsp;{node.label}</span>
+              <span><i class={data.MENU_ICON}></i>&nbsp;{node.label}</span>
             </span>
           </span>)
       },
       newAdd() {
         this.form = {
-          id: null,
-          name: '',
-          sort: 0,
-          icon: '',
-          href: '',
-          isShow: '',
+          MENU_ID: null,
+          MENU_NAME: '',
+          MENU_ORDER: 0,
+          MENU_ICON: '',
+          MODULE_URL: '',
+          MENU_PROP: '',
           delivery: false,
-          parentId: null,
+          MENU_ID_UPPER: null,
           desc: ''
         }
       },
       deleteSelected() {
-        /* this.$http.get(api.SYS_MENU_DELETE + '?menuIds=' + this.form.id)
+        /* this.$http.get(api.SYS_MENU_DELETE + '?menuIds=' + this.form.MENU_ID)
           .then(res => {
             this.$message('操作成功')
-            this.deleteFromTree(this.menuTree, this.form.id)
+            this.deleteFromTree(this.menuTree, this.form.MENU_ID)
             this.newAdd()
           }).catch(e => {
             this.$message('操作成功')
-            this.deleteFromTree(this.menuTree, this.form.id)
+            this.deleteFromTree(this.menuTree, this.form.MENU_ID)
             this.newAdd()
           }) */
-        this.listUpdate.keyCode = this.form.id
-        console.log(typeof (this.form.id))
+        this.listUpdate.keyCode = this.form.MENU_ID
         this.listUpdate.operCode = 'delete'
         deleteMenu(this.listUpdate).then(response => {
           this.message = '删除失败'
           this.title = '失败'
           if (response.data.result === true) {
-            this.deleteFromTree(this.menuTree, this.form.id, 'id')
+            this.deleteFromTree(this.menuTree, this.form.MENU_ID, 'MENU_ID')
             this.title = '成功'
             this.newAdd()
           }
@@ -677,33 +676,7 @@
         this.form = merge({}, data)
       },
       onSubmit() {
-        if (this.form.id == null) {
-          /* this.$http.post(api.SYS_MENU_ADD, this.form)
-            .then(res => {
-              this.$message('操作成功')
-              this.form.id = res.data.id
-              this.appendTreeNode(this.menuTree, res.data)
-            }).catch(e => {
-              this.maxId += 1
-              this.$message('操作成功')
-              this.form.id = this.maxId
-              var ddd = {
-                id: this.form.id,
-                name: this.form.name,
-                sort: this.form.sort,
-                icon: this.form.icon,
-                href: this.form.href,
-                isShow: this.form.isShow,
-                delivery: this.form.delivery,
-                parentId: this.form.parentId,
-                desc: this.form.desc,
-                children: []
-              }
-              this.appendTreeNode(this.menuTree, ddd)
-              this.menuTree.push({})
-              this.menuTree.pop()
-            }) */
-
+        if (this.form.MENU_ID == null) {
           this.listUpdate.field = this.form
           this.listUpdate.operCode = 'add'
           this.$refs['form'].validate((valid) => {
@@ -717,16 +690,16 @@
                   this.title = '成功'
                   this.maxId += 1
                   // this.$message('操作成功')
-                  this.form.id = this.maxId
+                  this.form.MENU_ID = this.maxId
                   var ddd = {
-                    id: this.form.id,
-                    name: this.form.name,
-                    sort: this.form.sort,
-                    icon: this.form.icon,
-                    href: this.form.href,
+                    MENU_ID: this.form.MENU_ID,
+                    MENU_NAME: this.form.MENU_NAME,
+                    MENU_ORDER: this.form.MENU_ORDER,
+                    MENU_ICON: this.form.MENU_ICON,
+                    MODULE_URL: this.form.MODULE_URL,
                     isShow: this.form.isShow,
                     delivery: this.form.delivery,
-                    parentId: this.form.parentId,
+                    MENU_ID_UPPER: this.form.MENU_ID_UPPER,
                     desc: this.form.desc,
                     children: []
                   }
@@ -751,10 +724,8 @@
               this.updateTreeNode(this.menuTree, merge({}, this.form))
             }) */
 
-          console.log('update')
           this.listUpdate.field = this.form
           this.listUpdate.operCode = 'update'
-          console.log(this.listUpdate.field.icon)
           updateMenu(this.listUpdate).then(response => {
             this.message = '更新失败'
             this.title = '失败'

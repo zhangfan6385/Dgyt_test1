@@ -1,5 +1,4 @@
 import { constantRouterMap } from '@/frame_src/router'
-import { fetchPermission } from '@/frame_src/api/menu'
 
 /**
  * 通过meta.role判断是否与当前用户权限匹配
@@ -47,18 +46,14 @@ const permission = {
     GenerateRoutes({ commit }, data) {
       return new Promise((resolve, reject) => {
         const { roles, routeMap } = data
-        fetchPermission().then(response => {
-          let accessedRouters
-          if (roles.indexOf('admin') >= 0) {
-            accessedRouters = routeMap
-          } else {
-            accessedRouters = filterAsyncRouter(routeMap, roles)
-          }
-          commit('SET_ROUTERS', accessedRouters)
-          resolve()
-        }).catch(error => {
-          reject(error)
-        })
+        let accessedRouters
+        if (roles.indexOf('admin') >= 0) {
+          accessedRouters = routeMap
+        } else {
+          accessedRouters = filterAsyncRouter(routeMap, roles)
+        }
+        commit('SET_ROUTERS', accessedRouters)
+        resolve()
       })
     }
   }

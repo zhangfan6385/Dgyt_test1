@@ -13,7 +13,8 @@
     height: 100%;
     position: fixed;
     font-size: 0px;
-    top: 55px;
+    // top: 55px;
+    padding-top: 55px;
     bottom: 0;
     left: 0;
     z-index: 1001;
@@ -85,11 +86,75 @@
   .sidebar-container .nest-menu .el-submenu>.el-submenu__title,
   .sidebar-container .el-submenu .el-menu-item {
     min-width: 180px !important;
-    background-color: $subMenuBg !important;
+    /* background-color: $subMenuBg !important;
     &:hover {
       background-color: $menuHover !important;
+    } */
+
+    /* background-color: #28004D !important;
+    &:hover {
+      background-color: #8600FF !important;
+    } */
+  }
+
+  .themeBlue{
+    background-color: #28004D !important;
+    &:hover {
+      background-color: #8600FF !important;
     }
   }
+
+  .themeGreen{
+    background-color: #006000 !important;
+    &:hover {
+      background-color: #00BB00 !important;
+    }
+  }
+
+  .themeRed{
+    background-color: #AE0000 !important;
+    &:hover {
+      background-color: #EA0000 !important;
+    }
+  }
+
+  .themeGray{
+    background-color: #272727 !important;
+    &:hover {
+      background-color: #6c6c6c !important;
+    }
+  }
+
+
+  .themeBlueElMenu{
+    background-color: #28004D !important;
+    &:hover {
+      background-color: #8600FF !important;
+    }
+  }
+
+  .themeGreenElMenu{
+    background-color: #006000 !important;
+    &:hover {
+      background-color: #00BB00 !important;
+    }
+  }
+
+  .themeRedElMenu{
+    background-color: #AE0000 !important;
+    &:hover {
+      background-color: #EA0000 !important;
+    }
+  }
+
+  .themeGrayElMenu{
+    background-color: #272727 !important;
+    &:hover {
+      background-color: #6c6c6c !important;
+    }
+  }
+
+
   .el-menu--collapse .el-menu .el-submenu {
     min-width: 180px !important;
   }

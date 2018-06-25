@@ -1,15 +1,16 @@
 <template>
   <div class="login-container">
-    <div class="logo">
-      <img src="../../../frame_src/imgs/logo.png">
-      <!-- <img src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif"> -->
-      <span>大港油田软件研发平台</span>
-    </div>
+    
     <el-form class="login-form" autoComplete="on" :model="loginForm" :rules="loginRules" ref="loginForm" label-position="left">
       <!-- <div class="title-container">
         <h3 class="title">{{$t('login.title')}}</h3>
         <lang-select class="set-language"></lang-select>
       </div> -->
+      <div class="logo title">
+        <img src="../../../frame_src/imgs/logo.png">
+        <!-- <img src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif"> -->
+        <span>大港油田软件研发平台</span>
+      </div>
       <el-form-item prop="username">
         <span class="svg-container svg-container_login">
           <svg-icon icon-class="user" />
@@ -230,6 +231,16 @@ $light_gray:#eee;
       font-size: 20px;
     }
   }
+
+  .title {
+    font-size: 26px;
+    font-weight: 400;
+    color: $light_gray;
+    margin: 0px auto 40px auto;
+    text-align: center;
+    font-weight: bold;
+  }
+
   .title-container {
     position: relative;
     .title {

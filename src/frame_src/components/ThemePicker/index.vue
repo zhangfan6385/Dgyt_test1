@@ -1,14 +1,27 @@
 <template>
-  <el-color-picker
+  <!-- <el-color-picker
     class="theme-picker"
     popper-class="theme-picker-dropdown"
-    v-model="theme"></el-color-picker>
+    v-model="theme"></el-color-picker> -->
+
+    <el-dropdown trigger="click" class='international' @command="handleSetLanguage">
+      <div>
+        <svg-icon icon-class="theme" style="color:white;width:22px;height:22px;vertical-align: middle;cursor: pointer;"/>
+      </div>
+      <el-dropdown-menu slot="dropdown">
+        <el-dropdown-item command="#3A71A8"><div class='rect blue'></div></el-dropdown-item>
+        <el-dropdown-item command="#C03639"><div class='rect red'></div></el-dropdown-item>
+        <el-dropdown-item command="#30B08F"><div class='rect green'></div></el-dropdown-item>
+        <el-dropdown-item command="#909399"><div class='rect gray'></div></el-dropdown-item>
+      </el-dropdown-menu>
+    </el-dropdown>
 </template>
 
 <script>
 
 const version = require('element-ui/package.json').version // element-ui version from node_modules
 const ORIGINAL_THEME = '#409EFF' // default color
+var lastTheme = ORIGINAL_THEME
 
 export default {
   data() {
@@ -17,17 +30,56 @@ export default {
       theme: ORIGINAL_THEME
     }
   },
-  watch: {
-    theme(val, oldVal) {
-      if (typeof val !== 'string') return
-      const themeCluster = this.getThemeCluster(val.replace('#', ''))
-      const originalCluster = this.getThemeCluster(oldVal.replace('#', ''))
+
+  methods: {
+    handleSetLanguage(style) {
+      const themeCluster = this.getThemeCluster(style.replace('#', ''))
+      const originalCluster = this.getThemeCluster(lastTheme.replace('#', ''))
+      // console.log(document.querySelectorAll('.sidebar-container .el-submenu .el-menu-item'))
+      /* var elMenus = document.querySelectorAll('.el-submenu__title,el-menu-item')
+      console.log(elMenus)
+      for (let i = 0, j = elMenus.length; i < j; i++) {
+        if (style === '#3A71A8') { // 蓝
+          elMenus[i].classList.remove('themeGreenElMenu', 'themeRedElMenu', 'themeGrayElMenu')
+          elMenus[i].classList.add('themeBlueElMenu')
+        } else if (style === '#C03639') { // 红
+          elMenus[i].classList.remove('themeBlueElMenu', 'themeGreenElMenu', 'themeGrayElMenu')
+          elMenus[i].classList.add('themeRedElMenu')
+        } else if (style === '#30B08F') { // 绿
+          elMenus[i].classList.remove('themeBlueElMenu', 'themeRedElMenu', 'themeGrayElMenu')
+          elMenus[i].classList.add('themeGreenElMenu')
+        } else if (style === '#909399') { // 灰
+          elMenus[i].classList.remove('themeGreenElMenu', 'themeRedElMenu', 'themeBlueElMenu')
+          elMenus[i].classList.add('themeGrayElMenu')
+        } else { // 蓝
+          elMenus[i].classList.remove('themeGreenElMenu', 'themeRedElMenu', 'themeGrayElMenu')
+          elMenus[i].classList.add('themeBlueElMenu')
+        }
+      }*/
+      var subMenus = document.querySelectorAll('.sidebar-container .el-submenu .el-menu-item')
+      for (let i = 0, j = subMenus.length; i < j; i++) {
+        if (style === '#3A71A8') { // 蓝
+          subMenus[i].classList.remove('themeGreen', 'themeRed', 'themeGray')
+          subMenus[i].classList.add('themeBlue')
+        } else if (style === '#C03639') { // 红
+          subMenus[i].classList.remove('themeBlue', 'themeGreen', 'themeGray')
+          subMenus[i].classList.add('themeRed')
+        } else if (style === '#30B08F') { // 绿
+          subMenus[i].classList.remove('themeBlue', 'themeRed', 'themeGray')
+          subMenus[i].classList.add('themeGreen')
+        } else if (style === '#909399') { // 灰
+          subMenus[i].classList.remove('themeGreen', 'themeRed', 'themeBlue')
+          subMenus[i].classList.add('themeGray')
+        } else { // 蓝
+          subMenus[i].classList.remove('themeGreen', 'themeRed', 'themeGray')
+          subMenus[i].classList.add('themeBlue')
+        }
+      }
       console.log(themeCluster, originalCluster)
       const getHandler = (variable, id) => {
         return () => {
           const originalCluster = this.getThemeCluster(ORIGINAL_THEME.replace('#', ''))
           const newStyle = this.updateStyle(this[variable], originalCluster, themeCluster)
-
           let styleTag = document.getElementById(id)
           if (!styleTag) {
             styleTag = document.createElement('style')
@@ -50,21 +102,20 @@ export default {
       const styles = [].slice.call(document.querySelectorAll('style'))
         .filter(style => {
           const text = style.innerText
-          return new RegExp(oldVal, 'i').test(text) && !/Chalk Variables/.test(text)
+          return new RegExp(lastTheme, 'i').test(text) && !/Chalk Variables/.test(text)
         })
       styles.forEach(style => {
         const { innerText } = style
         if (typeof innerText !== 'string') return
         style.innerText = this.updateStyle(innerText, originalCluster, themeCluster)
       })
+      lastTheme = style
       this.$message({
         message: '换肤成功',
         type: 'success'
       })
-    }
-  },
+    },
 
-  methods: {
     updateStyle(style, oldCluster, newCluster) {
       let newStyle = style
       oldCluster.forEach((color, index) => {
@@ -134,6 +185,29 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
+  @import '../../styles/variables.scss';
+.rect {
+  width:20px; 
+  height:20px;
+  margin-bottom: 2px;
+}
+
+.green{
+  background: green
+}
+
+.red{
+  background: red
+}
+
+.blue{
+  background: blue
+}
+
+.gray{
+  background: gray
+}
+
 .theme-picker .el-color-picker__trigger {
   vertical-align: middle;
 }

@@ -4,7 +4,7 @@
     <div class="right-menu">
       <!-- <error-log class="errLog-container right-menu-item"></error-log> -->
       <div class="logo">
-        <img src="../../../../frame_src/imgs/avatar.png">
+        <!-- <img src="../../../../frame_src/imgs/avatar.png"> -->
         <span>Admin</span>
 
         <span style="margin-left:15px;">单位：大港油田信息中心</span>
@@ -26,7 +26,11 @@
           <i class="el-icon-caret-bottom"></i>
         </div> -->
 
-        <svg-icon icon-class="user" style="color:white;width:25px;height:25px;vertical-align: middle;cursor: pointer;"/>
+        <div class="avatar-wrapper">
+            <img class='user-avatar' src="../../../../frame_src/imgs/avatar.png">
+            <i class="el-icon-caret-bottom"></i>
+        </div>
+        <!-- <svg-icon icon-class="user" style="color:white;width:25px;height:25px;vertical-align: middle;cursor: pointer;"/> -->
         <el-dropdown-menu slot="dropdown">
           <router-link to="/">
             <el-dropdown-item>
@@ -141,16 +145,17 @@ export default {
     //   vertical-align: 15px;
     // }
     .avatar-container {
-      height: 50px;
+      height: 55px;
       margin-right: 30px;
       .avatar-wrapper {
         cursor: pointer;
-        margin-top: 5px;
+        // margin-top: 5px;
         position: relative;
         .user-avatar {
-          width: 40px;
-          height: 40px;
+          width: 30px;
+          height: 30px;
           border-radius: 10px;
+          vertical-align: middle;
         }
         .el-icon-caret-bottom {
           position: absolute;
