@@ -15,9 +15,9 @@
     <el-card class="box-card">
    
     <div class="filter-container">
-       <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" :placeholder="$t('userTable.userName')" v-model="listQuery.userName">
+       <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" :placeholder="$t('userTable.USER_NAME')" v-model="listQuery.USER_NAME">
       </el-input>
-      <el-select clearable style="width: 120px" class="filter-item" v-model="listQuery.flag" :placeholder="$t('userTable.flag')">
+      <el-select clearable style="width: 120px" class="filter-item" v-model="listQuery.FLAG" :placeholder="$t('userTable.FLAG')">
         <el-option v-for="item in flagOptions" :key="item.key" :label="item.flag_name" :value="item.key">
         </el-option>
       </el-select>
@@ -38,24 +38,29 @@
         </el-table-column>
 
 
-      <el-table-column width="110px" align="center" :label="$t('userTable.userCode')">
+      <el-table-column width="110px" align="center" :label="$t('userTable.USER_DOMAIN')">
         <template slot-scope="scope">
-          <span>{{scope.row.userCode}}</span>
+          <span>{{scope.row.USER_DOMAIN}}</span>
         </template>
       </el-table-column>
-      <el-table-column width="110px" align="center" :label="$t('userTable.userName')">
+      <el-table-column width="110px" align="center" :label="$t('userTable.USER_NAME')">
         <template slot-scope="scope">
-          <span>{{scope.row.userName}}</span>
+          <span>{{scope.row.USER_NAME}}</span>
         </template>
       </el-table-column>
-      <el-table-column width="110px" align="center" :label="$t('userTable.flag')">
+       <el-table-column width="110px" align="center" :label="$t('userTable.USER_CODE')">
         <template slot-scope="scope">
-          <el-tag>{{scope.row.flag | typeFilter}}</el-tag>
+          <span>{{scope.row.USER_CODE}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column width="110px" align="center" :label="$t('userTable.FLAG')">
+        <template slot-scope="scope">
+          <el-tag>{{scope.row.FLAG | typeFilter}}</el-tag>
         </template>
        </el-table-column>
-      <el-table-column min-width="180px"  align="center" :label="$t('userTable.remark')">
+      <el-table-column min-width="180px"  align="center" :label="$t('userTable.REMARK')">
         <template slot-scope="scope">
-          <span>{{scope.row.remark}}</span>
+          <span>{{scope.row.REMARK}}</span>
         </template>
        </el-table-column>
        <el-table-column min-width="110px"  align="center" :label="$t('userTable.orgName')">
@@ -108,33 +113,32 @@ export default {
       listQuery: {
         page: 1,
         limit: 5,
-        userName: undefined,
-        flag: undefined,
-        importance: undefined,
-        sort: '+userId',
+        USER_NAME: undefined,
+        FLAG: undefined,
+        sort: '+USER_ID',
         orgId: undefined
       },
       flagOptions,
       sortOptions: [
-        { label: '正序', key: '+userId' },
-        { label: '倒序', key: '-userId' }
+        { label: '正序', key: '+USER_ID' },
+        { label: '倒序', key: '-USER_ID' }
       ],
       multipleSelection: [],
       temp: {
-        userId: undefined,
-        userCode: '',
-        userName: '',
-        userAlias: '',
-        userPass: '',
-        phoneMobile: '',
-        phoneOffice: '',
-        phoneOrg: '',
-        userEmail: '',
-        emailOffice: '',
-        userIp: '',
-        flag: '',
-        userDomain: '',
-        remark: '',
+        USER_ID: undefined,
+        USER_CODE: '',
+        USER_NAME: '',
+        USER_ALIAS: '',
+        USER_PASS: '',
+        PHONE_MOBILE: '',
+        PHONE_OFFICE: '',
+        PHONE_ORG: '',
+        USER_EMAIL: '',
+        EMAIL_OFFICE: '',
+        USER_IP: '',
+        FLAG: '',
+        USER_DOMAIN: '',
+        REMARK: '',
         orgName: '',
         orgId: ''
 
@@ -149,7 +153,6 @@ export default {
         label: 'orgName',
         id: 'id'
       }, treeListQuery: {
-        sysCode: undefined
       }
     }
   },
@@ -161,7 +164,7 @@ export default {
     multipleSelection: function() { // 把选中的数据id放到数组里，以便后期传值用
       const arr = []
       for (const i in this.multipleSelection) {
-        arr.push(this.multipleSelection[i].userId)
+        arr.push(this.multipleSelection[i].USER_ID)
       }
     }
   },
@@ -169,14 +172,32 @@ export default {
     getList() { // 查询组织结构对应的用户数据
       this.listLoading = true
       fetchUserOrgList(this.listQuery).then(response => {
-        this.list = response.data.items
-        this.total = response.data.total
-        this.listLoading = false
+        if (response.data.code === 2000) {
+          this.list = response.data.items
+          this.total = response.data.total
+          this.listLoading = false
+        } else {
+          this.listLoading = false
+          this.$notify({
+            title: '失败',
+            message: response.data.message,
+            type: 'error',
+            duration: 2000
+          })
+        }
       })
-    }, load() { // 查询组织结构数据
-      this.treeListQuery.sysCode = '2'
-      fetchOrgList(this.treeListQuery).then(response => {
-        this.roleTree = response.data.items
+    }, load() { // 查询组织结构数据this.treeListQuery
+      fetchOrgList().then(response => {
+        if (response.data.code === 2000) {
+          this.roleTree = response.data.items
+        } else {
+          this.$notify({
+            title: '失败',
+            message: response.data.message,
+            type: 'error',
+            duration: 2000
+          })
+        }
       })
       // this.roleTree.push(...defaultValue.roleList);
     },
@@ -203,9 +224,19 @@ export default {
       this.listQuery.orgId = this.$refs.roleTree.getCurrentKey()
 
       fetchUserOrgList(this.listQuery).then(response => {
-        this.list = response.data.items
-        this.total = response.data.total
-        this.listLoading = false
+        if (response.data.code === 2000) {
+          this.list = response.data.items
+          this.total = response.data.total
+          this.listLoading = false
+        } else {
+          this.listLoading = false
+          this.$notify({
+            title: '失败',
+            message: response.data.message,
+            type: 'error',
+            duration: 2000
+          })
+        }
       })
     }, updateRole() { // 修改组织结构权限
       if (this.multipleSelection.length <= 0 || this.$refs.roleTree.getCurrentKey() == null) {
@@ -222,7 +253,7 @@ export default {
           var message = response.data.message
           var title = '失败'
           var type = 'error'
-          if (response.data.result === true) {
+          if (response.data.code === 2000) {
             title = '成功'
             type = 'success'
             this.getList()

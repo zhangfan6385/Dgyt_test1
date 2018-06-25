@@ -6,10 +6,17 @@ export function fetchUserList(query) { // 查询用户
     params: query
   })
 }
-export function updateUserArticle(data) { // 修改用户信息-删除或者激活用户
+export function updateUserArticle(data) { // 修改用户信息-删除
   return request({
     url: '/user/updateUserArticle',
-    method: 'get',
+    method: 'post',
+    params: data
+  })
+}
+export function updateUserFlag(data) { // 修改用户信息-激活用户
+  return request({
+    url: '/user/updateUserFlag',
+    method: 'post',
     params: data
   })
 }
@@ -30,7 +37,7 @@ export function updateUserData(data) { // 修改用户信息-
 export function updatePasswordData(data) { // 修改密码
   return request({
     url: '/user/updatePasswordData',
-    method: 'get',
+    method: 'post',
     params: data
   })
 }

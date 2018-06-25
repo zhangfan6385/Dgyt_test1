@@ -22,7 +22,7 @@ export default {
     const { multipleSelection, roleId } = param2Obj(config.url)
     return {
       message: '分配成功',
-      result: true,
+      code: 2000,
       aa: multipleSelection,
       bb: roleId
     }
@@ -32,89 +32,74 @@ export default {
       return {
         aa: id,
         message: '删除成功',
-        result: true
+        code: 2000
       }
     }
   },
   getFetchOrgList: config => {
-    const { sysCode } = param2Obj(config.url)
+    const { sysCode = '2' } = param2Obj(config.url)
 
     if (sysCode === '2') {
-      return { items: [{
-        'id': 26,
-        'parentId': null,
-        'orgName': '大港油田一部',
-        'orgCode': '1401',
-        'remark': '1级单位',
-        'phone': '1361088982',
-        'phoneS': '15432222123',
-        'phoneFax': '024-2349874',
-        'orgAddr': '天津大港油田石油大街',
-        'children': [{
-          'id': 2601,
-          'parentId': 26,
-          'orgName': '大港油田财务',
-          'orgCode': '140101',
-          'remark': '',
-          'children': []
-        }]
-      }, {
-        'id': 27,
-        'parentId': null,
-        'orgName': '大港油田二部',
-        'orgCode': '1501',
-        'remark': '2级单位',
-        'phone': '1361088982',
-        'phoneS': '15432222123',
-        'phoneFax': '024-2349874',
-        'orgAddr': '天津大港油田石油大街',
-        'children': [{
-          'id': 2701,
-          'parentId': 27,
-          'orgName': '大港油田财务',
-          'orgCode': '150101',
-          'remark': '',
-          'children': []
-        }, {
-          'id': 2702,
-          'parentId': 27,
-          'orgName': '大港油田信息科',
-          'orgCode': '150102',
-          'remark': '一级单位',
+      return {
+        message: '查询成功',
+        code: 2000,
+        items: [{
+          'id': 26,
+          'parentId': null,
+          'orgName': '大港油田一部',
+          'orgCode': '1401',
+          'remark': '1级单位',
           'phone': '1361088982',
           'phoneS': '15432222123',
           'phoneFax': '024-2349874',
           'orgAddr': '天津大港油田石油大街',
-          'children': []
-        }]
-      }] }
+          'children': [{
+            'id': 2601,
+            'parentId': 26,
+            'orgName': '大港油田财务',
+            'orgCode': '140101',
+            'remark': '',
+            'children': []
+          }]
+        }, {
+          'id': 27,
+          'parentId': null,
+          'orgName': '大港油田二部',
+          'orgCode': '1501',
+          'remark': '2级单位',
+          'phone': '1361088982',
+          'phoneS': '15432222123',
+          'phoneFax': '024-2349874',
+          'orgAddr': '天津大港油田石油大街',
+          'children': [{
+            'id': 2701,
+            'parentId': 27,
+            'orgName': '大港油田财务',
+            'orgCode': '150101',
+            'remark': '',
+            'children': []
+          }, {
+            'id': 2702,
+            'parentId': 27,
+            'orgName': '大港油田信息科',
+            'orgCode': '150102',
+            'remark': '一级单位',
+            'phone': '1361088982',
+            'phoneS': '15432222123',
+            'phoneFax': '024-2349874',
+            'orgAddr': '天津大港油田石油大街',
+            'children': []
+          }]
+        }] }
     } else {
-      return { items: [{
-        'id': 26,
-        'parentId': null,
-        'orgName': '大港油田三部',
-        'orgCode': '1403',
-        'remark': '一级单位',
-        'phone': '1361088982',
-        'phoneS': '15432222123',
-        'phoneFax': '024-2349874',
-        'orgAddr': '天津大港油田石油大街',
-        'children': []
-      }, {
-        'id': 27,
-        'parentId': null,
-        'orgName': '大港油田四部',
-        'orgCode': '1404',
-        'remark': '一级单位',
-        'phone': '1361088982',
-        'phoneS': '15432222123',
-        'phoneFax': '024-2349874',
-        'orgAddr': '天津大港油田石油大街',
-        'children': [{
-          'id': 2701,
-          'parentId': 27,
-          'orgName': '大港油田财务部',
-          'orgCode': '140401',
+      return {
+        message: '查询成功',
+        code: 2000,
+        items: [{
+          'id': 26,
+          'parentId': null,
+          'orgName': '大港油田三部',
+          'orgCode': '1403',
           'remark': '一级单位',
           'phone': '1361088982',
           'phoneS': '15432222123',
@@ -122,28 +107,49 @@ export default {
           'orgAddr': '天津大港油田石油大街',
           'children': []
         }, {
-          'id': 2702,
-          'parentId': 27,
-          'orgName': '大港油田信息科',
-          'orgCode': '140402',
+          'id': 27,
+          'parentId': null,
+          'orgName': '大港油田四部',
+          'orgCode': '1404',
           'remark': '一级单位',
           'phone': '1361088982',
           'phoneS': '15432222123',
           'phoneFax': '024-2349874',
           'orgAddr': '天津大港油田石油大街',
-          'children': []
-        }]
-      }] }
+          'children': [{
+            'id': 2701,
+            'parentId': 27,
+            'orgName': '大港油田财务部',
+            'orgCode': '140401',
+            'remark': '一级单位',
+            'phone': '1361088982',
+            'phoneS': '15432222123',
+            'phoneFax': '024-2349874',
+            'orgAddr': '天津大港油田石油大街',
+            'children': []
+          }, {
+            'id': 2702,
+            'parentId': 27,
+            'orgName': '大港油田信息科',
+            'orgCode': '140402',
+            'remark': '一级单位',
+            'phone': '1361088982',
+            'phoneS': '15432222123',
+            'phoneFax': '024-2349874',
+            'orgAddr': '天津大港油田石油大街',
+            'children': []
+          }]
+        }] }
     }
   },
   createOrgArticle: () => ({
 
     message: '创建成功',
-    result: true
+    code: 2000
 
   }),
   getUpdateOrgData: () => ({
     message: '修改成功',
-    result: true
+    code: 2000
   })
 }

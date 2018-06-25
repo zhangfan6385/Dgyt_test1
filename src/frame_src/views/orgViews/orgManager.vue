@@ -126,7 +126,7 @@ export default {
       maxId: 700000,
 
       listQuery: {
-        sysCode: undefined// 回头注释掉
+        // sysCode: undefined// 回头注释掉
       },
       form: {
         id: null, // id: null,
@@ -168,11 +168,11 @@ export default {
             var message = response.data.message
             var title = '失败'
             var type = 'error'
-            if (response.data.result === true) {
+            if (response.data.code === 2000) {
               title = '成功'
               type = 'success'
               this.newAdd()
-              this.load2()
+              this.load()
             }
             this.$notify({
               title: title,
@@ -190,11 +190,11 @@ export default {
             var message = response.data.message
             var title = '失败'
             var type = 'error'
-            if (response.data.result === true) {
-              this.title = '成功'
-              this.type = 'success'
+            if (response.data.code === 2000) {
+              title = '成功'
+              type = 'success'
               this.newAdd()
-              this.load2()
+              this.load()
             }
             this.$notify({
               title: title,
@@ -206,39 +206,32 @@ export default {
         }
       })
     },
-    load2() { // 二次查询，为了查询出来不一样的假数据用
-      this.listQuery.sysCode = '2'// 回头注释掉
-      fetchOrgList(this.listQuery).then(response => {
-        this.roleTree = response.data.items
-      })
-      // this.roleTree.push(...defaultValue.roleList);
-    },
     deleteSelected(id) { // 删除方法
       this.listUpdate.id = this.form.id // 传递id
       this.listUpdate.field = 'deletaStatus' // 传递判断参数
       updateOrgArticle(this.listUpdate).then(response => {
-        this.message = '删除失败'
-        this.title = '失败'
-        this.message = response.data.message
-        if (response.data.result === true) {
-          //   this.newAdd();
-          //  this.load2();
+        var message = response.data.message
+        var title = '失败'
+        var type = 'error'
+        if (response.data.code === 2000) {
           this.deleteFromTree(this.roleTree, this.form.id, 'id') // 调用删除假数据的树里的方法
-          this.title = '成功'
+          title = '成功'
+          type = 'success'
           this.newAdd()
+          //  this.load2();
         }
         this.$notify({
-          title: this.title,
-          message: this.message,
-          type: 'success',
+          title: title,
+          message: message,
+          type: type,
           duration: 2000
         })
       })
       // this.load();
     },
     load() { // 查询数据
-      this.listQuery.sysCode = '1'// 回头注释掉
-      fetchOrgList(this.listQuery).then(response => {
+      // this.listQuery.sysCode = '1'// 回头注释掉
+      fetchOrgList().then(response => {
         this.roleTree = response.data.items
         // this.roleTree.push(...defaultValue.roleList);
       })

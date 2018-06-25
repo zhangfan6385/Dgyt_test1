@@ -1,11 +1,11 @@
 <template>
     <div class="app-container calendar-list-container"> 
     <div class="filter-container">
-       <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" :placeholder="$t('logInfoTable.userName')" v-model="listQuery.userName">
+       <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" :placeholder="$t('logInfoTable.USER_NAME')" v-model="listQuery.USER_NAME">
       </el-input> 
-      <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" :placeholder="$t('logInfoTable.logType')" v-model="listQuery.logType">
+      <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" :placeholder="$t('logInfoTable.LOG_TYPE')" v-model="listQuery.LOG_TYPE">
       </el-input> 
-       <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" :placeholder="$t('logInfoTable.accessTime')" v-model="listQuery.accessTime">
+       <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" :placeholder="$t('logInfoTable.ACCESS_TIME')" v-model="listQuery.ACCESS_TIME">
       </el-input> 
       <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">{{$t('logInfoTable.search')}}</el-button>
       <el-button class="filter-item" type="primary" :loading="downloadLoading" v-waves icon="el-icon-download" @click="handleDownload">{{$t('logInfoTable.export')}}</el-button>
@@ -14,39 +14,39 @@
     <el-card class="box-card">
       <el-table :key='tableKey' :header-cell-class-name="tableRowClassName" :data="list" v-loading="listLoading" element-loading-text="给我一点时间" border fit highlight-current-row
       style="width: 100%">
-        <el-table-column width="160px"  class="filter-item"  align="center" :label="$t('logInfoTable.accessTime')">
+        <el-table-column width="160px"  class="filter-item"  align="center" :label="$t('logInfoTable.ACCESS_TIME')">
         <template slot-scope="scope">
-          <span>{{scope.row.accessTime}}</span>
+          <span>{{scope.row.ACCESS_TIME}}</span>
         </template>
       </el-table-column>
-       <el-table-column width="140px" class="link-type"  align="center" :label="$t('logInfoTable.userId')">
+       <el-table-column width="140px" class="link-type"  align="center" :label="$t('logInfoTable.USER_ID')">
         <template slot-scope="scope">
-          <span>{{scope.row.userId}}</span>
+          <span>{{scope.row.USER_ID}}</span>
         </template>
       </el-table-column>
-      <el-table-column width="100px" align="center" :label="$t('logInfoTable.userName')">
+      <el-table-column width="100px" align="center" :label="$t('logInfoTable.USER_NAME')">
         <template slot-scope="scope">
-          <span>{{scope.row.userName}}</span>
+          <span>{{scope.row.USER_NAME}}</span>
         </template>
       </el-table-column>
-        <el-table-column width="140px" align="center" :label="$t('logInfoTable.ipAddr')">
+        <el-table-column width="140px" align="center" :label="$t('logInfoTable.IP_ADDR')">
         <template slot-scope="scope">
-          <span>{{scope.row.ipAddr}}</span>
+          <span>{{scope.row.IP_ADDR}}</span>
         </template>
       </el-table-column>
-      <el-table-column width="140px" align="center" :label="$t('logInfoTable.logType')">
+      <el-table-column width="140px" align="center" :label="$t('logInfoTable.LOG_TYPE')">
         <template slot-scope="scope">
-          <span>{{scope.row.logType}}</span>
+          <span>{{scope.row.LOG_TYPE}}</span>
         </template>
       </el-table-column>
-      <el-table-column width="270px" align="center" :label="$t('logInfoTable.logContent')">
+      <el-table-column width="270px" align="center" :label="$t('logInfoTable.LOG_CONTENT')">
         <template slot-scope="scope">
-          <span>{{scope.row.logContent}}</span>
+          <span>{{scope.row.LOG_CONTENT}}</span>
         </template>
       </el-table-column>
-       <el-table-column width="270px" align="center" :label="$t('logInfoTable.remark')">
+       <el-table-column width="270px" align="center" :label="$t('logInfoTable.REMARK')">
         <template slot-scope="scope">
-          <span>{{scope.row.remark}}</span>
+          <span>{{scope.row.REMARK}}</span>
         </template>
       </el-table-column>
     </el-table>
@@ -75,9 +75,9 @@ export default {
       total: null,
       listLoading: true,
       listQuery: {
-        userName: undefined,
-        logType: undefined,
-        accessTime: undefined,
+        USER_NAME: undefined,
+        LOG_TYPE: undefined,
+        ACCESS_TIME: undefined,
         page: 1,
         limit: 15
       },
@@ -97,9 +97,19 @@ export default {
     getList() {
       this.listLoading = true
       fetchLogInfoList(this.listQuery).then(response => {
+         if (response.data.code === 2000) {
         this.list = response.data.items
         this.total = response.data.total
         this.listLoading = false
+        }else {
+             this.listLoading = false
+            this.$notify({
+              title: '失败',
+              message: response.data.message,
+              type: 'error',
+              duration: 2000
+            })
+          }
       })
     },
     handleSizeChange(val) {
@@ -123,13 +133,13 @@ export default {
           '备注'
         ]
         const filterVal = [
-          'accessTime',
-          'userId',
-          'userName',
-          'ipAddr',
-          'logType',
-          'logContent',
-          'remark'
+          'ACCESS_TIME',
+          'USER_ID',
+          'USER_NAME',
+          'IP_ADDR',
+          'LOG_TYPE',
+          'LOG_CONTENT',
+          'REMARK'
         ]
         const data = this.formatJson(filterVal, this.list)
         excel.export_json_to_excel({

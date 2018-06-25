@@ -38,15 +38,15 @@ export default {
     if (field === 'deletaStatus') {
       return {
         aa: id,
-        message: '删除成功',
-        result: true
+        code: 2000,
+        message: '创建成功'
       }
     }
   }, getUpdateUserRoleArticle: config => {
     const { multipleSelection, roleId } = param2Obj(config.url)
     return {
-      message: '分配成功',
-      result: true,
+      code: 2000,
+      message: '创建成功',
       aa: multipleSelection,
       bb: roleId
     }
@@ -54,89 +54,95 @@ export default {
     const { sysCode } = param2Obj(config.url)
 
     if (sysCode === '2') {
-      return { items: [{
-        'id': 26,
-        'parentId': null,
-        'groupName': '超级管理员',
-        'groupCode': 'super_manager',
-        'sysCode': '1',
-        'remark': '',
-        'children': [{
-          'id': 30,
-          'parentId': 26,
-          'groupName': '测试新增',
+      return {
+        code: 2000,
+        message: '创建成功',
+        items: [{
+          'id': 26,
+          'parentId': null,
+          'groupName': '超级管理员',
+          'groupCode': 'super_manager',
+          'sysCode': '1',
+          'remark': '',
+          'children': [{
+            'id': 30,
+            'parentId': 26,
+            'groupName': '测试新增',
+            'groupCode': 'super_manager',
+            'sysCode': '1',
+            'remark': '',
+            'children': []
+          }]
+        }, {
+          'id': 27,
+          'parentId': null,
+          'groupName': '客服主管',
+          'groupCode': 'server_manager',
+          'sysCode': '1',
+          'remark': '',
+          'children': [{
+            'id': 28,
+            'parentId': 27,
+            'groupName': '售后客服',
+            'groupCode': 'server1',
+            'sysCode': '1',
+            'remark': '',
+            'children': []
+          }, {
+            'id': 29,
+            'parentId': 27,
+            'groupName': '售前客服',
+            'groupCode': 'server2',
+            'sysCode': '1',
+            'remark': '',
+            'children': []
+          }]
+        }] }
+    } else {
+      return {
+        code: 2000,
+        message: '创建成功',
+        items: [{
+          'id': 26,
+          'parentId': null,
+          'groupName': '超级管理员',
           'groupCode': 'super_manager',
           'sysCode': '1',
           'remark': '',
           'children': []
-        }]
-      }, {
-        'id': 27,
-        'parentId': null,
-        'groupName': '客服主管',
-        'groupCode': 'server_manager',
-        'sysCode': '1',
-        'remark': '',
-        'children': [{
-          'id': 28,
-          'parentId': 27,
-          'groupName': '售后客服',
-          'groupCode': 'server1',
-          'sysCode': '1',
-          'remark': '',
-          'children': []
         }, {
-          'id': 29,
-          'parentId': 27,
-          'groupName': '售前客服',
-          'groupCode': 'server2',
+          'id': 27,
+          'parentId': null,
+          'groupName': '客服主管',
+          'groupCode': 'server_manager',
           'sysCode': '1',
           'remark': '',
-          'children': []
-        }]
-      }] }
-    } else {
-      return { items: [{
-        'id': 26,
-        'parentId': null,
-        'groupName': '超级管理员',
-        'groupCode': 'super_manager',
-        'sysCode': '1',
-        'remark': '',
-        'children': []
-      }, {
-        'id': 27,
-        'parentId': null,
-        'groupName': '客服主管',
-        'groupCode': 'server_manager',
-        'sysCode': '1',
-        'remark': '',
-        'children': [{
-          'id': 28,
-          'parentId': 27,
-          'groupName': '售后客服',
-          'groupCode': 'server1',
-          'sysCode': '1',
-          'remark': '',
-          'children': []
-        }, {
-          'id': 29,
-          'parentId': 27,
-          'groupName': '售前客服',
-          'groupCode': 'server2',
-          'sysCode': '1',
-          'remark': '',
-          'children': []
-        }]
-      }] }
+          'children': [{
+            'id': 28,
+            'parentId': 27,
+            'groupName': '售后客服',
+            'groupCode': 'server1',
+            'sysCode': '1',
+            'remark': '',
+            'children': []
+          }, {
+            'id': 29,
+            'parentId': 27,
+            'groupName': '售前客服',
+            'groupCode': 'server2',
+            'sysCode': '1',
+            'remark': '',
+            'children': []
+          }]
+        }] }
     }
   },
   createRoleArticle: () => ({
-    message: '创建成功',
-    result: true
+    code: 2000,
+    message: '创建成功'
   }),
   getUpdateRoleData: () => ({
-    message: '修改成功',
-    result: true
+    code: 2000,
+    message: '修改成功'
   })
 }

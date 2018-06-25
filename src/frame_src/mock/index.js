@@ -29,38 +29,39 @@ Mock.mock(/\/article\/update/, 'post', articleAPI.updateArticle)
 
 // 用户管理模块
 Mock.mock(/\/user\/fetchUserList/, 'get', userAPI.getFetchUserList)
-Mock.mock(/\/user\/updateUserArticle/, 'get', userAPI.getUpdateUserArticle)
+Mock.mock(/\/user\/updateUserArticle/, 'post', userAPI.getUpdateUserArticle)
+Mock.mock(/\/user\/updateUserFlag/, 'post', userAPI.getUpdateUserFlag)
 Mock.mock(/\/user\/createUserArticle/, 'post', userAPI.createUserArticle)
 Mock.mock(/\/user\/updateUserData/, 'post', userAPI.getUpdateUserData)
-Mock.mock(/\/user\/updatePasswordData/, 'get', userAPI.getUpdatePasswordData)
+Mock.mock(/\/user\/updatePasswordData/, 'post', userAPI.getUpdatePasswordData)
 // 角色管理模块
 Mock.mock(/\/role\/fetchRoleList/, 'get', roleAPI.getFetchRoleList)
 Mock.mock(/\/role\/createRoleArticle/, 'post', roleAPI.createRoleArticle)
-Mock.mock(/\/role\/updateRoleArticle/, 'get', roleAPI.getUpdateRoleArticle)
+Mock.mock(/\/role\/updateRoleArticle/, 'post', roleAPI.getUpdateRoleArticle)
 Mock.mock(/\/role\/updateRoleData/, 'post', roleAPI.getUpdateRoleData)
 Mock.mock(/\/user\/fetchUserRoleList/, 'get', userAPI.getFetchUserRoleList)
-Mock.mock(/\/role\/updateUserRoleArticle/, 'get', roleAPI.getUpdateUserRoleArticle)
+Mock.mock(/\/role\/updateUserRoleArticle/, 'post', roleAPI.getUpdateUserRoleArticle)
 
 // 基础信息配置模块
 
-Mock.mock(/\/config\/fetchConfigList/, 'get', configAPI.getFetchConfigList)
-Mock.mock(/\/config\/createConfigArticle/, 'post', configAPI.getCreateConfigArticle)
-Mock.mock(/\/config\/updateConfigData/, 'post', configAPI.getUpdateConfigData)
-Mock.mock(/\/config\/updateConfigArticle/, 'get', configAPI.getUpdateConfigArticle)
+Mock.mock(/\/conf\/fetchConfigList/, 'get', configAPI.getFetchConfigList)
+Mock.mock(/\/conf\/createConfigArticle/, 'post', configAPI.getCreateConfigArticle)
+Mock.mock(/\/conf\/updateConfigData/, 'post', configAPI.getUpdateConfigData)
+Mock.mock(/\/conf\/updateConfigArticle/, 'post', configAPI.getUpdateConfigArticle)
 // 平台在建系统配置模块
 
 Mock.mock(/\/sysinfo\/fetchSysInfoList/, 'get', sysinfoAPI.getFetchSysInfoList)
 Mock.mock(/\/sysinfo\/createSysInfoArticle/, 'post', sysinfoAPI.getCreateSysInfoArticle)
 Mock.mock(/\/sysinfo\/updateSysInfoData/, 'post', sysinfoAPI.getUpdateSysInfoData)
-Mock.mock(/\/sysinfo\/updateSysInfoArticle/, 'get', sysinfoAPI.getUpdateSysInfoArticle)
+Mock.mock(/\/sysinfo\/updateSysInfoArticle/, 'post', sysinfoAPI.getUpdateSysInfoArticle)
 // 组织结构配置模块
 
 Mock.mock(/\/org\/fetchOrgList/, 'get', orgAPI.getFetchOrgList)
 Mock.mock(/\/org\/createOrgArticle/, 'post', orgAPI.createOrgArticle)
-Mock.mock(/\/org\/updateOrgArticle/, 'get', orgAPI.getUpdateOrgArticle)
+Mock.mock(/\/org\/updateOrgArticle/, 'post', orgAPI.getUpdateOrgArticle)
 Mock.mock(/\/org\/updateOrgData/, 'post', orgAPI.getUpdateOrgData)
 Mock.mock(/\/user\/fetchUserOrgList/, 'get', userAPI.getFetchUserOrgList)
-Mock.mock(/\/org\/updateUserOrgArticle/, 'get', orgAPI.getUpdateUserOrgArticle)
+Mock.mock(/\/org\/updateUserOrgArticle/, 'post', orgAPI.getUpdateUserOrgArticle)
 // 日志管理模块
 
 Mock.mock(/\/logInfo\/fetchLogInfoList/, 'get', logInfoAPI.getFetchLogInfoList)

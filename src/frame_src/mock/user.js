@@ -2,48 +2,45 @@ import Mock from 'mockjs'
 import { param2Obj } from '@/frame_src/utils'
 
 const UserList = []
-const count = 100
+const count = 10
 const UserRoleList = []
 const UserOrgList = []
 
 for (let i = 0; i < count; i++) {
   UserList.push(Mock.mock({
-    userId: '@increment',
-    userCode: '@integer(1000000,60000000)',
-    userName: '@cname',
-    userAlias: '@first',
-    userPass: '111111',
-    'phoneMobile|1': ['13531544954', '13632250649', '15820292420', '15999905612'],
-    'phoneOffice|1': ['024-2574598', '024-2574508', '024-2574510', '024-2574534'],
-    phoneOrg: '@integer(1000,9000)',
-    userEmail: '@EMAIL',
-    emailOffice: '@EMAIL',
-    userIp: '@ip',
-    'flag|1': ['0', '1'],
-    userDomain: '@first',
-    'remark|1': ['自开发人员', '业务人员', '办公室人员', '企业领导'],
-    title: '@title(1,9)',
-    forecast: '@float(0, 100, 2, 2)',
-    'type|1': ['CN', 'US', 'JP', 'EU'],
-    'status|1': ['published', 'draft', 'deleted'],
+    USER_ID: '@increment',
+    USER_CODE: '@integer(1000000,60000000)',
+    USER_NAME: '@cname',
+    USER_ALIAS: '@first',
+    USER_PASS: '111111',
+    'PHONE_MOBILE|1': ['13531544954', '13632250649', '15820292420', '15999905612'],
+    'PHONE_OFFICE|1': ['024-2574598', '024-2574508', '024-2574510', '024-2574534'],
+    PHONE_ORG: '@integer(1000,9000)',
+    USER_EMAIL: '@EMAIL',
+    EMAIL_OFFICE: '@EMAIL',
+    USER_IP: '@ip',
+    'FLAG|1': ['0', '1'],
+    USER_DOMAIN: '@first',
+    'REMARK|1': ['自开发人员', '业务人员', '办公室人员', '企业领导'],
     pageviews: '@integer(300, 5000)'
   }))
   UserRoleList.push(Mock.mock({
-    userId: '@increment',
-    userCode: '@integer(1000000,60000000)',
-    userName: '@cname',
-    'remark|1': ['自开发人员', '业务人员', '办公室人员', '企业领导'],
-    'flag|1': ['0', '1'],
+    USER_ID: '@increment',
+    USER_CODE: '@integer(1000000,60000000)',
+    USER_NAME: '@cname',
+    'REMARK|1': ['自开发人员', '业务人员', '办公室人员', '企业领导'],
+    'FLAG|1': ['0', '1'],
     'groupName|1': ['超级管理员', '', '客服主管'],
     'roleId|1': [26, 28],
     pageviews: '@integer(300, 5000)'
   }))
   UserOrgList.push(Mock.mock({
-    userId: '@increment',
-    userCode: '@integer(1000000,60000000)',
-    userName: '@cname',
-    'remark|1': ['自开发人员', '业务人员', '办公室人员', '企业领导'],
-    'flag|1': ['0', '1'],
+    USER_DOMAIN: '@first',
+    USER_ID: '@increment',
+    USER_CODE: '@integer(1000000,60000000)',
+    USER_NAME: '@cname',
+    'REMARK|1': ['自开发人员', '业务人员', '办公室人员', '企业领导'],
+    'FLAG|1': ['0', '1'],
     'orgName|1': ['大港油田一部', '', '大港油田财务'],
     'orgId|1': [26, 28],
     pageviews: '@integer(300, 5000)'
@@ -53,15 +50,15 @@ for (let i = 0; i < count; i++) {
 export default {
 
   getFetchUserList: config => {
-    const { flag, userName, page = 1, limit = 20, sort } = param2Obj(config.url)
+    const { FLAG, USER_NAME, page = 1, limit = 20, sort } = param2Obj(config.url)
 
     let mockList = UserList.filter(item => {
-      if (flag && item.flag !== flag) return false
-      if (userName && item.userName.indexOf(userName) < 0) return false
+      if (FLAG && item.FLAG !== FLAG) return false
+      if (USER_NAME && item.USER_NAME.indexOf(USER_NAME) < 0) return false
       return true
     })
 
-    if (sort === '-userId') {
+    if (sort === '-USER_ID') {
       mockList = mockList.reverse()
     }
 
@@ -69,21 +66,23 @@ export default {
 
     return {
       total: mockList.length,
-      items: pageList
+      items: pageList,
+      code: 2000,
+      message: '查询成功'
     }
   }, getFetchUserRoleList: config => {
-    const { flag, userName, page = 1, limit = 20, sort, roleId } = param2Obj(config.url)
+    const { FLAG, USER_NAME, page = 1, limit = 20, sort, roleId } = param2Obj(config.url)
 
     let mockList = UserRoleList.filter(item => {
-      if (flag && item.flag !== flag) return false
-      if (userName && item.userName.indexOf(userName) < 0) return false
+      if (FLAG && item.FLAG !== FLAG) return false
+      if (USER_NAME && item.USER_NAME.indexOf(USER_NAME) < 0) return false
       if (roleId === '26') {
-        if (item.groupName !== '超级管理员') return false
+        if (item.GROUP_NAME !== '超级管理员') return false
       }
       return true
     })
 
-    if (sort === '-userId') {
+    if (sort === '-USER_ID') {
       mockList = mockList.reverse()
     }
 
@@ -91,21 +90,23 @@ export default {
 
     return {
       total: mockList.length,
-      items: pageList
+      items: pageList,
+      code: 2000,
+      message: '查询成功'
     }
   }, getFetchUserOrgList: config => {
-    const { flag, userName, page = 1, limit = 20, sort, orgId } = param2Obj(config.url)
+    const { FLAG, USER_NAME, page = 1, limit = 20, sort, orgId } = param2Obj(config.url)
 
     let mockList = UserOrgList.filter(item => {
-      if (flag && item.flag !== flag) return false
-      if (userName && item.userName.indexOf(userName) < 0) return false
+      if (FLAG && item.FLAG !== FLAG) return false
+      if (USER_NAME && item.USER_NAME.indexOf(USER_NAME) < 0) return false
       if (orgId === '26') {
         if (item.orgName !== '大港油田一部') return false
       }
       return true
     })
 
-    if (sort === '-userId') {
+    if (sort === '-USER_ID') {
       mockList = mockList.reverse()
     }
 
@@ -113,38 +114,51 @@ export default {
 
     return {
       total: mockList.length,
-      items: pageList
+      items: pageList,
+      code: 2000,
+      message: '查询成功'
     }
   }, getUpdateUserArticle: config => {
-    const { field, flag, userId } = param2Obj(config.url)
+    const { field, FLAG, USER_ID } = param2Obj(config.url)
     if (field === 'deletaStatus') {
       return {
-        aa: flag,
-        bb: userId,
+        aa: FLAG,
+        bb: USER_ID,
         message: '删除成功',
-        result: true
+        code: 2000
       }
-    } else if (field === 'flag') {
+    } else if (field === 'FLAG') {
       return {
         message: '修改成功',
-        result: true
+        code: 2000
+      }
+    }
+  }, getUpdateUserFlag: config => {
+    const { field, FLAG, USER_ID } = param2Obj(config.url)
+    if (field === 'FLAG') {
+      return {
+        aa: FLAG,
+        bb: USER_ID,
+        message: '修改成功',
+        code: 2000
       }
     }
   }, getUpdatePasswordData: config => {
-    const { password, newpassword } = param2Obj(config.url)
+    const { password, newpassword, userCode } = param2Obj(config.url)
     return {
       message: '修改成功',
-      result: true,
+      code: 2000,
       aa: password,
-      bb: newpassword
+      bb: newpassword,
+      cc: userCode
     }
   },
   createUserArticle: () => ({
     message: '创建成功',
-    result: true
+    code: 2000
   }),
   getUpdateUserData: () => ({
     message: '创建成功',
-    result: true
+    code: 2000
   })
 }
