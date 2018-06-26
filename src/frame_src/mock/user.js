@@ -120,7 +120,7 @@ export default {
       message: '查询成功'
     }
   }, getUpdateUserArticle: config => {
-    const { field, FLAG, USER_ID } = param2Obj(config.url)
+    const { field, FLAG, USER_ID } = JSON.parse(config.body)
     if (field === 'deletaStatus') {
       return {
         aa: FLAG,
@@ -135,7 +135,7 @@ export default {
       }
     }
   }, getUpdateUserFlag: config => {
-    const { field, FLAG, USER_ID } = param2Obj(config.url)
+    const { field, FLAG, USER_ID } = JSON.parse(config.body)
     if (field === 'FLAG') {
       return {
         aa: FLAG,
@@ -145,13 +145,13 @@ export default {
       }
     }
   }, getUpdatePasswordData: config => {
-    const { password, newpassword, userCode } = param2Obj(config.url)
+    const { password, newpassword, userid } = JSON.parse(config.body)
     return {
       message: '修改成功',
       code: 2000,
       aa: password,
       bb: newpassword,
-      cc: userCode
+      cc: userid
     }
   },
   createUserArticle: () => ({

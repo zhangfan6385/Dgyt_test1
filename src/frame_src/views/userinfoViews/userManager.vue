@@ -110,7 +110,7 @@
       </el-table-column>
     </el-table>
       <div class="pagination-container">
-      <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="listQuery.page" :page-sizes="[10,20,30, 50]" :page-size="listQuery.limit" layout="total, sizes, prev, pager, next, jumper" :total="total">
+      <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="listQuery.page" :page-sizes="[5,10,20, 30]" :page-size="listQuery.limit" layout="total, sizes, prev, pager, next, jumper" :total="total">
       </el-pagination>
     </div>
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
@@ -334,13 +334,14 @@ export default {
             if (response.data.code === 2000) {
               title = '成功'
               type = 'success'
-              for (const v of this.list) {
-                if (v.id === this.temp.id) {
-                  const index = this.list.indexOf(v)
-                  this.list.splice(index, 1, this.temp)
-                  break
-                }
-              }
+              this.getList()
+              // for (const v of this.list) {
+              //   if (v.id === this.temp.id) {
+              //     const index = this.list.indexOf(v)
+              //     this.list.splice(index, 1, this.temp)
+              //     break
+              //   }
+              // }
             }
             this.dialogFormVisible = false
             this.$notify({
@@ -362,9 +363,9 @@ export default {
         this.title = '失败'
         this.type = 'error'
         if (response.data.code === 2000) {
-          const index = this.list.indexOf(row)
-          this.list.splice(index, 1)
-          // this.getList();
+          //const index = this.list.indexOf(row)
+         // this.list.splice(index, 1)
+           this.getList();
           this.title = '成功'
           this.type = 'success'
         }
@@ -388,7 +389,8 @@ export default {
             if (response.data.code === 2000) {
               title = '成功'
               type = 'success'
-              this.list.unshift(this.temp)
+              // this.list.unshift(this.temp)
+               this.getList()
             }
             this.dialogFormVisible = false
             this.$notify({
@@ -412,8 +414,8 @@ export default {
         this.title = '失败'
         this.type = 'error'
         if (response.data.code === 2000) {
-          row.FLAG = status
-          // this.getList();
+          //row.FLAG = status
+          this.getList();
           this.title = '成功'
           this.type = 'success'
         }

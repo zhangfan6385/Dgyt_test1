@@ -7,7 +7,7 @@
         <!-- <img src="../../../../frame_src/imgs/avatar.png"> -->
         <span>Admin</span>
 
-        <span style="margin-left:15px;">单位：大港油田信息中心</span>
+        <span style="margin-left:15px;">单位：{{departCodeMessage}}</span>
       </div>
 
 
@@ -65,7 +65,11 @@ export default {
       'sidebar',
       'name',
       'avatar'
-    ])
+    ]),
+    // 计算属性的 getter
+    departCodeMessage: function () {
+      return this.$store.state.user.departName
+    }
   },
   methods: {
     toggleSideBar() {

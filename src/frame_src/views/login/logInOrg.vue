@@ -41,6 +41,8 @@ export default {
       return ''
     },
     handleCurrentChange(val) {
+      this.$store.dispatch('setDepartCode', val.orgId)
+      this.$store.dispatch('setDepartName', val.orgName)
       this.updateShowDialog(val.orgId)
     }
 
