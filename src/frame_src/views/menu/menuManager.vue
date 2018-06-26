@@ -28,8 +28,14 @@
                 <el-form-item label="名称" :label-width="formLabelWidth">
                   <el-input v-model="form.MENU_NAME" auto-complete="off"></el-input>
                 </el-form-item>
-                <el-form-item label="链接" :label-width="formLabelWidth">
+                <el-form-item label="路由" :label-width="formLabelWidth">
+                  <el-input v-model="form.MODULE_ROUTE" auto-complete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="相对链接" :label-width="formLabelWidth">
                   <el-input v-model="form.MODULE_URL" auto-complete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="功能对象名" :label-width="formLabelWidth">
+                  <el-input v-model="form.MODULE_OBJ" auto-complete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="是否显示" :label-width="formLabelWidth">
                   <el-radio class="radio" v-model="form.MENU_PROP" label="1">显示</el-radio>
@@ -540,7 +546,7 @@
         defaultProps: {
           children: 'children',
           label: 'MENU_NAME',
-          id: 'MENU_ID'
+          id: 'id'
         },
         maxId: 7000000,
         menuTree: [],
@@ -549,19 +555,12 @@
           MENU_NAME: '',
           MENU_ORDER: 0,
           MENU_ICON: '',
+          MODULE_ROUTE: '',
           MODULE_URL: '',
+          MODULE_OBJ: '',
           MENU_PROP: '',
-          delivery: false,
           MENU_ID_UPPER: null,
-          desc: ''
-        },
-        listUpdate: {
-          keyCode: undefined,
-          field: {},
-          operCode: undefined
-        },
-        query: {
-          sysCode: undefined
+          SYS_CODE: ''
         }
       }
     },
@@ -570,6 +569,9 @@
       menuSelectTree: function() {
         // `this` 指向 vm 实例
         return this.menuTree
+      },
+      sysCode() {
+        return this.$store.getters.sysCode
       }
     },
     methods: {
@@ -591,39 +593,30 @@
           MENU_NAME: '',
           MENU_ORDER: 0,
           MENU_ICON: '',
+          MODULE_ROUTE: '',
           MODULE_URL: '',
+          MODULE_OBJ: '',
           MENU_PROP: '',
-          delivery: false,
           MENU_ID_UPPER: null,
-          desc: ''
+          SYS_CODE: this.sysCode
         }
       },
       deleteSelected() {
-        /* this.$http.get(api.SYS_MENU_DELETE + '?menuIds=' + this.form.MENU_ID)
-          .then(res => {
-            this.$message('操作成功')
-            this.deleteFromTree(this.menuTree, this.form.MENU_ID)
+        const deleteQuery = { MENU_ID: [] }
+        deleteQuery.MENU_ID.push(this.form.MENU_ID)
+        deleteMenu(deleteQuery).then(response => {
+          let type
+          if (response.data.code === 2000) {
+            type = 'success'
+            this.deleteFromTree(this.menuTree, this.form.MENU_ID, 'id')
             this.newAdd()
-          }).catch(e => {
-            this.$message('操作成功')
-            this.deleteFromTree(this.menuTree, this.form.MENU_ID)
-            this.newAdd()
-          }) */
-        this.listUpdate.keyCode = this.form.MENU_ID
-        this.listUpdate.operCode = 'delete'
-        deleteMenu(this.listUpdate).then(response => {
-          this.message = '删除失败'
-          this.title = '失败'
-          if (response.data.result === true) {
-            this.deleteFromTree(this.menuTree, this.form.MENU_ID, 'MENU_ID')
-            this.title = '成功'
-            this.newAdd()
+          } else {
+            type = 'error'
           }
-          this.message = response.data.message
           this.$notify({
-            title: this.title,
-            message: this.message,
-            type: 'success',
+            title: '提示信息',
+            message: response.data.message,
+            type: type,
             duration: 2000
           })
         })
@@ -635,34 +628,20 @@
           this.$message.warning('请选择要删除的资源')
           return
         }
+        const deleteQuery = { MENU_ID: checkKeys }
         this.$confirm('确定删除?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          /* this.$http.get(api.SYS_MENU_DELETE + '?menuIds=' + checkKeys.join(','))
-            .then(res => {
-              this.$message('操作成功')
-              this.load()
-            }).catch(e => {
-              this.$message('操作成功')
+          deleteMenu(deleteQuery).then(response => {
+            if (response.data.code === 2000) {
               this.batchDeleteFromTree(this.menuTree, checkKeys)
-            }) */
-
-          this.listUpdate.keyCode = checkKeys
-          this.listUpdate.operCode = 'delete'
-          deleteMenu(this.listUpdate).then(response => {
-            this.message = '删除失败'
-            this.title = '失败'
-            if (response.data.result === true) {
-              this.batchDeleteFromTree(this.menuTree, checkKeys)
-              this.title = '成功'
               this.newAdd()
             }
-            this.message = response.data.message
             this.$notify({
-              title: this.title,
-              message: this.message,
+              title: '提示信息',
+              message: response.data.message,
               type: 'success',
               duration: 2000
             })
@@ -670,87 +649,67 @@
         })
       },
       handleNodeClick(data) {
-        /* fetchMenuDetail().then(response => {
-          this.menuTree = response.data.items
-        }) */
         this.form = merge({}, data)
+        this.form.MENU_ID = this.form.id
+        this.form.MENU_ID_UPPER = this.form.parentId
       },
       onSubmit() {
         if (this.form.MENU_ID == null) {
-          this.listUpdate.field = this.form
-          this.listUpdate.operCode = 'add'
           this.$refs['form'].validate((valid) => {
             if (valid) {
-              createMenu(this.listUpdate).then(response => {
-                this.message = '创建失败'
-                this.title = '失败'
-                if (response.data.result === true) {
-                  console.log('add')
-                  // this.newAdd()
-                  this.title = '成功'
-                  this.maxId += 1
-                  // this.$message('操作成功')
-                  this.form.MENU_ID = this.maxId
-                  var ddd = {
-                    MENU_ID: this.form.MENU_ID,
+              createMenu(this.form).then(response => {
+                let type = 'success'
+                if (response.data.code === 2000) {
+                  type = 'success'
+                  this.form.MENU_ID = response.data.items.MENU_ID
+                  var add = {
+                    id: this.form.MENU_ID,
                     MENU_NAME: this.form.MENU_NAME,
                     MENU_ORDER: this.form.MENU_ORDER,
                     MENU_ICON: this.form.MENU_ICON,
+                    MODULE_ROUTE: this.form.MODULE_ROUTE,
                     MODULE_URL: this.form.MODULE_URL,
-                    isShow: this.form.isShow,
-                    delivery: this.form.delivery,
-                    MENU_ID_UPPER: this.form.MENU_ID_UPPER,
-                    desc: this.form.desc,
+                    MODULE_OBJ: this.form.MODULE_OBJ,
+                    MENU_PROP: this.form.MENU_PROP,
+                    parentId: this.form.MENU_ID_UPPER,
                     children: []
                   }
-                  this.appendTreeNode(this.menuTree, ddd)
+                  this.appendTreeNode(this.menuTree, add)
+                } else {
+                  type = 'error'
                 }
                 this.$notify({
-                  title: this.title,
+                  title: '提示信息',
                   message: response.data.message,
-                  type: 'success',
+                  type: type,
                   duration: 2000
                 })
               })
             }
           })
         } else {
-          /* this.$http.post(api.SYS_MENU_UPDATE, this.form)
-            .then(res => {
-              this.$message('操作成功')
-              this.updateTreeNode(this.menuTree, res.data)
-            }).catch(e => {
-              this.$message('操作成功')
+          updateMenu(this.form).then(response => {
+            let type = 'success'
+            if (response.data.code === 2000) {
+              type = 'success'
               this.updateTreeNode(this.menuTree, merge({}, this.form))
-            }) */
-
-          this.listUpdate.field = this.form
-          this.listUpdate.operCode = 'update'
-          updateMenu(this.listUpdate).then(response => {
-            this.message = '更新失败'
-            this.title = '失败'
-            if (response.data.result === true) {
-              this.title = '成功'
-              this.updateTreeNode(this.menuTree, merge({}, this.form))
+            } else {
+              type = 'error'
             }
-            this.message = response.data.message
             this.$notify({
-              title: this.title,
-              message: this.message,
-              type: 'success',
+              title: '提示信息',
+              message: response.data.message,
+              type: type,
               duration: 2000
             })
           })
         }
       },
       load() {
-        /* sysApi.menuList().then(res => {
-          this.menuTree = res
-        }) */
-
-        this.query.sysCode = '1'
-        fetchMenuList(this.query).then(response => {
-          this.menuTree = response.data.items
+        this.form.SYS_CODE = this.sysCode
+        const query = { sysCode: this.sysCode }
+        fetchMenuList(query).then(response => {
+          this.menuTree = response.data
         })
       }
     },

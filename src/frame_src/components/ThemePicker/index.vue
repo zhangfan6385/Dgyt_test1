@@ -35,45 +35,22 @@ export default {
     handleSetLanguage(style) {
       const themeCluster = this.getThemeCluster(style.replace('#', ''))
       const originalCluster = this.getThemeCluster(lastTheme.replace('#', ''))
-      // console.log(document.querySelectorAll('.sidebar-container .el-submenu .el-menu-item'))
-      /* var elMenus = document.querySelectorAll('.el-submenu__title,el-menu-item')
-      console.log(elMenus)
-      for (let i = 0, j = elMenus.length; i < j; i++) {
-        if (style === '#3A71A8') { // 蓝
-          elMenus[i].classList.remove('themeGreenElMenu', 'themeRedElMenu', 'themeGrayElMenu')
-          elMenus[i].classList.add('themeBlueElMenu')
-        } else if (style === '#C03639') { // 红
-          elMenus[i].classList.remove('themeBlueElMenu', 'themeGreenElMenu', 'themeGrayElMenu')
-          elMenus[i].classList.add('themeRedElMenu')
-        } else if (style === '#30B08F') { // 绿
-          elMenus[i].classList.remove('themeBlueElMenu', 'themeRedElMenu', 'themeGrayElMenu')
-          elMenus[i].classList.add('themeGreenElMenu')
-        } else if (style === '#909399') { // 灰
-          elMenus[i].classList.remove('themeGreenElMenu', 'themeRedElMenu', 'themeBlueElMenu')
-          elMenus[i].classList.add('themeGrayElMenu')
-        } else { // 蓝
-          elMenus[i].classList.remove('themeGreenElMenu', 'themeRedElMenu', 'themeGrayElMenu')
-          elMenus[i].classList.add('themeBlueElMenu')
-        }
-      }*/
-      var subMenus = document.querySelectorAll('.sidebar-container .el-submenu .el-menu-item')
-      for (let i = 0, j = subMenus.length; i < j; i++) {
-        if (style === '#3A71A8') { // 蓝
-          subMenus[i].classList.remove('themeGreen', 'themeRed', 'themeGray')
-          subMenus[i].classList.add('themeBlue')
-        } else if (style === '#C03639') { // 红
-          subMenus[i].classList.remove('themeBlue', 'themeGreen', 'themeGray')
-          subMenus[i].classList.add('themeRed')
-        } else if (style === '#30B08F') { // 绿
-          subMenus[i].classList.remove('themeBlue', 'themeRed', 'themeGray')
-          subMenus[i].classList.add('themeGreen')
-        } else if (style === '#909399') { // 灰
-          subMenus[i].classList.remove('themeGreen', 'themeRed', 'themeBlue')
-          subMenus[i].classList.add('themeGray')
-        } else { // 蓝
-          subMenus[i].classList.remove('themeGreen', 'themeRed', 'themeGray')
-          subMenus[i].classList.add('themeBlue')
-        }
+      var subMenu = document.querySelector('.sidebar-container .theme')
+      if (style === '#3A71A8') { // 蓝
+        subMenu.classList.remove('themeGreen', 'themeRed', 'themeGray')
+        subMenu.classList.add('themeBlue')
+      } else if (style === '#C03639') { // 红
+        subMenu.classList.remove('themeBlue', 'themeGreen', 'themeGray')
+        subMenu.classList.add('themeRed')
+      } else if (style === '#30B08F') { // 绿
+        subMenu.classList.remove('themeBlue', 'themeRed', 'themeGray')
+        subMenu.classList.add('themeGreen')
+      } else if (style === '#909399') { // 灰
+        subMenu.classList.remove('themeGreen', 'themeRed', 'themeBlue')
+        subMenu.classList.add('themeGray')
+      } else { // 蓝
+        subMenu.classList.remove('themeGreen', 'themeRed', 'themeGray')
+        subMenu.classList.add('themeBlue')
       }
       console.log(themeCluster, originalCluster)
       const getHandler = (variable, id) => {
