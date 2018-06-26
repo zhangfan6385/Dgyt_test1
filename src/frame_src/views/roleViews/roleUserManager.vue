@@ -37,15 +37,20 @@
           width="50"> 
         </el-table-column>
 
-
-      <el-table-column width="110px" align="center" :label="$t('userTable.USER_CODE')">
+<el-table-column width="110px" align="center" :label="$t('userTable.USER_DOMAIN')">
         <template slot-scope="scope">
-          <span>{{scope.row.USER_CODE}}</span>
+          <span>{{scope.row.USER_DOMAIN}}</span>
         </template>
       </el-table-column>
+      
       <el-table-column width="110px" align="center" :label="$t('userTable.USER_NAME')">
         <template slot-scope="scope">
           <span>{{scope.row.USER_NAME}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column width="110px" align="center" :label="$t('userTable.USER_CODE')">
+        <template slot-scope="scope">
+          <span>{{scope.row.USER_CODE}}</span>
         </template>
       </el-table-column>
       <el-table-column width="110px" align="center" :label="$t('userTable.FLAG')">

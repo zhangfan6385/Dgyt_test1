@@ -25,6 +25,7 @@ for (let i = 0; i < count; i++) {
     pageviews: '@integer(300, 5000)'
   }))
   UserRoleList.push(Mock.mock({
+    USER_DOMAIN: '@first',
     USER_ID: '@increment',
     USER_CODE: '@integer(1000000,60000000)',
     USER_NAME: '@cname',
@@ -77,7 +78,7 @@ export default {
       if (FLAG && item.FLAG !== FLAG) return false
       if (USER_NAME && item.USER_NAME.indexOf(USER_NAME) < 0) return false
       if (roleId === '26') {
-        if (item.GROUP_NAME !== '超级管理员') return false
+        if (item.groupName !== '超级管理员') return false
       }
       return true
     })
