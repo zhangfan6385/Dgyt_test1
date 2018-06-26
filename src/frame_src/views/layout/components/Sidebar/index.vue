@@ -1,12 +1,12 @@
 <template>
   <!-- #304156 -->
   <el-scrollbar wrapClass="scrollbar-wrapper">
-    <el-menu
+    <el-menu class="theme themeBlue"
       mode="vertical"
       :show-timeout="200"
       :default-active="$route.path"
       :collapse="isCollapse"
-      background-color="#3A71A8"
+      background-color="#304156"
       text-color="#bfcbd9"
       active-text-color="#409EFF"
     >

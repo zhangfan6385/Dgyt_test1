@@ -83,77 +83,78 @@
       }
     }
   }
-  .sidebar-container .nest-menu .el-submenu>.el-submenu__title,
-  .sidebar-container .el-submenu .el-menu-item {
-    min-width: 180px !important;
-    /* background-color: $subMenuBg !important;
-    &:hover {
-      background-color: $menuHover !important;
+
+  .sidebar-container .themeBlue{
+    .nest-menu .el-submenu>.el-submenu__title,
+    .el-submenu .el-menu-item {
+      min-width: 180px !important;
+      background-color: $subMenuBg !important;
+      &:hover {
+        background-color: $menuHover !important;
+      }
+    }
+
+    /* .el-submenu__title{
+      background-color: red !important;
+      &:hover {
+        background-color: green !important;
+      }
     } */
-
-    /* background-color: #28004D !important;
-    &:hover {
-      background-color: #8600FF !important;
-    } */
   }
 
-  .themeBlue{
-    background-color: #28004D !important;
-    &:hover {
-      background-color: #8600FF !important;
+  .sidebar-container .themeGreen{
+    .nest-menu .el-submenu>.el-submenu__title,
+    .el-submenu .el-menu-item {
+      min-width: 180px !important;
+      background-color: $subMenuBg !important;
+      &:hover {
+        background-color: $menuHover !important;
+      }
+    }
+
+    .el-submenu__title{
+      background-color: #006000 !important;
+      &:hover {
+        background-color: #00BB00 !important;
+      }
     }
   }
 
-  .themeGreen{
-    background-color: #006000 !important;
-    &:hover {
-      background-color: #00BB00 !important;
+  .sidebar-container .themeRed{
+    .nest-menu .el-submenu>.el-submenu__title,
+    .el-submenu .el-menu-item {
+      min-width: 180px !important;
+      background-color: $subMenuBg !important;
+      &:hover {
+        background-color: $menuHover !important;
+      }
+    }
+
+    .el-submenu__title{
+      background-color: #AE0000 !important;
+      &:hover {
+        background-color: #EA0000 !important;
+      }
     }
   }
 
-  .themeRed{
-    background-color: #AE0000 !important;
-    &:hover {
-      background-color: #EA0000 !important;
+  .sidebar-container .themeGray{
+    .nest-menu .el-submenu>.el-submenu__title,
+    .el-submenu .el-menu-item {
+      min-width: 180px !important;
+      background-color: $subMenuBg !important;
+      &:hover {
+        background-color: $menuHover !important;
+      }
+    }
+
+    .el-submenu__title{
+      background-color: #272727 !important;
+      &:hover {
+        background-color: #6c6c6c !important;
+      }
     }
   }
-
-  .themeGray{
-    background-color: #272727 !important;
-    &:hover {
-      background-color: #6c6c6c !important;
-    }
-  }
-
-
-  .themeBlueElMenu{
-    background-color: #28004D !important;
-    &:hover {
-      background-color: #8600FF !important;
-    }
-  }
-
-  .themeGreenElMenu{
-    background-color: #006000 !important;
-    &:hover {
-      background-color: #00BB00 !important;
-    }
-  }
-
-  .themeRedElMenu{
-    background-color: #AE0000 !important;
-    &:hover {
-      background-color: #EA0000 !important;
-    }
-  }
-
-  .themeGrayElMenu{
-    background-color: #272727 !important;
-    &:hover {
-      background-color: #6c6c6c !important;
-    }
-  }
-
 
   .el-menu--collapse .el-menu .el-submenu {
     min-width: 180px !important;

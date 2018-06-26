@@ -59,75 +59,21 @@
         },
         defaultMenuProps: {
           children: 'children',
-          label: 'name',
+          label: 'MENU_NAME',
           id: 'id'
         },
         roleTree: [],
-        resourceTree: [],
-        roleListQuery: {
-          sysCode: undefined
-        },
-        menuListQuery: {
-          sysCode: undefined,
-          roleId: undefined
-        },
-        roleMenuSet: {
-          roleId: undefined,
-          menuIds: undefined
-        }
+        resourceTree: []
+      }
+    },
+    computed: {
+      // 计算属性的 getter
+      sysCode() {
+        return this.$store.getters.sysCode
       }
     },
     methods: {
-      configRoleResources() {
-        const checkedKeys = this.$refs.resourceTree.getCheckedKeys()
-        /* this.$http.get(api.SYS_SET_ROLE_RESOURCE + '?roleId=' + this.form.id + '&resourceIds=' + checkedKeys.join(','))
-          .then(res => {
-            this.$message('修改成功')
-            this.dialogVisible = false
-          }) */
-
-        if (this.checkedKeys.length <= 0 || this.$refs.roleTree.getCurrentKey() == null) {
-          this.$notify({
-            title: '失败',
-            message: '请选择角色和菜单',
-            type: 'error',
-            duration: 2000
-          })
-          return
-        }
-        this.roleMenuSet.roleId = this.$refs.resourceTree.getCurrentKey()
-        this.roleMenuSet.menuIds = checkedKeys.join(',')
-        setRoleMenus(this.roleMenuSet).then(response => {
-          this.message = '配置失败'
-          this.title = '失败'
-          if (response.data.result === true) {
-            this.title = '成功'
-          }
-          this.message = response.data.message
-          this.$notify({
-            title: this.title,
-            message: this.message,
-            type: 'success',
-            duration: 2000
-          })
-        })
-      },
-      handleNodeClick(data) {
-        this.settingResource(data.id)
-      },
-
-      // 初始化角色树数据
-      load() {
-        // sysApi.roleList().then(res => {
-        //   this.roleTree = []
-        //   this.roleTree.push(...res)
-        // })
-
-        this.roleListQuery.sysCode = '2'
-        fetchRoleList(this.roleListQuery).then(response => {
-          this.roleTree = response.data.items
-        })
-      },
+      // 自定义方法，重绘树结构
       renderContent(h, { node, data, store }) {
         return (
           <span>
@@ -139,40 +85,74 @@
             </span>
           </span>)
       },
-      settingResource(id) {
-        // event.stopPropagation()
+
+      // 给角色分配权限
+      configRoleResources() {
+        const checkedKeys = this.$refs.resourceTree.getCheckedKeys()
+        if (checkedKeys.length <= 0 || this.$refs.roleTree.getCurrentKey() == null) {
+          this.$notify({
+            title: '提示信息',
+            message: '请选择角色和菜单',
+            type: 'error',
+            duration: 2000
+          })
+          return
+        }
+        const roleMenuSet = { GROUP_ID: this.$refs.roleTree.getCurrentKey(), MENU_ID: checkedKeys.join(',') }
+        let type = 'success'
+        setRoleMenus(roleMenuSet).then(response => {
+          if (response.data.code === 2000) {
+            type = 'success'
+          } else {
+            type = 'error'
+          }
+          this.$notify({
+            title: '提示信息',
+            message: response.data.message,
+            type: type,
+            duration: 2000
+          })
+        })
+      },
+
+      // 左侧角色树节点点击事件
+      handleNodeClick(data) {
+        this.settingResource(data.id)
+      },
+
+      // 初始化角色树及资源树数据
+      load() {
+        const query = { sysCode: this.sysCode }
+        fetchRoleList(query).then(response => {
+          this.roleTree = response.data.items
+        })
+
         if (this.resourceTree == null || this.resourceTree.length <= 0) {
           this.dialogLoading = true
-          /* sysApi.resourceList()
-            .then(res => {
-              this.dialogLoading = false
-              this.resourceTree = res
-            }) */
-          this.roleListQuery.sysCode = '1'
-          fetchMenuList(this.roleListQuery).then(response => {
+          fetchMenuList(query).then(response => {
             this.dialogLoading = false
-            this.resourceTree = response.data.items
+            this.resourceTree = response.data
           })
         }
-        /* this.$http.get(api.SYS_ROLE_RESOURCE + '?id=' + id)
-          .then(res => {
-            this.$refs.resourceTree.setCheckedKeys(res.data)
-          }).catch(err => {
+      },
 
-          }) */
-        this.menuListQuery.sysCode = '1'
-        this.menuListQuery.roleId = Number(id)
-        console.log(typeof (this.menuListQuery.roleId))
+      // 获取角色对应的权限
+      settingResource(id) {
+        const menuListQuery = { sysCode: this.sysCode, roleId: id }
         if (id === undefined) return
-        fetchRoleMenuList(this.menuListQuery).then(response => {
-          if (response.data.items[0] === undefined) return
-          this.$refs.resourceTree.setCheckedKeys(response.data.items[0].id)
+        fetchRoleMenuList(menuListQuery).then(response => {
+          const menuIds = []
+          for (const menuId of response.data) {
+            menuIds.push(menuId.MENU_ID)
+          }
+          this.$refs.resourceTree.setCheckedKeys(menuIds)
         })
       }
     },
+
+    // 生命周期函数
     created() {
       this.load()
-      this.settingResource()
     }
   }
 </script>

@@ -14,7 +14,9 @@ const user = {
     orgList: null,
     setting: {
       articlePlatform: []
-    }
+    },
+    sysCode: '1',
+    sysName: '大港油田软件研发平台'
   },
 
   mutations: {
@@ -44,10 +46,23 @@ const user = {
     },
     SET_ORG_LIST: (state, orgList) => {
       state.orgList = orgList
+    },
+    SET_SYS_CODE: (state, sysCode) => {
+      state.sysCode = sysCode
+    },
+    SET_SYS_NAME: (state, sysName) => {
+      state.sysName = sysName
     }
   },
 
   actions: {
+    setSysCode({ commit }, sysCode) {
+      commit('SET_SYS_CODE', sysCode)
+    },
+    setSysName({ commit }, sysName) {
+      commit('SET_SYS_NAME', sysName)
+    },
+
     // 用户名登录
     LoginByUsername({ commit }, userInfo) {
       const username = userInfo.username.trim()
@@ -82,6 +97,10 @@ const user = {
           commit('SET_NAME', data.name)
           commit('SET_AVATAR', data.avatar)
           commit('SET_INTRODUCTION', data.introduction)
+
+          commit('SET_SYS_CODE', '1')// 设置当前系统编码
+          commit('SET_SYS_NAME', '大港油田软件研发平台')// 设置当前系统名称
+
           resolve(response)
         }).catch(error => {
           reject(error)

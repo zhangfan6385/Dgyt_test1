@@ -72,12 +72,13 @@ Mock.mock(/\/search\/user/, 'get', remoteSearchAPI.searchUser)
 Mock.mock(/\/transaction\/list/, 'get', transactionAPI.getList)
 
 // 菜单管理界面
-Mock.mock(/\/menu\/fetchMenuList/, 'get', menuAPI.getMenuList)
-Mock.mock(/\/menu\/fetchRoleMenuList/, 'get', menuAPI.getRoleMenuList)
-Mock.mock(/\/menu\/fetchMenuDetail/, 'get', menuAPI.getMenuDetail)
-Mock.mock(/\/menu\/updateMenu/, 'post', menuAPI.updateMenu)
-Mock.mock(/\/menu\/createMenu/, 'post', menuAPI.createMenu)
-Mock.mock(/\/menu\/deleteMenu/, 'post', menuAPI.deleteMenu)
-Mock.mock(/\/menu\/setRoleMenus/, 'post', menuAPI.setRoleMenus)
+// Mock.mock(/\/menu\/fetchMenuList/, 'get', menuAPI.getMenuList)
+// Mock.mock(/\/menu\/fetchMenuDetail/, 'get', menuAPI.getMenuDetail)
+// Mock.mock(/\/menu\/updateMenu/, 'post', menuAPI.updateMenu)
+// Mock.mock(/\/menu\/createMenu/, 'post', menuAPI.createMenu)
+// Mock.mock(/\/menu\/deleteMenu/, 'post', menuAPI.deleteMenu)
+
+// Mock.mock(/\/menu\/fetchRoleMenuList/, 'get', menuAPI.getRoleMenuList)
+// Mock.mock(/\/menu\/setRoleMenus/, 'post', menuAPI.setRoleMenus)
 Mock.mock(/\/menu\/fetchPermission/, 'get', menuAPI.getPermission)
 export default Mock

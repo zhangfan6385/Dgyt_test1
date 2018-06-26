@@ -58,7 +58,6 @@ function generateRouteStrucChildren(asyncRouterMap, menusChildren) {
 }
 
 router.beforeEach((to, from, next) => {
-  console.log(to)
   NProgress.start() // 开始进度条
   const query = { sysCode: '1' }
 
@@ -68,9 +67,7 @@ router.beforeEach((to, from, next) => {
       next({ path: '/' })
       NProgress.done() // if current page is dashboard will not trigger	afterEach hook, so manually handle it
     } else {
-      console.log('getUserInfo')
       if (store.getters.roles.length === 0) { // 判断当前用户是否已拉取完user_info信息
-        console.log('getUserInfoSuccess')
         store.dispatch('GetUserInfo').then(res => { // 拉取user_info
           const roles = res.data.roles // note: roles 必须是一个数组 array! 像这样: ['editor','develop']
           fetchPermission(query).then(response => {
