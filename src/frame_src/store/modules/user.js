@@ -11,6 +11,7 @@ const user = {
     avatar: '',
     introduction: '',
     roles: [],
+    orgList: null,
     setting: {
       articlePlatform: []
     }
@@ -40,6 +41,9 @@ const user = {
     },
     SET_ROLES: (state, roles) => {
       state.roles = roles
+    },
+    SET_ORG_LIST: (state, orgList) => {
+      state.orgList = orgList
     }
   },
 
@@ -50,6 +54,7 @@ const user = {
       return new Promise((resolve, reject) => {
         loginByUsername(username, userInfo.password).then(response => {
           const data = response.data
+          commit('SET_ORG_LIST', data.orgList)
           commit('SET_TOKEN', data.token)
           setToken(response.data.token)
           resolve()
