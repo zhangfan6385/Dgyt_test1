@@ -74,7 +74,7 @@ router.beforeEach((to, from, next) => {
         store.dispatch('GetUserInfo').then(res => { // 拉取user_info
           const roles = res.data.roles // note: roles 必须是一个数组 array! 像这样: ['editor','develop']
           fetchPermission(query).then(response => {
-            const menus = response.data
+            const menus = response.data// .items
             /* var currentRoute
             var localRouteString = localStorage.getItem('PERMISSION')
             var localRouteArray = []

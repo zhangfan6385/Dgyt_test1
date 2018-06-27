@@ -87,13 +87,13 @@ const user = {
     // 用户名登录
     LoginByUsername({ commit }, userInfo) {
       const username = userInfo.username.trim()
-      return new Promise((resolve, reject) => {
-        loginByUsername(username, userInfo.password).then(response => {
+      return new Promise((resolve, reject) => { //, userDomain:userDomain
+        loginByUsername(username, userInfo.password, userInfo.userDomain).then(response => {
           const data = response.data
           commit('SET_ORG_LIST', data.orgList)
           commit('SET_TOKEN', data.token)
           setToken(response.data.token)
-          resolve()
+          resolve(response)
         }).catch(error => {
           reject(error)
         })
@@ -123,6 +123,7 @@ const user = {
           commit('SET_DEPART_CODE', data.departCode)
           commit('SET_USER_ID', data.userId)
           commit('SET_USER_SEX', data.userSex)
+          commit('SET_CODE', data.userCode)
           resolve(response)
         }).catch(error => {
           reject(error)
