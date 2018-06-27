@@ -25,6 +25,7 @@ for (let i = 0; i < count; i++) {
     pageviews: '@integer(300, 5000)'
   }))
   UserRoleList.push(Mock.mock({
+    USER_DOMAIN: '@first',
     USER_ID: '@increment',
     USER_CODE: '@integer(1000000,60000000)',
     USER_NAME: '@cname',
@@ -77,7 +78,7 @@ export default {
       if (FLAG && item.FLAG !== FLAG) return false
       if (USER_NAME && item.USER_NAME.indexOf(USER_NAME) < 0) return false
       if (roleId === '26') {
-        if (item.GROUP_NAME !== '超级管理员') return false
+        if (item.groupName !== '超级管理员') return false
       }
       return true
     })
@@ -119,7 +120,7 @@ export default {
       message: '查询成功'
     }
   }, getUpdateUserArticle: config => {
-    const { field, FLAG, USER_ID } = param2Obj(config.url)
+    const { field, FLAG, USER_ID } = JSON.parse(config.body)
     if (field === 'deletaStatus') {
       return {
         aa: FLAG,
@@ -134,7 +135,7 @@ export default {
       }
     }
   }, getUpdateUserFlag: config => {
-    const { field, FLAG, USER_ID } = param2Obj(config.url)
+    const { field, FLAG, USER_ID } = JSON.parse(config.body)
     if (field === 'FLAG') {
       return {
         aa: FLAG,
@@ -144,13 +145,13 @@ export default {
       }
     }
   }, getUpdatePasswordData: config => {
-    const { password, newpassword, userCode } = param2Obj(config.url)
+    const { password, newpassword, userid } = JSON.parse(config.body)
     return {
       message: '修改成功',
       code: 2000,
       aa: password,
       bb: newpassword,
-      cc: userCode
+      cc: userid
     }
   },
   createUserArticle: () => ({

@@ -61,7 +61,7 @@ export default {
       listUpdate: {
         password: '',
         newpassword: '',
-        userCode: ''
+        userid: ''
       },
       pwdRules: {
         password: [
@@ -89,7 +89,7 @@ export default {
           this.listUpdate.newpassword = this.pwdForm.newpassword
           //  var userCode = this.$store.state.user.code //获取登陆信息的 俩种方式
           //   var name = this.$store.getters.name
-            this.listUpdate.userCode = this.$store.state.user.code
+          this.listUpdate.userid = this.$store.state.user.userId
           updatePasswordData(this.listUpdate).then(response => {
             this.message = response.data.message
             this.title = '失败'

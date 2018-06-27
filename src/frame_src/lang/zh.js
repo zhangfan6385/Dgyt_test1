@@ -83,7 +83,9 @@ export default {
     password: '密码',
     any: '随便填',
     thirdparty: '第三方登录',
-    thirdpartyTips: '本地不能模拟，请结合自己业务进行模拟！！！'
+    thirdpartyTips: '本地不能模拟，请结合自己业务进行模拟！！！',
+    loginToDepartCode: '请选择单位！'
+
   },
   documentation: {
     documentation: '文档',
@@ -188,8 +190,8 @@ export default {
     confirm: '确 定',
     author: '操作人',
     groupName: '角色名称',
-    orgName: '组织结构名称'
-
+    orgName: '组织机构名称',
+    orgCode: '组织机构代码'
   },
   roleTable: {
     dynamicTips1: '固定表头, 按照表头顺序排序',

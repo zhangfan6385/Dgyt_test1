@@ -30,24 +30,20 @@
 
       <el-button type="primary" style="width:100%;margin-bottom:30px;" :loading="loading" @click.native.prevent="handleLogin">{{$t('login.logIn')}}</el-button>
 
-      <div class="tips">
+      <!-- <div class="tips">
         <span>{{$t('login.username')}} : admin</span>
         <span>{{$t('login.password')}} : {{$t('login.any')}}</span>
-      </div>
-      <!-- <div class="tips">
+      </div> -->
+       <!-- <div class="tips">
         <span style="margin-right:18px;">{{$t('login.username')}} : editor</span>
         <span>{{$t('login.password')}} : {{$t('login.any')}}</span>
-      </div>
+      </div> -->
 
-      <el-button class="thirdparty-button" type="primary" @click="showDialog=true">{{$t('login.thirdparty')}}</el-button> -->
+      <!-- <el-button class="thirdparty-button" type="primary" @click="showDialog=true">{{$t('login.thirdparty')}}</el-button>  -->
     </el-form>
 
-    <el-dialog :title="$t('login.thirdparty')" :visible.sync="showDialog" append-to-body>
-      {{$t('login.thirdpartyTips')}}
-      <br/>
-      <br/>
-      <br/>
-      <social-sign />
+    <el-dialog width="30%" :title="$t('login.loginToDepartCode')" :visible.sync="showDialog" append-to-body>
+      <log-in-org :updateShowDialog = 'updateShowDialog'/>
     </el-dialog>
 
   </div>
@@ -56,10 +52,10 @@
 <script>
 import { isvalidUsername } from '@/frame_src/utils/validate'
 import LangSelect from '@/frame_src/components/LangSelect'
-import SocialSign from './socialsignin'
+import LogInOrg from './logInOrg'
 
 export default {
-  components: { LangSelect, SocialSign },
+  components: { LangSelect, LogInOrg },
   name: 'login',
   data() {
     const validateUsername = (rule, value, callback) => {
@@ -78,11 +74,11 @@ export default {
     }
     return {
       loginForm: {
-        username: 'admin',
-        password: '1111111'
+        username: 'hr2222',
+        password: '123456'
       },
       loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
+       // username: [{ required: true, trigger: 'blur', validator: validateUsername }],
         password: [{ required: true, trigger: 'blur', validator: validatePassword }]
       },
       passwordType: 'password',
@@ -104,7 +100,8 @@ export default {
           this.loading = true
           this.$store.dispatch('LoginByUsername', this.loginForm).then(() => {
             this.loading = false
-            this.$router.push({ path: '/' })
+            this.showDialog=true
+            // this.$router.push({ path: '/' })
           }).catch(() => {
             this.loading = false
           })
@@ -131,7 +128,10 @@ export default {
       //     this.$router.push({ path: '/' })
       //   })
       // }
-    }
+    },updateShowDialog(val){
+    this.showDialog=false
+    this.$router.push({ path: '/' })
+  }
   },
   created() {
     // window.addEventListener('hashchange', this.afterQRScan)

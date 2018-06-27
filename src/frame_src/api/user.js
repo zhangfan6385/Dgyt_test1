@@ -10,14 +10,14 @@ export function updateUserArticle(data) { // 修改用户信息-删除
   return request({
     url: '/user/updateUserArticle',
     method: 'post',
-    params: data
+    data
   })
 }
 export function updateUserFlag(data) { // 修改用户信息-激活用户
   return request({
     url: '/user/updateUserFlag',
     method: 'post',
-    params: data
+    data
   })
 }
 export function createUserArticle(data) { // 创建用户
@@ -38,7 +38,7 @@ export function updatePasswordData(data) { // 修改密码
   return request({
     url: '/user/updatePasswordData',
     method: 'post',
-    params: data
+    data
   })
 }
 export function fetchUserRoleList(query) { // 根据查询带rolename的 用户信息

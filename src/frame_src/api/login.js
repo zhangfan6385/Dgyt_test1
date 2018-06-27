@@ -19,11 +19,16 @@ export function logout() {
   })
 }
 
-export function getUserInfo(token) {
+export function getUserInfo(token, departCode) {
+  const data = {
+    token,
+    departCode
+  }
   return request({
     url: '/user/info',
-    method: 'get',
-    params: { token }
+    method: 'post',
+    data
+    // params: { data }
   })
 }
 

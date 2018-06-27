@@ -196,7 +196,9 @@ export default {
       this.listQuery.sysCode = '1'
       fetchRoleList(this.listQuery).then(response => {
         if (response.data.code === 2000) {
-          this.roleTree = response.data.items
+          if (response.data.items) { // 由于mockjs 不支持自定义状态码只能这样hack
+           this.roleTree = response.data.items
+          }
           // this.roleTree.push(...defaultValue.roleList);
         } else {
           this.listLoading = false
