@@ -28,17 +28,17 @@ import Layout from '../views/layout/Layout'
   }
 **/
 export const constantRouterMap = [
-  { path: '/login', component: _import('login/index'), hidden: true },
-  { path: '/authredirect', component: _import('login/authredirect'), hidden: true },
-  { path: '/404', component: _import('errorPage/404'), hidden: true },
-  { path: '/401', component: _import('errorPage/401'), hidden: true },
+  { path: '/login', component: _import('frame_src/views/login/index'), hidden: true },
+  { path: '/authredirect', component: _import('frame_src/views/login/authredirect'), hidden: true },
+  { path: '/404', component: _import('frame_src/views/errorPage/404'), hidden: true },
+  { path: '/401', component: _import('frame_src/views/errorPage/401'), hidden: true },
   {
     path: '',
     component: Layout,
     redirect: 'dashboard',
     children: [{
       path: 'dashboard',
-      component: _import('dashboard/index'),
+      component: _import('frame_src/views/dashboard/index'),
       name: 'dashboard',
       meta: { title: '首页', icon: 'fa fa-home', noCache: true }
     }]
@@ -50,98 +50,3 @@ export default new Router({
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRouterMap
 })
-
-export const asyncRouterMap = [
-  {
-    path: '/userinfoViews',
-    component: Layout,
-    redirect: 'noredirect',
-    name: 'userinfoViews',
-    meta: {
-      title: 'userinfoViews',
-      icon: 'example'
-    },
-    children: [
-      { path: 'user-manager', component: _import('userinfoViews/userManager'), name: 'userManager', meta: { title: 'userManager', icon: 'table' }},
-      { path: 'user-password-manager', component: _import('userinfoViews/userPasswordManager'), name: 'userPasswordManager', meta: { title: 'userPasswordManager', icon: 'table' }}
-    ]
-  },
-  {
-    path: '/uidpConfigViews',
-    component: Layout,
-    redirect: 'noredirect',
-    name: 'uidpConfigViews',
-    meta: {
-      title: 'uidpConfigViews',
-      icon: 'example'
-    },
-    children: [
-      { path: 'uidp-config-manager', component: _import('uidpConfigViews/uidpConfigManager'), name: 'uidpConfigManager', meta: { title: 'uidpConfigManager', icon: 'table' }},
-      { path: 'uidp-sys-info-manager', component: _import('uidpConfigViews/uidpSysInfoManager'), name: 'uidpSysInfoManager', meta: { title: 'uidpSysInfoManager', icon: 'table' }}
-    ]
-  },
-  {
-    path: '/roleViews',
-    component: Layout,
-    redirect: 'noredirect',
-    name: 'roleViews',
-    meta: {
-      title: 'roleViews',
-      icon: 'example'
-    },
-    children: [
-      { path: 'role-manager', component: _import('roleViews/roleManager'), name: 'roleManager', meta: { title: 'roleManager', icon: 'table' }},
-      { path: 'role-user-manager', component: _import('roleViews/roleUserManager'), name: 'roleUserManager', meta: { title: 'roleUserManager', icon: 'table' }}
-    ]
-  },
-  {
-    path: '/menu',
-    component: Layout,
-    redirect: 'noredirect',
-    name: 'menu',
-    meta: {
-      title: 'menu',
-      icon: 'table'
-    },
-    children: [
-      { path: 'menu-manager', component: _import('menu/menuManager'), name: 'menuManager', meta: { title: 'menuManager', icon: 'table' }},
-      { path: 'menu-permission-manager', component: _import('menu/menuPermissionManager'), name: 'menuPermissionManager', meta: { title: 'menuPermissionManager', icon: 'table' }}
-    ]
-  },
-  {
-    path: '/orgViews',
-    component: Layout,
-    redirect: 'noredirect',
-    name: 'orgViews',
-    meta: {
-      title: 'orgViews',
-      icon: 'example'
-    },
-    children: [
-      { path: 'org-manager', component: _import('orgViews/orgManager'), name: 'orgManager', meta: { title: 'orgManager', icon: 'table' }},
-      { path: 'org-user-manager', component: _import('orgViews/orgUserManager'), name: 'orgUserManager', meta: { title: 'orgUserManager', icon: 'table' }}
-    ]
-  },
-  {
-    path: '/logInfoViews',
-    component: Layout,
-    redirect: 'noredirect',
-    name: 'logInfoViews',
-    meta: {
-      title: 'logInfoViews',
-      icon: 'form'
-    },
-    children: [{ path: 'log-info-manager', component: _import('logInfoViews/logInfoManager'), name: 'logInfoManager', meta: { title: 'logInfoManager', icon: 'table' }}]
-  },
-  /* {
-    path: '/error',
-    component: Layout,
-    redirect: 'noredirect',
-    name: 'errorPages',
-    meta: {
-      title: 'errorPages',
-      icon: '404'
-    }
-  }, */
-  { path: '*', redirect: '/404', hidden: true }
-]

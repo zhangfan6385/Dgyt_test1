@@ -58,8 +58,11 @@ function generateRouteStrucChildren(asyncRouterMap, menusChildren) {
 }
 
 router.beforeEach((to, from, next) => {
+  console.log('cccc')
   NProgress.start() // 开始进度条
-  const query = { sysCode: '1', userId: '1' }
+  console.log(store.getters.code)
+  // store.getters.code
+  const query = { sysCode: store.getters.sysCode, userId: 'UIDPAdmin' }
 
   if (getToken()) { // 判断是否有token
     /* has token*/
@@ -83,7 +86,7 @@ router.beforeEach((to, from, next) => {
               currentRoute = menus
               console.log('remote')
             } */
-            const routeStru = generateRouteStruc(menus.items)
+            const routeStru = generateRouteStruc(menus)
             console.log(routeStru)
             if (routeStru) {
               routeStru.push({ path: '*', redirect: '/404', hidden: true })
