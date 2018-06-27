@@ -24,13 +24,20 @@ export function updateRoleArticle(data) { // 修改角色信息-删除
   return request({
     url: '/role/updateRoleArticle',
     method: 'post',
-    params: data
+    data
   })
 }
 export function updateUserRoleArticle(data) { // 关联用户与角色
   return request({
     url: '/role/updateUserRoleArticle',
     method: 'post',
-    params: data
+    data
+  })
+}
+export function deleteUserRoleArticle(data) { // 清空用户与角色
+  return request({
+    url: '/role/deleteUserRoleArticle',
+    method: 'post',
+    data
   })
 }

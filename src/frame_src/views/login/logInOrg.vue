@@ -31,7 +31,7 @@ export default {
       // var status = this.$store.getters.token
       var orglist = this.$store.state.user.orgList
       this.list = orglist
-     
+
       // this.total = response.data.total
       this.listLoading = false
     }, tableRowClassName({ row, rowIndex }) { // 表头行的 className 的回调方法，也可以使用字符串为所有表头行设置一个固定的 className。
@@ -52,7 +52,7 @@ export default {
     // alert(token+"ddd"+status);
 
     this.getList()
-  },props:['updateShowDialog']
+  }, props: ['updateShowDialog']
 }
 </script>
 

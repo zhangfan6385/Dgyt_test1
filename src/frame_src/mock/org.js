@@ -19,12 +19,19 @@ for (let i = 0; i < count; i++) {
 
 export default {
   getUpdateUserOrgArticle: config => {
-    const { multipleSelection, roleId } = param2Obj(config.url)
+    const { multipleSelection, roleId } = JSON.parse(config.body)
     return {
       message: '分配成功',
       code: 2000,
       aa: multipleSelection,
       bb: roleId
+    }
+  }, getDeleteUserOrgArticle: config => {
+    const { multipleSelection } = JSON.parse(config.body)
+    return {
+      message: '分配成功',
+      code: 2000,
+      aa: multipleSelection
     }
   }, getUpdateOrgArticle: config => {
     const { field, id } = param2Obj(config.url)

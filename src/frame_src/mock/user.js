@@ -19,6 +19,7 @@ for (let i = 0; i < count; i++) {
     USER_EMAIL: '@EMAIL',
     EMAIL_OFFICE: '@EMAIL',
     USER_IP: '@ip',
+    'USER_SEX|1': ['0', '1'],
     'FLAG|1': ['0', '1'],
     USER_DOMAIN: '@first',
     'REMARK|1': ['自开发人员', '业务人员', '办公室人员', '企业领导'],

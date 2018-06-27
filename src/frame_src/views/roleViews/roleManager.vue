@@ -33,9 +33,9 @@
                <el-form-item :label="$t('roleTable.remark')"  :label-width="formLabelWidth">
                 <el-input v-model="form.remark" auto-complete="off"></el-input>
               </el-form-item>
-             <el-form-item :label="$t('roleTable.sysCode')"  :label-width="formLabelWidth">
+             <!-- <el-form-item :label="$t('roleTable.sysCode')"  :label-width="formLabelWidth">
                 <el-input v-model="form.sysCode" auto-complete="off"></el-input>
-              </el-form-item>
+              </el-form-item> -->
               <el-form-item label="" :label-width="formLabelWidth"> 
             <el-button v-if="form.id==null" size="mini" type="primary"    @click="onOkSubmit">{{$t('roleTable.add')}}
              </el-button>
@@ -127,6 +127,7 @@ export default {
     onOkSubmit() { // 创建角色信息
       this.$refs['form'].validate((valid) => {
         if (valid) {
+          this.form.sysCode = this.$store.state.user.sysCode
           createRoleArticle(this.form).then(response => {
             var message = response.data.message
             var title = '失败'
@@ -193,11 +194,11 @@ export default {
       // this.load();
     },
     load() { // 查询左边角色信息
-      this.listQuery.sysCode = '1'
+      this.listQuery.sysCode = this.$store.state.user.sysCode
       fetchRoleList(this.listQuery).then(response => {
         if (response.data.code === 2000) {
           if (response.data.items) { // 由于mockjs 不支持自定义状态码只能这样hack
-           this.roleTree = response.data.items
+            this.roleTree = response.data.items
           }
           // this.roleTree.push(...defaultValue.roleList);
         } else {

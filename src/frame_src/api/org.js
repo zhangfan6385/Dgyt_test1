@@ -31,6 +31,13 @@ export function updateUserOrgArticle(data) { // 关联用户与组织结构
   return request({
     url: '/org/updateUserOrgArticle',
     method: 'post',
-    params: data
+    data
+  })
+}
+export function deleteUserOrgArticle(data) { // 关联用户与组织结构
+  return request({
+    url: '/org/deleteUserOrgArticle',
+    method: 'post',
+    data
   })
 }

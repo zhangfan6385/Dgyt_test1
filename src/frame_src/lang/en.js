@@ -167,6 +167,7 @@ export default {
     USER_EMAIL: 'UserEmail',
     EMAIL_OFFICE: 'EmailOffice',
     USER_IP: 'UserIp',
+    USER_SEX: 'UserSex',
     FLAG: 'Flag',
     USER_DOMAIN: 'UserDomain',
     REMARK: 'Remark',

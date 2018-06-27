@@ -41,6 +41,7 @@ Mock.mock(/\/role\/updateRoleArticle/, 'post', roleAPI.getUpdateRoleArticle)
 Mock.mock(/\/role\/updateRoleData/, 'post', roleAPI.getUpdateRoleData)
 Mock.mock(/\/user\/fetchUserRoleList/, 'get', userAPI.getFetchUserRoleList)
 Mock.mock(/\/role\/updateUserRoleArticle/, 'post', roleAPI.getUpdateUserRoleArticle)
+Mock.mock(/\/role\/deleteUserRoleArticle/, 'post', roleAPI.getDeleteUserRoleArticle)
 
 // 基础信息配置模块
 
@@ -62,6 +63,7 @@ Mock.mock(/\/org\/updateOrgArticle/, 'post', orgAPI.getUpdateOrgArticle)
 Mock.mock(/\/org\/updateOrgData/, 'post', orgAPI.getUpdateOrgData)
 Mock.mock(/\/user\/fetchUserOrgList/, 'get', userAPI.getFetchUserOrgList)
 Mock.mock(/\/org\/updateUserOrgArticle/, 'post', orgAPI.getUpdateUserOrgArticle)
+Mock.mock(/\/org\/deleteUserOrgArticle/, 'post', orgAPI.getDeleteUserOrgArticle)
 // 日志管理模块
 
 Mock.mock(/\/logInfo\/fetchLogInfoList/, 'get', logInfoAPI.getFetchLogInfoList)

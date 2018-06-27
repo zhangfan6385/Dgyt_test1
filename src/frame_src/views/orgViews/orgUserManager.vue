@@ -27,6 +27,8 @@
       </el-select>
       <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">{{$t('userTable.search')}}</el-button>
       <el-button class="filter-item"  @click="updateRole" type="primary" icon="el-icon-edit">{{$t('roleTable.mount')}}</el-button>
+     <el-button class="filter-item"  @click="deleteRole" type="primary" icon="el-icon-edit">{{$t('roleTable.deleteRole')}}</el-button>
+   
      </div>
       <el-table :key='tableKey' :data="list" :header-cell-class-name="tableRowClassName"   @selection-change="handleSelectionChange" v-loading="listLoading" element-loading-text="给我一点时间" border fit highlight-current-row
       style="width: 100%">
@@ -70,7 +72,7 @@
        </el-table-column>
     </el-table>
       <div class="pagination-container">
-      <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="listQuery.page" :page-sizes="[10,20,30, 50]" :page-size="listQuery.limit" layout="total, sizes, prev, pager, next, jumper" :total="total">
+      <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="listQuery.page" :page-sizes="[5,10,20, 30]" :page-size="listQuery.limit" layout="total, sizes, prev, pager, next, jumper" :total="total">
       </el-pagination>
     </div> 
    
@@ -81,7 +83,7 @@
   </div>
 </template>
 <script>
-import { fetchOrgList, updateUserOrgArticle } from '@/frame_src/api/org'
+import { fetchOrgList, updateUserOrgArticle, deleteUserOrgArticle } from '@/frame_src/api/org'
 import { fetchUserOrgList } from '@/frame_src/api/user'
 import waves from '@/frame_src/directive/waves' // 水波纹指令
 // import { parseTime } from '@/frame_src/utils'
@@ -110,6 +112,8 @@ export default {
       total: null,
       listLoading: true,
       showUserPass: false,
+      orgKey: undefined,
+      arr: [],
       listQuery: {
         page: 1,
         limit: 5,
@@ -145,7 +149,7 @@ export default {
       }, listUpdate: {
 
         orgId: undefined,
-        multipleSelection: []
+        arr: []
       },
       roleTree: [],
       defaultProps: {
@@ -162,9 +166,9 @@ export default {
     }
   }, watch: { // 监听器，当multipleSelection 发生改变时
     multipleSelection: function() { // 把选中的数据id放到数组里，以便后期传值用
-      const arr = []
+      this.arr = []
       for (const i in this.multipleSelection) {
-        arr.push(this.multipleSelection[i].USER_ID)
+        this.arr.push(this.multipleSelection[i].USER_ID)
       }
     }
   },
@@ -203,14 +207,18 @@ export default {
     },
     handleSizeChange(val) {
       this.listQuery.limit = val
+      this.listQuery.orgId = this.orgKey
       this.getList()
     },
     handleCurrentChange(val) {
       this.listQuery.page = val
+      this.listQuery.orgId = this.orgKey
       this.getList()
     },
     handleFilter() {
       this.listQuery.page = 1
+      this.orgKey = undefined
+      this.listQuery.orgId = this.orgKey
       this.getList()
     }, renderContent(h, { node, data, store }) { // 给左边树进行遍历
       return (
@@ -221,8 +229,8 @@ export default {
         </span>)
     }, handleNodeClick(data) { // 点击左侧树查询对应的用户信息
       this.listLoading = true
-      this.listQuery.orgId = this.$refs.roleTree.getCurrentKey()
-
+      this.orgkey = this.$refs.roleTree.getCurrentKey()
+      this.listQuery.orgId = this.orgkey
       fetchUserOrgList(this.listQuery).then(response => {
         if (response.data.code === 2000) {
           this.list = response.data.items
@@ -248,7 +256,7 @@ export default {
         })
       } else {
         this.listUpdate.orgId = this.$refs.roleTree.getCurrentKey() // 左侧树的key值
-        this.listUpdate.multipleSelection = this.multipleSelection // 右边选中的集合
+        this.listUpdate.arr = this.arr // 右边选中的集合
         updateUserOrgArticle(this.listUpdate).then(response => { // 给用户分配组织结构权限
           var message = response.data.message
           var title = '失败'
@@ -256,6 +264,7 @@ export default {
           if (response.data.code === 2000) {
             title = '成功'
             type = 'success'
+            this.arr = []
             this.getList()
             this.load()
           }
@@ -267,6 +276,48 @@ export default {
           })
         })
       }
+    }, deleteRole() { // 给用户分配角色权限
+      this.$confirm('将永久删除该用户的所有分配角色, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        if (this.multipleSelection.length <= 0) {
+          this.$notify({
+            title: '失败',
+            message: '请选择用户',
+            type: 'error',
+            duration: 2000
+          })
+        } else {
+          this.listUpdate.arr = this.arr // 右边选中的集合
+          deleteUserOrgArticle(this.listUpdate).then(response => { // 给用户分配组织结构权限
+            var message = response.data.message
+            var title = '失败'
+            var type = 'error'
+            if (response.data.code === 2000) {
+              title = '成功'
+              type = 'success'
+              this.arr = []
+              this.getList()
+              this.load()
+            }
+            this.$notify({
+              title: title,
+              message: message,
+              type: type,
+              duration: 2000
+            })
+          })
+        }
+      }).catch(() => {
+        this.$notify({
+          title: '失败',
+          message: '已取消清空',
+          type: 'error',
+          duration: 2000
+        })
+      })
     }, handleSelectionChange(val) { // 勾选右边表格时记录勾选的数据
       this.multipleSelection = val
     }, tableRowClassName({ row, rowIndex }) { // 通过右边表格的class名 挂载css样式

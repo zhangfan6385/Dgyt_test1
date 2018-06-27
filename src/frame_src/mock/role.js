@@ -34,7 +34,7 @@ export default {
       items: pageList
     }
   }, getUpdateRoleArticle: config => {
-    const { field, id } = param2Obj(config.url)
+    const { field, id } = JSON.parse(config.body)
     if (field === 'deletaStatus') {
       return {
         aa: id,
@@ -43,10 +43,18 @@ export default {
       }
     }
   }, getUpdateUserRoleArticle: config => {
-    const { multipleSelection, roleId } = param2Obj(config.url)
+    const { multipleSelection, roleId } = JSON.parse(config.body)
     return {
       code: 2000,
-      message: '创建成功',
+      message: '修改成功',
+      aa: multipleSelection,
+      bb: roleId
+    }
+  }, getDeleteUserRoleArticle: config => {
+    const { multipleSelection, roleId } = JSON.parse(config.body)
+    return {
+      code: 2000,
+      message: '修改成功',
       aa: multipleSelection,
       bb: roleId
     }

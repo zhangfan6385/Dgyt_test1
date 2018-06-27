@@ -27,7 +27,8 @@
         </div> -->
 
         <div class="avatar-wrapper">
-            <img class='user-avatar' src="../../../../frame_src/imgs/avatar.png">
+            <img v-if='showPng=="1"'  class='user-avatar' src="../../../../frame_src/imgs/avatar.png">
+            <img v-else class='user-avatar' src="../../../../frame_src/imgs/nvtou.png">
             <i class="el-icon-caret-bottom"></i>
         </div>
         <!-- <svg-icon icon-class="user" style="color:white;width:25px;height:25px;vertical-align: middle;cursor: pointer;"/> -->
@@ -59,6 +60,10 @@ export default {
     ErrorLog,
     Screenfull,
     ThemePicker
+  }, data() {
+    return {
+
+    }
   },
   computed: {
     ...mapGetters([
@@ -67,8 +72,11 @@ export default {
       'avatar'
     ]),
     // 计算属性的 getter
-    departCodeMessage: function () {
+    departCodeMessage: function() {
       return this.$store.state.user.departName
+    },
+    showPng: function() {
+      return this.$store.state.user.userSex
     }
   },
   methods: {

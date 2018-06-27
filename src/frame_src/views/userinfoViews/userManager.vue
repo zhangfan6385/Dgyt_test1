@@ -85,7 +85,11 @@
           <span>{{scope.row.USER_IP}}</span>
         </template>
        </el-table-column>
-        
+           <el-table-column width="110px" align="center" :label="$t('userTable.USER_SEX')">
+        <template slot-scope="scope">
+          <el-tag>{{scope.row.USER_SEX | sexFilter}}</el-tag>
+        </template>
+       </el-table-column>
           <el-table-column width="110px" align="center" :label="$t('userTable.FLAG')">
         <template slot-scope="scope">
           <el-tag>{{scope.row.FLAG | typeFilter}}</el-tag>
@@ -150,7 +154,12 @@
            <el-form-item :label="$t('userTable.USER_IP')" prop="USER_IP">
           <el-input v-model="temp.USER_IP"></el-input>
         </el-form-item>
-        
+          <el-form-item :label="$t('userTable.USER_SEX')">
+          <el-select class="filter-item" v-model="temp.USER_SEX" placeholder="Please select">
+        <el-option v-for="item in sexOptions" :key="item.key" :label="item.sex_name" :value="item.key">
+            </el-option>
+          </el-select>
+        </el-form-item>
          <el-form-item :label="$t('userTable.FLAG')">
           <el-select class="filter-item" v-model="temp.FLAG" placeholder="Please select">
         <el-option v-for="item in flagOptions" :key="item.key" :label="item.flag_name" :value="item.key">
@@ -182,9 +191,14 @@ import {
 import waves from '@/frame_src/directive/waves' // 水波纹指令
 // import { parseTime } from '@/frame_src/utils'
 const flagOptions = [{ key: 0, flag_name: '否' }, { key: 1, flag_name: '是' }]
+const sexOptions = [{ key: 0, sex_name: '女' }, { key: 1, sex_name: '男' }]
 // arr to obj ,such as { CN : "China", US : "USA" }
 const flagOptionsKeyValue = flagOptions.reduce((acc, cur) => {
   acc[cur.key] = cur.flag_name
+  return acc
+}, {})
+const sexOptionsKeyValue = sexOptions.reduce((acc, cur) => {
+  acc[cur.key] = cur.sex_name
   return acc
 }, {})
 export default {
@@ -211,6 +225,7 @@ export default {
         sort: '+USER_ID'
       },
       flagOptions,
+      sexOptions,
       statusOptions: ['published', 'draft', 'deleted'],
       sortOptions: [
         { label: '正序', key: '+USER_ID' },
@@ -232,7 +247,8 @@ export default {
         USER_IP: '',
         FLAG: '',
         USER_DOMAIN: '',
-        REMARK: ''
+        REMARK: '',
+        USER_SEX: undefined
       },
       dialogFormVisible: false,
       dialogStatus: '',
@@ -267,6 +283,9 @@ export default {
   filters: {
     typeFilter(type) {
       return flagOptionsKeyValue[type]
+    },
+    sexFilter(type) {
+      return sexOptionsKeyValue[type]
     }
   },
   methods: {
@@ -301,9 +320,11 @@ export default {
         USER_EMAIL: '',
         EMAIL_OFFICE: '',
         USER_IP: '',
+        USER_SEX: 1,
         FLAG: 1,
         USER_DOMAIN: '',
-        REMARK: ''
+        REMARK: '',
+       
       }
     },
     handleUpdate(row) { // 打开修改表单
@@ -449,6 +470,7 @@ export default {
           '电子邮箱-常用',
           '电子邮箱-办公',
           'IP地址列表',
+          '性别',
           '是否激活',
           '域账户',
           '备注'
@@ -463,6 +485,7 @@ export default {
           'USER_EMAIL',
           'EMAIL_OFFICE',
           'USER_IP',
+          'USER_SEX',
           'FLAG',
           'USER_DOMAIN',
           'REMARK'
@@ -481,7 +504,9 @@ export default {
         filterVal.map(j => {
           if (j === 'FLAG') {
             return flagOptionsKeyValue[v[j]]
-          } else {
+          } if (j === 'USER_SEX') {
+            return sexOptionsKeyValue[v[j]]
+          }else {
             return v[j]
           }
         })

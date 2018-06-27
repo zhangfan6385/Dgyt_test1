@@ -27,8 +27,10 @@
       </el-select>
       <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">{{$t('userTable.search')}}</el-button>
       <el-button class="filter-item"  @click="updateRole" type="primary" icon="el-icon-edit">{{$t('roleTable.mount')}}</el-button>
+    <el-button class="filter-item"  @click="deleteRole" type="primary" icon="el-icon-edit">{{$t('roleTable.deleteRole')}}</el-button>
+     
      </div>
-      <el-table :key='tableKey' :data="list" :header-cell-class-name="tableRowClassName"  @selection-change="handleSelectionChange" v-loading="listLoading" element-loading-text="给我一点时间" border fit highlight-current-row
+      <el-table :key='tableKey' ref="multipleTable" :data="list" :header-cell-class-name="tableRowClassName"  @selection-change="handleSelectionChange" v-loading="listLoading" element-loading-text="给我一点时间" border fit highlight-current-row
       style="width: 100%">
    
          <el-table-column 
@@ -70,7 +72,7 @@
        </el-table-column>
     </el-table>
       <div class="pagination-container">
-      <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="listQuery.page" :page-sizes="[10,20,30, 50]" :page-size="listQuery.limit" layout="total, sizes, prev, pager, next, jumper" :total="total">
+      <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="listQuery.page" :page-sizes="[5,10,20, 30]" :page-size="listQuery.limit" layout="total, sizes, prev, pager, next, jumper" :total="total">
       </el-pagination>
     </div> 
    
@@ -81,7 +83,7 @@
   </div>
 </template>
 <script>
-import { fetchRoleList, updateUserRoleArticle } from '@/frame_src/api/role'
+import { fetchRoleList, updateUserRoleArticle, deleteUserRoleArticle } from '@/frame_src/api/role'
 import { fetchUserRoleList } from '@/frame_src/api/user'
 import waves from '@/frame_src/directive/waves' // 水波纹指令
 // import { parseTime } from '@/frame_src/utils'
@@ -110,6 +112,8 @@ export default {
       total: null,
       listLoading: true,
       showUserPass: false,
+      roleKey: undefined,
+      arr: [],
       listQuery: {
         page: 1,
         limit: 5,
@@ -146,7 +150,7 @@ export default {
       }, listUpdate: {
 
         roleId: undefined,
-        multipleSelection: []
+        arr: []
       },
       roleTree: [],
       defaultProps: {
@@ -164,9 +168,11 @@ export default {
     }
   }, watch: { // 监听器，当multipleSelection 发生改变时
     multipleSelection: function() { // 把选中的数据id放到数组里，以便后期传值用
-      const arr = []
-      for (const i in this.multipleSelection) {
-        arr.push(this.multipleSelection[i].USER_ID)
+      this.arr = []
+      for (var i = this.multipleSelection.length - 1; i >= 0; i--) {
+        // if (this.multipleSelection[i].roleId !== this.$refs.roleTree.getCurrentKey()) {
+        this.arr.push(this.multipleSelection[i].USER_ID) // this.$refs.multipleTable.toggleRowSelection(this.list[i]);
+        // }
       }
     }
   },
@@ -179,22 +185,39 @@ export default {
         this.listLoading = false
       })
     }, load() {
-      this.treeListQuery.sysCode = '2'
+      this.treeListQuery.sysCode = this.$store.state.user.sysCode
       fetchRoleList(this.treeListQuery).then(response => {
-        this.roleTree = response.data.items
+        if (response.data.code === 2000) {
+          if (response.data.items) { // 由于mockjs 不支持自定义状态码只能这样hack
+            this.roleTree = response.data.items
+          }
+          // this.roleTree.push(...defaultValue.roleList);
+        } else {
+          this.listLoading = false
+          this.$notify({
+            title: '失败',
+            message: response.data.message,
+            type: 'error',
+            duration: 2000
+          })
+        }
       })
       // this.roleTree.push(...defaultValue.roleList);
     },
     handleSizeChange(val) {
       this.listQuery.limit = val
+      this.listQuery.roleId = this.roleKey
       this.getList()
     },
     handleCurrentChange(val) {
       this.listQuery.page = val
+      this.listQuery.roleId = this.roleKey
       this.getList()
     },
     handleFilter() {
       this.listQuery.page = 1
+      this.roleKey = undefined
+      this.listQuery.roleId = this.roleKey
       this.getList()
     }, renderContent(h, { node, data, store }) { // 给左侧菜单遍历数据
       return (
@@ -205,8 +228,8 @@ export default {
         </span>)
     }, handleNodeClick(data) { // 为选中的角色查询出用户信息
       this.listLoading = true
-      this.listQuery.roleId = this.$refs.roleTree.getCurrentKey()
-
+      this.roleKey = this.$refs.roleTree.getCurrentKey()
+      this.listQuery.roleId = this.roleKey
       fetchUserRoleList(this.listQuery).then(response => {
         this.list = response.data.items
         this.total = response.data.total
@@ -222,7 +245,7 @@ export default {
         })
       } else {
         this.listUpdate.roleId = this.$refs.roleTree.getCurrentKey()
-        this.listUpdate.multipleSelection = this.multipleSelection
+        this.listUpdate.arr = this.arr
         updateUserRoleArticle(this.listUpdate).then(response => {
           var message = response.data.message
           var title = '失败'
@@ -230,6 +253,7 @@ export default {
           if (response.data.code === 2000) {
             title = '成功'
             type = 'success'
+            this.arr = []
             this.getList()
             this.load()
           }
@@ -241,7 +265,49 @@ export default {
           })
         })
       }
-    }, handleSelectionChange(val) { // 点击右边表格数据时，把数据赋值给声明的数组中
+    }, deleteRole() { // 给用户分配角色权限
+      this.$confirm('将永久删除该用户的所有分配角色, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        if (this.multipleSelection.length <= 0) {
+          this.$notify({
+            title: '失败',
+            message: '请选择用户',
+            type: 'error',
+            duration: 2000
+          })
+        } else {
+          this.listUpdate.arr = this.arr
+          deleteUserRoleArticle(this.listUpdate).then(response => {
+            var message = response.data.message
+            var title = '失败'
+            var type = 'error'
+            if (response.data.code === 2000) {
+              title = '成功'
+              type = 'success'
+              this.arr = []
+              this.getList()
+              this.load()
+            }
+            this.$notify({
+              title: title,
+              message: message,
+              type: type,
+              duration: 2000
+            })
+          })
+        }
+      }).catch(() => {
+        this.$notify({
+          title: '失败',
+          message: '已取消清空',
+          type: 'error',
+          duration: 2000
+        })
+      })
+    }, handleSelectionChange(val) { // 点击右边表格数据时，把数据赋值给声明的数组
       this.multipleSelection = val
     }, tableRowClassName({ row, rowIndex }) { // 给table定义class名称，然后赋值给它scss样式
       if (rowIndex === 0) {

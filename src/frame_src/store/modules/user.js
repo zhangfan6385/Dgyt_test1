@@ -19,7 +19,8 @@ const user = {
     sysName: '大港油田软件研发平台',
     departCode: '',
     departName: '',
-    userId: ''
+    userId: '',
+    userSex: ''
 
   },
 
@@ -65,6 +66,9 @@ const user = {
     },
     SET_DEPART_NAME: (state, departName) => {
       state.departName = departName
+    },
+    SET_USER_SEX: (state, userSex) => {
+      state.userSex = userSex
     }
   },
 
@@ -118,6 +122,7 @@ const user = {
           commit('SET_SYS_NAME', data.sysName)// 设置当前系统名称
           commit('SET_DEPART_CODE', data.departCode)
           commit('SET_USER_ID', data.userId)
+          commit('SET_USER_SEX', data.userSex)
           resolve(response)
         }).catch(error => {
           reject(error)
