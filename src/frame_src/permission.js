@@ -24,12 +24,12 @@ function generateRouteStruc(menus) {
   var asyncRouterMap = []
   for (const menu of menus) {
     const permission = {}
-    permission.path = menu.path
-    permission.hidden = !menu.isShow
+    permission.path = menu.MODULE_ROUTE
+    permission.hidden = !menu.MENU_PROP
     permission.component = Layout
     permission.redirect = 'noredirect'
-    permission.name = menu.path
-    permission.meta = { title: menu.name, icon: menu.icon, roles: menu.roleId }
+    permission.name = menu.MODULE_ROUTE
+    permission.meta = { title: menu.MENU_NAME, icon: menu.MENU_ICON, roles: [] }
     permission.children = []
     if (menu.children.length) {
       generateRouteStrucChildren(permission.children, menu.children)
@@ -42,12 +42,12 @@ function generateRouteStruc(menus) {
 function generateRouteStrucChildren(asyncRouterMap, menusChildren) {
   for (const menu of menusChildren) {
     const permission = {}
-    permission.path = menu.path
-    permission.hidden = !menu.isShow
-    permission.component = _import(menu.href)
+    permission.path = menu.MODULE_ROUTE
+    permission.hidden = !menu.MENU_PROP
+    permission.component = _import(menu.MODULE_URL + menu.MODULE_OBJ)
     // permission.redirect = 'noredirect'
-    permission.name = menu.path
-    permission.meta = { title: menu.name, icon: menu.icon, roles: menu.roleId }
+    permission.name = menu.MODULE_ROUTE
+    permission.meta = { title: menu.MENU_NAME, icon: menu.MENU_ICON, roles: [] }
     permission.children = []
     if (menu.children.length) {
       const childMenu = generateRouteStrucChildren(asyncRouterMap, menu.children)
@@ -59,7 +59,7 @@ function generateRouteStrucChildren(asyncRouterMap, menusChildren) {
 
 router.beforeEach((to, from, next) => {
   NProgress.start() // 开始进度条
-  const query = { sysCode: '1' }
+  const query = { sysCode: '1', userId: '1' }
 
   if (getToken()) { // 判断是否有token
     /* has token*/
@@ -71,8 +71,8 @@ router.beforeEach((to, from, next) => {
         store.dispatch('GetUserInfo').then(res => { // 拉取user_info
           const roles = res.data.roles // note: roles 必须是一个数组 array! 像这样: ['editor','develop']
           fetchPermission(query).then(response => {
-            const menus = response.data.items
-            var currentRoute
+            const menus = response.data
+            /* var currentRoute
             var localRouteString = localStorage.getItem('PERMISSION')
             var localRouteArray = []
             if (localRouteString) {
@@ -82,8 +82,9 @@ router.beforeEach((to, from, next) => {
             } else {
               currentRoute = menus
               console.log('remote')
-            }
-            const routeStru = generateRouteStruc(currentRoute)
+            } */
+            const routeStru = generateRouteStruc(menus.items)
+            console.log(routeStru)
             if (routeStru) {
               routeStru.push({ path: '*', redirect: '/404', hidden: true })
             }

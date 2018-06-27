@@ -9,10 +9,10 @@
         <svg-icon icon-class="theme" style="color:white;width:22px;height:22px;vertical-align: middle;cursor: pointer;"/>
       </div>
       <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item command="#3A71A8"><div class='rect blue'></div></el-dropdown-item>
-        <el-dropdown-item command="#C03639"><div class='rect red'></div></el-dropdown-item>
-        <el-dropdown-item command="#30B08F"><div class='rect green'></div></el-dropdown-item>
-        <el-dropdown-item command="#909399"><div class='rect gray'></div></el-dropdown-item>
+        <el-dropdown-item command="#3A8EE6"><div class="dropItem"><div class='rect blue'></div><div class="span">蓝</div></div></el-dropdown-item>
+        <el-dropdown-item command="#C03639"><div class="dropItem"><div class='rect red'></div><div class="span">红</div></div></el-dropdown-item>
+        <el-dropdown-item command="#30B08F"><div class="dropItem"><div class='rect green'></div><div class="span">绿</div></div></el-dropdown-item>
+        <el-dropdown-item command="#909399"><div class="dropItem"><div class='rect gray'></div><div class="span">灰</div></div></el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
 </template>
@@ -21,7 +21,8 @@
 
 const version = require('element-ui/package.json').version // element-ui version from node_modules
 const ORIGINAL_THEME = '#409EFF' // default color
-var lastTheme = ORIGINAL_THEME
+// const ORIGINAL_THEME = '#3A8EE6' // default color
+var lastTheme = '#3A8EE6'
 
 export default {
   data() {
@@ -36,7 +37,7 @@ export default {
       const themeCluster = this.getThemeCluster(style.replace('#', ''))
       const originalCluster = this.getThemeCluster(lastTheme.replace('#', ''))
       var subMenu = document.querySelector('.sidebar-container .theme')
-      if (style === '#3A71A8') { // 蓝
+      if (style === '#3A8EE6') { // 蓝
         subMenu.classList.remove('themeGreen', 'themeRed', 'themeGray')
         subMenu.classList.add('themeBlue')
       } else if (style === '#C03639') { // 红
@@ -163,10 +164,20 @@ export default {
 
 <style rel="stylesheet/scss" lang="scss" scoped>
   @import '../../styles/variables.scss';
+
+.dropItem{
+  margin-bottom: 2px;
+  display: flex;
+}
+
 .rect {
   width:20px; 
   height:20px;
-  margin-bottom: 2px;
+}
+
+.span{
+  padding-left: 5px;
+  line-height: 20px;
 }
 
 .green{
