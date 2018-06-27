@@ -91,6 +91,7 @@ export default {
   min-width: 100%;
   height: 55px;
   // background:#3A71A8;
+  background: 409EFF;
   margin: 0 auto;
   line-height: 55px; /*设置line-height与父级元素的height相等*/
   overflow: hidden; /*防止内容超出容器或者产生自动换行*/
