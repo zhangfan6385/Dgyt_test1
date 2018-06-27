@@ -28,50 +28,52 @@ const testMenuList = [
 
 const menuList1 = [
   {
-    'id': 1, 'MODULE_ROUTE': '/userinfoViews', 'MODULE_OBJ': '', 'parentId': null, 'sort': 0, 'MENU_NAME': '用户管理', 'MODULE_URL': 'userinfoViews', 'MENU_ICON': 'fa fa-dashboard', 'children': [
+    'id': 1, 'MODULE_ROUTE': '/userinfoViews', 'MODULE_OBJ': '', 'parentId': null, 'sort': 0, 'MENU_NAME': '用户管理', 'MODULE_URL': 'frame_src/views/userinfoViews', 'MENU_ICON': 'fa fa-dashboard', 'children': [
       {
-        'id': 92, 'MODULE_ROUTE': 'user-manager', 'MODULE_OBJ': 'userManager', 'parentId': 31, 'sort': 0, 'MENU_NAME': '注册用户', 'MODULE_URL': 'userinfoViews/', 'MENU_ICON': 'fa fa-bank', 'children': [], 'MENU_PROP': '1', 'roleId': [26, 27]
+        'id': 92, 'MODULE_ROUTE': 'user-manager', 'MODULE_OBJ': 'userManager', 'parentId': 31, 'sort': 0, 'MENU_NAME': '注册用户', 'MODULE_URL': 'frame_src/views/userinfoViews/', 'MENU_ICON': 'fa fa-bank', 'children': [], 'MENU_PROP': '1', 'roleId': [26, 27]
       },
-      { 'id': 93, 'MODULE_ROUTE': 'user-password-manager', 'MODULE_OBJ': 'userPasswordManager', 'parentId': 31, 'sort': 0, 'MENU_NAME': '修改密码', 'MODULE_URL': 'userinfoViews/', 'MENU_ICON': 'fa fa-area-chart', 'children': [], 'MENU_PROP': '1', 'roleId': [26, 27] }
+      { 'id': 93, 'MODULE_ROUTE': 'user-password-manager', 'MODULE_OBJ': 'userPasswordManager', 'parentId': 31, 'sort': 0, 'MENU_NAME': '修改密码', 'MODULE_URL': 'frame_src/views/userinfoViews/', 'MENU_ICON': 'fa fa-area-chart', 'children': [], 'MENU_PROP': '1', 'roleId': [26, 27] },
+      { 'id': 1000, 'MODULE_ROUTE': 'test1', 'MODULE_OBJ': 'test1', 'parentId': 31, 'sort': 0, 'MENU_NAME': '第三方应用演示', 'MODULE_URL': 'app_src/views/', 'MENU_ICON': 'fa fa-area-chart', 'children': [], 'MENU_PROP': '1', 'roleId': [26, 27] },
+      { 'id': 1001, 'MODULE_ROUTE': 'test1', 'MODULE_OBJ': 'test', 'parentId': 31, 'sort': 0, 'MENU_NAME': '第三方网页演示', 'MODULE_URL': 'app_src/views/', 'MENU_ICON': 'fa fa-area-chart', 'children': [], 'MENU_PROP': '1', 'roleId': [26, 27] }
     ],
     'MENU_PROP': '1', 'roleId': [26, 27]
   },
   {
-    'id': 31, 'MODULE_ROUTE': '/uidpConfigViews', 'MODULE_OBJ': '', 'parentId': null, 'sort': 1, 'MENU_NAME': '基础信息管理', 'MODULE_URL': 'uidpConfigViews', 'MENU_ICON': 'fa fa-upload', 'children':
+    'id': 31, 'MODULE_ROUTE': '/uidpConfigViews', 'MODULE_OBJ': '', 'parentId': null, 'sort': 1, 'MENU_NAME': '基础信息管理', 'MODULE_URL': 'frame_src/views/uidpConfigViews', 'MENU_ICON': 'fa fa-upload', 'children':
       [
-        { 'id': 93, 'MODULE_ROUTE': 'uidp-config-manager', 'MODULE_OBJ': 'uidpConfigManager', 'parentId': 31, 'sort': 0, 'MENU_NAME': '平台信息管理', 'MODULE_URL': 'uidpConfigViews/', 'MENU_ICON': 'fa fa-area-chart', 'children': [], 'MENU_PROP': '1', 'roleId': [26, 27] },
-        { 'id': 93, 'MODULE_ROUTE': 'uidp-sys-info-manager', 'MODULE_OBJ': 'uidpSysInfoManager', 'parentId': 31, 'sort': 0, 'MENU_NAME': '在建系统信息管理', 'MODULE_URL': 'uidpConfigViews/', 'MENU_ICON': 'fa fa-area-chart', 'children': [], 'MENU_PROP': '1', 'roleId': [26, 27] }
+        { 'id': 93, 'MODULE_ROUTE': 'uidp-config-manager', 'MODULE_OBJ': 'uidpConfigManager', 'parentId': 31, 'sort': 0, 'MENU_NAME': '平台信息管理', 'MODULE_URL': 'frame_src/views/uidpConfigViews/', 'MENU_ICON': 'fa fa-area-chart', 'children': [], 'MENU_PROP': '1', 'roleId': [26, 27] },
+        { 'id': 93, 'MODULE_ROUTE': 'uidp-sys-info-manager', 'MODULE_OBJ': 'uidpSysInfoManager', 'parentId': 31, 'sort': 0, 'MENU_NAME': '在建系统信息管理', 'MODULE_URL': 'frame_src/views/uidpConfigViews/', 'MENU_ICON': 'fa fa-area-chart', 'children': [], 'MENU_PROP': '1', 'roleId': [26, 27] }
       ],
     'MENU_PROP': '1', 'roleId': [26, 27]
   },
   {
-    'id': 102, 'MODULE_ROUTE': '/roleViews', 'MODULE_OBJ': '', 'parentId': null, 'sort': 3, 'MENU_NAME': '角色管理', 'MODULE_URL': 'roleViews', 'MENU_ICON': 'fa fa-download', 'children':
+    'id': 102, 'MODULE_ROUTE': '/roleViews', 'MODULE_OBJ': '', 'parentId': null, 'sort': 3, 'MENU_NAME': '角色管理', 'MODULE_URL': 'frame_src/views/roleViews', 'MENU_ICON': 'fa fa-download', 'children':
       [
-        { 'id': 103, 'MODULE_ROUTE': 'role-manager', 'MODULE_OBJ': 'roleManager', 'parentId': 102, 'sort': 0, 'MENU_NAME': '注册角色', 'MODULE_URL': 'roleViews/', 'MENU_ICON': 'fa fa-image', 'children': [], 'MENU_PROP': '1', 'roleId': [27] },
-        { 'id': 104, 'MODULE_ROUTE': 'role-user-manager', 'MODULE_OBJ': 'roleUserManager', 'parentId': 102, 'sort': 0, 'MENU_NAME': '角色挂载', 'MODULE_URL': 'roleViews/', 'MENU_ICON': 'fa fa-image', 'children': [], 'MENU_PROP': '1', 'roleId': [27] }
+        { 'id': 103, 'MODULE_ROUTE': 'role-manager', 'MODULE_OBJ': 'roleManager', 'parentId': 102, 'sort': 0, 'MENU_NAME': '注册角色', 'MODULE_URL': 'frame_src/views/roleViews/', 'MENU_ICON': 'fa fa-image', 'children': [], 'MENU_PROP': '1', 'roleId': [27] },
+        { 'id': 104, 'MODULE_ROUTE': 'role-user-manager', 'MODULE_OBJ': 'roleUserManager', 'parentId': 102, 'sort': 0, 'MENU_NAME': '角色挂载', 'MODULE_URL': 'frame_src/views/roleViews/', 'MENU_ICON': 'fa fa-image', 'children': [], 'MENU_PROP': '1', 'roleId': [27] }
       ],
     'MENU_PROP': '1', 'roleId': [27]
   },
   {
-    'id': 6, 'MODULE_ROUTE': '/menu', 'MODULE_OBJ': '', 'parentId': null, 'sort': 6, 'MENU_NAME': '菜单权限', 'MODULE_URL': 'menu', 'MENU_ICON': 'fa fa-cog', 'children':
+    'id': 6, 'MODULE_ROUTE': '/menu', 'MODULE_OBJ': '', 'parentId': null, 'sort': 6, 'MENU_NAME': '菜单权限', 'MODULE_URL': 'frame_src/views/menu', 'MENU_ICON': 'fa fa-cog', 'children':
       [
-        { 'id': 108, 'MODULE_ROUTE': 'menu-manager', 'MODULE_OBJ': 'menuManager', 'parentId': 6, 'sort': 0, 'MENU_NAME': ' 菜单管理', 'MODULE_URL': 'menu/', 'MENU_ICON': 'fa fa-database', 'children': [], 'MENU_PROP': '1', 'roleId': [27, 28] },
-        { 'id': 109, 'MODULE_ROUTE': 'menu-permission-manager', 'MODULE_OBJ': 'menuPermissionManager', 'parentId': 6, 'sort': 1, 'MENU_NAME': '权限分配', 'MODULE_URL': 'menu/', 'MENU_ICON': 'fa fa-navicon', 'children': [], 'MENU_PROP': '1', 'roleId': [27, 28] }
+        { 'id': 108, 'MODULE_ROUTE': 'menu-manager', 'MODULE_OBJ': 'menuManager', 'parentId': 6, 'sort': 0, 'MENU_NAME': ' 菜单管理', 'MODULE_URL': 'frame_src/views/menu/', 'MENU_ICON': 'fa fa-database', 'children': [], 'MENU_PROP': '1', 'roleId': [27, 28] },
+        { 'id': 109, 'MODULE_ROUTE': 'menu-permission-manager', 'MODULE_OBJ': 'menuPermissionManager', 'parentId': 6, 'sort': 1, 'MENU_NAME': '权限分配', 'MODULE_URL': 'frame_src/views/menu/', 'MENU_ICON': 'fa fa-navicon', 'children': [], 'MENU_PROP': '1', 'roleId': [27, 28] }
       ],
     'MENU_PROP': '1', 'roleId': [27, 28]
   },
   {
-    'id': 7, 'MODULE_ROUTE': '/orgViews', 'MODULE_OBJ': '', 'parentId': null, 'sort': 6, 'MENU_NAME': '组织结构', 'MODULE_URL': 'orgViews', 'MENU_ICON': 'fa fa-cog', 'children':
+    'id': 7, 'MODULE_ROUTE': '/orgViews', 'MODULE_OBJ': '', 'parentId': null, 'sort': 6, 'MENU_NAME': '组织结构', 'MODULE_URL': 'frame_src/views/orgViews', 'MENU_ICON': 'fa fa-cog', 'children':
       [
-        { 'id': 110, 'MODULE_ROUTE': 'org-manager', 'MODULE_OBJ': 'orgManager', 'parentId': 7, 'sort': 2, 'MENU_NAME': '组织机构配置', 'MODULE_URL': 'orgViews/', 'MENU_ICON': 'fa fa-universal-access', 'children': [], 'MENU_PROP': '1', 'roleId': [27, 28] },
-        { 'id': 111, 'MODULE_ROUTE': 'org-user-manager', 'MODULE_OBJ': 'orgUserManager', 'parentId': 7, 'sort': 3, 'MENU_NAME': '组织机构挂载', 'MODULE_URL': 'orgViews/', 'MENU_ICON': 'fa fa-user-plus', 'children': [], 'MENU_PROP': '1', 'roleId': [27, 28] }
+        { 'id': 110, 'MODULE_ROUTE': 'org-manager', 'MODULE_OBJ': 'orgManager', 'parentId': 7, 'sort': 2, 'MENU_NAME': '组织机构配置', 'MODULE_URL': 'frame_src/views/orgViews/', 'MENU_ICON': 'fa fa-universal-access', 'children': [], 'MENU_PROP': '1', 'roleId': [27, 28] },
+        { 'id': 111, 'MODULE_ROUTE': 'org-user-manager', 'MODULE_OBJ': 'orgUserManager', 'parentId': 7, 'sort': 3, 'MENU_NAME': '组织机构挂载', 'MODULE_URL': 'frame_src/views/orgViews/', 'MENU_ICON': 'fa fa-user-plus', 'children': [], 'MENU_PROP': '1', 'roleId': [27, 28] }
       ],
     'MENU_PROP': '1', 'roleId': [27, 28]
   },
   {
-    'id': 8, 'MODULE_ROUTE': '/logInfoViews', 'MODULE_OBJ': '', 'parentId': null, 'sort': 6, 'MENU_NAME': '日志管理', 'MODULE_URL': 'logInfoViews', 'MENU_ICON': 'fa fa-cog', 'children':
+    'id': 8, 'MODULE_ROUTE': '/logInfoViews', 'MODULE_OBJ': '', 'parentId': null, 'sort': 6, 'MENU_NAME': '日志管理', 'MODULE_URL': 'frame_src/views/logInfoViews', 'MENU_ICON': 'fa fa-cog', 'children':
       [
-        { 'id': 112, 'MODULE_ROUTE': 'log-info-manager', 'MODULE_OBJ': 'logInfoManager', 'parentId': 8, 'sort': 2, 'MENU_NAME': '日志查看', 'MODULE_URL': 'logInfoViews/', 'MENU_ICON': 'fa fa-universal-access', 'children': [], 'MENU_PROP': '1', 'roleId': [27, 28] }
+        { 'id': 112, 'MODULE_ROUTE': 'log-info-manager', 'MODULE_OBJ': 'logInfoManager', 'parentId': 8, 'sort': 2, 'MENU_NAME': '日志查看', 'MODULE_URL': 'frame_src/views/logInfoViews/', 'MENU_ICON': 'fa fa-universal-access', 'children': [], 'MENU_PROP': '1', 'roleId': [27, 28] }
       ],
     'MENU_PROP': '1', 'roleId': [27, 28]
   }
