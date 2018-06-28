@@ -26,8 +26,12 @@
         <span class="show-pwd" @click="showPwd">
           <svg-icon icon-class="eye" />
         </span>
-      </el-form-item>
-
+      </el-form-item> 
+       <div>
+         <el-radio v-model="radio" label="user">普通账户</el-radio> 
+        <el-radio v-model="radio" label="userDomain">域账户</el-radio>
+       </div>
+       <br>
       <el-button type="primary" style="width:100%;margin-bottom:30px;" :loading="loading" @click.native.prevent="handleLogin">{{$t('login.logIn')}}</el-button>
 
       <!-- <div class="tips">
@@ -74,8 +78,9 @@ export default {
     }
     return {
       loginForm: {
-        username: 'hr2222',
-        password: '123456'
+        username: 'UIDPAdmin',
+        password: 'UIDPAdmin',
+        userDomain: ''
       },
       loginRules: {
         // username: [{ required: true, trigger: 'blur', validator: validateUsername }],
@@ -83,7 +88,8 @@ export default {
       },
       passwordType: 'password',
       loading: false,
-      showDialog: false
+      showDialog: false,
+      radio: 'user'
     }
   },
   methods: {
@@ -98,10 +104,15 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.$store.dispatch('LoginByUsername', this.loginForm).then(() => {
-            this.loading = false
-            this.showDialog = true
-            // this.$router.push({ path: '/' })
+          this.loginForm.userDomain = this.radio
+          this.$store.dispatch('LoginByUsername', this.loginForm).then(response => {
+            if (response.data.roleLevel === 'admin') {
+              this.showDialog = false
+              this.$router.push({ path: '/' })
+            } else {
+              this.loading = false
+              this.showDialog = true
+            }// this.$router.push({ path: '/' })
           }).catch(() => {
             this.loading = false
           })

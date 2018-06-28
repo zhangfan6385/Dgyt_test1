@@ -193,6 +193,7 @@ export default {
     }, load() { // 查询组织结构数据this.treeListQuery
       fetchOrgList().then(response => {
         if (response.data.code === 2000) {
+          this.roleTree = []
           this.roleTree = response.data.items
         } else {
           this.$notify({

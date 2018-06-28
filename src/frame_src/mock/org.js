@@ -34,7 +34,7 @@ export default {
       aa: multipleSelection
     }
   }, getUpdateOrgArticle: config => {
-    const { field, id } = param2Obj(config.url)
+    const { field, id } = JSON.parse(config.body)
     if (field === 'deletaStatus') {
       return {
         aa: id,

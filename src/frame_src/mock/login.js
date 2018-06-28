@@ -8,9 +8,13 @@ const userMap = {
     avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
     name: 'Super Admin',
     sysCode: '1',
+    code: '2000',
+    userCode: 'admin',
     sysName: '大港软件开发平台',
     departCode: '1401',
     userId: '98743',
+    userSex: '1',
+    roleLevel: 'admin',
     orgList: [{
       'orgName': '大港油田1部',
       'orgCode': '1401',
