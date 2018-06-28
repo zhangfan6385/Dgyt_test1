@@ -6,7 +6,7 @@
         <div class="logo">
           <img src="../../../frame_src/imgs/logo.png">
           <!-- <img src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif"> -->
-          <span>大港油田软件研发平台</span>
+          <span>{{sysNameMessage}}</span>
         </div>
       </el-col>
       <el-col :span="6" style="text-aligh:center;">
@@ -57,6 +57,13 @@ export default {
         hideSidebar: !this.sidebar.opened,
         withoutAnimation: this.sidebar.withoutAnimation,
         mobile: this.device === 'mobile'
+      }
+    },
+    sysNameMessage: function() {
+      if (this.$store.state.user.sysName !== '') {
+        return this.$store.state.user.sysName
+      } else {
+        return '大港油田软件研发平台'
       }
     }
   },
