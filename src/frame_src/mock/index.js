@@ -16,9 +16,9 @@ import menuAPI from './menu'
 // })
 
 // 登录相关
-Mock.mock(/\/login\/login/, 'post', loginAPI.loginByUsername)
+//Mock.mock(/\/login\/login/, 'post', loginAPI.loginByUsername)
 Mock.mock(/\/login\/logout/, 'post', loginAPI.logout)
-Mock.mock(/\/user\/info\.*/, 'post', loginAPI.getUserInfo)
+//Mock.mock(/\/user\/info\.*/, 'post', loginAPI.getUserInfo)
 
 // 文章相关
 Mock.mock(/\/article\/list/, 'get', articleAPI.getList)
@@ -83,4 +83,4 @@ Mock.mock(/\/transaction\/list/, 'get', transactionAPI.getList)
 // Mock.mock(/\/menu\/fetchRoleMenuList/, 'get', menuAPI.getRoleMenuList)
 // Mock.mock(/\/menu\/setRoleMenus/, 'post', menuAPI.setRoleMenus)
 Mock.mock(/\/menu\/fetchPermission/, 'get', menuAPI.getPermission)
-export default Mock
+//export default Mock
