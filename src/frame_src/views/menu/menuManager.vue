@@ -709,6 +709,7 @@
         this.form.SYS_CODE = this.sysCode
         const query = { sysCode: this.sysCode }
         fetchMenuList(query).then(response => {
+          console.log(response.data)
           this.menuTree = response.data
         })
       }

@@ -19,6 +19,7 @@ const getters = {
   departCode: state => state.user.departCode,
   userId: state => state.user.userId,
   userSex: state => state.user.userSex,
-  code: state => state.user.code
+  code: state => state.user.code,
+  roleLevel: state => state.user.roleLevel
 }
 export default getters
