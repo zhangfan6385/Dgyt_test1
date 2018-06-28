@@ -142,8 +142,8 @@ export default {
       dialogFormVisible: false,
       dialogStatus: '',
       textMap: {
-        update: 'Edit',
-        create: 'Create'
+        update: '修改配置',
+        create: '创建配置'
       },
       dialogPvVisible: false,
       pvData: [],

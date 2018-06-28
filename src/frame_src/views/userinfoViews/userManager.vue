@@ -167,7 +167,7 @@
           </el-select>
         </el-form-item>
         <el-form-item :label="$t('userTable.REMARK')">
-          <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="Please input" v-model="temp.REMARK">
+          <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="备注" v-model="temp.REMARK">
           </el-input>
         </el-form-item>
       </el-form> 
@@ -253,8 +253,8 @@ export default {
       dialogFormVisible: false,
       dialogStatus: '',
       textMap: {
-        update: 'Edit',
-        create: 'Create'
+        update: '修改用户',
+        create: '创建用户'
       },
       dialogPvVisible: false,
       pvData: [],
