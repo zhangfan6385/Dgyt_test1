@@ -95,11 +95,15 @@ const user = {
       const username = userInfo.username.trim()
       return new Promise((resolve, reject) => { //, userDomain:userDomain
         loginByUsername(username, userInfo.password, userInfo.userDomain).then(response => {
-          const data = response.data
-          commit('SET_ORG_LIST', data.orgList)
-          commit('SET_TOKEN', data.token)
-          setToken(response.data.token)
-          resolve(response)
+          if (response.data.code === 2000) {
+            const data = response.data
+            commit('SET_ORG_LIST', data.orgList)
+            commit('SET_TOKEN', data.token)
+            setToken(response.data.token)
+            resolve(response)
+          } else {
+            reject(response.data.message)
+          }
         }).catch(error => {
           reject(error)
         })
