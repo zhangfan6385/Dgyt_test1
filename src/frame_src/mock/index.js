@@ -15,9 +15,22 @@ import transactionAPI from './transaction'
 // })
 
 // 登录相关
+<<<<<<< HEAD
+//Mock.mock(/\/login\/login/, 'post', loginAPI.loginByUsername)
+Mock.mock(/\/login\/logout/, 'post', loginAPI.logout)
+//Mock.mock(/\/user\/info\.*/, 'post', loginAPI.getUserInfo)
+
+// 文章相关
+Mock.mock(/\/article\/list/, 'get', articleAPI.getList)
+Mock.mock(/\/article\/detail/, 'get', articleAPI.getArticle)
+Mock.mock(/\/article\/pv/, 'get', articleAPI.getPv)
+Mock.mock(/\/article\/create/, 'post', articleAPI.createArticle)
+Mock.mock(/\/article\/update/, 'post', articleAPI.updateArticle)
+=======
 // Mock.mock(/\/login\/login/, 'post', loginAPI.loginByUsername)
 Mock.mock(/\/login\/logout/, 'post', loginAPI.logout)
 // Mock.mock(/\/user\/info\.*/, 'post', loginAPI.getUserInfo)
+>>>>>>> 4d1fc01087416795ac78090b2a7ffdede20b7f1f
 
 // 用户管理模块
 // Mock.mock(/\/user\/fetchUserList/, 'get', userAPI.getFetchUserList)
@@ -74,5 +87,10 @@ Mock.mock(/\/transaction\/list/, 'get', transactionAPI.getList)
 
 // Mock.mock(/\/menu\/fetchRoleMenuList/, 'get', menuAPI.getRoleMenuList)
 // Mock.mock(/\/menu\/setRoleMenus/, 'post', menuAPI.setRoleMenus)
+<<<<<<< HEAD
+Mock.mock(/\/menu\/fetchPermission/, 'get', menuAPI.getPermission)
+//export default Mock
+=======
 // Mock.mock(/\/menu\/fetchPermission/, 'get', menuAPI.getPermission)
 export default Mock
+>>>>>>> 4d1fc01087416795ac78090b2a7ffdede20b7f1f
