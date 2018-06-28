@@ -49,7 +49,7 @@ function generateRouteStrucChildren(asyncRouterMap, menusChildren) {
   for (const menu of menusChildren) {
     const permission = {}
     permission.path = menu.MODULE_ROUTE
-    permission.hidden = !menu.MENU_PROP
+    permission.hidden = !Number(menu.MENU_PROP)
     permission.component = _import(menu.MODULE_URL + menu.MODULE_OBJ)
     // permission.redirect = 'noredirect'
     permission.name = menu.MODULE_ROUTE

@@ -7,7 +7,7 @@ import Element from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
 import '@/frame_src/styles/index.scss' // global css
-import 'font-awesome/css/font-awesome.css'
+// import 'font-awesome/css/font-awesome.css'
 import App from './frame_src/App'
 import router from './frame_src/router'
 import store from './frame_src/store'
