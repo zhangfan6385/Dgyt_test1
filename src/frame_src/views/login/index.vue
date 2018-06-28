@@ -106,6 +106,7 @@ export default {
           this.loading = true
           this.loginForm.userDomain = this.radio
           this.$store.dispatch('LoginByUsername', this.loginForm).then(response => {
+            this.$store.dispatch('setRoleLevel', response.data.roleLevel)
             if (response.data.roleLevel === 'admin') {
               this.showDialog = false
               this.$router.push({ path: '/' })

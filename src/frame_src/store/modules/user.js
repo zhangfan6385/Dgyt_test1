@@ -20,7 +20,8 @@ const user = {
     departCode: '',
     departName: '',
     userId: '',
-    userSex: ''
+    userSex: '',
+    roleLevel: ''
 
   },
 
@@ -69,6 +70,9 @@ const user = {
     },
     SET_USER_SEX: (state, userSex) => {
       state.userSex = userSex
+    },
+    SET_ROLE_LEVEL: (state, roleLevel) => {
+      state.roleLevel = roleLevel
     }
   },
 
@@ -82,6 +86,8 @@ const user = {
       commit('SET_DEPART_CODE', departCode)
     }, setDepartName({ commit }, departName) {
       commit('SET_DEPART_NAME', departName)
+    }, setRoleLevel({ commit }, roleLevel) {
+      commit('SET_ROLE_LEVEL', roleLevel)
     },
 
     // 用户名登录

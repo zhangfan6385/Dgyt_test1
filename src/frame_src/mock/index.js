@@ -1,6 +1,5 @@
 import Mock from 'mockjs'
 import loginAPI from './login'
-import articleAPI from './article'
 // import logInfoAPI from './logInfo'
 // import userAPI from './user'
 // import roleAPI from './role'
@@ -16,16 +15,9 @@ import transactionAPI from './transaction'
 // })
 
 // 登录相关
-Mock.mock(/\/login\/login/, 'post', loginAPI.loginByUsername)
+// Mock.mock(/\/login\/login/, 'post', loginAPI.loginByUsername)
 Mock.mock(/\/login\/logout/, 'post', loginAPI.logout)
-Mock.mock(/\/user\/info\.*/, 'post', loginAPI.getUserInfo)
-
-// 文章相关
-Mock.mock(/\/article\/list/, 'get', articleAPI.getList)
-Mock.mock(/\/article\/detail/, 'get', articleAPI.getArticle)
-Mock.mock(/\/article\/pv/, 'get', articleAPI.getPv)
-Mock.mock(/\/article\/create/, 'post', articleAPI.createArticle)
-Mock.mock(/\/article\/update/, 'post', articleAPI.updateArticle)
+// Mock.mock(/\/user\/info\.*/, 'post', loginAPI.getUserInfo)
 
 // 用户管理模块
 // Mock.mock(/\/user\/fetchUserList/, 'get', userAPI.getFetchUserList)
