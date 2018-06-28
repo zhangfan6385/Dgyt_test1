@@ -3,8 +3,12 @@
     <div class="filter-container">
        <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" :placeholder="$t('logInfoTable.USER_NAME')" v-model="listQuery.USER_NAME">
       </el-input> 
-      <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" :placeholder="$t('logInfoTable.LOG_TYPE')" v-model="listQuery.LOG_TYPE">
-      </el-input> 
+      <!-- <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" :placeholder="$t('logInfoTable.LOG_TYPE')" v-model="listQuery.LOG_TYPE">
+      </el-input>  -->
+       <el-select clearable style="width: 120px" class="filter-item" v-model="listQuery.LOG_TYPE" :placeholder="$t('logInfoTable.LOG_TYPE')">
+        <el-option v-for="item in logOptions" :key="item.key" :label="item.log_name" :value="item.key">
+        </el-option>
+      </el-select>
        <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" :placeholder="$t('logInfoTable.ACCESS_TIME')" v-model="listQuery.ACCESS_TIME">
       </el-input> 
       <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">{{$t('logInfoTable.search')}}</el-button>
@@ -36,7 +40,7 @@
       </el-table-column>
       <el-table-column width="140px" align="center" :label="$t('logInfoTable.LOG_TYPE')">
         <template slot-scope="scope">
-          <span>{{scope.row.LOG_TYPE}}</span>
+          <span>{{scope.row.LOG_TYPE | logFilter}}</span>
         </template>
       </el-table-column>
       <el-table-column width="270px" align="center" :label="$t('logInfoTable.LOG_CONTENT')">
@@ -62,7 +66,11 @@ import {
   fetchLogInfoList
 } from '@/frame_src/api/logInfo'
 import waves from '@/frame_src/directive/waves' // 水波纹指令
-
+const logOptions = [{ key: 0, log_name: '业务操作' }, { key: 1, log_name: '异常' }, { key: 2, log_name: '登录' }]// 0业务操作 1 异常 2 登录
+const logOptionsKeyValue = logOptions.reduce((acc, cur) => {
+  acc[cur.key] = cur.log_name
+  return acc
+}, {})
 export default {
   name: 'uidpConfigManager',
   directives: {
@@ -81,6 +89,7 @@ export default {
         page: 1,
         limit: 15
       },
+      logOptions,
       editConfig: false,
       dialogFormVisible: false,
       dialogStatus: '',
@@ -92,24 +101,28 @@ export default {
       pvData: [],
       downloadLoading: false
     }
+  }, filters: {
+    logFilter(type) {
+      return logOptionsKeyValue[type]
+    }
   },
   methods: {
     getList() {
       this.listLoading = true
       fetchLogInfoList(this.listQuery).then(response => {
-         if (response.data.code === 2000) {
-        this.list = response.data.items
-        this.total = response.data.total
-        this.listLoading = false
-        }else {
-             this.listLoading = false
-            this.$notify({
-              title: '失败',
-              message: response.data.message,
-              type: 'error',
-              duration: 2000
-            })
-          }
+        if (response.data.code === 2000) {
+          this.list = response.data.items
+          this.total = response.data.total
+          this.listLoading = false
+        } else {
+          this.listLoading = false
+          this.$notify({
+            title: '失败',
+            message: response.data.message,
+            type: 'error',
+            duration: 2000
+          })
+        }
       })
     },
     handleSizeChange(val) {
@@ -153,7 +166,11 @@ export default {
     formatJson(filterVal, jsonData) {
       return jsonData.map(v =>
         filterVal.map(j => {
-          return v[j]
+          if (j === 'LOG_TYPE') {
+            return logOptionsKeyValue[v[j]]
+          } else {
+            return v[j]
+          }
         })
       )
     },

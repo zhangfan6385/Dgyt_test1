@@ -167,7 +167,7 @@
           </el-select>
         </el-form-item>
         <el-form-item :label="$t('userTable.REMARK')">
-          <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="Please input" v-model="temp.REMARK">
+          <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="备注" v-model="temp.REMARK">
           </el-input>
         </el-form-item>
       </el-form> 
@@ -253,8 +253,8 @@ export default {
       dialogFormVisible: false,
       dialogStatus: '',
       textMap: {
-        update: 'Edit',
-        create: 'Create'
+        update: '修改用户',
+        create: '创建用户'
       },
       dialogPvVisible: false,
       pvData: [],
@@ -323,8 +323,8 @@ export default {
         USER_SEX: 1,
         FLAG: 1,
         USER_DOMAIN: '',
-        REMARK: '',
-       
+        REMARK: ''
+
       }
     },
     handleUpdate(row) { // 打开修改表单
@@ -384,9 +384,9 @@ export default {
         this.title = '失败'
         this.type = 'error'
         if (response.data.code === 2000) {
-          //const index = this.list.indexOf(row)
-         // this.list.splice(index, 1)
-           this.getList();
+          // const index = this.list.indexOf(row)
+          // this.list.splice(index, 1)
+          this.getList()
           this.title = '成功'
           this.type = 'success'
         }
@@ -411,7 +411,7 @@ export default {
               title = '成功'
               type = 'success'
               // this.list.unshift(this.temp)
-               this.getList()
+              this.getList()
             }
             this.dialogFormVisible = false
             this.$notify({
@@ -435,8 +435,8 @@ export default {
         this.title = '失败'
         this.type = 'error'
         if (response.data.code === 2000) {
-          //row.FLAG = status
-          this.getList();
+          // row.FLAG = status
+          this.getList()
           this.title = '成功'
           this.type = 'success'
         }
@@ -506,7 +506,7 @@ export default {
             return flagOptionsKeyValue[v[j]]
           } if (j === 'USER_SEX') {
             return sexOptionsKeyValue[v[j]]
-          }else {
+          } else {
             return v[j]
           }
         })

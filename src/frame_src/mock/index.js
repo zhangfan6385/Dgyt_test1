@@ -19,6 +19,13 @@ import transactionAPI from './transaction'
 Mock.mock(/\/login\/logout/, 'post', loginAPI.logout)
 // Mock.mock(/\/user\/info\.*/, 'post', loginAPI.getUserInfo)
 
+// 文章相关
+// Mock.mock(/\/article\/list/, 'get', articleAPI.getList)
+// Mock.mock(/\/article\/detail/, 'get', articleAPI.getArticle)
+// Mock.mock(/\/article\/pv/, 'get', articleAPI.getPv)
+// Mock.mock(/\/article\/create/, 'post', articleAPI.createArticle)
+// Mock.mock(/\/article\/update/, 'post', articleAPI.updateArticle)
+
 // 用户管理模块
 // Mock.mock(/\/user\/fetchUserList/, 'get', userAPI.getFetchUserList)
 // Mock.mock(/\/user\/updateUserArticle/, 'post', userAPI.getUpdateUserArticle)
@@ -74,5 +81,7 @@ Mock.mock(/\/transaction\/list/, 'get', transactionAPI.getList)
 
 // Mock.mock(/\/menu\/fetchRoleMenuList/, 'get', menuAPI.getRoleMenuList)
 // Mock.mock(/\/menu\/setRoleMenus/, 'post', menuAPI.setRoleMenus)
+
 // Mock.mock(/\/menu\/fetchPermission/, 'get', menuAPI.getPermission)
-export default Mock
+// export default Mock
+

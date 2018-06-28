@@ -71,7 +71,7 @@ export default {
     // }
     const validatePassword = (rule, value, callback) => {
       if (value.length < 6) {
-        callback(new Error('The password can not be less than 6 digits'))
+        callback(new Error('密码不能小于6位！'))
       } else {
         callback()
       }
@@ -108,11 +108,17 @@ export default {
           this.$store.dispatch('LoginByUsername', this.loginForm).then(response => {
             this.$store.dispatch('setRoleLevel', response.data.roleLevel)
             if (response.data.roleLevel === 'admin') {
-              this.showDialog = false
-              this.$router.push({ path: '/' })
+              this.updateShowDialog('')
             } else {
+              var orglist = this.$store.state.user.orgList
+              if (orglist.length === 1) {
+                this.$store.dispatch('setDepartCode', orglist[0].orgId)
+                this.$store.dispatch('setDepartName', orglist[0].orgName)
+                this.updateShowDialog('')
+              } else {
+                this.showDialog = true
+              }
               this.loading = false
-              this.showDialog = true
             }// this.$router.push({ path: '/' })
           }).catch((err) => {
             this.loading = false
