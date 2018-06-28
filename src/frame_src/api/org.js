@@ -17,7 +17,7 @@ export function updateOrgArticle(data) { // 修改组织结构信息-删除
   return request({
     url: '/org/updateOrgArticle',
     method: 'post',
-    params: data
+    data
   })
 }
 export function updateOrgData(data) { // 修改组织结构

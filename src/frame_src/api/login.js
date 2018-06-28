@@ -1,9 +1,10 @@
 import request from '@/frame_src/utils/request'
 
-export function loginByUsername(username, password) {
+export function loginByUsername(username, password, userDomain) {
   const data = {
     username,
-    password
+    password,
+    userDomain
   }
   return request({
     url: '/login/login',

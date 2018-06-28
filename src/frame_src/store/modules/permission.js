@@ -5,13 +5,13 @@ import { constantRouterMap } from '@/frame_src/router'
  * @param roles
  * @param route
  */
-function hasPermission(roles, route) {
+/* function hasPermission(roles, route) {
   if (route.meta && route.meta.roles) {
     return roles.some(role => route.meta.roles.indexOf(role) >= 0)
   } else {
     return true
   }
-}
+} */
 
 /**
  * 递归过滤异步路由表，返回符合用户角色权限的路由表

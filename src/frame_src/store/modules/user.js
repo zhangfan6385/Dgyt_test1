@@ -20,7 +20,8 @@ const user = {
     departCode: '',
     departName: '',
     userId: '',
-    userSex: ''
+    userSex: '',
+    roleLevel: ''
 
   },
 
@@ -69,6 +70,9 @@ const user = {
     },
     SET_USER_SEX: (state, userSex) => {
       state.userSex = userSex
+    },
+    SET_ROLE_LEVEL: (state, roleLevel) => {
+      state.roleLevel = roleLevel
     }
   },
 
@@ -82,18 +86,24 @@ const user = {
       commit('SET_DEPART_CODE', departCode)
     }, setDepartName({ commit }, departName) {
       commit('SET_DEPART_NAME', departName)
+    }, setRoleLevel({ commit }, roleLevel) {
+      commit('SET_ROLE_LEVEL', roleLevel)
     },
 
     // 用户名登录
     LoginByUsername({ commit }, userInfo) {
       const username = userInfo.username.trim()
-      return new Promise((resolve, reject) => {
-        loginByUsername(username, userInfo.password).then(response => {
-          const data = response.data
-          commit('SET_ORG_LIST', data.orgList)
-          commit('SET_TOKEN', data.token)
-          setToken(response.data.token)
-          resolve()
+      return new Promise((resolve, reject) => { //, userDomain:userDomain
+        loginByUsername(username, userInfo.password, userInfo.userDomain).then(response => {
+          if (response.data.code === 2000) {
+            const data = response.data
+            commit('SET_ORG_LIST', data.orgList)
+            commit('SET_TOKEN', data.token)
+            setToken(response.data.token)
+            resolve(response)
+          } else {
+            reject(response.data.message)
+          }
         }).catch(error => {
           reject(error)
         })
@@ -123,6 +133,7 @@ const user = {
           commit('SET_DEPART_CODE', data.departCode)
           commit('SET_USER_ID', data.userId)
           commit('SET_USER_SEX', data.userSex)
+          commit('SET_CODE', data.userCode)
           resolve(response)
         }).catch(error => {
           reject(error)

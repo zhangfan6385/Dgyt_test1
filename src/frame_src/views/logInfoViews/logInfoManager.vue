@@ -97,19 +97,19 @@ export default {
     getList() {
       this.listLoading = true
       fetchLogInfoList(this.listQuery).then(response => {
-         if (response.data.code === 2000) {
-        this.list = response.data.items
-        this.total = response.data.total
-        this.listLoading = false
-        }else {
-             this.listLoading = false
-            this.$notify({
-              title: '失败',
-              message: response.data.message,
-              type: 'error',
-              duration: 2000
-            })
-          }
+        if (response.data.code === 2000) {
+          this.list = response.data.items
+          this.total = response.data.total
+          this.listLoading = false
+        } else {
+          this.listLoading = false
+          this.$notify({
+            title: '失败',
+            message: response.data.message,
+            type: 'error',
+            duration: 2000
+          })
+        }
       })
     },
     handleSizeChange(val) {

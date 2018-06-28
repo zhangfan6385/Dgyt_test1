@@ -26,8 +26,12 @@
         <span class="show-pwd" @click="showPwd">
           <svg-icon icon-class="eye" />
         </span>
-      </el-form-item>
-
+      </el-form-item> 
+       <div>
+         <el-radio v-model="radio" label="user">普通账户</el-radio> 
+        <el-radio v-model="radio" label="userDomain">域账户</el-radio>
+       </div>
+       <br>
       <el-button type="primary" style="width:100%;margin-bottom:30px;" :loading="loading" @click.native.prevent="handleLogin">{{$t('login.logIn')}}</el-button>
 
       <!-- <div class="tips">
@@ -53,7 +57,7 @@
 // import { isvalidUsername } from '@/frame_src/utils/validate'
 import LangSelect from '@/frame_src/components/LangSelect'
 import LogInOrg from './logInOrg'
-
+import { Message } from 'element-ui'
 export default {
   components: { LangSelect, LogInOrg },
   name: 'login',
@@ -74,8 +78,9 @@ export default {
     }
     return {
       loginForm: {
-        username: 'hr2222',
-        password: '123456'
+        username: 'UIDPAdmin',
+        password: 'UIDPAdmin',
+        userDomain: ''
       },
       loginRules: {
         // username: [{ required: true, trigger: 'blur', validator: validateUsername }],
@@ -83,7 +88,8 @@ export default {
       },
       passwordType: 'password',
       loading: false,
-      showDialog: false
+      showDialog: false,
+      radio: 'user'
     }
   },
   methods: {
@@ -98,12 +104,25 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.$store.dispatch('LoginByUsername', this.loginForm).then(() => {
+          this.loginForm.userDomain = this.radio
+          this.$store.dispatch('LoginByUsername', this.loginForm).then(response => {
+            this.$store.dispatch('setRoleLevel', response.data.roleLevel)
+            if (response.data.roleLevel === 'admin') {
+              this.updateShowDialog('')
+            } else {
+              var orglist = this.$store.state.user.orgList
+              if (orglist.length === 1) {
+                this.$store.dispatch('setDepartCode', orglist[0].orgId)
+                this.$store.dispatch('setDepartName', orglist[0].orgName)
+                this.updateShowDialog('')
+              } else {
+                this.showDialog = true
+              }
+              this.loading = false
+            }// this.$router.push({ path: '/' })
+          }).catch((err) => {
             this.loading = false
-            this.showDialog = true
-            // this.$router.push({ path: '/' })
-          }).catch(() => {
-            this.loading = false
+            Message.error(err)
           })
         } else {
           console.log('error submit!!')

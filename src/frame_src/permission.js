@@ -12,11 +12,17 @@ import Layout from '@/frame_src/views/layout/Layout'
 NProgress.configure({ showSpinner: false })// NProgress 配置
 
 // permissiom judge function
-function hasPermission(roles, permissionRoles) {
+/* function hasPermission(roles, permissionRoles) {
   if (roles.indexOf('admin') >= 0) return true // 如果是admin，直接拥有所有权限
   if (!permissionRoles) return true
   return roles.some(role => permissionRoles.indexOf(role) >= 0)
-}
+} */
+
+/* function hasPermission(permissionRoles) {
+  if (store.getters.roleLevel.indexOf('admin') >= 0) return true // 如果是admin，直接拥有所有权限
+  if (!permissionRoles) return true
+  // return roles.some(role => permissionRoles.indexOf(role) >= 0)
+} */
 
 const whiteList = ['/login', '/authredirect']//  在免登录白名单，直接进入
 
@@ -59,36 +65,24 @@ function generateRouteStrucChildren(asyncRouterMap, menusChildren) {
 
 router.beforeEach((to, from, next) => {
   NProgress.start() // 开始进度条
-  const query = { sysCode: '1', userId: '1' }
-
   if (getToken()) { // 判断是否有token
     /* has token*/
     if (to.path === '/login') {
       next({ path: '/' })
       NProgress.done() // if current page is dashboard will not trigger	afterEach hook, so manually handle it
     } else {
-      if (store.getters.roles.length === 0) { // 判断当前用户是否已拉取完user_info信息
+      if (store.getters.code.length === 0) { // 判断当前用户是否已拉取完user_info信息
         store.dispatch('GetUserInfo').then(res => { // 拉取user_info
-          const roles = res.data.roles // note: roles 必须是一个数组 array! 像这样: ['editor','develop']
+          // const roles = res.data.roles // note: roles 必须是一个数组 array! 像这样: ['editor','develop']
+          const query = { sysCode: store.getters.sysCode, userId: store.getters.userId }
           fetchPermission(query).then(response => {
-            const menus = response.data
-            /* var currentRoute
-            var localRouteString = localStorage.getItem('PERMISSION')
-            var localRouteArray = []
-            if (localRouteString) {
-              localRouteArray = JSON.parse(localRouteString)
-              currentRoute = localRouteArray
-              console.log('local')
-            } else {
-              currentRoute = menus
-              console.log('remote')
-            } */
-            const routeStru = generateRouteStruc(menus.items)
-            console.log(routeStru)
+            const menus = response.data// .items
+            console.log(menus)
+            const routeStru = generateRouteStruc(menus)
             if (routeStru) {
               routeStru.push({ path: '*', redirect: '/404', hidden: true })
             }
-            store.dispatch('GenerateRoutes', { 'roles': roles, 'routeMap': routeStru }).then(() => { // 根据roles权限生成可访问的路由表
+            store.dispatch('GenerateRoutes', { 'routeMap': routeStru }).then(() => { // 根据roles权限生成可访问的路由表
               router.addRoutes(store.getters.addRouters) // 动态添加可访问路由表
               next({ ...to, replace: true }) // hack方法 确保addRoutes已完成 ,set the replace: true so the navigation will not leave a history record
             })
@@ -101,12 +95,14 @@ router.beforeEach((to, from, next) => {
         })
       } else {
         // 没有动态改变权限的需求可直接next() 删除下方权限判断 ↓
-        if (hasPermission(store.getters.roles, to.meta.roles)) {
+        /* if (hasPermission(store.getters.roles, to.meta.roles)) {
           next()//
         } else {
           next({ path: '/401', replace: true, query: { noGoBack: true }})
-        }
+        } */
         // 可删 ↑
+
+        next()
       }
     }
   } else {

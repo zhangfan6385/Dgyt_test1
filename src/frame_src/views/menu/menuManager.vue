@@ -550,6 +550,7 @@
         },
         maxId: 7000000,
         menuTree: [],
+        menuSelectTree: [],
         form: {
           MENU_ID: null,
           MENU_NAME: '',
@@ -566,10 +567,10 @@
     },
     computed: {
       // 计算属性的 getter
-      menuSelectTree: function() {
+      /* menuSelectTree: function() {
         // `this` 指向 vm 实例
         return this.menuTree
-      },
+      }, */
       sysCode() {
         return this.$store.getters.sysCode
       }
@@ -610,6 +611,7 @@
             type = 'success'
             this.deleteFromTree(this.menuTree, this.form.MENU_ID, 'id')
             this.newAdd()
+            this.loadSelectTree()
           } else {
             type = 'error'
           }
@@ -638,6 +640,7 @@
             if (response.data.code === 2000) {
               this.batchDeleteFromTree(this.menuTree, checkKeys)
               this.newAdd()
+              this.loadSelectTree()
             }
             this.$notify({
               title: '提示信息',
@@ -675,6 +678,7 @@
                     children: []
                   }
                   this.appendTreeNode(this.menuTree, add)
+                  this.loadSelectTree()
                 } else {
                   type = 'error'
                 }
@@ -693,6 +697,7 @@
             if (response.data.code === 2000) {
               type = 'success'
               this.updateTreeNode(this.menuTree, merge({}, this.form))
+              this.loadSelectTree()
             } else {
               type = 'error'
             }
@@ -709,7 +714,16 @@
         this.form.SYS_CODE = this.sysCode
         const query = { sysCode: this.sysCode }
         fetchMenuList(query).then(response => {
+          console.log(response.data)
           this.menuTree = response.data
+          this.menuSelectTree = response.data
+        })
+      },
+      loadSelectTree() {
+        this.form.SYS_CODE = this.sysCode
+        const query = { sysCode: this.sysCode }
+        fetchMenuList(query).then(response => {
+          this.menuSelectTree = response.data
         })
       }
     },
