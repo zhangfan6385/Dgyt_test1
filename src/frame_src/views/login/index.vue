@@ -57,7 +57,7 @@
 // import { isvalidUsername } from '@/frame_src/utils/validate'
 import LangSelect from '@/frame_src/components/LangSelect'
 import LogInOrg from './logInOrg'
-
+import { Message } from 'element-ui'
 export default {
   components: { LangSelect, LogInOrg },
   name: 'login',
@@ -114,8 +114,9 @@ export default {
               this.loading = false
               this.showDialog = true
             }// this.$router.push({ path: '/' })
-          }).catch(() => {
+          }).catch((err) => {
             this.loading = false
+            Message.error(err)
           })
         } else {
           console.log('error submit!!')

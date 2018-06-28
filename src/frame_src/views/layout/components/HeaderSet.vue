@@ -5,7 +5,7 @@
       <!-- <error-log class="errLog-container right-menu-item"></error-log> -->
       <div class="logo">
         <!-- <img src="../../../../frame_src/imgs/avatar.png"> -->
-        <span>Admin</span>
+        <span>{{userNameMessage}}</span>
 
         <span style="margin-left:15px;">单位：{{departCodeMessage}}</span>
       </div>
@@ -74,6 +74,9 @@ export default {
     // 计算属性的 getter
     departCodeMessage: function() {
       return this.$store.state.user.departName
+    },
+    userNameMessage: function() {
+      return this.$store.state.user.name
     },
     showPng: function() {
       return this.$store.state.user.userSex
