@@ -278,19 +278,19 @@ export default {
         })
       }
     }, deleteRole() { // 给用户分配角色权限
-      this.$confirm('将永久删除该用户的所有分配角色, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        if (this.multipleSelection.length <= 0) {
-          this.$notify({
-            title: '失败',
-            message: '请选择用户',
-            type: 'error',
-            duration: 2000
-          })
-        } else {
+      if (this.multipleSelection.length <= 0) {
+        this.$notify({
+          title: '失败',
+          message: '请选择用户',
+          type: 'error',
+          duration: 2000
+        })
+      } else {
+        this.$confirm('将永久删除该用户的所有分配角色, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
           this.listUpdate.arr = this.arr // 右边选中的集合
           deleteUserOrgArticle(this.listUpdate).then(response => { // 给用户分配组织结构权限
             var message = response.data.message
@@ -310,15 +310,15 @@ export default {
               duration: 2000
             })
           })
-        }
-      }).catch(() => {
-        this.$notify({
-          title: '失败',
-          message: '已取消清空',
-          type: 'error',
-          duration: 2000
+        }).catch(() => {
+          this.$notify({
+            title: '失败',
+            message: '已取消清空',
+            type: 'error',
+            duration: 2000
+          })
         })
-      })
+      }
     }, handleSelectionChange(val) { // 勾选右边表格时记录勾选的数据
       this.multipleSelection = val
     }, tableRowClassName({ row, rowIndex }) { // 通过右边表格的class名 挂载css样式
