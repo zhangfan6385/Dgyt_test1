@@ -132,9 +132,9 @@
        <!--<el-form-item :label="$t('userTable.USER_ALIAS')" prop="USER_ALIAS">
           <el-input v-model="temp.USER_ALIAS" ></el-input>
         </el-form-item>-->
-          <el-form-item :label="$t('userTable.USER_PASS')" prop="USER_PASS">
+          <!-- <el-form-item :label="$t('userTable.USER_PASS')" prop="USER_PASS">
           <el-input v-model="temp.USER_PASS"></el-input>
-        </el-form-item>
+        </el-form-item> -->
         
           <el-form-item :label="$t('userTable.PHONE_MOBILE')" prop="PHONE_MOBILE">
           <el-input v-model="temp.PHONE_MOBILE"></el-input>

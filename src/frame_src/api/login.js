@@ -20,10 +20,10 @@ export function logout() {
   })
 }
 
-export function getUserInfo(token, departCode) {
+export function getUserInfo(token, userId) {
   const data = {
     token,
-    departCode
+    userId
   }
   return request({
     url: '/user/info',

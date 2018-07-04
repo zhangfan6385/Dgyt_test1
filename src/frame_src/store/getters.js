@@ -20,6 +20,9 @@ const getters = {
   userId: state => state.user.userId,
   userSex: state => state.user.userSex,
   code: state => state.user.code,
-  roleLevel: state => state.user.roleLevel
+  roleLevel: state => state.user.roleLevel,
+  loginUserCode: state => state.user.loginUserCode,
+  userList: state => state.user.userList,
+  orgList: state => state.user.orgList
 }
 export default getters

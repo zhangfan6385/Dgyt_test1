@@ -12,7 +12,7 @@ export function fetchUserForLoginList(query) { // 查询登陆账号对应的用
     method: 'get',
     params: query
   })
-}fetchUserForLoginList
+}
 export function updateUserArticle(data) { // 修改用户信息-删除
   return request({
     url: '/user/updateUserArticle',

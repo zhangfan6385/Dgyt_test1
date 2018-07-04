@@ -116,7 +116,7 @@
        </el-table-column>
     </el-table>
       <div class="pagination-container">
-      <el-pagination background @size-change="handleSizeUserChange" @current-change="handleCurrentUserChange" :current-page="listUserQuery.page" :page-sizes="[5,10,20, 30]" :page-size="listQuery.limit" layout="total, sizes, prev, pager, next, jumper" :total="total">
+      <el-pagination background @size-change="handleSizeUserChange" @current-change="handleCurrentUserChange" :current-page="listUserQuery.page" :page-sizes="[5,10,20, 30]" :page-size="listQuery.limit" layout="total, sizes, prev, pager, next, jumper" :total="total2">
       </el-pagination>
     </div> 
     </el-card>
@@ -148,6 +148,7 @@ export default {
       list: null,
       userList: null,
       total: null,
+      total2: null,
       listLoading: true,
       listUserLoading: true,
       tableUserKey: undefined,
@@ -222,7 +223,7 @@ export default {
       fetchUserForLoginList(this.listUserQuery).then(response => {
         if (response.data.code === 2000) {
           this.userList = response.data.items
-          this.total = response.data.total
+          this.total2 = response.data.total
           this.listUserLoading = false
         } else {
           this.listUserLoading = false
@@ -265,7 +266,6 @@ export default {
       this.temp = Object.assign({}, row) // copy obj
       this.tableUserKey = row.LOGIN_ID
       this.tableUserKey2 = row.LOGIN_ID
-      alert(row.LOGIN_ID)
       this.listUserQuery.LOGIN_ID = this.tableUserKey
       this.getListUser()
       this.userLoginVisible = true
@@ -506,7 +506,7 @@ export default {
     }
   },
   created() {
-    this.getListUser()
+    // this.getListUser()
     this.getList()
   }
 }
