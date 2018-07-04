@@ -266,19 +266,19 @@ export default {
         })
       }
     }, deleteRole() { // 给用户分配角色权限
-      this.$confirm('将永久删除该用户的所有分配角色, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        if (this.multipleSelection.length <= 0) {
-          this.$notify({
-            title: '失败',
-            message: '请选择用户',
-            type: 'error',
-            duration: 2000
-          })
-        } else {
+      if (this.multipleSelection.length <= 0) {
+        this.$notify({
+          title: '失败',
+          message: '请选择用户',
+          type: 'error',
+          duration: 2000
+        })
+      } else {
+        this.$confirm('将永久删除该用户的所有分配角色, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
           this.listUpdate.arr = this.arr
           deleteUserRoleArticle(this.listUpdate).then(response => {
             var message = response.data.message
@@ -298,15 +298,15 @@ export default {
               duration: 2000
             })
           })
-        }
-      }).catch(() => {
-        this.$notify({
-          title: '失败',
-          message: '已取消清空',
-          type: 'error',
-          duration: 2000
+        }).catch(() => {
+          this.$notify({
+            title: '失败',
+            message: '已取消清空',
+            type: 'error',
+            duration: 2000
+          })
         })
-      })
+      }
     }, handleSelectionChange(val) { // 点击右边表格数据时，把数据赋值给声明的数组
       this.multipleSelection = val
     }, tableRowClassName({ row, rowIndex }) { // 给table定义class名称，然后赋值给它scss样式

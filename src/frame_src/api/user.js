@@ -6,6 +6,13 @@ export function fetchUserList(query) { // 查询用户
     params: query
   })
 }
+export function fetchUserForLoginList(query) { // 查询登陆账号对应的用户
+  return request({
+    url: '/user/fetchUserForLoginList',
+    method: 'get',
+    params: query
+  })
+}fetchUserForLoginList
 export function updateUserArticle(data) { // 修改用户信息-删除
   return request({
     url: '/user/updateUserArticle',

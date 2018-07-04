@@ -5,7 +5,7 @@ const UserList = []
 const count = 10
 const UserRoleList = []
 const UserOrgList = []
-
+const UserLoginList = []
 for (let i = 0; i < count; i++) {
   UserList.push(Mock.mock({
     USER_ID: '@increment',
@@ -45,6 +45,16 @@ for (let i = 0; i < count; i++) {
     'FLAG|1': ['0', '1'],
     'orgName|1': ['大港油田一部', '', '大港油田财务'],
     'orgId|1': [26, 28],
+    pageviews: '@integer(300, 5000)'
+  }))
+  UserLoginList.push(Mock.mock({
+    USER_DOMAIN: '@first',
+    USER_ID: '@increment',
+    USER_CODE: '@integer(1000000,60000000)',
+    USER_NAME: '@cname',
+    'REMARK|1': ['自开发人员', '业务人员', '办公室人员', '企业领导'],
+    'LOGIN_REMARK|1': ['张大', '', '王二'],
+    'LOGIN_ID|1': [35, 28],
     pageviews: '@integer(300, 5000)'
   }))
 }
@@ -104,6 +114,29 @@ export default {
       if (USER_NAME && item.USER_NAME.indexOf(USER_NAME) < 0) return false
       if (orgId === '26') {
         if (item.orgName !== '大港油田一部') return false
+      }
+      return true
+    })
+
+    if (sort === '-USER_ID') {
+      mockList = mockList.reverse()
+    }
+
+    const pageList = mockList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
+
+    return {
+      total: mockList.length,
+      items: pageList,
+      code: 2000,
+      message: '查询成功'
+    }
+  }, getFetchUserForLoginList: config => {
+    const { FLAG, USER_NAME, page = 1, limit = 20, sort, LOGIN_ID } = param2Obj(config.url)
+    let mockList = UserLoginList.filter(item => {
+      if (FLAG && item.FLAG !== FLAG) return false
+      if (USER_NAME && item.USER_NAME.indexOf(USER_NAME) < 0) return false
+      if (LOGIN_ID === '35') {
+        if (item.LOGIN_REMARK !== '王二') return false
       }
       return true
     })

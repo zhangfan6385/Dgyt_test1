@@ -49,11 +49,11 @@
           <span>{{scope.row.USER_ALIAS}}</span>
         </template>
       </el-table-column>-->
-     <el-table-column width="110px" align="center" v-if='showUSER_PASS'  :label="$t('userTable.USER_PASS')" >
+     <!--<el-table-column width="110px" align="center" v-if='showUSER_PASS'  :label="$t('userTable.USER_PASS')" >
         <template slot-scope="scope" >
           <span>{{scope.row.USER_PASS}}</span>
         </template>
-      </el-table-column>
+      </el-table-column>-->
        
       <el-table-column width="110px" align="center" :label="$t('userTable.PHONE_MOBILE')">
         <template slot-scope="scope">
