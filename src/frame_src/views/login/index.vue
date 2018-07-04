@@ -2,10 +2,6 @@
   <div class="login-container">
     
     <el-form class="login-form" autoComplete="on" :model="loginForm" :rules="loginRules" ref="loginForm" label-position="left">
-      <!-- <div class="title-container">
-        <h3 class="title">{{$t('login.title')}}</h3>
-        <lang-select class="set-language"></lang-select>
-      </div> -->
       <div class="logo title">
         <img src="../../../frame_src/imgs/logo.png">
         <!-- <img src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif"> -->
@@ -163,12 +159,13 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss">
-$bg:#2d3a4b;
+// $bg:#2d3a4b;
+$bg:#304156;
 $light_gray:#eee;
 
 /* reset element-ui css */
 .login-container {
-  padding: 100px 0;
+  padding: 50px 0;
   .el-input {
     display: inline-block;
     height: 47px;
@@ -188,7 +185,8 @@ $light_gray:#eee;
     }
   }
   .el-form-item {
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    // border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid #ffffff;
     background: rgba(0, 0, 0, 0.1);
     border-radius: 5px;
     color: #454545;
@@ -197,17 +195,18 @@ $light_gray:#eee;
   .logo {
     text-align: center;
     line-height: 50px;
+    padding-bottom: 30px;
     span {
       margin-left: 8px;
-      font-size: 18px;
+      // font-size: 18px;
       font-weight: bold;
       color: #ffffff;
     }
 
     img {
       vertical-align: middle;
-      height: 30px;
-      width: 30px;
+      height: 50px;
+      width: 50px;
     }
   }
 }
@@ -261,23 +260,6 @@ $light_gray:#eee;
     font-weight: bold;
   }
 
-  .title-container {
-    position: relative;
-    .title {
-      font-size: 26px;
-      font-weight: 400;
-      color: $light_gray;
-      margin: 0px auto 40px auto;
-      text-align: center;
-      font-weight: bold;
-    }
-    .set-language {
-      color: #fff;
-      position: absolute;
-      top: 5px;
-      right: 0px;
-    }
-  }
   .show-pwd {
     position: absolute;
     right: 10px;
