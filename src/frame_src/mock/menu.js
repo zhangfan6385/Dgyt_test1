@@ -33,7 +33,7 @@ const menuList1 = [
       { 'id': 92, 'MODULE_ROUTE': 'user-manager', 'MODULE_OBJ': 'userManager', 'parentId': 31, 'sort': 0, 'MENU_NAME': '注册用户', 'MODULE_URL': 'frame_src/views/userinfoViews/', 'MENU_ICON': 'fa fa-bank', 'children': [], 'MENU_PROP': '1', 'roleId': [26, 27] },
       { 'id': 93, 'MODULE_ROUTE': 'user-password-manager', 'MODULE_OBJ': 'userPasswordManager', 'parentId': 31, 'sort': 0, 'MENU_NAME': '修改密码', 'MODULE_URL': 'frame_src/views/userinfoViews/', 'MENU_ICON': 'fa fa-area-chart', 'children': [], 'MENU_PROP': '1', 'roleId': [26, 27] },
       { 'id': 1000, 'MODULE_ROUTE': 'test1', 'MODULE_OBJ': 'test1', 'parentId': 31, 'sort': 0, 'MENU_NAME': '第三方应用演示', 'MODULE_URL': 'app_src/views/', 'MENU_ICON': 'fa fa-area-chart', 'children': [], 'MENU_PROP': '1', 'roleId': [26, 27] },
-      { 'id': 1001, 'MODULE_ROUTE': 'test1', 'MODULE_OBJ': 'test', 'parentId': 31, 'sort': 0, 'MENU_NAME': '第三方网页演示', 'MODULE_URL': 'app_src/views/', 'MENU_ICON': 'fa fa-area-chart', 'children': [], 'MENU_PROP': '1', 'roleId': [26, 27] }
+      { 'id': 1001, 'MODULE_ROUTE': 'test2', 'MODULE_OBJ': 'test', 'parentId': 31, 'sort': 0, 'MENU_NAME': '第三方网页演示', 'MODULE_URL': 'app_src/views/', 'MENU_ICON': 'fa fa-area-chart', 'children': [], 'MENU_PROP': '1', 'roleId': [26, 27] }
     ],
     'MENU_PROP': '1', 'roleId': [26, 27]
   },

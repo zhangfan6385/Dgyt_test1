@@ -23,10 +23,10 @@
           <svg-icon icon-class="eye" />
         </span>
       </el-form-item> 
-       <div>
+       <!-- <div>
          <el-radio v-model="radio" label="user">普通账户</el-radio> 
         <el-radio v-model="radio" label="userDomain">域账户</el-radio>
-       </div>
+       </div> -->
        <br>
       <el-button type="primary" style="width:100%;margin-bottom:30px;" :loading="loading" @click.native.prevent="handleLogin">{{$t('login.logIn')}}</el-button>
 
@@ -42,8 +42,8 @@
       <!-- <el-button class="thirdparty-button" type="primary" @click="showDialog=true">{{$t('login.thirdparty')}}</el-button>  -->
     </el-form>
 
-    <el-dialog width="30%" :title="$t('login.loginToDepartCode')" :visible.sync="showDialog" append-to-body>
-      <log-in-org :updateShowDialog = 'updateShowDialog'/>
+    <el-dialog width="40%" :title="$t('login.loginToUserCode')" :visible.sync="showDialog" append-to-body>
+      <log-in-user :updateShowDialog = 'updateShowDialog'/>
     </el-dialog>
 
   </div>
@@ -52,10 +52,10 @@
 <script>
 // import { isvalidUsername } from '@/frame_src/utils/validate'
 import LangSelect from '@/frame_src/components/LangSelect'
-import LogInOrg from './logInOrg'
+import LogInUser from './logInUser'
 import { Message } from 'element-ui'
 export default {
-  components: { LangSelect, LogInOrg },
+  components: { LangSelect, LogInUser },
   name: 'login',
   data() {
     // const validateUsername = (rule, value, callback) => {
@@ -100,16 +100,17 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.loginForm.userDomain = this.radio
+          this.loginForm.userDomain = this.radio // 后改需求走登陆账号 所以没有 域账号的说法了
           this.$store.dispatch('LoginByUsername', this.loginForm).then(response => {
             this.$store.dispatch('setRoleLevel', response.data.roleLevel)
             if (response.data.roleLevel === 'admin') {
               this.updateShowDialog('')
             } else {
-              var orglist = this.$store.state.user.orgList
-              if (orglist.length === 1) {
-                this.$store.dispatch('setDepartCode', orglist[0].orgId)
-                this.$store.dispatch('setDepartName', orglist[0].orgName)
+              var userList = this.$store.state.user.userList
+              if (userList.length === 1) {
+                // this.$store.dispatch('setDepartCode', orglist[0].orgId)
+                // this.$store.dispatch('setDepartName', orglist[0].orgName)
+                this.$store.dispatch('setUserId', userList[0].userId)
                 this.updateShowDialog('')
               } else {
                 this.showDialog = true
