@@ -11,7 +11,9 @@ const user = {
     avatar: '',
     introduction: '',
     roles: [],
-    orgList: null,
+    orgList: null, // 单位集合
+    userList: null, // 用户集合
+    loginUserCode: '', // 登陆账号
     setting: {
       articlePlatform: []
     },
@@ -53,6 +55,12 @@ const user = {
     SET_ORG_LIST: (state, orgList) => {
       state.orgList = orgList
     },
+    SET_USER_LIST: (state, userList) => {
+      state.userList = userList
+    },
+    SET_LOGIN_USER_CODE: (state, loginUserCode) => {
+      state.loginUserCode = loginUserCode
+    },
     SET_SYS_CODE: (state, sysCode) => {
       state.sysCode = sysCode
     },
@@ -88,16 +96,20 @@ const user = {
       commit('SET_DEPART_NAME', departName)
     }, setRoleLevel({ commit }, roleLevel) {
       commit('SET_ROLE_LEVEL', roleLevel)
+    }, setUserId({ commit }, userId) {
+      commit('SET_USER_ID', userId)
     },
 
     // 用户名登录
     LoginByUsername({ commit }, userInfo) {
       const username = userInfo.username.trim()
       return new Promise((resolve, reject) => { //, userDomain:userDomain
+        commit('SET_LOGIN_USER_CODE', username)// 保存用户登陆账号
         loginByUsername(username, userInfo.password, userInfo.userDomain).then(response => {
           if (response.data.code === 2000) {
             const data = response.data
-            commit('SET_ORG_LIST', data.orgList)
+            // commit('SET_ORG_LIST', data.orgList)
+            commit('SET_USER_LIST', data.userList)
             commit('SET_TOKEN', data.token)
             setToken(response.data.token)
             resolve(response)
@@ -113,16 +125,16 @@ const user = {
     // 获取用户信息
     GetUserInfo({ commit, state }) {
       return new Promise((resolve, reject) => {
-        getUserInfo(state.token, state.departCode).then(response => {
+        getUserInfo(state.token, state.userId).then(response => {
           if (!response.data) { // 由于mockjs 不支持自定义状态码只能这样hack
             reject('error')
           }
           const data = response.data
-          if (data.roles && data.roles.length > 0) { // 验证返回的roles是否是一个非空数组
-            commit('SET_ROLES', data.roles)
-          } else {
-            reject('getInfo: roles must be a non-null array !')
-          }
+          // if (data.roles && data.roles.length > 0) { // 验证返回的roles是否是一个非空数组
+          //   commit('SET_ROLES', data.roles)
+          // } else {
+          //   reject('getInfo: roles must be a non-null array !')
+          // }
 
           commit('SET_NAME', data.name)
           commit('SET_AVATAR', data.avatar)
@@ -131,9 +143,11 @@ const user = {
           commit('SET_SYS_CODE', data.sysCode)// 设置当前系统编码
           commit('SET_SYS_NAME', data.sysName)// 设置当前系统名称
           commit('SET_DEPART_CODE', data.departCode)
+          commit('SET_DEPART_NAME', data.departName)
           commit('SET_USER_ID', data.userId)
           commit('SET_USER_SEX', data.userSex)
           commit('SET_CODE', data.userCode)
+          commit('SET_TOKEN', data.token)
           resolve(response)
         }).catch(error => {
           reject(error)

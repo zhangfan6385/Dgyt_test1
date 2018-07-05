@@ -12,6 +12,7 @@ const userMap = {
     userCode: 'admin',
     sysName: '大港软件开发平台',
     departCode: '1401',
+    departName: '大港一部',
     userId: '98743',
     userSex: '1',
     roleLevel: 'admin',
@@ -31,6 +32,27 @@ const userMap = {
       'orgName': '大港油田4部',
       'orgCode': '1404',
       'orgId': '1401'
+    }],
+    userList: [{
+      'USER_ID': '10101011',
+      'USER_CODE': '14011',
+      'USER_NAME': '李四',
+      'USER_DOMAIN': 'yq10101'
+    }, {
+      'USER_ID': '10101012',
+      'USER_CODE': '14012',
+      'USER_NAME': '李四2',
+      'USER_DOMAIN': 'yq10102'
+    }, {
+      'USER_ID': '10101013',
+      'USER_CODE': '14013',
+      'USER_NAME': '李四3',
+      'USER_DOMAIN': 'yq10103'
+    }, {
+      'USER_ID': '10101014',
+      'USER_CODE': '14014',
+      'USER_NAME': '李四4',
+      'USER_DOMAIN': 'yq10104'
     }]
   },
   editor: {

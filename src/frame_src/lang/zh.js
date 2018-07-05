@@ -84,8 +84,8 @@ export default {
     any: '随便填',
     thirdparty: '第三方登录',
     thirdpartyTips: '本地不能模拟，请结合自己业务进行模拟！！！',
-    loginToDepartCode: '请选择单位！'
-
+    loginToDepartCode: '请选择单位！',
+    loginToUserCode: '请选择用户！'
   },
   documentation: {
     documentation: '文档',
