@@ -110,7 +110,7 @@ export default {
               if (userList.length === 1) {
                 // this.$store.dispatch('setDepartCode', orglist[0].orgId)
                 // this.$store.dispatch('setDepartName', orglist[0].orgName)
-                this.$store.dispatch('setUserId', userList[0].userId)
+                this.$store.dispatch('setUserId', userList[0].USER_ID)
                 this.updateShowDialog('')
               } else {
                 this.showDialog = true
