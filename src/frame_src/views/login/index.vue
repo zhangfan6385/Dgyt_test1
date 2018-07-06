@@ -12,6 +12,19 @@
           <svg-icon icon-class="user" />
         </span>
         <el-input name="username" type="text" v-model="loginForm.username" autoComplete="on" placeholder="username" />
+     
+  <el-dropdown  class="show-pwd"   @command="handleCommand">
+  <span class="el-dropdown-link">
+    {{radio}}<i class="el-icon-arrow-down el-icon--right"></i>
+  </span>
+  <el-dropdown-menu slot="dropdown">
+    <el-dropdown-item command="本地账号">本地账号</el-dropdown-item>
+    <el-dropdown-item command="员工账号">员工账号</el-dropdown-item>
+    <el-dropdown-item command="ptr账号">ptr账号</el-dropdown-item>
+  </el-dropdown-menu>
+</el-dropdown>
+
+
       </el-form-item>
 
       <el-form-item prop="password">
@@ -23,9 +36,10 @@
           <svg-icon icon-class="eye" />
         </span>
       </el-form-item> 
-       <!-- <div>
-         <el-radio v-model="radio" label="user">普通账户</el-radio> 
-        <el-radio v-model="radio" label="userDomain">域账户</el-radio>
+       <!--<div>
+         <el-radio v-model="radio" label="ptrUser">ptr账号</el-radio> 
+        <el-radio v-model="radio" label="user">员工账号</el-radio>
+        <el-radio v-model="radio" label="localUser">本地账号</el-radio>
        </div> -->
        <br>
       <el-button type="primary" style="width:100%;margin-bottom:30px;" :loading="loading" @click.native.prevent="handleLogin">{{$t('login.logIn')}}</el-button>
@@ -54,6 +68,11 @@
 import LangSelect from '@/frame_src/components/LangSelect'
 import LogInUser from './logInUser'
 import { Message } from 'element-ui'
+const userOptions = [{ key: 'ptr账号', user_code: 'ptrUser' }, { key: '员工账号', user_code: 'user' }, { key: '本地账号', user_code: 'localUser' }]
+const userOptionsKeyValue = userOptions.reduce((acc, cur) => {
+  acc[cur.key] = cur.user_code
+  return acc
+}, {})
 export default {
   components: { LangSelect, LogInUser },
   name: 'login',
@@ -85,10 +104,14 @@ export default {
       passwordType: 'password',
       loading: false,
       showDialog: false,
-      radio: 'user'
+      radio: '本地账号'
     }
   },
   methods: {
+    handleCommand(command) {
+      this.radio = command
+    },
+
     showPwd() {
       if (this.passwordType === 'password') {
         this.passwordType = ''
@@ -100,7 +123,7 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.loginForm.userDomain = this.radio // 后改需求走登陆账号 所以没有 域账号的说法了
+          this.loginForm.userDomain = userOptionsKeyValue[this.radio] // this.radio // 后改需求走登陆账号 所以没有 域账号的说法了
           this.$store.dispatch('LoginByUsername', this.loginForm).then(response => {
             this.$store.dispatch('setRoleLevel', response.data.roleLevel)
             if (response.data.roleLevel === 'admin') {
@@ -169,7 +192,7 @@ $light_gray:#eee;
   .el-input {
     display: inline-block;
     height: 47px;
-    width: 85%;
+    width: 70%;
     input {
       background: transparent;
       border: 0px;
