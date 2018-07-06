@@ -36,9 +36,9 @@ export default {
     handleSetLanguage(style) {
       const themeCluster = this.getThemeCluster(style.replace('#', ''))
       const originalCluster = this.getThemeCluster(lastTheme.replace('#', ''))
-      var subMenu = document.querySelector('.sidebar-container .theme')
       var tagsColor = document.querySelector('.tags-view-wrapper .tags-view-item.active')
       tagsColor.style.cssText = 'background-color:' + style + ';border-color:' + style
+      var subMenu = document.querySelector('.sidebar-container .theme')
       if (style === '#3A8EE6') { // 蓝
         subMenu.classList.remove('themeGreen', 'themeRed', 'themeGray')
         subMenu.classList.add('themeBlue')
