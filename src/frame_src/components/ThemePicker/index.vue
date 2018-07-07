@@ -9,10 +9,11 @@
         <svg-icon icon-class="theme" style="color:white;width:22px;height:22px;vertical-align: middle;cursor: pointer;"/>
       </div>
       <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item command="#3A8EE6"><div class="dropItem"><img src="../../../frame_src/imgs/blueSmall.png"><div class="span">蓝</div></div></el-dropdown-item>
-        <el-dropdown-item command="#C03639"><div class="dropItem"><img src="../../../frame_src/imgs/redSmall.png"><div class="span">红</div></div></el-dropdown-item>
-        <el-dropdown-item command="#30B08F"><div class="dropItem"><img src="../../../frame_src/imgs/greenSmall.png"><div class="span">绿</div></div></el-dropdown-item>
-        <el-dropdown-item command="#909399"><div class="dropItem"><img src="../../../frame_src/imgs/graySmall.png"><div class="span">灰</div></div></el-dropdown-item>
+        <el-dropdown-item command="#3A8EE6"><div class="dropItem"><div class="rect blue"></div><div class="span">蓝</div></div></el-dropdown-item>
+        <el-dropdown-item command="#C03639"><div class="dropItem"><div class="rect red"></div><div class="span">红</div></div></el-dropdown-item>
+        <el-dropdown-item command="#30B08F"><div class="dropItem"><div class="rect green"></div><div class="span">绿</div></div></el-dropdown-item>
+        <el-dropdown-item command="#909399"><div class="dropItem"><div class="rect gray"></div><div class="span">灰</div></div></el-dropdown-item>
+        <!--<el-dropdown-item command="#909399"><div class="dropItem"><img src="../../../frame_src/imgs/graySmall.png"><div class="span">灰</div></div></el-dropdown-item>-->
       </el-dropdown-menu>
     </el-dropdown>
 </template>
@@ -36,6 +37,8 @@ export default {
     handleSetLanguage(style) {
       const themeCluster = this.getThemeCluster(style.replace('#', ''))
       const originalCluster = this.getThemeCluster(lastTheme.replace('#', ''))
+      var tagsColor = document.querySelector('.tags-view-wrapper .tags-view-item.active')
+      tagsColor.style.cssText = 'background-color:' + style + ';border-color:' + style
       var subMenu = document.querySelector('.sidebar-container .theme')
       if (style === '#3A8EE6') { // 蓝
         subMenu.classList.remove('themeGreen', 'themeRed', 'themeGray')
