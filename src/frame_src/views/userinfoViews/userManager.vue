@@ -335,7 +335,7 @@ export default {
         USER_SEX: 1,
         FLAG: 1,
         USER_DOMAIN: '',
-        USER_ERP: ' ',
+        USER_ERP: '',
         REMARK: ''
 
       }
