@@ -9,7 +9,7 @@ import Mock from 'mockjs'
 // import sysinfoAPI from './sysinfo'
 import remoteSearchAPI from './remoteSearch'
 import transactionAPI from './transaction'
-import menuAPI from './menu'
+// import menuAPI from './menu'
 
 // Mock.setup({
 //   timeout: '350-600'
