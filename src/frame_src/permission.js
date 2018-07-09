@@ -80,7 +80,7 @@ router.beforeEach((to, from, next) => {
             next({ path: '/' })
           } else {
             fetchPermission(query).then(response => {
-              const menus = response.data.items
+              const menus = response.data// .items
               console.log(menus)
               const routeStru = generateRouteStruc(menus)
               if (routeStru) {
