@@ -40,17 +40,17 @@
         </el-table-column>
 
 
-      <el-table-column width="110px" align="center" :label="$t('userTable.USER_DOMAIN')">
+      <el-table-column width="200px" align="center" :label="$t('userTable.USER_DOMAIN')">
         <template slot-scope="scope">
           <span>{{scope.row.USER_DOMAIN}}</span>
         </template>
       </el-table-column>
-      <el-table-column width="110px" align="center" :label="$t('userTable.USER_NAME')">
+      <el-table-column width="200px" align="center" :label="$t('userTable.USER_NAME')">
         <template slot-scope="scope">
           <span>{{scope.row.USER_NAME}}</span>
         </template>
       </el-table-column>
-       <el-table-column width="110px" align="center" :label="$t('userTable.USER_CODE')">
+       <el-table-column width="200px" align="center" :label="$t('userTable.USER_CODE')">
         <template slot-scope="scope">
           <span>{{scope.row.USER_CODE}}</span>
         </template>
@@ -60,12 +60,12 @@
           <el-tag>{{scope.row.FLAG | typeFilter}}</el-tag>
         </template>
        </el-table-column>
-      <el-table-column min-width="180px"  align="center" :label="$t('userTable.REMARK')">
+      <el-table-column min-width="200px"  align="center" :label="$t('userTable.REMARK')">
         <template slot-scope="scope">
           <span>{{scope.row.REMARK}}</span>
         </template>
        </el-table-column>
-       <el-table-column min-width="110px"  align="center" :label="$t('userTable.orgName')">
+       <el-table-column min-width="300px"  align="center" :label="$t('userTable.orgName')">
         <template slot-scope="scope">
           <span>{{scope.row.orgName}}</span>
         </template>
