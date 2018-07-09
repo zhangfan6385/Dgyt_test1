@@ -18,9 +18,9 @@
     </div>
       <el-table :key='tableKey' :data="list" :header-cell-class-name="tableRowClassName"  v-loading="listLoading" element-loading-text="给我一点时间" border fit highlight-current-row
       style="width: 100%">
-      <el-table-column align="center" v-if='showUSER_PASS'  :label="$t('userTable.USER_ID')" width="65">
+      <el-table-column align="center" :label="$t('userTable.USER_ID')" width="65">
         <template slot-scope="scope">
-          <span>{{scope.row.USER_ID}}</span>
+          <span>{{scope.row.USER_ID}}</span><!--v-if='showUSER_PASS'  -->
         </template>
       </el-table-column>
        <el-table-column width="110px" align="center" :label="$t('userTable.USER_DOMAIN')">
@@ -44,16 +44,21 @@
           <span>{{scope.row.USER_NAME}}</span>
         </template>
       </el-table-column>
+      <el-table-column width="110px" align="center" :label="$t('userTable.USER_ERP')">
+        <template slot-scope="scope">
+          <span>{{scope.row.USER_ERP}}</span>
+        </template>
+      </el-table-column>
         <!--<el-table-column width="110px" align="center" :label="$t('userTable.USER_ALIAS')">
         <template slot-scope="scope">
           <span>{{scope.row.USER_ALIAS}}</span>
         </template>
       </el-table-column>-->
-     <!--<el-table-column width="110px" align="center" v-if='showUSER_PASS'  :label="$t('userTable.USER_PASS')" >
+     <el-table-column width="110px" align="center" :label="$t('userTable.USER_PASS')" >
         <template slot-scope="scope" >
           <span>{{scope.row.USER_PASS}}</span>
         </template>
-      </el-table-column>-->
+      </el-table-column>
        
       <el-table-column width="110px" align="center" :label="$t('userTable.PHONE_MOBILE')">
         <template slot-scope="scope">
@@ -120,7 +125,10 @@
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
     
       <el-form :rules="rules" ref="dataForm" :model="temp" label-position="left" label-width="120px" style='width: 400px; margin-left:20px;'>
-       <el-form-item :label="$t('userTable.USER_DOMAIN')" prop="USER_DOMAIN">
+       <el-form-item :label="$t('userTable.USER_ID')" prop="USER_ID">
+          <span>{{temp.USER_ID}}</span>
+        </el-form-item>
+        <el-form-item :label="$t('userTable.USER_DOMAIN')" prop="USER_DOMAIN">
           <el-input v-model="temp.USER_DOMAIN"></el-input>
         </el-form-item>
         <el-form-item :label="$t('userTable.USER_CODE')" prop="USER_CODE">
@@ -129,12 +137,15 @@
        <el-form-item :label="$t('userTable.USER_NAME')" prop="USER_NAME">
           <el-input v-model="temp.USER_NAME"></el-input>
         </el-form-item>
+        <el-form-item :label="$t('userTable.USER_ERP')" prop="USER_ERP">
+          <el-input v-model="temp.USER_ERP"></el-input>
+        </el-form-item>
        <!--<el-form-item :label="$t('userTable.USER_ALIAS')" prop="USER_ALIAS">
           <el-input v-model="temp.USER_ALIAS" ></el-input>
         </el-form-item>-->
-          <!-- <el-form-item :label="$t('userTable.USER_PASS')" prop="USER_PASS">
+          <el-form-item :label="$t('userTable.USER_PASS')" prop="USER_PASS">
           <el-input v-model="temp.USER_PASS"></el-input>
-        </el-form-item> -->
+        </el-form-item>
         
           <el-form-item :label="$t('userTable.PHONE_MOBILE')" prop="PHONE_MOBILE">
           <el-input v-model="temp.PHONE_MOBILE"></el-input>
@@ -248,6 +259,7 @@ export default {
         FLAG: '',
         USER_DOMAIN: '',
         REMARK: '',
+        USER_ERP: '',
         USER_SEX: undefined
       },
       dialogFormVisible: false,
@@ -323,6 +335,7 @@ export default {
         USER_SEX: 1,
         FLAG: 1,
         USER_DOMAIN: '',
+        USER_ERP: '',
         REMARK: ''
 
       }
