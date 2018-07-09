@@ -1,24 +1,24 @@
 import Mock from 'mockjs'
-// import loginAPI from './login'
-// import logInfoAPI from './logInfo'
-// import userAPI from './user'
-// import userloginAPI from './userlogin'
-// import roleAPI from './role'
-// import orgAPI from './org'
-// import configAPI from './config'
-// import sysinfoAPI from './sysinfo'
+import loginAPI from './login'
+import logInfoAPI from './logInfo'
+import userAPI from './user'
+import userloginAPI from './userlogin'
+import roleAPI from './role'
+import orgAPI from './org'
+import configAPI from './config'
+import sysinfoAPI from './sysinfo'
 import remoteSearchAPI from './remoteSearch'
 import transactionAPI from './transaction'
-// import menuAPI from './menu'
+import menuAPI from './menu'
 
 // Mock.setup({
 //   timeout: '350-600'
 // })
 
 // 登录相关
-// Mock.mock(/\/login\/login/, 'post', loginAPI.loginByUsername)
-// Mock.mock(/\/login\/logout/, 'post', loginAPI.logout)
-// Mock.mock(/\/user\/info\.*/, 'post', loginAPI.getUserInfo)
+Mock.mock(/\/login\/login/, 'post', loginAPI.loginByUsername)
+Mock.mock(/\/login\/logout/, 'post', loginAPI.logout)
+Mock.mock(/\/user\/info\.*/, 'post', loginAPI.getUserInfo)
 
 // 文章相关
 // Mock.mock(/\/article\/list/, 'get', articleAPI.getList)
@@ -28,22 +28,22 @@ import transactionAPI from './transaction'
 // Mock.mock(/\/article\/update/, 'post', articleAPI.updateArticle)
 
 // 用户管理模块
-// Mock.mock(/\/user\/fetchUserList/, 'get', userAPI.getFetchUserList)
-// Mock.mock(/\/user\/updateUserArticle/, 'post', userAPI.getUpdateUserArticle)
-// Mock.mock(/\/user\/updateUserFlag/, 'post', userAPI.getUpdateUserFlag)
-// Mock.mock(/\/user\/createUserArticle/, 'post', userAPI.createUserArticle)
-// Mock.mock(/\/user\/updateUserData/, 'post', userAPI.getUpdateUserData)
-// Mock.mock(/\/user\/updatePasswordData/, 'post', userAPI.getUpdatePasswordData)
+Mock.mock(/\/user\/fetchUserList/, 'get', userAPI.getFetchUserList)
+Mock.mock(/\/user\/updateUserArticle/, 'post', userAPI.getUpdateUserArticle)
+Mock.mock(/\/user\/updateUserFlag/, 'post', userAPI.getUpdateUserFlag)
+Mock.mock(/\/user\/createUserArticle/, 'post', userAPI.createUserArticle)
+Mock.mock(/\/user\/updateUserData/, 'post', userAPI.getUpdateUserData)
+Mock.mock(/\/user\/updatePasswordData/, 'post', userAPI.getUpdatePasswordData)
 // // 用户管理模块--登陆账号管理
-// Mock.mock(/\/userlogin\/fetchUserLoginList/, 'get', userloginAPI.getFetchUserLoginList)
-// Mock.mock(/\/userlogin\/updateUserLoginArticle/, 'post', userloginAPI.getUpdateUserLoginArticle)
-// Mock.mock(/\/userlogin\/createUserLoginArticle/, 'post', userloginAPI.createUserLoginArticle)
-// Mock.mock(/\/userlogin\/updateUserLoginData/, 'post', userloginAPI.getUpdateUserLoginData)
-// Mock.mock(/\/userlogin\/updatePasswordLoginData/, 'post', userloginAPI.getUpdatePasswordLoginData)
+Mock.mock(/\/userlogin\/fetchUserLoginList/, 'get', userloginAPI.getFetchUserLoginList)
+Mock.mock(/\/userlogin\/updateUserLoginArticle/, 'post', userloginAPI.getUpdateUserLoginArticle)
+Mock.mock(/\/userlogin\/createUserLoginArticle/, 'post', userloginAPI.createUserLoginArticle)
+Mock.mock(/\/userlogin\/updateUserLoginData/, 'post', userloginAPI.getUpdateUserLoginData)
+Mock.mock(/\/userlogin\/updatePasswordLoginData/, 'post', userloginAPI.getUpdatePasswordLoginData)
 
-// Mock.mock(/\/user\/fetchUserForLoginList/, 'get', userAPI.getFetchUserForLoginList)
-// Mock.mock(/\/userlogin\/updateUserForLoginArticle/, 'post', userloginAPI.getUpdateUserForLoginArticle)
-// Mock.mock(/\/userlogin\/deleteUserForLoginArticle/, 'post', userloginAPI.getDeleteUserForLoginArticle)
+Mock.mock(/\/user\/fetchUserForLoginList/, 'get', userAPI.getFetchUserForLoginList)
+Mock.mock(/\/userlogin\/updateUserForLoginArticle/, 'post', userloginAPI.getUpdateUserForLoginArticle)
+Mock.mock(/\/userlogin\/deleteUserForLoginArticle/, 'post', userloginAPI.getDeleteUserForLoginArticle)
 // 角色管理模块
 // Mock.mock(/\/role\/fetchRoleList/, 'get', roleAPI.getFetchRoleList)
 // Mock.mock(/\/role\/createRoleArticle/, 'post', roleAPI.createRoleArticle)
@@ -55,10 +55,10 @@ import transactionAPI from './transaction'
 
 // // 基础信息配置模块
 
-// Mock.mock(/\/conf\/fetchConfigList/, 'get', configAPI.getFetchConfigList)
-// Mock.mock(/\/conf\/createConfigArticle/, 'post', configAPI.getCreateConfigArticle)
-// Mock.mock(/\/conf\/updateConfigData/, 'post', configAPI.getUpdateConfigData)
-// Mock.mock(/\/conf\/updateConfigArticle/, 'post', configAPI.getUpdateConfigArticle)
+Mock.mock(/\/conf\/fetchConfigList/, 'get', configAPI.getFetchConfigList)
+Mock.mock(/\/conf\/createConfigArticle/, 'post', configAPI.getCreateConfigArticle)
+Mock.mock(/\/conf\/updateConfigData/, 'post', configAPI.getUpdateConfigData)
+Mock.mock(/\/conf\/updateConfigArticle/, 'post', configAPI.getUpdateConfigArticle)
 // // 平台在建系统配置模块
 
 // Mock.mock(/\/sysinfo\/fetchSysInfoList/, 'get', sysinfoAPI.getFetchSysInfoList)
@@ -93,6 +93,6 @@ Mock.mock(/\/transaction\/list/, 'get', transactionAPI.getList)
 // Mock.mock(/\/menu\/fetchRoleMenuList/, 'get', menuAPI.getRoleMenuList)
 // Mock.mock(/\/menu\/setRoleMenus/, 'post', menuAPI.setRoleMenus)
 
-// Mock.mock(/\/menu\/fetchPermission/, 'get', menuAPI.getPermission)
+Mock.mock(/\/menu\/fetchPermission/, 'get', menuAPI.getPermission)
 export default Mock
 
