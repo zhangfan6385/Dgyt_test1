@@ -65,7 +65,7 @@
           <span>{{scope.row.REMARK}}</span>
         </template>
        </el-table-column>
-       <el-table-column min-width="250px"  align="center" :label="$t('userTable.orgName')">
+       <el-table-column min-width="300px"  align="center" :label="$t('userTable.orgName')">
         <template slot-scope="scope">
           <span>{{scope.row.orgName}}</span>
         </template>

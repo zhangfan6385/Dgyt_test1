@@ -33,7 +33,7 @@
           <span>{{scope.row.USER_CODE}}</span>
         </template>
       </el-table-column>
-       <el-table-column width="250px" align="center" :label="$t('userTable.ORG_NAME')">
+       <el-table-column width="300px" align="center" :label="$t('userTable.ORG_NAME')">
         <template slot-scope="scope">
           <span>{{scope.row.ORG_NAME}}</span>
         </template>
