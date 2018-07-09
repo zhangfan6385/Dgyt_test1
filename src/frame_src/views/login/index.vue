@@ -183,7 +183,7 @@ export default {
 
 <style rel="stylesheet/scss" lang="scss">
 // $bg:#2d3a4b;
-$bg:#207aade0;
+$bg: rgb(22, 86, 155);
 $light_gray:#eee;
 
 /* reset element-ui css */
@@ -236,7 +236,7 @@ $light_gray:#eee;
 </style>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-$bg:#0d77b3e0;
+$bg: rgb(22, 86, 155);
 $dark_gray:#dee7e8; // #889aa4;
 $light_gray:#eee;
 
