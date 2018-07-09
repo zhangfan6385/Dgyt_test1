@@ -5,7 +5,7 @@
       <div class="logo title">
         <img src="../../../frame_src/imgs/logo.png">
         <!-- <img src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif"> -->
-        <span>大港油田软件研发平台</span>
+        <span>大港油田软件开发平台</span>
       </div>
       <el-form-item prop="username">
         <span class="svg-container svg-container_login">
