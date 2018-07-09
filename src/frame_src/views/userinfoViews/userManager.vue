@@ -23,7 +23,7 @@
           <span>{{scope.row.USER_ID}}</span><!--v-if='showUSER_PASS'  -->
         </template>
       </el-table-column>
-       <el-table-column width="110px" align="center" :label="$t('userTable.USER_DOMAIN')">
+       <el-table-column width="150px" align="center" :label="$t('userTable.USER_DOMAIN')">
         <template slot-scope="scope">
           <span>{{scope.row.USER_DOMAIN}}</span>
         </template>
@@ -335,7 +335,7 @@ export default {
         USER_SEX: 1,
         FLAG: 1,
         USER_DOMAIN: '',
-        USER_ERP: '',
+        USER_ERP: ' ',
         REMARK: ''
 
       }
