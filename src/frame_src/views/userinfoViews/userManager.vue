@@ -18,7 +18,7 @@
     </div>
       <el-table :key='tableKey' :data="list" :header-cell-class-name="tableRowClassName"  v-loading="listLoading" element-loading-text="给我一点时间" border fit highlight-current-row
       style="width: 100%">
-      <el-table-column align="center" :label="$t('userTable.USER_ID')" width="65">
+      <el-table-column align="center" width="200px"  :label="$t('userTable.USER_ID')" >
         <template slot-scope="scope">
           <span>{{scope.row.USER_ID}}</span><!--v-if='showUSER_PASS'  -->
         </template>
