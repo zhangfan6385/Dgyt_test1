@@ -23,28 +23,28 @@
           <span>{{scope.row.USER_ID}}</span><!--v-if='showUSER_PASS'  -->
         </template>
       </el-table-column>
-       <el-table-column width="150px" align="center" :label="$t('userTable.USER_DOMAIN')">
+       <el-table-column width="200px" align="center" :label="$t('userTable.USER_DOMAIN')">
         <template slot-scope="scope">
           <span>{{scope.row.USER_DOMAIN}}</span>
         </template>
        </el-table-column>
-      <el-table-column width="110px" align="center" :label="$t('userTable.USER_CODE')">
+      <el-table-column width="200px" align="center" :label="$t('userTable.USER_CODE')">
         <template slot-scope="scope">
           <span>{{scope.row.USER_CODE}}</span>
         </template>
       </el-table-column>
-       <el-table-column width="110px" align="center" :label="$t('userTable.ORG_NAME')">
+       <el-table-column width="250px" align="center" :label="$t('userTable.ORG_NAME')">
         <template slot-scope="scope">
           <span>{{scope.row.ORG_NAME}}</span>
         </template>
       </el-table-column>
 
-      <el-table-column width="110px" align="center" :label="$t('userTable.USER_NAME')">
+      <el-table-column width="200px" align="center" :label="$t('userTable.USER_NAME')">
         <template slot-scope="scope">
           <span>{{scope.row.USER_NAME}}</span>
         </template>
       </el-table-column>
-      <el-table-column width="110px" align="center" :label="$t('userTable.USER_ERP')">
+      <el-table-column width="200px" align="center" :label="$t('userTable.USER_ERP')">
         <template slot-scope="scope">
           <span>{{scope.row.USER_ERP}}</span>
         </template>
@@ -75,7 +75,7 @@
           <span>{{scope.row.PHONE_ORG}}</span>
         </template>
       </el-table-column>-->
-      <el-table-column width="180px" align="center" :label="$t('userTable.USER_EMAIL')">
+      <el-table-column width="200px" align="center" :label="$t('userTable.USER_EMAIL')">
         <template slot-scope="scope">
           <span>{{scope.row.USER_EMAIL}}</span>
         </template>
@@ -85,7 +85,7 @@
           <span>{{scope.row.EMAIL_OFFICE}}</span>
         </template>
        </el-table-column>-->
-        <el-table-column width="150px" align="center" :label="$t('userTable.USER_IP')">
+        <el-table-column width="180px" align="center" :label="$t('userTable.USER_IP')">
         <template slot-scope="scope">
           <span>{{scope.row.USER_IP}}</span>
         </template>
