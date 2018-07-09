@@ -12,7 +12,7 @@
     <el-card class="box-card">
       <el-table :key='tableKey' :data="list" :header-cell-class-name="tableRowClassName"   v-loading="listLoading" element-loading-text="给我一点时间" border fit highlight-current-row
       style="width: 100%">
-       <el-table-column width="140px" align="center" :label="$t('configTable.CONF_NAME')">
+       <el-table-column width="180px" align="center" :label="$t('configTable.CONF_NAME')">
         <template slot-scope="scope">
           <span>{{scope.row.CONF_NAME}}</span>
         </template>

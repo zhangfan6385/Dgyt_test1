@@ -43,12 +43,12 @@
           <span>{{scope.row.LOG_TYPE | logFilter}}</span>
         </template>
       </el-table-column>
-      <el-table-column width="270px" align="center" :label="$t('logInfoTable.LOG_CONTENT')">
+      <el-table-column width="300px" align="center" :label="$t('logInfoTable.LOG_CONTENT')">
         <template slot-scope="scope">
           <span>{{scope.row.LOG_CONTENT}}</span>
         </template>
       </el-table-column>
-       <el-table-column width="270px" align="center" :label="$t('logInfoTable.REMARK')">
+       <el-table-column width="300px" align="center" :label="$t('logInfoTable.REMARK')">
         <template slot-scope="scope">
           <span>{{scope.row.REMARK}}</span>
         </template>

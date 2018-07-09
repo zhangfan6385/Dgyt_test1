@@ -27,12 +27,12 @@
           <span>{{scope.row.sysStyle}}</span>
         </template>
       </el-table-column>
-      <el-table-column width="200px" align="center" :label="$t('sysInfoTable.sysLogo')">
+      <el-table-column width="250px" align="center" :label="$t('sysInfoTable.sysLogo')">
         <template slot-scope="scope">
           <span>{{scope.row.sysLogo}}</span>
         </template>
       </el-table-column>
-      <el-table-column width="140px" align="center" :label="$t('sysInfoTable.sysUrl')">
+      <el-table-column width="250px" align="center" :label="$t('sysInfoTable.sysUrl')">
         <template slot-scope="scope">
           <span>{{scope.row.sysUrl}}</span>
         </template>
