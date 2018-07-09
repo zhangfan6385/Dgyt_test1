@@ -24,7 +24,7 @@ module.exports = {
   },
   // add your custom rules here
   //it is base on https://github.com/vuejs/eslint-config-vue
-  /*
+
   'rules': {
     'accessor-pairs': 2,
     'arrow-spacing': [2, {
@@ -197,6 +197,6 @@ module.exports = {
     'array-bracket-spacing': [2, 'never']
     
   }
-  */
+  
 }
 
