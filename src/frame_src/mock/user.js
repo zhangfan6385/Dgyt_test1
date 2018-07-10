@@ -8,7 +8,7 @@ const UserOrgList = []
 const UserLoginList = []
 for (let i = 0; i < count; i++) {
   UserList.push(Mock.mock({
-    USER_ID: '@increment',
+    USER_ID: '@integer(100000000000000000000,60000000000000000000000)',
     USER_CODE: '@integer(1000000,60000000)',
     USER_NAME: '@cname',
     USER_ALIAS: '@first',
@@ -23,7 +23,8 @@ for (let i = 0; i < count; i++) {
     'FLAG|1': ['0', '1'],
     USER_DOMAIN: '@first',
     'REMARK|1': ['自开发人员', '业务人员', '办公室人员', '企业领导'],
-    pageviews: '@integer(300, 5000)'
+    pageviews: '@integer(300, 5000)',
+    USER_ERP: '@cname'
   }))
   UserRoleList.push(Mock.mock({
     USER_DOMAIN: '@first',
