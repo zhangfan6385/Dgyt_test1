@@ -37,7 +37,7 @@ export default {
     handleSetLanguage(style) {
       const themeCluster = this.getThemeCluster(style.replace('#', ''))
       const originalCluster = this.getThemeCluster(lastTheme.replace('#', ''))
-      var tagsColor = document.querySelector('.tags-view-wrapper .tags-view-item.active')
+      var tagsColor = document.querySelector('.tags-view-wrapper .tags-view-item')
       tagsColor.style.cssText = 'background-color:' + style + ';border-color:' + style
       var subMenu = document.querySelector('.sidebar-container .theme')
       if (style === '#3A8EE6') { // 蓝
