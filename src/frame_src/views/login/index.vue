@@ -42,7 +42,7 @@
         <el-radio v-model="radio" label="localUser">本地账号</el-radio>
        </div> -->
        <br>
-      <el-button type="primary" style="width:100%;margin-bottom:30px;" :loading="loading" @click.native.prevent="handleLogin">{{$t('login.logIn')}}</el-button>
+      <el-button type="primary" style="width:100%;margin-bottom:30px;background-color:#409EFF;border-color:#409EFF" :loading="loading" @click.native.prevent="handleLogin">{{$t('login.logIn')}}</el-button>
 
       <!-- <div class="tips">
         <span>{{$t('login.username')}} : admin</span>
