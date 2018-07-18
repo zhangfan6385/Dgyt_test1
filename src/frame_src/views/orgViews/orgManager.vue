@@ -1,9 +1,26 @@
 <template>
- <div class="app-container calendar-list-container"> 
-  <imp-panel>
+ <div class="app-container calendar-list-container">
+  <imp-panel >
     <h3 class="box-title" slot="header" style="width: 100%;"> 
  <el-button class="filter-item" style="margin-left: 10px;" @click="newAdd" type="primary" icon="el-icon-edit">{{$t('orgTable.add')}}</el-button>
-     
+
+        <!-- <input id="excel-upload-input" ref="excel-upload-input" type="file" accept=".xlsx, .xls" class="c-hide" @change="handkeFileChange"> -->
+<el-upload
+  class="upload-demo"
+  :action="aa"
+  :on-preview="handlePreview"
+  :on-remove="handleRemove"
+  :before-remove="beforeRemove"
+  multiple
+  :limit="3"
+  :on-exceed="handleExceed"
+  :file-list="fileList">
+  <el-button size="small" type="primary">点击上传</el-button>
+  <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+</el-upload>
+
+    <!--  <el-button style="margin-left:16px;" size="mini" type="primary" @click="handleUpload">browse</el-button>
+  -->
     </h3>
     <el-row slot="body" :gutter="24" style="margin-bottom: 20px;">
       <el-col :span="6" :xs="24" :sm="24" :md="6" :lg="6" style="margin-bottom: 20px;">
@@ -24,17 +41,13 @@
                                 placeholder="请选择父级">
                 </el-select-tree>
               </el-form-item>
-              <el-col :span="12" :xs="24" :sm="24" :md="9" :lg="9" :xl="9">
                 <el-form-item :label="$t('orgTable.orgCode')" prop="orgCode" :label-width="formLabelWidth">
                 <el-input v-model="form.orgCode" auto-complete="off"></el-input>
                 </el-form-item>
-              </el-col>
-              <el-col :span="12" :xs="24" :sm="24" :md="9" :lg="9" :xl="9">
                 <el-form-item :label="$t('orgTable.orgName')" prop="orgName" :label-width="formLabelWidth">
                 <el-input v-model="form.orgName" auto-complete="off"></el-input>
                 </el-form-item>
-              </el-col>
-              <el-col :span="12" :xs="24" :sm="24" :md="9" :lg="9" :xl="9">
+             <!-- <el-col :span="12" :xs="24" :sm="24" :md="9" :lg="9" :xl="9">
                 <el-form-item :label="$t('orgTable.orgNameFull')" prop="orgNameFull" :label-width="formLabelWidth">
                 <el-input v-model="form.orgNameFull" auto-complete="off"></el-input>
                 </el-form-item>
@@ -58,13 +71,15 @@
                 <el-form-item :label="$t('orgTable.phoneFax')" prop="phoneFax" :label-width="formLabelWidth">
                 <el-input v-model="form.phoneFax" auto-complete="off"></el-input>
                 </el-form-item>
-              </el-col>
-              <el-col :span="12" :xs="24" :sm="24" :md="9" :lg="9" :xl="9">
+              </el-col>-->
+                <el-form-item label="是否有效" :label-width="formLabelWidth">
+                  <el-radio class="radio" v-model="form.ISINVALID" label="1">有效</el-radio>
+                  <el-radio class="radio" v-model="form.ISINVALID" label="0">无效</el-radio>
+                </el-form-item>
                 <el-form-item :label="$t('orgTable.remark')"  :label-width="formLabelWidth">
                 <el-input v-model="form.remark" auto-complete="off"></el-input>
                 </el-form-item>
-              </el-col>
-               <el-col :span="12" :xs="24" :sm="24" :md="9" :lg="9" :xl="9">
+              <!-- <el-col :span="12" :xs="24" :sm="24" :md="9" :lg="9" :xl="9">-->
               <el-form-item label="" :label-width="formLabelWidth"> 
               
               <el-button v-if="form.id==null" size="mini" type="primary"    @click="onOkSubmit">{{$t('orgTable.add')}}
@@ -75,7 +90,6 @@
               </el-button> 
             
               </el-form-item>
-                </el-col>
             </el-form>
           </div>
         </el-card>
@@ -89,6 +103,7 @@
 </template>
 <script>
 import { fetchOrgList, createOrgArticle, updateOrgArticle, updateOrgData } from '@/frame_src/api/org'
+import UploadExcelComponent from '@/frame_src/components/UploadExcel/index.vue'
 import panel from '@/frame_src/components/TreeList/panel.vue'
 import selectTree from '@/frame_src/components/TreeList/selectTree.vue'
 import treeter from '@/frame_src/components/TreeList/treeter'
@@ -96,10 +111,12 @@ export default {
   mixins: [treeter],
   components: {
     'imp-panel': panel,
-    'el-select-tree': selectTree
+    'el-select-tree': selectTree,
+    UploadExcelComponent
   },
   data() {
     return {
+      aa: process.env.BASE_API + 'org/uploadOrgArticle',
       dialogLoading: false,
       dialogVisible: false,
       formLabelWidth: '120px',
@@ -108,9 +125,12 @@ export default {
         label: 'orgName',
         id: 'id'
       },
+      fileList: [{ name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100' }, { name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100' }],
       listUpdate: {
         field: undefined,
         id: undefined
+      }, listupload: {
+        data2: undefined
       },
       roleTree: [],
       rules: {
@@ -120,6 +140,9 @@ export default {
         ],
         orgName: [
           { required: true, message: '组织结构名称不能为空', trigger: 'change' }
+        ],
+        ISINVALID: [
+          { required: true, message: '是否有效不能为空', trigger: 'change' }
         ]
       },
       resourceTree: [],
@@ -138,6 +161,7 @@ export default {
         phone: '', // enName
         phoneS: '', // enName
         phoneFax: '',
+        ISINVALID: '',
         remark: ''
       }
     }
@@ -158,6 +182,7 @@ export default {
         phone: '', // enName
         phoneS: '', // enName
         phoneFax: '',
+        ISINVALID: '1',
         remark: ''
       }
     },
@@ -228,7 +253,19 @@ export default {
         })
       })
       // this.load();
+    }, handleRemove(file, fileList) {
+      console.log(file, fileList)
     },
+    handlePreview(file) {
+      console.log(file)
+    },
+    handleExceed(files, fileList) {
+      this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`)
+    },
+    beforeRemove(file, fileList) {
+      return this.$confirm(`确定移除 ${file.name}？`)
+    },
+
     load() { // 查询数据
       // this.listQuery.sysCode = '1'// 回头注释掉
       fetchOrgList().then(response => {

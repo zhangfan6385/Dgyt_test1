@@ -12,6 +12,7 @@ for (let i = 0; i < count; i++) {
     ipAddr: '@ip',
     'logType|1': ['用户管理', '业务操作', '角色配置', '增加用户'],
     logContent: '@title(1,9)',
+    'ISINVALID|1': ['0', '1'],
     remark: '@title(1,9)',
     pageviews: '@integer(300, 5000)'
   }))
@@ -60,11 +61,13 @@ export default {
           'phoneS': '15432222123',
           'phoneFax': '024-2349874',
           'orgAddr': '天津大港油田石油大街',
+          'ISINVALID': '1',
           'children': [{
             'id': 2601,
             'parentId': 26,
             'orgName': '大港油田财务',
             'orgCode': '140101',
+            'ISINVALID': '0',
             'remark': '',
             'children': []
           }]
@@ -78,12 +81,14 @@ export default {
           'phoneS': '15432222123',
           'phoneFax': '024-2349874',
           'orgAddr': '天津大港油田石油大街',
+          'ISINVALID': '1',
           'children': [{
             'id': 2701,
             'parentId': 27,
             'orgName': '大港油田财务',
             'orgCode': '150101',
             'remark': '',
+            'ISINVALID': '1',
             'children': []
           }, {
             'id': 2702,
@@ -155,6 +160,16 @@ export default {
     code: 2000
 
   }),
+  uploadOrgArticle: config => {
+    const { listupload } = JSON.parse(config.body)
+    alert('dfgdg')
+    console.log(listupload)
+    return {
+      message: '分配成功',
+      code: 2000,
+      aa: listupload
+    }
+  },
   getUpdateOrgData: () => ({
     message: '修改成功',
     code: 2000
