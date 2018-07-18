@@ -2,20 +2,20 @@
   <div class="app-wrapper" :class="classObj">
     <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside"></div>
     <div class="header el-button--primary  is-active">
-      <el-col :span="6">
+      <el-col :span="12">
         <div class="logo">
           <img src="../../../frame_src/imgs/logo.png">
           <!-- <img src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif"> -->
           <span>{{sysNameMessage}}</span>
         </div>
       </el-col>
-      <el-col :span="6" style="text-aligh:center;">
+      <!-- <el-col :span="6" style="text-aligh:center;">
         <el-input style="width:300px;"
           size="mini"
           placeholder=""
           suffix-icon="el-icon-search">
         </el-input>
-      </el-col>
+      </el-col> -->
       <el-col :span="12">
         <header-set></header-set>
       </el-col>
