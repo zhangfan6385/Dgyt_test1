@@ -7,10 +7,11 @@
         <!-- <input id="excel-upload-input" ref="excel-upload-input" type="file" accept=".xlsx, .xls" class="c-hide" @change="handkeFileChange"> -->
 <el-upload
   class="upload-demo"
-  :action="aa"
+  :action="urlUpload"
   :on-preview="handlePreview"
   :on-remove="handleRemove"
   :before-remove="beforeRemove"
+  :headers="headers"
   multiple
   :limit="3"
   :on-exceed="handleExceed"
@@ -107,6 +108,7 @@ import UploadExcelComponent from '@/frame_src/components/UploadExcel/index.vue'
 import panel from '@/frame_src/components/TreeList/panel.vue'
 import selectTree from '@/frame_src/components/TreeList/selectTree.vue'
 import treeter from '@/frame_src/components/TreeList/treeter'
+import { getToken } from '@/frame_src/utils/auth'
 export default {
   mixins: [treeter],
   components: {
@@ -116,7 +118,7 @@ export default {
   },
   data() {
     return {
-      aa: process.env.BASE_API + 'org/uploadOrgArticle',
+      urlUpload: process.env.BASE_API + 'org/uploadOrgArticle',
       dialogLoading: false,
       dialogVisible: false,
       formLabelWidth: '120px',
@@ -125,7 +127,7 @@ export default {
         label: 'orgName',
         id: 'id'
       },
-      fileList: [{ name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100' }, { name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100' }],
+      fileList: [], // [{ name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100' }, { name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100' }],
       listUpdate: {
         field: undefined,
         id: undefined
@@ -260,6 +262,7 @@ export default {
       console.log(file)
     },
     handleExceed(files, fileList) {
+      alert('gdfg')
       this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`)
     },
     beforeRemove(file, fileList) {
@@ -287,6 +290,13 @@ export default {
   },
   created() { // 创建页面的初始化方法
     this.load()
+  },
+  computed: {
+    headers() {
+      return {
+        'X-Token': getToken()
+      }
+    }
   }
 }
 </script>
