@@ -1,28 +1,14 @@
 <template>
  <div class="app-container calendar-list-container">
   <imp-panel >
-    <h3 class="box-title" slot="header" style="width: 100%;"> 
+    <h3 class="box-title" slot="header" style="width: 25%;"> 
  <el-button class="filter-item" style="margin-left: 10px;" @click="newAdd" type="primary" icon="el-icon-edit">{{$t('orgTable.add')}}</el-button>
 
         <!-- <input id="excel-upload-input" ref="excel-upload-input" type="file" accept=".xlsx, .xls" class="c-hide" @change="handkeFileChange"> -->
-<el-upload
-  class="upload-demo"
-  :action="urlUpload"
-  :on-preview="handlePreview"
-  :on-remove="handleRemove"
-  :before-remove="beforeRemove"
-  :headers="headers"
-  multiple
-  :limit="3"
-  :on-exceed="handleExceed"
-  :file-list="fileList">
-  <el-button size="small" type="primary">点击上传</el-button>
-  <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
-</el-upload>
-
-    <!--  <el-button style="margin-left:16px;" size="mini" type="primary" @click="handleUpload">browse</el-button>
+<!--  <el-button style="margin-left:16px;" size="mini" type="primary" @click="handleUpload">browse</el-button>
   -->
     </h3>
+
     <el-row slot="body" :gutter="24" style="margin-bottom: 20px;">
       <el-col :span="6" :xs="24" :sm="24" :md="6" :lg="6" style="margin-bottom: 20px;">
         <el-tree v-if="roleTree"
@@ -34,6 +20,21 @@
       </el-col>
       <el-col :span="18" :xs="24" :sm="24" :md="18" :lg="18">
         <el-card class="box-card">
+    <div class="filter-container">
+          <el-upload
+            class="upload-demo"
+            :action="urlUpload"
+            :on-preview="handlePreview"
+            :on-remove="handleRemove"
+            :before-remove="beforeRemove"
+            :headers="headers"
+            multiple="false"
+            :limit="1"
+            :on-exceed="handleExceed"
+            :file-list="fileList">
+            <el-button   class="filter-item"  type="primary" icon="el-icon-edit">点击上传</el-button>
+          </el-upload>
+     </div>
           <div class="text item">
             <el-form :rules="rules"  :model="form" ref="form" >
               <el-form-item  :label="$t('orgTable.parent')" :label-width="formLabelWidth">
@@ -262,8 +263,7 @@ export default {
       console.log(file)
     },
     handleExceed(files, fileList) {
-      alert('gdfg')
-      this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`)
+      this.$message.warning(`当前限制选择 1个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`)
     },
     beforeRemove(file, fileList) {
       return this.$confirm(`确定移除 ${file.name}？`)
