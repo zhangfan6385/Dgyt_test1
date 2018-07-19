@@ -196,7 +196,8 @@ export default {
     groupName: '角色名称',
     orgName: '组织机构名称',
     orgCode: '组织机构代码',
-    LOGIN_REMARK: '关联用户'
+    LOGIN_REMARK: '关联用户',
+    deleteRole: '清空登陆权限'
   },
   userLoginTable: {
     dynamicTips1: '固定表头, 按照表头顺序排序',
