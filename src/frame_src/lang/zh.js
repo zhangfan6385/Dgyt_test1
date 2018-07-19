@@ -175,7 +175,7 @@ export default {
     USER_IP: '访问IP',
     USER_SEX: '性别',
     FLAG: '激活状态',
-    USER_DOMAIN: 'PRT账户',
+    USER_DOMAIN: '账户',
     REMARK: '备注',
     importance: '重要性',
     type: '类型',
@@ -186,15 +186,17 @@ export default {
     actions: '操作',
     edit: '编辑',
     publish: '激活',
-    draft: '取消',
+    draft: '禁用',
     delete: '删除',
     cancel: '取 消',
     confirm: '确 定',
     author: '操作人',
+    AUTHENTICATION_TYPE: '关联类型',
+    editUser: '关联用户',
     groupName: '角色名称',
     orgName: '组织机构名称',
     orgCode: '组织机构代码',
-    LOGIN_REMARK: '关联账号'
+    LOGIN_REMARK: '关联用户'
   },
   userLoginTable: {
     dynamicTips1: '固定表头, 按照表头顺序排序',
