@@ -26,11 +26,9 @@
             :action="urlUpload"
             :on-preview="handlePreview"
             :on-remove="handleRemove"
+            :on-success="handleSuccess"
             :before-remove="beforeRemove"
             :headers="headers"
-            multiple="false"
-            :limit="1"
-            :on-exceed="handleExceed"
             :file-list="fileList">
             <el-button   class="filter-item"  type="primary" icon="el-icon-edit">点击上传</el-button>
           </el-upload>
@@ -262,11 +260,26 @@ export default {
     handlePreview(file) {
       console.log(file)
     },
+    handleSuccess(res, file, fileList) {
+      var message = res.message
+      var title = '失败'
+      var type = 'error'
+      if (res.code === 2000) {
+        title = '成功'
+        type = 'success'
+      }
+      this.$notify({
+        title: title,
+        message: message,
+        type: type,
+        duration: 2000
+      })
+    },
     handleExceed(files, fileList) {
       this.$message.warning(`当前限制选择 1个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`)
     },
     beforeRemove(file, fileList) {
-      return this.$confirm(`确定移除 ${file.name}？`)
+      // return this.$confirm(`确定移除 ${file.name}？`)
     },
 
     load() { // 查询数据
