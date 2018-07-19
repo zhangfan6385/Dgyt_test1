@@ -265,6 +265,8 @@ export default {
       var title = '失败'
       var type = 'error'
       if (res.code === 2000) {
+        this.newAdd()
+        this.load()
         title = '成功'
         type = 'success'
       }
