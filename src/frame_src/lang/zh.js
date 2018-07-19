@@ -191,7 +191,7 @@ export default {
     cancel: '取 消',
     confirm: '确 定',
     author: '操作人',
-    AUTHENTICATION_TYPE: '关联类型',
+    AUTHENTICATION_TYPE: '账号类型',
     editUser: '关联用户',
     groupName: '角色名称',
     orgName: '组织机构名称',
