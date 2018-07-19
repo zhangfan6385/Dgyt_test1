@@ -1,5 +1,18 @@
 <template>
     <div class="app-container calendar-list-container"> 
+       <imp-panel>
+   
+ <el-row slot="body" :gutter="24" style="margin-bottom: 20px;">
+     <el-col :span="6" :xs="24" :sm="24" :md="6" :lg="6" style="margin-bottom: 20px;">
+        <el-tree v-if="roleTree"
+                 :data="roleTree"
+                 ref="roleTree" 
+                 highlight-current
+                 :render-content="renderContent"
+                 @node-click="handleNodeClick" clearable node-key="id" :props="defaultProps"></el-tree>
+      </el-col>
+<el-col :span="18" :xs="24" :sm="24" :md="18" :lg="18">
+    <el-card class="box-card">
     <div class="filter-container">
        <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" :placeholder="$t('userTable.USER_NAME')" v-model="listQuery.USER_NAME">
       </el-input>
@@ -57,11 +70,11 @@
           <span>{{scope.row.USER_ALIAS}}</span>
         </template>
       </el-table-column>-->
-     <!--<el-table-column width="110px" align="center" :label="$t('userTable.USER_PASS')" >
+     <el-table-column width="110px" align="center" v-if='showUSER_PASS'    :label="$t('userTable.USER_PASS')" >
         <template slot-scope="scope" >
           <span>{{scope.row.USER_PASS}}</span>
         </template>
-      </el-table-column>-->
+      </el-table-column>
       <el-table-column width="110px" align="center" :label="$t('userTable.USER_SEX')">
         <template slot-scope="scope">
           <el-tag>{{scope.row.USER_SEX | sexFilter}}</el-tag>
@@ -92,6 +105,16 @@
           <span>{{scope.row.EMAIL_OFFICE}}</span>
         </template>
        </el-table-column>-->
+             <el-table-column min-width="300px"  align="center" :label="$t('userTable.orgName')">
+        <template slot-scope="scope">
+          <span>{{scope.row.orgName}}</span>
+        </template>
+       </el-table-column>
+        <el-table-column width="150px" align="center" :label="$t('userTable.ASSOCIATED_ACCOUNT')">
+        <template slot-scope="scope">
+          <span>{{scope.row.ASSOCIATED_ACCOUNT}}</span>
+        </template>
+      </el-table-column>
         <el-table-column width="180px" align="center" :label="$t('userTable.USER_IP')">
         <template slot-scope="scope">
           <span>{{scope.row.USER_IP}}</span>
@@ -260,22 +283,29 @@
     </div> 
     </el-card>
        </el-dialog>
+       </el-card>
+      </el-col>
+    </el-row>
+    </imp-panel>
     </div>
 </template>
 <script>
 import {
-  fetchUserList,
+  // fetchUserList,
   createUserArticle,
   updateUserData,
   updateUserArticle,
   updateUserFlag,
-  fetchUserForLoginList
+  fetchUserForLoginList,
+  fetchUserOrgList
 } from '@/frame_src/api/user'
+import { fetchOrgList } from '@/frame_src/api/org'
 import {
   updateUserForLoginArticle,
   deleteUserForLoginArticle
 } from '@/frame_src/api/userlogin'
 import waves from '@/frame_src/directive/waves' // 水波纹指令
+import panel from '@/frame_src/components/TreeList/panel.vue'
 // import { parseTime } from '@/frame_src/utils'
 const flagOptions = [{ key: 0, flag_name: '否' }, { key: 1, flag_name: '是' }]
 const sexOptions = [{ key: 0, sex_name: '女' }, { key: 1, sex_name: '男' }]
@@ -297,6 +327,9 @@ export default {
   name: 'userManager',
   directives: {
     waves
+  },
+  components: {
+    'imp-panel': panel
   },
   data() {
     // validateField:对部分表单字段进行校验的方法
@@ -331,6 +364,14 @@ export default {
       tableUserKey: undefined,
       tableUserKey2: undefined,
       multipleSelection: [],
+      roleTree: [],
+      orgKey: undefined,
+      defaultProps: {
+        children: 'children',
+        label: 'orgName',
+        id: 'id'
+      }, treeListQuery: {
+      },
       listUpdate: {
         field: undefined,
         FLAG: undefined,
@@ -351,7 +392,8 @@ export default {
         limit: 5,
         USER_NAME: undefined,
         FLAG: undefined,
-        sort: '+USER_ID'
+        sort: '+USER_ID',
+        orgId: undefined
       },
       flagOptions,
       sexOptions,
@@ -381,7 +423,10 @@ export default {
         REMARK: '',
         USER_ERP: '',
         AUTHENTICATION_TYPE: undefined,
-        USER_SEX: undefined
+        ASSOCIATED_ACCOUNT: '',
+        USER_SEX: undefined,
+        orgName: '',
+        orgId: ''
       },
       dialogFormVisible: false,
       dialogStatus: '',
@@ -441,7 +486,7 @@ export default {
   methods: {
     getList() {
       this.listLoading = true
-      fetchUserList(this.listQuery).then(response => {
+      fetchUserOrgList(this.listQuery).then(response => {
         if (response.data.code === 2000) {
           this.list = response.data.items
           this.total = response.data.total
@@ -482,6 +527,49 @@ export default {
       this.listUserQuery.USER_ID = this.tableUserKey
       this.getListUser()
       this.userLoginVisible = true
+    }, renderContent(h, { node, data, store }) { // 给左边树进行遍历
+      return (
+        <span>
+          <span>
+            <span>{node.label}</span>
+          </span>
+        </span>)
+    },
+    handleNodeClick(data) { // 点击左侧树查询对应的用户信息
+      this.listLoading = true
+      this.orgkey = this.$refs.roleTree.getCurrentKey()
+      this.listQuery.orgId = this.orgkey
+      fetchUserOrgList(this.listQuery).then(response => {
+        if (response.data.code === 2000) {
+          this.list = response.data.items
+          this.total = response.data.total
+          this.listLoading = false
+        } else {
+          this.listLoading = false
+          this.$notify({
+            title: '失败',
+            message: response.data.message,
+            type: 'error',
+            duration: 2000
+          })
+        }
+      })
+    },
+    load() { // 查询组织结构数据this.treeListQuery
+      fetchOrgList().then(response => {
+        if (response.data.code === 2000) {
+          this.roleTree = []
+          this.roleTree = response.data.items
+        } else {
+          this.$notify({
+            title: '失败',
+            message: response.data.message,
+            type: 'error',
+            duration: 2000
+          })
+        }
+      })
+      // this.roleTree.push(...defaultValue.roleList);
     },
     resetTemp() {
       this.temp = {
@@ -500,33 +588,55 @@ export default {
         USER_SEX: 1,
         AUTHENTICATION_TYPE: 1,
         FLAG: 1,
+        ASSOCIATED_ACCOUNT: '',
         USER_DOMAIN: '',
         USER_ERP: '',
-        REMARK: ''
-
+        REMARK: '',
+        orgName: '',
+        orgId: ''
       }
     },
     handleUpdate(row) { // 打开修改表单
-      this.temp = Object.assign({}, row) // copy obj
-      this.temp.timestamp = new Date(this.temp.timestamp)
-      this.dialogStatus = 'update'
-      this.dialogFormVisible = true
-      this.$nextTick(() => {
-        this.$refs['dataForm'].clearValidate()
-      })
+      if (this.orgkey == null) {
+        this.$notify({// 判断右边记录的勾选数据 和左侧树选中的key值是否为0或者空
+          title: '失败',
+          message: '请选择组织结构',
+          type: 'error',
+          duration: 2000
+        })
+      } else {
+        this.temp = Object.assign({}, row) // copy obj
+        this.temp.USER_PASS2 = row.USER_PASS
+        this.temp.timestamp = new Date(this.temp.timestamp)
+        this.dialogStatus = 'update'
+        this.dialogFormVisible = true
+        this.$nextTick(() => {
+          this.$refs['dataForm'].clearValidate()
+        })
+      }
     },
     handleCreate() { // 打开创建表单
-      this.resetTemp()
-      this.dialogStatus = 'create'
-      this.dialogFormVisible = true
-      this.$nextTick(() => {
-        this.$refs['dataForm'].clearValidate()
-      })
+      if (this.orgkey == null) {
+        this.$notify({// 判断右边记录的勾选数据 和左侧树选中的key值是否为0或者空
+          title: '失败',
+          message: '请选择组织结构',
+          type: 'error',
+          duration: 2000
+        })
+      } else {
+        this.resetTemp()
+        this.dialogStatus = 'create'
+        this.dialogFormVisible = true
+        this.$nextTick(() => {
+          this.$refs['dataForm'].clearValidate()
+        })
+      }
     },
     updateData() {
       this.$refs['dataForm'].validate(valid => {
         if (valid) {
           const tempData = Object.assign({}, this.temp) // 这样就不会共用同一个对象
+          tempData.orgId = this.orgkey
           updateUserData(tempData).then(response => {
             var message = response.data.message
             var title = '失败'
@@ -582,6 +692,8 @@ export default {
         if (valid) {
           // this.temp.USER_ID = parseInt(Math.random() * 100) + 1024 // mock a id
           // this.temp.author = "ppp" //当前登陆人
+          this.temp.orgId = this.orgkey
+          alert(this.orgkey)
           createUserArticle(this.temp).then(response => {
             var message = response.data.message
             var title = '失败'
@@ -725,10 +837,12 @@ export default {
     },
     handleSizeChange(val) {
       this.listQuery.limit = val
+      this.listQuery.orgId = this.orgKey
       this.getList()
     },
     handleCurrentChange(val) {
       this.listQuery.page = val
+      this.listQuery.orgId = this.orgKey
       this.getList()
     },
     handleDownload() { // 导出
@@ -791,6 +905,8 @@ export default {
     },
     handleFilter() {
       this.listQuery.page = 1
+      this.orgKey = undefined
+      this.listQuery.orgId = this.orgKey
       this.getList()
     }, tableRowClassName({ row, rowIndex }) { // 表头行的 className 的回调方法，也可以使用字符串为所有表头行设置一个固定的 className。
       if (rowIndex === 0) {
@@ -801,6 +917,7 @@ export default {
   },
   created() {
     this.getList()
+    this.load()
   }
 }
 </script>
