@@ -12,26 +12,27 @@
     <el-card class="box-card">
       <el-table :key='tableKey' :data="list" :header-cell-class-name="tableRowClassName"   v-loading="listLoading" element-loading-text="给我一点时间" border fit highlight-current-row
       style="width: 100%">
-       <el-table-column width="200px" align="center" :label="$t('configTable.CONF_NAME')">
+       <el-table-column width="140px" align="center" :label="$t('configTable.CONF_NAME')">
         <template slot-scope="scope">
           <span>{{scope.row.CONF_NAME}}</span>
         </template>
       </el-table-column>
-      <el-table-column width="200px" align="center" :label="$t('configTable.CONF_CODE')">
+      <el-table-column width="140px" align="center" :label="$t('configTable.CONF_CODE')">
         <template slot-scope="scope">
           <span>{{scope.row.CONF_CODE}}</span>
         </template>
       </el-table-column>
-        <el-table-column width="250px" align="center" :label="$t('configTable.CONF_VALUE')">
+        <el-table-column width="140px" align="center" :label="$t('configTable.CONF_VALUE')">
         <template slot-scope="scope">
           <span>{{scope.row.CONF_VALUE}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" :label="$t('configTable.actions')" width="230" class-name="small-padding fixed-width">
+      <el-table-column align="center" :label="$t('configTable.actions')" width="150" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">{{$t('configTable.edit')}}</el-button>
-          <el-button size="mini" type="danger" @click="handleDelete(scope.row)">{{$t('configTable.delete')}}
-          </el-button>
+          <!--
+          <el-button size="mini" type="danger" @click="handleDelete(scope.row)">{{$t('configTable.delete')}}</el-button>
+          -->
         </template>
       </el-table-column>
     </el-table>
@@ -93,7 +94,7 @@ export default {
       },
       listQuery: {
         page: 1,
-        limit: 10,
+        limit: 20,
         CONF_NAME: undefined
       },
       statusOptions: ['published', 'draft', 'deleted'],
@@ -102,7 +103,9 @@ export default {
       temp: {
         CONF_CODE: '',
         CONF_NAME: '',
-        CONF_VALUE: ''
+        CONF_VALUE: '',
+        CLOUD_ORG:'',
+        CLOUD_ADDRESS:'',
       },
       dialogFormVisible: false,
       dialogStatus: '',
@@ -147,7 +150,9 @@ export default {
       this.temp = {
         CONF_CODE: '',
         CONF_NAME: '',
-        CONF_VALUE: ''
+        CONF_VALUE: '',
+        CLOUD_ORG:'',
+        CLOUD_ADDRESS:'',
       }
     },
     handleUpdate(row) { // 修改数据弹出修改表单

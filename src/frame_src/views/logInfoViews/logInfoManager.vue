@@ -1,58 +1,65 @@
 <template>
     <div class="app-container calendar-list-container"> 
     <div class="filter-container">
-       <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" :placeholder="$t('logInfoTable.USER_NAME')" v-model="listQuery.USER_NAME">
+       <el-input @keyup.enter.native="handleFilter" style="width: 200px;"  :placeholder="$t('logInfoTable.USER_NAME')" v-model="listQuery.USER_NAME">
       </el-input> 
       <!-- <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" :placeholder="$t('logInfoTable.LOG_TYPE')" v-model="listQuery.LOG_TYPE">
       </el-input>  -->
-       <el-select clearable style="width: 120px" class="filter-item" v-model="listQuery.LOG_TYPE" :placeholder="$t('logInfoTable.LOG_TYPE')">
+       <el-select clearable style="width: 120px"  v-model="listQuery.LOG_TYPE" :placeholder="$t('logInfoTable.LOG_TYPE')">
         <el-option v-for="item in logOptions" :key="item.key" :label="item.log_name" :value="item.key">
         </el-option>
       </el-select>
-       <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" :placeholder="$t('logInfoTable.ACCESS_TIME')" v-model="listQuery.ACCESS_TIME">
-      </el-input> 
-      <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">{{$t('logInfoTable.search')}}</el-button>
-      <el-button class="filter-item" type="primary" :loading="downloadLoading" v-waves icon="el-icon-download" @click="handleDownload">{{$t('logInfoTable.export')}}</el-button>
+      <el-date-picker v-model="listQuery.BEGIN_ACCESS_TIME" type="date" placeholder="选择开始日期"></el-date-picker>
+      <el-date-picker v-model="listQuery.END_ACCESS_TIME" type="date" placeholder="选择结束日期"></el-date-picker>
+      <el-button  type="primary" v-waves icon="el-icon-search" @click="handleFilter">{{$t('logInfoTable.search')}}</el-button>
+      <el-button  type="primary" :loading="downloadLoading" v-waves icon="el-icon-download" @click="handleDownload">{{$t('logInfoTable.export')}}</el-button>
  
     </div>
     <el-card class="box-card">
       <el-table :key='tableKey' :header-cell-class-name="tableRowClassName" :data="list" v-loading="listLoading" element-loading-text="给我一点时间" border fit highlight-current-row
       style="width: 100%">
-        <el-table-column width="160px"  class="filter-item"  align="center" :label="$t('logInfoTable.ACCESS_TIME')">
+        <el-table-column width="160px"  class="filter-item"  align="center" :label="'时间'">
         <template slot-scope="scope">
-          <span>{{scope.row.ACCESS_TIME|parseDate}}</span>
+          <span>{{scope.row.ACCESS_TIME}}</span>
         </template>
       </el-table-column>
-       <el-table-column width="140px" class="link-type"  align="center" :label="$t('logInfoTable.USER_ID')">
+       <el-table-column width="140px" class="link-type"  align="center" :label="'账号'">
         <template slot-scope="scope">
           <span>{{scope.row.USER_ID}}</span>
         </template>
       </el-table-column>
-      <el-table-column width="100px" align="center" :label="$t('logInfoTable.USER_NAME')">
+      <el-table-column width="150px" align="center" :label="'姓名'">
         <template slot-scope="scope">
           <span>{{scope.row.USER_NAME}}</span>
         </template>
       </el-table-column>
-        <el-table-column width="140px" align="center" :label="$t('logInfoTable.IP_ADDR')">
+        <el-table-column width="140px" align="center" :label="'IP'">
         <template slot-scope="scope">
           <span>{{scope.row.IP_ADDR}}</span>
         </template>
       </el-table-column>
-      <el-table-column width="140px" align="center" :label="$t('logInfoTable.LOG_TYPE')">
+      <el-table-column width="100px" align="center" :label="'操作类型'">
         <template slot-scope="scope">
           <span>{{scope.row.LOG_TYPE | logFilter}}</span>
         </template>
       </el-table-column>
-      <el-table-column width="300px" align="center" :label="$t('logInfoTable.LOG_CONTENT')">
+      <el-table-column width="100px" align="center" :label="'警告级别'">
+        <template slot-scope="scope">
+          <span>{{scope.row.ALARM_LEVEL}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column width="270px" align="center" :label="'操作内容'">
         <template slot-scope="scope">
           <span>{{scope.row.LOG_CONTENT}}</span>
         </template>
       </el-table-column>
-       <el-table-column width="300px" align="center" :label="$t('logInfoTable.REMARK')">
+       <!--
+       <el-table-column width="270px" align="center" :label="$t('logInfoTable.REMARK')">
         <template slot-scope="scope">
           <span>{{scope.row.REMARK}}</span>
         </template>
       </el-table-column>
+      -->
     </el-table>
     </el-card>
       <div class="pagination-container">
@@ -66,7 +73,6 @@ import {
   fetchLogInfoList
 } from '@/frame_src/api/logInfo'
 import waves from '@/frame_src/directive/waves' // 水波纹指令
-import {parseTime} from '@/frame_src/utils/index.js'
 const logOptions = [{ key: 0, log_name: '业务操作' }, { key: 1, log_name: '异常' }, { key: 2, log_name: '登录' }]// 0业务操作 1 异常 2 登录
 const logOptionsKeyValue = logOptions.reduce((acc, cur) => {
   acc[cur.key] = cur.log_name
@@ -83,12 +89,14 @@ export default {
       list: null,
       total: null,
       listLoading: true,
+      value1:'',
       listQuery: {
         USER_NAME: undefined,
         LOG_TYPE: undefined,
-        ACCESS_TIME: undefined,
+        BEGIN_ACCESS_TIME:'',
+        END_ACCESS_TIME:'',
         page: 1,
-        limit: 15
+        limit: 10
       },
       logOptions,
       editConfig: false,
@@ -105,9 +113,6 @@ export default {
   }, filters: {
     logFilter(type) {
       return logOptionsKeyValue[type]
-    },
-    parseDate(date){
-      return parseTime(date,null)
     }
   },
   methods: {
@@ -141,13 +146,13 @@ export default {
       this.downloadLoading = true
       import('@/frame_src/vendor/Export2Excel').then(excel => {
         const tHeader = [
-          '访问时间',
-          '用户ID',
-          '用户名称',
-          'IP地址',
+          '时间',
+          '账号',
+          '姓名',
+          'IP',
           '操作类型',
-          '操作内容',
-          '备注'
+          '警告级别',
+          '操作内容'
         ]
         const filterVal = [
           'ACCESS_TIME',
@@ -155,6 +160,7 @@ export default {
           'USER_NAME',
           'IP_ADDR',
           'LOG_TYPE',
+          'ALARM_LEVEL',
           'LOG_CONTENT',
           'REMARK'
         ]
@@ -179,8 +185,18 @@ export default {
       )
     },
     handleFilter() {
-      this.listQuery.page = 1
-      this.getList()
+      if(this.listQuery.BEGIN_ACCESS_TIME==''){
+        const start=new Date();
+        this.listQuery.BEGIN_ACCESS_TIME=start.setTime(start.getTime());
+      }
+      if(this.listQuery.END_ACCESS_TIME==''){
+        const end=new Date();
+        this.listQuery.END_ACCESS_TIME=end.setTime(end.getTime()+3600 * 1000 * 24 * 7);
+      }
+      else{ 
+        this.listQuery.page = 1
+        this.getList()
+      }
     }, tableRowClassName({ row, rowIndex }) {
       // 可以通过指定 Table 组件的 :header-cell-class-name 表头行的 className 的回调方法，也可以使用字符串为所有表头行设置一个固定的 className属性来为 Table 中的某一行添加 class，表明该行处于某种状态
       if (rowIndex === 0) {
