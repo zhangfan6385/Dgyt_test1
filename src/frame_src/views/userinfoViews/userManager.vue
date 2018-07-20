@@ -29,6 +29,19 @@
       <el-button class="filter-item" type="primary" :loading="downloadLoading" v-waves icon="el-icon-download" @click="handleDownload">{{$t('userTable.export')}}</el-button>
  
     </div>
+    <!--<div class="filter-container">
+          <el-upload
+            class="upload-demo"
+            :action="urlUpload"
+            :on-preview="handlePreview"
+            :on-remove="handleRemove"
+            :on-success="handleSuccess"
+            :before-remove="beforeRemove"
+            :headers="headers"
+            :file-list="fileList">
+            <el-button   class="filter-item"  type="primary" icon="el-icon-edit">点击上传</el-button>
+          </el-upload>
+     </div>-->
       <el-table :key='tableKey' :data="list" :header-cell-class-name="tableRowClassName"  v-loading="listLoading" element-loading-text="给我一点时间" border fit highlight-current-row
       style="width: 100%">
         <el-table-column width="200px" align="center" :label="$t('userTable.USER_DOMAIN')">
@@ -306,6 +319,7 @@ import {
 } from '@/frame_src/api/userlogin'
 import waves from '@/frame_src/directive/waves' // 水波纹指令
 import panel from '@/frame_src/components/TreeList/panel.vue'
+import { getToken } from '@/frame_src/utils/auth'
 // import { parseTime } from '@/frame_src/utils'
 const flagOptions = [{ key: 0, flag_name: '禁用' }, { key: 1, flag_name: '激活' }]
 const sexOptions = [{ key: 0, sex_name: '女' }, { key: 1, sex_name: '男' }]
@@ -353,6 +367,8 @@ export default {
       }
     }
     return {
+      urlUpload: process.env.BASE_API + 'org/uploadOrgArticle',
+      fileList: [],
       tableKey: 0,
       list: null,
       userList: null,
@@ -845,6 +861,35 @@ export default {
       this.listQuery.orgId = this.orgKey
       this.getList()
     },
+    handleRemove(file, fileList) {
+      console.log(file, fileList)
+    },
+    handlePreview(file) {
+      console.log(file)
+    },
+    handleSuccess(res, file, fileList) {
+      var message = res.message
+      var title = '失败'
+      var type = 'error'
+      if (res.code === 2000) {
+        this.newAdd()
+        this.load()
+        title = '成功'
+        type = 'success'
+      }
+      this.$notify({
+        title: title,
+        message: message,
+        type: type,
+        duration: 2000
+      })
+    },
+    handleExceed(files, fileList) {
+      this.$message.warning(`当前限制选择 1个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`)
+    },
+    beforeRemove(file, fileList) {
+      // return this.$confirm(`确定移除 ${file.name}？`)
+    },
     handleDownload() { // 导出
       this.downloadLoading = true
       import('@/frame_src/vendor/Export2Excel').then(excel => {
@@ -918,6 +963,13 @@ export default {
   created() {
     this.getList()
     this.load()
+  },
+  computed: {
+    headers() {
+      return {
+        'X-Token': getToken()
+      }
+    }
   }
 }
 </script>

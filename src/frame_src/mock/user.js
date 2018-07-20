@@ -21,6 +21,7 @@ for (let i = 0; i < count; i++) {
     USER_IP: '@ip',
     'USER_SEX|1': ['0', '1'],
     'FLAG|1': ['0', '1'],
+    'AUTHENTICATION_TYPE|1': ['0', '1'],
     USER_DOMAIN: '@first',
     'REMARK|1': ['自开发人员', '业务人员', '办公室人员', '企业领导'],
     pageviews: '@integer(300, 5000)',
@@ -29,6 +30,7 @@ for (let i = 0; i < count; i++) {
   UserRoleList.push(Mock.mock({
     USER_DOMAIN: '@first',
     USER_ID: '@increment',
+    USER_PASS: '111111',
     USER_CODE: '@integer(1000000,60000000)',
     USER_NAME: '@cname',
     'REMARK|1': ['自开发人员', '业务人员', '办公室人员', '企业领导'],
@@ -40,13 +42,21 @@ for (let i = 0; i < count; i++) {
   UserOrgList.push(Mock.mock({
     USER_DOMAIN: '@first',
     USER_ID: '@increment',
+    USER_PASS: '111111',
     USER_CODE: '@integer(1000000,60000000)',
     USER_NAME: '@cname',
     'REMARK|1': ['自开发人员', '业务人员', '办公室人员', '企业领导'],
     'FLAG|1': ['0', '1'],
     'orgName|1': ['大港油田一部', '', '大港油田财务'],
     'orgId|1': [26, 28],
-    pageviews: '@integer(300, 5000)'
+    pageviews: '@integer(300, 5000)',
+    PHONE_ORG: '@integer(1000,9000)',
+    USER_EMAIL: '@EMAIL',
+    EMAIL_OFFICE: '@EMAIL',
+    USER_IP: '@ip',
+    'USER_SEX|1': ['0', '1'],
+    'AUTHENTICATION_TYPE|1': ['0', '1'],
+    USER_ERP: '@cname'
   }))
   UserLoginList.push(Mock.mock({
     USER_DOMAIN: '@first',
