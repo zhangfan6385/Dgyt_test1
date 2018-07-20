@@ -3,7 +3,10 @@
   <imp-panel >
     <h3 class="box-title" slot="header" style="width: 25%;"> 
  <el-button class="filter-item" style="margin-left: 10px;" @click="newAdd" type="primary" icon="el-icon-edit">{{$t('orgTable.add')}}</el-button>
-
+     </h3>
+      <h3 class="box-title" slot="header" style="width: 25%;"> 
+      <el-button  class="filter-item" type="primary" icon="el-icon-edit" @click="showUpload=true">上传</el-button>
+ 
         <!-- <input id="excel-upload-input" ref="excel-upload-input" type="file" accept=".xlsx, .xls" class="c-hide" @change="handkeFileChange"> -->
 <!--  <el-button style="margin-left:16px;" size="mini" type="primary" @click="handleUpload">browse</el-button>
   -->
@@ -20,19 +23,7 @@
       </el-col>
       <el-col :span="18" :xs="24" :sm="24" :md="18" :lg="18">
         <el-card class="box-card">
-    <div class="filter-container">
-          <el-upload
-            class="upload-demo"
-            :action="urlUpload"
-            :on-preview="handlePreview"
-            :on-remove="handleRemove"
-            :on-success="handleSuccess"
-            :before-remove="beforeRemove"
-            :headers="headers"
-            :file-list="fileList">
-            <el-button   class="filter-item"  type="primary" icon="el-icon-edit">点击上传</el-button>
-          </el-upload>
-     </div>
+
           <div class="text item">
             <el-form :rules="rules"  :model="form" ref="form" >
               <el-form-item  :label="$t('orgTable.parent')" :label-width="formLabelWidth">
@@ -95,7 +86,25 @@
         </el-card>
  
       </el-col>
+         <el-dialog  :visible.sync="showUpload">
+   <el-card class="box-card">
+       <div class="filter-container">
+        <el-upload
+            class="upload-demo"
+            :action="urlUpload"
+            :on-preview="handlePreview"
+            :on-remove="handleRemove"
+            :on-success="handleSuccess"
+            :before-remove="beforeRemove"
+            :headers="headers"
+            :file-list="fileList">
+            <el-button   class="filter-item"  type="primary" icon="el-icon-edit">点击上传</el-button>
+          </el-upload>
+     </div>
+    </el-card>
+  </el-dialog>
     </el-row>
+  
   </imp-panel>
 
  
@@ -117,6 +126,7 @@ export default {
   },
   data() {
     return {
+      showUpload: false,
       urlUpload: process.env.BASE_API + 'org/uploadOrgArticle',
       dialogLoading: false,
       dialogVisible: false,
@@ -276,6 +286,9 @@ export default {
         type: type,
         duration: 2000
       })
+    },
+    submitUpload() {
+      this.$refs.upload.submit()
     },
     handleExceed(files, fileList) {
       this.$message.warning(`当前限制选择 1个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`)

@@ -13,19 +13,7 @@
       </el-col>
 <el-col :span="18" :xs="24" :sm="24" :md="18" :lg="18">
     <el-card class="box-card">
-         >
     <div class="filter-container">
-       <el-upload
-            class="upload-demo"
-            :action="urlUpload"
-            :on-preview="handlePreview"
-            :on-remove="handleRemove"
-            :on-success="handleSuccess"
-            :before-remove="beforeRemove"
-            :headers="headers"
-            :file-list="fileList">
-            <el-button   class="filter-item"  type="primary" icon="el-icon-edit">点击上传</el-button>
-          </el-upload>
        <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" :placeholder="$t('userTable.USER_NAME')" v-model="listQuery.USER_NAME">
       </el-input>
       <el-select clearable style="width: 120px" class="filter-item" v-model="listQuery.FLAG" :placeholder="$t('userTable.FLAG')">
@@ -39,7 +27,7 @@
       <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">{{$t('userTable.search')}}</el-button>
       <el-button class="filter-item" style="margin-left: 10px;" @click="handleCreate" type="primary" icon="el-icon-edit">{{$t('userTable.add')}}</el-button>
       <el-button class="filter-item" type="primary" :loading="downloadLoading" v-waves icon="el-icon-download" @click="handleDownload">{{$t('userTable.export')}}</el-button>
- 
+      <el-button  class="filter-item" type="primary" icon="el-icon-edit" @click="showUpload=true">上传</el-button>
     </div>
    
       <el-table :key='tableKey' :data="list" :header-cell-class-name="tableRowClassName"  v-loading="listLoading" element-loading-text="给我一点时间" border fit highlight-current-row
@@ -246,10 +234,9 @@
         <el-button v-else type="primary" @click="updateData">{{$t('userTable.confirm')}}</el-button>
       </div>
     </el-dialog>
-    <el-dialog  :visible.sync="userLoginVisible">
+ <el-dialog  :visible.sync="userLoginVisible">
   <el-card class="box-card">
-   
-    <div class="filter-container">
+   <div class="filter-container">
        <el-input @keyup.enter.native="handleUserFilter" style="width: 100px;" class="filter-item" :placeholder="$t('userTable.USER_NAME')" v-model="listUserQuery.USER_NAME">
       </el-input>
      
@@ -294,12 +281,46 @@
       </el-pagination>
     </div> 
     </el-card>
-       </el-dialog>
+    </el-dialog>
+     <el-dialog  :visible.sync="showUpload">
+   <el-card class="box-card">
+       <div class="filter-container">
+       <!-- <el-upload
+          class="upload-demo"
+          ref="upload"
+           :action="urlUpload"
+          :on-preview="handlePreview"
+          :on-remove="handleRemove"
+          :on-success="handleSuccess"
+          :headers="headers"
+          :file-list="fileList"
+          :auto-upload="false">
+          <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
+          <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
+         </el-upload> -->
+
+          <el-upload
+            class="upload-demo"
+              ref="upload"
+            :action="urlUpload"
+            :on-preview="handlePreview"
+            :on-remove="handleRemove"
+            :on-exceed="handleExceed"
+            :on-success="handleSuccess"
+            :before-remove="beforeRemove"
+            :headers="headers"
+            :file-list="fileList">
+            <el-button   class="filter-item"  type="primary" icon="el-icon-edit">点击上传</el-button>
+          </el-upload>
+     </div>
+    </el-card>
+  </el-dialog>
        </el-card>
       </el-col>
     </el-row>
     </imp-panel>
     </div>
+ 
 </template>
 <script>
 import {
@@ -366,6 +387,7 @@ export default {
       }
     }
     return {
+      showUpload: false,
       urlUpload: process.env.BASE_API + 'user/uploadUserArticle',
       fileList: [],
       tableKey: 0,
@@ -870,10 +892,11 @@ export default {
       var title = '失败'
       var type = 'error'
       if (res.code === 2000) {
-        this.newAdd()
+        this.getList()
         this.load()
         title = '成功'
         type = 'success'
+        this.showUpload = false
       }
       this.$notify({
         title: title,
@@ -881,6 +904,9 @@ export default {
         type: type,
         duration: 2000
       })
+    },
+    submitUpload() {
+      this.$refs.upload.submit()
     },
     handleExceed(files, fileList) {
       this.$message.warning(`当前限制选择 1个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`)
