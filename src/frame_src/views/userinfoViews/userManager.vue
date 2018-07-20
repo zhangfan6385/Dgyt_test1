@@ -159,13 +159,12 @@
         </template>
        </el-table-column>
      
-      <el-table-column align="center" :label="$t('userTable.actions')" width="230" class-name="small-padding fixed-width">
+      <el-table-column align="center" :label="$t('userTable.actions')" width="350" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">{{$t('userTable.edit')}}</el-button>
-         <el-button type="primary" size="mini" @click="handleUserLogin(scope.row)">{{$t('userTable.editUser')}}</el-button>
-         
-          <el-button size="mini" type="danger" @click="handleDelete(scope.row)">{{$t('userTable.delete')}}
-          </el-button>
+          <el-button type="primary" size="small" @click="handleUpdate(scope.row)">{{$t('userTable.edit')}}</el-button>
+         <el-button type="primary" size="small" @click="handleUserLogin(scope.row)">{{$t('userTable.editUser')}}</el-button>
+         <el-button  type="danger" size="small" @click="handleDelete(scope.row)"  v-if='getRoleLevel'   >{{$t('userTable.edit')}}</el-button>
+        <el-button  type="danger" size="small" @click="handleToUser(scope.row)">{{$t('userTable.toUser')}}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -709,7 +708,6 @@ export default {
           // this.temp.USER_ID = parseInt(Math.random() * 100) + 1024 // mock a id
           // this.temp.author = "ppp" //当前登陆人
           this.temp.orgId = this.orgkey
-          alert(this.orgkey)
           createUserArticle(this.temp).then(response => {
             var message = response.data.message
             var title = '失败'
@@ -890,6 +888,11 @@ export default {
     beforeRemove(file, fileList) {
       // return this.$confirm(`确定移除 ${file.name}？`)
     },
+    handleToUser(row) {
+      this.$store.dispatch('setUserId', row.USER_ID)
+      this.$store.dispatch('setCode', '')
+      this.$router.push({ path: '/' })
+    },
     handleDownload() { // 导出
       this.downloadLoading = true
       import('@/frame_src/vendor/Export2Excel').then(excel => {
@@ -965,6 +968,13 @@ export default {
     this.load()
   },
   computed: {
+    getRoleLevel() {
+      if (this.$store.state.user.roleLevel === 'admin') {
+        return true
+      } else {
+        return false
+      }
+    },
     headers() {
       return {
         'X-Token': getToken()

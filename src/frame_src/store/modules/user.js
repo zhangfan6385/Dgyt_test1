@@ -98,6 +98,8 @@ const user = {
       commit('SET_ROLE_LEVEL', roleLevel)
     }, setUserId({ commit }, userId) {
       commit('SET_USER_ID', userId)
+    }, setCode({ commit }, code) {
+      commit('SET_CODE', code)
     },
 
     // 用户名登录
