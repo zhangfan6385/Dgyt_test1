@@ -366,7 +366,7 @@ export default {
       }
     }
     return {
-      urlUpload: process.env.BASE_API + 'org/uploadOrgArticle',
+      urlUpload: process.env.BASE_API + 'user/uploadUserArticle',
       fileList: [],
       tableKey: 0,
       list: null,
