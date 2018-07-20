@@ -11,9 +11,15 @@
       </el-select>
       <el-date-picker v-model="listQuery.BEGIN_ACCESS_TIME" type="date" placeholder="选择开始日期"></el-date-picker>
       <el-date-picker v-model="listQuery.END_ACCESS_TIME" type="date" placeholder="选择结束日期"></el-date-picker>
+      <br>
+      <el-input v-model="listQuery.USER_ID" type="text" placeholder="请输入用户ID" style="width: 200px;"></el-input>
+      <el-input v-model="listQuery.LOG_CONTENT" type="text" placeholder="请输入具体操作内容" style="width: 200px;"></el-input>
+      <el-select v-model="listQuery.ALARM_LEVEL" placeholder="请选择警告级别">
+        <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+    </el-option>
+      </el-select>
       <el-button  type="primary" v-waves icon="el-icon-search" @click="handleFilter">{{$t('logInfoTable.search')}}</el-button>
       <el-button  type="primary" :loading="downloadLoading" v-waves icon="el-icon-download" @click="handleDownload">{{$t('logInfoTable.export')}}</el-button>
- 
     </div>
     <el-card class="box-card">
       <el-table :key='tableKey' :header-cell-class-name="tableRowClassName" :data="list" v-loading="listLoading" element-loading-text="给我一点时间" border fit highlight-current-row
@@ -87,6 +93,19 @@ export default {
     return {
       tableKey: 0,
       list: null,
+      options: [{
+          value: 1,
+          label: '警告等级1'
+        }, {
+          value: 2,
+          label: '警告等级2'
+        }, {
+          value: 3,
+          label: '警告等级3'
+        }, {
+          value: 4,
+          label: '警告等级4'
+        }],
       total: null,
       listLoading: true,
       value1:'',
@@ -95,6 +114,9 @@ export default {
         LOG_TYPE: undefined,
         BEGIN_ACCESS_TIME:'',
         END_ACCESS_TIME:'',
+        USER_ID:'',
+        ALARM_LEVEL:'',
+        LOG_CONTENT:'',
         page: 1,
         limit: 10
       },
@@ -185,18 +207,16 @@ export default {
       )
     },
     handleFilter() {
-      if(this.listQuery.BEGIN_ACCESS_TIME==''){
+      if(this.listQuery.BEGIN_ACCESS_TIME==''&&this.listQuery.END_ACCESS_TIME!=''){
         const start=new Date();
         this.listQuery.BEGIN_ACCESS_TIME=start.setTime(start.getTime());
       }
-      if(this.listQuery.END_ACCESS_TIME==''){
+      if(this.listQuery.END_ACCESS_TIME==''&&this.listQuery.BEGIN_ACCESS_TIME!=''){
         const end=new Date();
         this.listQuery.END_ACCESS_TIME=end.setTime(end.getTime()+3600 * 1000 * 24 * 7);
       }
-      else{ 
         this.listQuery.page = 1
         this.getList()
-      }
     }, tableRowClassName({ row, rowIndex }) {
       // 可以通过指定 Table 组件的 :header-cell-class-name 表头行的 className 的回调方法，也可以使用字符串为所有表头行设置一个固定的 className属性来为 Table 中的某一行添加 class，表明该行处于某种状态
       if (rowIndex === 0) {

@@ -93,8 +93,8 @@ export default {
     }
     return {
       loginForm: {
-        username: 'UIDPAdmin1',
-        password: 'UIDPAdmin',
+      username: '',
+        password: '',
         userDomain: ''
       },
       loginRules: {
