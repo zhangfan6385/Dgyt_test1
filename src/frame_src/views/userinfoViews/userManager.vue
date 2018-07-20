@@ -13,7 +13,19 @@
       </el-col>
 <el-col :span="18" :xs="24" :sm="24" :md="18" :lg="18">
     <el-card class="box-card">
+         >
     <div class="filter-container">
+       <el-upload
+            class="upload-demo"
+            :action="urlUpload"
+            :on-preview="handlePreview"
+            :on-remove="handleRemove"
+            :on-success="handleSuccess"
+            :before-remove="beforeRemove"
+            :headers="headers"
+            :file-list="fileList">
+            <el-button   class="filter-item"  type="primary" icon="el-icon-edit">点击上传</el-button>
+          </el-upload>
        <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" :placeholder="$t('userTable.USER_NAME')" v-model="listQuery.USER_NAME">
       </el-input>
       <el-select clearable style="width: 120px" class="filter-item" v-model="listQuery.FLAG" :placeholder="$t('userTable.FLAG')">
@@ -29,19 +41,7 @@
       <el-button class="filter-item" type="primary" :loading="downloadLoading" v-waves icon="el-icon-download" @click="handleDownload">{{$t('userTable.export')}}</el-button>
  
     </div>
-    <!--<div class="filter-container">
-          <el-upload
-            class="upload-demo"
-            :action="urlUpload"
-            :on-preview="handlePreview"
-            :on-remove="handleRemove"
-            :on-success="handleSuccess"
-            :before-remove="beforeRemove"
-            :headers="headers"
-            :file-list="fileList">
-            <el-button   class="filter-item"  type="primary" icon="el-icon-edit">点击上传</el-button>
-          </el-upload>
-     </div>-->
+   
       <el-table :key='tableKey' :data="list" :header-cell-class-name="tableRowClassName"  v-loading="listLoading" element-loading-text="给我一点时间" border fit highlight-current-row
       style="width: 100%">
         <el-table-column width="200px" align="center" :label="$t('userTable.USER_DOMAIN')">
