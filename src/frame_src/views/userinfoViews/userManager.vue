@@ -175,9 +175,9 @@
        <el-form-item :label="$t('userTable.USER_NAME')" prop="USER_NAME">
           <el-input v-model="temp.USER_NAME"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('userTable.USER_ERP')" prop="USER_ERP">
+       <!-- <el-form-item :label="$t('userTable.USER_ERP')" prop="USER_ERP">
           <el-input v-model="temp.USER_ERP"></el-input>
-        </el-form-item>
+        </el-form-item>-->
        <!--<el-form-item :label="$t('userTable.USER_ALIAS')" prop="USER_ALIAS">
           <el-input v-model="temp.USER_ALIAS" ></el-input>
         </el-form-item>-->
@@ -307,7 +307,7 @@ import {
 import waves from '@/frame_src/directive/waves' // 水波纹指令
 import panel from '@/frame_src/components/TreeList/panel.vue'
 // import { parseTime } from '@/frame_src/utils'
-const flagOptions = [{ key: 0, flag_name: '否' }, { key: 1, flag_name: '是' }]
+const flagOptions = [{ key: 0, flag_name: '禁用' }, { key: 1, flag_name: '激活' }]
 const sexOptions = [{ key: 0, sex_name: '女' }, { key: 1, sex_name: '男' }]
 const typeOptions = [{ key: 0, type_name: '本地账号' }, { key: 1, type_name: 'PTR账号' }]
 // arr to obj ,such as { CN : "China", US : "USA" }

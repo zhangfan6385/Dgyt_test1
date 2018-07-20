@@ -175,7 +175,7 @@ export default {
     USER_IP: '访问IP',
     USER_SEX: '性别',
     FLAG: '账号状态',
-    USER_DOMAIN: '账户',
+    USER_DOMAIN: '账号',
     REMARK: '备注',
     importance: '重要性',
     type: '类型',
