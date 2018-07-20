@@ -14,9 +14,9 @@
 <el-col :span="18" :xs="24" :sm="24" :md="18" :lg="18">
     <el-card class="box-card">
     <div class="filter-container">
-       <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" :placeholder="$t('userTable.USER_NAME')" v-model="listQuery.USER_NAME">
+       <el-input @keyup.enter.native="handleFilter" style="width: 120px;" class="filter-item" :placeholder="$t('userTable.USER_NAME')" v-model="listQuery.USER_NAME">
       </el-input>
-      <el-select clearable style="width: 120px" class="filter-item" v-model="listQuery.FLAG" :placeholder="$t('userTable.FLAG')">
+      <el-select clearable style="width: 100px" class="filter-item" v-model="listQuery.FLAG" :placeholder="$t('userTable.FLAG')">
         <el-option v-for="item in flagOptions" :key="item.key" :label="item.flag_name" :value="item.key">
         </el-option>
       </el-select>
