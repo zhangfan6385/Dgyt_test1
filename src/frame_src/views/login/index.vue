@@ -1,26 +1,25 @@
 <template>
   <div class="login-container">
-    
     <el-form class="login-form" autoComplete="on" :model="loginForm" :rules="loginRules" ref="loginForm" label-position="left">
       <div class="logo title">
         <img src="../../../frame_src/imgs/logo.png">
         <!-- <img src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif"> -->
-        <span>大港油田软件开发平台</span>
+        <span>{{sysmessage}}</span>
       </div>
       <el-form-item prop="username">
         <span class="svg-container svg-container_login">
           <svg-icon icon-class="user" />
         </span>
-        <el-input name="username" type="text" v-model="loginForm.username" autoComplete="on" placeholder="username" />
+        <el-input name="username" type="text" v-model="loginForm.username" autoComplete="on" placeholder="账号" />
      
   <el-dropdown  class="show-pwd"   @command="handleCommand">
   <span class="el-dropdown-link">
     {{radio}}<i class="el-icon-arrow-down el-icon--right"></i>
   </span>
   <el-dropdown-menu slot="dropdown">
-    <el-dropdown-item command="本地账号">本地账号</el-dropdown-item>
-    <el-dropdown-item command="员工账号">员工账号</el-dropdown-item>
-    <el-dropdown-item command="ptr账号">ptr账号</el-dropdown-item>
+    <div v-for="item in list">
+        <el-dropdown-item  :command="item.key">{{item.key}}</el-dropdown-item> 
+    </div>
   </el-dropdown-menu>
 </el-dropdown>
 
@@ -31,7 +30,7 @@
         <span class="svg-container">
           <svg-icon icon-class="password" />
         </span>
-        <el-input name="password" :type="passwordType" @keyup.enter.native="handleLogin" v-model="loginForm.password" autoComplete="on" placeholder="password" />
+        <el-input name="password" :type="passwordType" @keyup.enter.native="handleLogin" v-model="loginForm.password" autoComplete="on" placeholder="密码" />
         <span class="show-pwd" @click="showPwd">
           <svg-icon icon-class="eye" />
         </span>
@@ -68,6 +67,7 @@
 import LangSelect from '@/frame_src/components/LangSelect'
 import LogInUser from './logInUser'
 import { Message } from 'element-ui'
+import {GetTitle} from '@/frame_src/api/title'
 const userOptions = [{ key: 'ptr账号', user_code: 'ptrUser' }, { key: '员工账号', user_code: 'user' }, { key: '本地账号', user_code: 'localUser' }]
 const userOptionsKeyValue = userOptions.reduce((acc, cur) => {
   acc[cur.key] = cur.user_code
@@ -93,7 +93,7 @@ export default {
     }
     return {
       loginForm: {
-        username: 'UIDPAdmin',
+        username: 'UIDPAdmin1',
         password: 'UIDPAdmin',
         userDomain: ''
       },
@@ -104,12 +104,21 @@ export default {
       passwordType: 'password',
       loading: false,
       showDialog: false,
-      radio: '本地账号'
+      radio:'PTR认证',
+      list:[],
+      sysmessage:'测试平台',
+      code:''
     }
   },
   methods: {
+
     handleCommand(command) {
-      this.radio = command
+      this.radio=command;
+      for(var item of this.list){
+        if(item.key==command){
+          this.code=item.user_code;
+        }
+      }
     },
 
     showPwd() {
@@ -122,8 +131,9 @@ export default {
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
-          this.loading = true
-          this.loginForm.userDomain = userOptionsKeyValue[this.radio] // this.radio // 后改需求走登陆账号 所以没有 域账号的说法了
+          this.loading = true;
+          this.loginForm.userDomain=this.code;
+          console.log(this.loginForm); // this.radio // 后改需求走登陆账号 所以没有 域账号的说法了
           this.$store.dispatch('LoginByUsername', this.loginForm).then(response => {
             this.$store.dispatch('setRoleLevel', response.data.roleLevel)
             if (response.data.roleLevel === 'admin') {
@@ -170,7 +180,19 @@ export default {
     }, updateShowDialog(val) {
       this.showDialog = false
       this.$router.push({ path: '/' })
+    },
+    GetTitle(){
+      GetTitle().then(response=>{
+        console.log(response.data.itemtype);
+        this.sysmessage=response.data.sysname.CONF_VALUE;
+        this.$store.state.user.sysName=response.data.sysname.CONF_VALUE;
+        this.list=response.data.itemtype;
+      })
     }
+  },
+
+  mounted(){
+    this.GetTitle();
   },
   created() {
     // window.addEventListener('hashchange', this.afterQRScan)

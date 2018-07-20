@@ -34,9 +34,9 @@
         </div>
         <!-- <svg-icon icon-class="user" style="color:white;width:25px;height:25px;vertical-align: middle;cursor: pointer;"/> -->
         <el-dropdown-menu slot="dropdown">
-          <router-link to="/">
+          <router-link to="/userinfoViews/user-password-manager">
             <el-dropdown-item>
-              {{$t('navbar.dashboard')}}
+              修改密码
             </el-dropdown-item>
           </router-link>
 
