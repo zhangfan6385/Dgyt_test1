@@ -2,10 +2,10 @@
  <div class="app-container calendar-list-container">
   <imp-panel >
     <h3 class="box-title" slot="header" style="width: 25%;"> 
- <el-button class="filter-item" style="margin-left: 10px;" @click="newAdd" type="primary" icon="el-icon-edit">{{$t('orgTable.add')}}</el-button>
+ <el-button class="filter-item" style="margin-left: 10px;" @click="newAdd" type="primary" icon="el-icon-edit" :disabled="Useorg">添加</el-button>
      </h3>
       <h3 class="box-title" slot="header" style="width: 25%;"> 
-      <el-button  class="filter-item" type="primary" icon="el-icon-edit" @click="showUpload=true">上传</el-button>
+      <el-button  class="filter-item" type="primary" icon="el-icon-edit" @click="showUpload=true" :disabled="Useorg" >上传</el-button>
  
         <!-- <input id="excel-upload-input" ref="excel-upload-input" type="file" accept=".xlsx, .xls" class="c-hide" @change="handkeFileChange"> -->
 <!--  <el-button style="margin-left:16px;" size="mini" type="primary" @click="handleUpload">browse</el-button>
@@ -29,14 +29,18 @@
               <el-form-item  :label="$t('orgTable.parent')" :label-width="formLabelWidth">
                 <!--<el-input v-model="form.parentId" auto-complete="off"></el-input>-->
                 <el-select-tree v-model="form.parentId" :treeData="roleTree" :propNames="defaultProps" clearable
-                                placeholder="请选择父级">
+                                placeholder="请选择父级" prop="">
                 </el-select-tree>
               </el-form-item>
                 <el-form-item :label="$t('orgTable.orgCode')" prop="orgCode" :label-width="formLabelWidth">
                 <el-input v-model="form.orgCode" auto-complete="off"></el-input>
                 </el-form-item>
-                <el-form-item :label="$t('orgTable.orgName')" prop="orgName" :label-width="formLabelWidth">
+                <el-form-item label="组织机构全称" prop="orgName" :label-width="formLabelWidth">
                 <el-input v-model="form.orgName" auto-complete="off"></el-input>
+                </el-form-item>
+
+                <el-form-item label="组织机构简称" prop="ORG_SHORT_NAME" :label-width="formLabelWidth">
+                <el-input v-model="form.orgShortName" auto-complete="off"></el-input>
                 </el-form-item>
              <!-- <el-col :span="12" :xs="24" :sm="24" :md="9" :lg="9" :xl="9">
                 <el-form-item :label="$t('orgTable.orgNameFull')" prop="orgNameFull" :label-width="formLabelWidth">
@@ -73,7 +77,7 @@
               <!-- <el-col :span="12" :xs="24" :sm="24" :md="9" :lg="9" :xl="9">-->
               <el-form-item label="" :label-width="formLabelWidth"> 
               
-              <el-button v-if="form.id==null" size="mini" type="primary"    @click="onOkSubmit">{{$t('orgTable.add')}}
+              <el-button v-if="form.id==null" size="mini" type="primary"    @click="onOkSubmit" :disabled="Useorg">{{$t('orgTable.add')}}
               </el-button>
                 <el-button  v-if="form.id!=null"   size="mini" type="primary"   @click="onUpdateSubmit" >{{$t('orgTable.edit')}}
               </el-button> 
@@ -130,6 +134,7 @@ export default {
       urlUpload: process.env.BASE_API + 'org/uploadOrgArticle',
       dialogLoading: false,
       dialogVisible: false,
+      Useorg:undefined,
       formLabelWidth: '120px',
       defaultProps: {
         children: 'children',
@@ -173,16 +178,22 @@ export default {
         phoneS: '', // enName
         phoneFax: '',
         ISINVALID: '',
-        remark: ''
+        remark: '',
+        orgShortName:''
       }
     }
   },
   methods: {
+    getorg(){
+      this.Useorg=this.$store.state.user.UseOrg;
+      console.log(this.Useorg);
+    },
 
     handleNodeClick(data) { // 把左侧树的选中数据赋值到右边form表单里。
       this.form = data
     },
     newAdd() { // 增加新的角色数据
+      this.$refs['form'].resetFields();
       this.form = {
         id: null,
         parentId: null, // parentId  orgid
@@ -194,7 +205,8 @@ export default {
         phoneS: '', // enName
         phoneFax: '',
         ISINVALID: '1',
-        remark: ''
+        remark: '',
+        orgShortName:''
       }
     },
     onOkSubmit() { // 创建成功按钮
@@ -216,6 +228,7 @@ export default {
               type: type,
               duration: 2000
             })
+            this.$refs['form'].resetFields();
           })
         }
       })
@@ -316,8 +329,11 @@ export default {
         </span>)
     }
   },
+  mounted(){
+    this.getorg();
+  },
   created() { // 创建页面的初始化方法
-    this.load()
+    this.load();
   },
   computed: {
     headers() {

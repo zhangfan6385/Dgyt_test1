@@ -16,14 +16,18 @@
     <div class="filter-container">
        <el-input @keyup.enter.native="handleFilter" style="width: 120px;" class="filter-item" :placeholder="$t('userTable.USER_NAME')" v-model="listQuery.USER_NAME">
       </el-input>
+      <el-input @keyup.enter.native="handleFilter" style="width: 120px;" class="filter-item" placeholder="请输入账号" v-model="listQuery.USER_ID">
+      </el-input>
       <el-select clearable style="width: 100px" class="filter-item" v-model="listQuery.FLAG" :placeholder="$t('userTable.FLAG')">
         <el-option v-for="item in flagOptions" :key="item.key" :label="item.flag_name" :value="item.key">
         </el-option>
       </el-select>
+       <!--
        <el-select @change='handleFilter' style="width: 120px" class="filter-item" v-model="listQuery.sort">
         <el-option v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key">
         </el-option>
       </el-select>
+      -->
       <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">{{$t('userTable.search')}}</el-button>
       <el-button class="filter-item" style="margin-left: 10px;" @click="handleCreate" type="primary" icon="el-icon-edit">{{$t('userTable.add')}}</el-button>
       <el-button class="filter-item" type="primary" :loading="downloadLoading" v-waves icon="el-icon-download" @click="handleDownload">{{$t('userTable.export')}}</el-button>
@@ -32,17 +36,31 @@
    
       <el-table :key='tableKey' :data="list" :header-cell-class-name="tableRowClassName"  v-loading="listLoading" element-loading-text="给我一点时间" border fit highlight-current-row
       style="width: 100%">
-        <el-table-column width="200px" align="center" :label="$t('userTable.USER_DOMAIN')">
+       
+       <el-table-column width="110px" align="center" label="账号类型">
+        <template slot-scope="scope">
+          <span>{{scope.row.AUTHENTICATION_TYPE | AUTHENTICATION_TYPEFilter}}</span>
+        </template>
+       </el-table-column>
+        
+        <el-table-column width="200px" align="center" label="账号">
         <template slot-scope="scope">
           <span>{{scope.row.USER_DOMAIN}}</span>
         </template>
        </el-table-column>
-        <el-table-column width="200px" align="center" :label="$t('userTable.USER_NAME')">
+
+      <el-table-column width="110px" align="center" v-if='showUSER_PASS'    :label="$t('userTable.USER_PASS')" >
+        <template slot-scope="scope" >
+          <span>{{scope.row.USER_PASS}}</span>
+        </template>
+      </el-table-column>
+
+        <el-table-column width="200px" align="center" label="姓名">
         <template slot-scope="scope">
           <span>{{scope.row.USER_NAME}}</span>
         </template>
       </el-table-column>
-         <el-table-column width="200px" align="center" :label="$t('userTable.USER_CODE')">
+         <el-table-column width="200px" align="center" label="员工编号">
         <template slot-scope="scope">
           <span>{{scope.row.USER_CODE}}</span>
         </template>
@@ -71,32 +89,31 @@
           <span>{{scope.row.USER_ALIAS}}</span>
         </template>
       </el-table-column>-->
-     <el-table-column width="110px" align="center" v-if='showUSER_PASS'    :label="$t('userTable.USER_PASS')" >
-        <template slot-scope="scope" >
-          <span>{{scope.row.USER_PASS}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column width="110px" align="center" :label="$t('userTable.USER_SEX')">
+
+      <el-table-column width="110px" align="center" label="用户性别">
         <template slot-scope="scope">
-          <el-tag>{{scope.row.USER_SEX | sexFilter}}</el-tag>
+          <span>{{scope.row.USER_SEX | sexFilter}}</span>
         </template>
        </el-table-column>
-      <el-table-column width="110px" align="center" :label="$t('userTable.PHONE_MOBILE')">
-        <template slot-scope="scope">
-          <span>{{scope.row.PHONE_MOBILE}}</span>
-        </template>
-      </el-table-column>
-       <el-table-column width="110px" align="center" :label="$t('userTable.PHONE_OFFICE')">
+
+      <el-table-column width="110px" align="center" label="办公电话">
         <template slot-scope="scope">
           <span>{{scope.row.PHONE_OFFICE}}</span>
         </template>
        </el-table-column>
+
+      <el-table-column width="110px" align="center" label="手机号码">
+        <template slot-scope="scope">
+          <span>{{scope.row.PHONE_MOBILE}}</span>
+        </template>
+      </el-table-column>
+
       <!-- <el-table-column width="110px" align="center" :label="$t('userTable.PHONE_ORG')">
         <template slot-scope="scope">
           <span>{{scope.row.PHONE_ORG}}</span>
         </template>
       </el-table-column>-->
-      <el-table-column width="200px" align="center" :label="$t('userTable.USER_EMAIL')">
+      <el-table-column width="200px" align="center" label="电子邮箱">
         <template slot-scope="scope">
           <span>{{scope.row.USER_EMAIL}}</span>
         </template>
@@ -106,28 +123,24 @@
           <span>{{scope.row.EMAIL_OFFICE}}</span>
         </template>
        </el-table-column>-->
-             <el-table-column min-width="300px"  align="center" :label="$t('userTable.orgName')">
+      <el-table-column min-width="300px"  align="center" label="组织机构名称">
         <template slot-scope="scope">
           <span>{{scope.row.orgName}}</span>
         </template>
        </el-table-column>
-        <el-table-column width="150px" align="center" :label="$t('userTable.ASSOCIATED_ACCOUNT')">
+        <el-table-column width="150px" align="center" label="关联账号">
         <template slot-scope="scope">
           <span>{{scope.row.ASSOCIATED_ACCOUNT}}</span>
         </template>
       </el-table-column>
-        <el-table-column width="180px" align="center" :label="$t('userTable.USER_IP')">
-        <template slot-scope="scope">
-          <span>{{scope.row.USER_IP}}</span>
-        </template>
-       </el-table-column>
    
          <!-- <el-table-column width="110px" align="center" :label="$t('userTable.FLAG')">
         <template slot-scope="scope">
           <el-tag>{{scope.row.FLAG | typeFilter}}</el-tag>
         </template>
        </el-table-column>-->
-       <el-table-column align="center" :label="$t('userTable.FLAG')" width="230" class-name="small-padding fixed-width">
+       <!--
+       <el-table-column align="center" label="账号状态" width="230" class-name="small-padding fixed-width">
         <template slot-scope="scope">
          <el-button v-if="scope.row.FLAG==0" size="mini" type="success" @click="handleModifyStatus(scope.row,1)">{{$t('userTable.publish')}}
           </el-button>
@@ -136,22 +149,19 @@
           
         </template>
       </el-table-column>
-          <el-table-column width="110px" align="center" :label="$t('userTable.AUTHENTICATION_TYPE')">
-        <template slot-scope="scope">
-          <el-tag>{{scope.row.AUTHENTICATION_TYPE | AUTHENTICATION_TYPEFilter}}</el-tag>
-        </template>
-       </el-table-column>
-       <el-table-column min-width="180px"  align="center" :label="$t('userTable.REMARK')">
+
+       <el-table-column min-width="180px"  align="center" label="备注">
         <template slot-scope="scope">
           <span>{{scope.row.REMARK}}</span>
         </template>
        </el-table-column>
+       -->
      
       <el-table-column align="center" :label="$t('userTable.actions')" width="350" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-button type="primary" size="small" @click="handleUpdate(scope.row)">{{$t('userTable.edit')}}</el-button>
+         <el-button type="primary" size="small" @click="handleUpdate(scope.row)">{{$t('userTable.edit')}}</el-button>
          <el-button type="primary" size="small" @click="handleUserLogin(scope.row)">{{$t('userTable.editUser')}}</el-button>
-         <el-button  type="danger" size="small" @click="handleDelete(scope.row)"  v-if='getRoleLevel'   >{{$t('userTable.edit')}}</el-button>
+         <el-button  type="danger" size="small" @click="handleDelete(scope.row)"  v-if='getRoleLevel'>删除</el-button>
         <el-button  type="danger" size="small" @click="handleToUser(scope.row)">{{$t('userTable.toUser')}}</el-button>
         </template>
       </el-table-column>
@@ -163,17 +173,39 @@
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
     
       <el-form :rules="rules" ref="dataForm" :model="temp" label-position="left" label-width="120px" style='width: 400px; margin-left:20px;'>
-       <el-form-item :label="$t('userTable.USER_ID')" prop="USER_ID">
-          <span>{{temp.USER_ID}}</span>
+
+        <el-form-item label="账号类型">
+          <el-select class="filter-item" v-model="temp.AUTHENTICATION_TYPE" placeholder="Please select" @change="getvalue">
+        <el-option v-for="item in typeOptions" :key="item.key" :label="item.type_name" :value="item.key" :val="item">
+            </el-option>
+          </el-select>
         </el-form-item>
-        <el-form-item :label="$t('userTable.USER_DOMAIN')" prop="USER_DOMAIN">
+
+        <el-form-item label="账号" prop="USER_DOMAIN">
           <el-input v-model="temp.USER_DOMAIN"></el-input>
         </el-form-item>
+
+        <el-form-item :label="$t('userTable.USER_PASS')" prop="USER_PASS" >
+          <el-input v-model="temp.USER_PASS"  type="password" auto-complete="off" :placeholder="passwordTips" :disabled="passwordVisible"></el-input>
+        </el-form-item>
+
+        <el-form-item label="确认密码" prop="USER_PASS2">
+          <el-input type="password" v-model="temp.USER_PASS2" auto-complete="off" :placeholder="passwordTips1"  :disabled="passwordVisible"></el-input>
+        </el-form-item>
+
+        <el-form-item :label="$t('userTable.USER_NAME')" prop="USER_NAME">
+          <el-input v-model="temp.USER_NAME"></el-input>
+        </el-form-item>
+
         <el-form-item :label="$t('userTable.USER_CODE')" prop="USER_CODE">
           <el-input v-model="temp.USER_CODE"></el-input>
         </el-form-item>
-       <el-form-item :label="$t('userTable.USER_NAME')" prop="USER_NAME">
-          <el-input v-model="temp.USER_NAME"></el-input>
+
+        <el-form-item :label="$t('userTable.USER_SEX')">
+          <el-select class="filter-item" v-model="temp.USER_SEX" placeholder="Please select">
+        <el-option v-for="item in sexOptions" :key="item.key" :label="item.sex_name" :value="item.key">
+            </el-option>
+          </el-select>
         </el-form-item>
        <!-- <el-form-item :label="$t('userTable.USER_ERP')" prop="USER_ERP">
           <el-input v-model="temp.USER_ERP"></el-input>
@@ -181,17 +213,12 @@
        <!--<el-form-item :label="$t('userTable.USER_ALIAS')" prop="USER_ALIAS">
           <el-input v-model="temp.USER_ALIAS" ></el-input>
         </el-form-item>-->
-          <el-form-item :label="$t('userTable.USER_PASS')" prop="USER_PASS">
-          <el-input v-model="temp.USER_PASS"  type="password" auto-complete="off" placeholder="请输入新密码"></el-input>
-        </el-form-item>
-            <el-form-item label="确认密码" prop="USER_PASS2">
-                <el-input type="password" v-model="temp.USER_PASS2" auto-complete="off" placeholder="请输入确认新密码"></el-input>
-            </el-form-item>
-          <el-form-item :label="$t('userTable.PHONE_MOBILE')" prop="PHONE_MOBILE">
-          <el-input v-model="temp.PHONE_MOBILE"></el-input>
-        </el-form-item>
          <el-form-item :label="$t('userTable.PHONE_OFFICE')" prop="PHONE_OFFICE">
           <el-input v-model="temp.PHONE_OFFICE"></el-input>
+        </el-form-item>
+
+        <el-form-item :label="$t('userTable.PHONE_MOBILE')" prop="PHONE_MOBILE">
+          <el-input v-model="temp.PHONE_MOBILE"></el-input>
         </el-form-item>
          <!--<el-form-item :label="$t('userTable.PHONE_ORG')" prop="PHONE_ORG">
           <el-input v-model="temp.PHONE_ORG"></el-input>
@@ -201,22 +228,7 @@
         </el-form-item>
          <!--<el-form-item :label="$t('userTable.EMAIL_OFFICE')" prop="EMAIL_OFFICE">
           <el-input v-model="temp.EMAIL_OFFICE"></el-input>
-        </el-form-item>-->
-           <el-form-item :label="$t('userTable.USER_IP')" prop="USER_IP">
-          <el-input v-model="temp.USER_IP"></el-input>
-        </el-form-item>
-          <el-form-item :label="$t('userTable.USER_SEX')">
-          <el-select class="filter-item" v-model="temp.USER_SEX" placeholder="Please select">
-        <el-option v-for="item in sexOptions" :key="item.key" :label="item.sex_name" :value="item.key">
-            </el-option>
-          </el-select>
-        </el-form-item>
-         <el-form-item :label="$t('userTable.AUTHENTICATION_TYPE')">
-          <el-select class="filter-item" v-model="temp.AUTHENTICATION_TYPE" placeholder="Please select">
-        <el-option v-for="item in typeOptions" :key="item.key" :label="item.type_name" :value="item.key">
-            </el-option>
-          </el-select>
-        </el-form-item>
+        </el-form-item>-->      
          <el-form-item :label="$t('userTable.FLAG')">
           <el-select class="filter-item" v-model="temp.FLAG" placeholder="Please select">
         <el-option v-for="item in flagOptions" :key="item.key" :label="item.flag_name" :value="item.key">
@@ -403,6 +415,9 @@ export default {
       multipleSelection: [],
       roleTree: [],
       orgKey: undefined,
+      passwordVisible:true,
+      passwordTips:'PTR账号无需输入此项',
+      passwordTips1:'PTR账号无需输入此项',
       defaultProps: {
         children: 'children',
         label: 'orgName',
@@ -428,6 +443,7 @@ export default {
         page: 1,
         limit: 5,
         USER_NAME: undefined,
+        USER_ID:'',
         FLAG: undefined,
         sort: '+USER_ID',
         orgId: undefined
@@ -485,8 +501,8 @@ export default {
             trigger: 'change'
           }
         ],
-        USER_CODE: [
-          { required: true, message: '用户编号不能为空', trigger: 'change' }
+        USER_DOMAIN: [
+          { required: true, message: '用户账号不能为空', trigger: 'change' }
         ],
         USER_NAME: [
           { required: true, message: '用户名称不能为空', trigger: 'change' }
@@ -987,6 +1003,18 @@ export default {
         return 'el-button--primary is-active'// 'warning-row'
       } // 'el-button--primary is-plain'// 'warning-row'
       return ''
+    },
+    getvalue(value){
+      if(value===0){
+        this.passwordVisible=false;
+        this.passwordTips='请输入密码';
+        this.passwordTips1='请再次输入密码';
+      }
+      else{
+        this.passwordVisible=true;
+        this.passwordTips='PTR账号无需输入此项';
+        this.passwordTips1='PTR账号无需输入此项';
+      }
     }
   },
   created() {

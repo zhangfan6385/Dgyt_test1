@@ -145,7 +145,8 @@ export default {
         USER_DOMAIN: '',
         REMARK: '',
         groupName: '',
-        roleId: ''
+        roleId: '',
+        GROUP_ID
 
       }, listUpdate: {
 
@@ -181,6 +182,7 @@ export default {
       this.listLoading = true
       fetchUserRoleList(this.listQuery).then(response => { // 查询选中角色的用户信息
         this.list = response.data.items
+        console.log(response.data.items)
         this.total = response.data.total
         this.listLoading = false
       })

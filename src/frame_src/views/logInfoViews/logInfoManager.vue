@@ -1,23 +1,13 @@
 <template>
     <div class="app-container calendar-list-container"> 
     <div class="filter-container">
-       <el-input @keyup.enter.native="handleFilter" style="width: 200px;"  :placeholder="$t('logInfoTable.USER_NAME')" v-model="listQuery.USER_NAME">
-      </el-input> 
+       <el-input @keyup.enter.native="handleFilter" style="width: 150px;"  :placeholder="$t('logInfoTable.USER_NAME')" v-model="listQuery.USER_NAME">
+      </el-input>
+      <el-input v-model="listQuery.LOG_CONTENT" type="text" placeholder="输入用户账号" style="width: 150px;"></el-input> 
       <!-- <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" :placeholder="$t('logInfoTable.LOG_TYPE')" v-model="listQuery.LOG_TYPE">
       </el-input>  -->
-       <el-select clearable style="width: 120px"  v-model="listQuery.LOG_TYPE" :placeholder="$t('logInfoTable.LOG_TYPE')">
-        <el-option v-for="item in logOptions" :key="item.key" :label="item.log_name" :value="item.key">
-        </el-option>
-      </el-select>
-      <el-date-picker v-model="listQuery.BEGIN_ACCESS_TIME" type="date" placeholder="选择开始日期"></el-date-picker>
-      <el-date-picker v-model="listQuery.END_ACCESS_TIME" type="date" placeholder="选择结束日期"></el-date-picker>
-      <br>
-      <el-input v-model="listQuery.USER_ID" type="text" placeholder="请输入用户ID" style="width: 200px;"></el-input>
-      <el-input v-model="listQuery.LOG_CONTENT" type="text" placeholder="请输入具体操作内容" style="width: 200px;"></el-input>
-      <el-select v-model="listQuery.ALARM_LEVEL" placeholder="请选择警告级别">
-        <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-    </el-option>
-      </el-select>
+      <el-date-picker v-model="listQuery.BEGIN_ACCESS_TIME" type="date" placeholder="选择开始日期" style="width: 180px;"></el-date-picker>
+      <el-date-picker v-model="listQuery.END_ACCESS_TIME" type="date" placeholder="选择结束日期" style="width: 180px;"></el-date-picker>
       <el-button  type="primary" v-waves icon="el-icon-search" @click="handleFilter">{{$t('logInfoTable.search')}}</el-button>
       <el-button  type="primary" :loading="downloadLoading" v-waves icon="el-icon-download" @click="handleDownload">{{$t('logInfoTable.export')}}</el-button>
     </div>
@@ -39,6 +29,13 @@
           <span>{{scope.row.USER_NAME}}</span>
         </template>
       </el-table-column>
+
+      <el-table-column width="150px" align="center" :label="'组织机构'">
+        <template slot-scope="scope">
+          <span>{{scope.row.ORG_NAME}}</span>
+        </template>
+      </el-table-column>
+
         <el-table-column width="140px" align="center" :label="'IP'">
         <template slot-scope="scope">
           <span>{{scope.row.IP_ADDR}}</span>
@@ -51,7 +48,10 @@
       </el-table-column>
       <el-table-column width="100px" align="center" :label="'警告级别'">
         <template slot-scope="scope">
-          <span>{{scope.row.ALARM_LEVEL}}</span>
+          <span v-if="scope.row.ALARM_LEVEL='1'">正常</span>
+          <span v-else-if="scope.row.ALARM_LEVEL='2'">一般</span>
+          <span v-else-if="scope.row.ALARM_LEVEL='3'">严重</span>
+          <span v-else-if="scope.row.ALARM_LEVEL='4'">非常严重</span>
         </template>
       </el-table-column>
       <el-table-column width="270px" align="center" :label="'操作内容'">
@@ -111,12 +111,9 @@ export default {
       value1:'',
       listQuery: {
         USER_NAME: undefined,
-        LOG_TYPE: undefined,
         BEGIN_ACCESS_TIME:'',
         END_ACCESS_TIME:'',
         USER_ID:'',
-        ALARM_LEVEL:'',
-        LOG_CONTENT:'',
         page: 1,
         limit: 10
       },
