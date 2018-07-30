@@ -168,6 +168,7 @@ export default {
           '时间',
           '账号',
           '姓名',
+          '组织机构',
           'IP',
           '操作类型',
           '警告级别',
@@ -177,11 +178,11 @@ export default {
           'ACCESS_TIME',
           'USER_ID',
           'USER_NAME',
+          'ORG_NAME',
           'IP_ADDR',
           'LOG_TYPE',
           'ALARM_LEVEL',
-          'LOG_CONTENT',
-          'REMARK'
+          'LOG_CONTENT'
         ]
         const data = this.formatJson(filterVal, this.list)
         excel.export_json_to_excel({

@@ -28,9 +28,10 @@ export function DeleteSynchroConfigArticle(data) { //删除配置信息
   })
 }
 
-export function pushOrgList() { // 基础信息配置查询
+export function pushOrgList(data) { // 同步结果查询
   return request({
     url: '/Org/pushOrgList',
-    method: 'get',
+    method: 'post',
+    params:data
   })
 }

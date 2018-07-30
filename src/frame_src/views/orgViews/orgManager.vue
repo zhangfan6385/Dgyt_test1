@@ -2,6 +2,9 @@
  <div class="app-container calendar-list-container">
   <imp-panel >
     <h3 class="box-title" slot="header" style="width: 25%;"> 
+ <h5 v-if="!Useorg">本地组织机构</h5>
+ <h5 v-else-if="Useorg">云组织机构</h5>
+ 
  <el-button class="filter-item" style="margin-left: 10px;" @click="newAdd" type="primary" icon="el-icon-edit" :disabled="Useorg">添加</el-button>
      </h3>
       <h3 class="box-title" slot="header" style="width: 25%;"> 
@@ -179,7 +182,7 @@ export default {
         phoneFax: '',
         ISINVALID: '',
         remark: '',
-        orgShortName:''
+        orgShortName:null
       }
     }
   },

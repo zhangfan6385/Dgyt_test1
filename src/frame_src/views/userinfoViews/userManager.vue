@@ -16,7 +16,7 @@
     <div class="filter-container">
        <el-input @keyup.enter.native="handleFilter" style="width: 120px;" class="filter-item" :placeholder="$t('userTable.USER_NAME')" v-model="listQuery.USER_NAME">
       </el-input>
-      <el-input @keyup.enter.native="handleFilter" style="width: 120px;" class="filter-item" placeholder="请输入账号" v-model="listQuery.USER_ID">
+      <el-input @keyup.enter.native="handleFilter" style="width: 120px;" class="filter-item" placeholder="请输入账号" v-model="listQuery.USER_DOMAIN">
       </el-input>
       <el-select clearable style="width: 100px" class="filter-item" v-model="listQuery.FLAG" :placeholder="$t('userTable.FLAG')">
         <el-option v-for="item in flagOptions" :key="item.key" :label="item.flag_name" :value="item.key">
@@ -444,7 +444,7 @@ export default {
         limit: 5,
         USER_NAME: undefined,
         USER_ID:'',
-        FLAG: undefined,
+        USER_DOMAIN:'',
         sort: '+USER_ID',
         orgId: undefined
       },

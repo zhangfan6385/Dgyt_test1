@@ -13,15 +13,9 @@
     </div>
     <el-card class="box-card">
       <el-table :key='tableKey' :data="list" :header-cell-class-name="tableRowClassName"   v-loading="listLoading" element-loading-text="给我一点时间" border fit highlight-current-row
-      style="width: 100%" @selection-change="handleSelectionChange">
+      style="width: 100%" @selection-change="handleSelectionChange" ref="table">
 
-      <el-table-column type="selection" width="55"></el-table-column>
-
-      <el-table-column width="140px" align="center" label="勾选状态">
-        <template slot-scope="scope">
-          
-        </template>
-      </el-table-column>
+      <el-table-column type="selection" width="50"></el-table-column>
       
       <el-table-column width="140px" align="center" label="服务器IP">
         <template slot-scope="scope">
@@ -41,7 +35,7 @@
       <el-table-column width="140px" align="center" label="是否推送服务">
         <template slot-scope="scope">
           <span v-if="scope.row.SYNC_FLAG=='0'">否</span>
-          <span v-if="scope.row.SYNC_FLAG=='1'">是</span>
+          <span v-else-if="scope.row.SYNC_FLAG=='1'">是</span>
         </template>
       </el-table-column>
 
@@ -183,14 +177,21 @@ export default {
   },
   data() {
     return {
+      multipleSelection: [],
       tableKey: 0,
       list: [{
         SYNC_ID:'1'
+      },{
+        SYNC_ID:'2'
       }],
       total: null,
       result:[],
       listLoading: true,
       TYPE:'请选择同步类型',
+      sync_list:[],
+      sync_obj:{
+        arr:[]
+      },
       listUpdate: {
         field: undefined,
         SYNC_ID: undefined
@@ -339,7 +340,9 @@ export default {
       })
     },
     pushOrgList(){
-      pushOrgList().then(response=>{
+      console.log(this.sync_list)
+      this.sync_obj.arr=this.sync_list;
+      pushOrgList(this.sync_obj).then(response=>{
         if(response.data.code===2000){
           this.title='成功';
           this.type='success';
@@ -453,6 +456,24 @@ export default {
         return 'el-button--primary is-active'// 'warning-row'
       } // 'el-button--primary is-plain'// 'warning-row'
       return ''
+    },
+    handleSelectionChange(val){
+      this.multipleSelection = val;
+    }
+  },
+  watch:{
+    multipleSelection: function() { // 把选中的数据id放到数组里，以便后期传值用
+      this.sync_list = []
+      console.log(this.sync_list);
+      for (var i = this.multipleSelection.length - 1; i >= 0; i--) {
+        // if (this.multipleSelection[i].roleId !== this.$refs.roleTree.getCurrentKey()) {
+        this.sync_list.push(JSON.parse(JSON.stringify(this.multipleSelection[i]))) // this.$refs.multipleTable.toggleRowSelection(this.list[i]);
+        console.log(1111);
+        console.log(this.sync_list)
+        
+        // }
+      }
+      console.log(JSON.parse(JSON.stringify(this.sync_list[0])))
     }
   },
   created() {
