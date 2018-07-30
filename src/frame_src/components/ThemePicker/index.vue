@@ -56,7 +56,7 @@ export default {
         subMenu.classList.remove('themeGreen', 'themeRed', 'themeGray')
         subMenu.classList.add('themeBlue')
       }
-      console.log(themeCluster, originalCluster)
+      //console.log(themeCluster, originalCluster)
       const getHandler = (variable, id) => {
         return () => {
           const originalCluster = this.getThemeCluster(ORIGINAL_THEME.replace('#', ''))
