@@ -162,7 +162,7 @@ export default {
       return clusters
     }
   }, created() {
-    const style = '#409EFF'
+    const style = '#3A8EE6'//409EFF
     const themeCluster = this.getThemeCluster(style.replace('#', ''))
     const originalCluster = this.getThemeCluster(lastTheme.replace('#', ''))
     const getHandler = (variable, id) => {
