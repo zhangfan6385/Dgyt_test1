@@ -349,64 +349,73 @@ import {
   updateUserFlag,
   fetchUserForLoginList,
   fetchUserOrgList
-} from '@/frame_src/api/user'
-import { fetchOrgList } from '@/frame_src/api/org'
+} from "@/frame_src/api/user";
+import { fetchOrgList } from "@/frame_src/api/org";
 import {
   updateUserForLoginArticle,
   deleteUserForLoginArticle
-} from '@/frame_src/api/userlogin'
-import waves from '@/frame_src/directive/waves' // 水波纹指令
-import panel from '@/frame_src/components/TreeList/panel.vue'
-import { getToken } from '@/frame_src/utils/auth'
+} from "@/frame_src/api/userlogin";
+import waves from "@/frame_src/directive/waves"; // 水波纹指令
+import panel from "@/frame_src/components/TreeList/panel.vue";
+import { getToken } from "@/frame_src/utils/auth";
 // import { parseTime } from '@/frame_src/utils'
-const flagOptions = [{ key: 0, flag_name: '禁用' }, { key: 1, flag_name: '激活' }]
-const sexOptions = [{ key: 0, sex_name: '女' }, { key: 1, sex_name: '男' }]
-const typeOptions = [{ key: 0, type_name: '本地账号' }, { key: 1, type_name: 'PTR账号' }]
+const flagOptions = [
+  { key: 0, flag_name: "禁用" },
+  { key: 1, flag_name: "激活" }
+];
+const sexOptions = [{ key: 0, sex_name: "女" }, { key: 1, sex_name: "男" }];
+const typeOptions = [
+  { key: 0, type_name: "本地账号" },
+  { key: 1, type_name: "PTR账号" }
+];
 // arr to obj ,such as { CN : "China", US : "USA" }
 const flagOptionsKeyValue = flagOptions.reduce((acc, cur) => {
-  acc[cur.key] = cur.flag_name
-  return acc
-}, {})
+  acc[cur.key] = cur.flag_name;
+  return acc;
+}, {});
 const sexOptionsKeyValue = sexOptions.reduce((acc, cur) => {
-  acc[cur.key] = cur.sex_name
-  return acc
-}, {})
-const AUTHENTICATION_TYPEFilterOptionsKeyValue = typeOptions.reduce((acc, cur) => {
-  acc[cur.key] = cur.type_name
-  return acc
-}, {})
+  acc[cur.key] = cur.sex_name;
+  return acc;
+}, {});
+const AUTHENTICATION_TYPEFilterOptionsKeyValue = typeOptions.reduce(
+  (acc, cur) => {
+    acc[cur.key] = cur.type_name;
+    return acc;
+  },
+  {}
+);
 export default {
-  name: 'userManager',
+  name: "userManager",
   directives: {
     waves
   },
   components: {
-    'imp-panel': panel
+    "imp-panel": panel
   },
   data() {
     // validateField:对部分表单字段进行校验的方法
     const validateNewpassword = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('请输入新密码'))
+      if (value === "") {
+        callback(new Error("请输入新密码"));
       } else {
-        if (this.temp.USER_PASS2 !== '') {
-          this.$refs.dataForm.validateField('USER_PASS2')
+        if (this.temp.USER_PASS2 !== "") {
+          this.$refs.dataForm.validateField("USER_PASS2");
         }
-        callback()
+        callback();
       }
-    }
+    };
     const validateSurepassword = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('请输入确认密码'))
+      if (value === "") {
+        callback(new Error("请输入确认密码"));
       } else if (value !== this.temp.USER_PASS) {
-        callback(new Error('两次输入密码不一致!'))
+        callback(new Error("两次输入密码不一致!"));
       } else {
-        callback()
+        callback();
       }
-    }
+    };
     return {
       showUpload: false,
-      urlUpload: process.env.BASE_API + 'user/uploadUserArticle',
+      urlUpload: process.env.BASE_API + "user/uploadUserArticle",
       fileList: [],
       tableKey: 0,
       list: null,
@@ -421,25 +430,26 @@ export default {
       multipleSelection: [],
       roleTree: [],
       orgKey: undefined,
-      passwordvalidate:1,
-      passwordVisible:true,
-      passwordTips:'PTR账号无需输入此项',
-      passwordTips1:'PTR账号无需输入此项',
+      passwordvalidate: 1,
+      passwordVisible: true,
+      passwordTips: "PTR账号无需输入此项",
+      passwordTips1: "PTR账号无需输入此项",
       defaultProps: {
-        children: 'children',
-        label: 'orgShortName',
-        id: 'id'
-      }, treeListQuery: {
+        children: "children",
+        label: "orgShortName",
+        id: "id"
       },
+      treeListQuery: {},
       listUpdate: {
         field: undefined,
         FLAG: undefined,
         USER_ID: undefined
-      }, listUserQuery: {
+      },
+      listUserQuery: {
         page: 1,
         limit: 5,
         USER_NAME: undefined,
-        sort: '+USER_ID',
+        sort: "+USER_ID",
         LOGIN_ID: undefined
       },
       userForLoginUpdate: {
@@ -450,347 +460,413 @@ export default {
         page: 1,
         limit: 5,
         USER_NAME: undefined,
-        USER_ID:'',
-        USER_DOMAIN:'',
-        sort: '+USER_ID',
+        USER_ID: "",
+        USER_DOMAIN: "",
+        sort: "+USER_ID",
         orgId: undefined
       },
       flagOptions,
       sexOptions,
       typeOptions,
-      statusOptions: ['published', 'draft', 'deleted'],
+      statusOptions: ["published", "draft", "deleted"],
       sortOptions: [
-        { label: '正序', key: '+USER_ID' },
-        { label: '倒序', key: '-USER_ID' }
+        { label: "正序", key: "+USER_ID" },
+        { label: "倒序", key: "-USER_ID" }
       ],
       showUSER_PASS: false,
       temp: {
         USER_ID: undefined,
-        USER_CODE: '',
-        USER_NAME: '',
-        ORG_NAME: '',
-        USER_ALIAS: '',
-        USER_PASS: '',
-        USER_PASS2: '',
-        PHONE_MOBILE: '',
-        PHONE_OFFICE: '',
-        PHONE_ORG: '',
-        USER_EMAIL: '',
-        EMAIL_OFFICE: '',
-        USER_IP: '',
-        FLAG: '',
-        USER_DOMAIN: '',
-        REMARK: '',
-        USER_ERP: '',
+        USER_CODE: "",
+        USER_NAME: "",
+        ORG_NAME: "",
+        USER_ALIAS: "",
+        USER_PASS: "",
+        USER_PASS2: "",
+        PHONE_MOBILE: "",
+        PHONE_OFFICE: "",
+        PHONE_ORG: "",
+        USER_EMAIL: "",
+        EMAIL_OFFICE: "",
+        USER_IP: "",
+        FLAG: "",
+        USER_DOMAIN: "",
+        REMARK: "",
+        USER_ERP: "",
         AUTHENTICATION_TYPE: undefined,
-        ASSOCIATED_ACCOUNT: '',
+        ASSOCIATED_ACCOUNT: "",
         USER_SEX: undefined,
-        orgName: '',
-        orgId: ''
+        orgName: "",
+        orgId: ""
       },
       dialogFormVisible: false,
-      dialogStatus: '',
+      dialogStatus: "",
       textMap: {
-        update: '修改用户',
-        create: '创建用户'
+        update: "修改用户",
+        create: "创建用户"
       },
       dialogPvVisible: false,
       pvData: [],
       rules: {
         FLAG: [
-          { required: true, message: 'FLAG is required', trigger: 'change' }
+          { required: true, message: "FLAG is required", trigger: "change" }
         ],
         timestamp: [
           {
-            type: 'date',
+            type: "date",
             required: true,
-            message: 'timestamp is required',
-            trigger: 'change'
+            message: "timestamp is required",
+            trigger: "change"
           }
         ],
         USER_DOMAIN: [
-          { required: true, message: '用户账号不能为空', trigger: 'change' }
+          { required: true, message: "用户账号不能为空", trigger: "change" }
         ],
         USER_NAME: [
-          { required: true, message: '用户名称不能为空', trigger: 'change' }
+          { required: true, message: "用户名称不能为空", trigger: "change" }
         ],
         USER_PASS: [
-          { required: true, validator: validateNewpassword, trigger: 'blur' }
+          { required: true, validator: validateNewpassword, trigger: "blur" }
         ],
         USER_PASS2: [
-          { required: true, validator: validateSurepassword, trigger: 'blur' }
+          { required: true, validator: validateSurepassword, trigger: "blur" }
         ]
       },
       downloadLoading: false
-    }
+    };
   },
   filters: {
     typeFilter(type) {
-      return flagOptionsKeyValue[type]
+      return flagOptionsKeyValue[type];
     },
     sexFilter(type) {
-      return sexOptionsKeyValue[type]
+      return sexOptionsKeyValue[type];
     },
     AUTHENTICATION_TYPEFilter(type) {
-      return AUTHENTICATION_TYPEFilterOptionsKeyValue[type]
+      return AUTHENTICATION_TYPEFilterOptionsKeyValue[type];
     }
   },
-  watch: { // 监听器，当multipleSelection 发生改变时
-    multipleSelection: function() { // 把选中的数据id放到数组里，以便后期传值用
-      this.arr = []
+  watch: {
+    // 监听器，当multipleSelection 发生改变时
+    multipleSelection: function() {
+      // 把选中的数据id放到数组里，以便后期传值用
+      this.arr = [];
       for (const i in this.multipleSelection) {
-        this.arr.push(this.multipleSelection[i].USER_ID)
+        this.arr.push(this.multipleSelection[i].USER_ID);
       }
     }
   },
   methods: {
     getList() {
-      this.listLoading = true
+      this.listLoading = true;
       fetchUserOrgList(this.listQuery).then(response => {
         if (response.data.code === 2000) {
-          this.list = response.data.items
-          this.total = response.data.total
-          this.listLoading = false
+          this.list = response.data.items;
+          this.total = response.data.total;
+          this.listLoading = false;
         } else {
-          this.listLoading = false
+          this.listLoading = false;
           this.$notify({
-            title: '失败',
+            title: "失败",
             message: response.data.message,
-            type: 'error',
+            type: "error",
             duration: 2000
-          })
+          });
         }
-      })
+      });
     },
-    getListUser() { // 查询组织结构对应的用户数据
-      this.listUserLoading = true
+    getListUser() {
+      // 查询组织结构对应的用户数据
+      this.listUserLoading = true;
       fetchUserForLoginList(this.listUserQuery).then(response => {
         if (response.data.code === 2000) {
-          this.userList = response.data.items
-          this.total2 = response.data.total
-          this.listUserLoading = false
+          this.userList = response.data.items;
+          this.total2 = response.data.total;
+          this.listUserLoading = false;
         } else {
-          this.listUserLoading = false
+          this.listUserLoading = false;
           this.$notify({
-            title: '失败',
+            title: "失败",
             message: response.data.message,
-            type: 'error',
+            type: "error",
             duration: 2000
-          })
+          });
         }
-      })
+      });
     },
-    handleUserLogin(row) { // 打开修改表单
-      this.temp = Object.assign({}, row) // copy obj
-      this.tableUserKey = row.USER_ID
-      this.tableUserKey2 = row.USER_ID
-      this.listUserQuery.USER_ID = row.USER_ID
-      this.getListUser(this.listUserQuery)
-      this.userLoginVisible = true
-    }, renderContent(h, { node, data, store }) { // 给左边树进行遍历
+    handleUserLogin(row) {
+      // 打开修改表单
+      this.temp = Object.assign({}, row); // copy obj
+      this.tableUserKey = row.USER_ID;
+      this.tableUserKey2 = row.USER_ID;
+      this.listUserQuery.USER_ID = row.USER_ID;
+      this.getListUser(this.listUserQuery);
+      this.userLoginVisible = true;
+    },
+    renderContent(h, { node, data, store }) {
+      // 给左边树进行遍历
       return (
         <span>
           <span>
             <span>{node.label}</span>
           </span>
-        </span>)
+        </span>
+      );
     },
-    handleNodeClick(data) { // 点击左侧树查询对应的用户信息
-      this.listLoading = true
-      this.orgkey = this.$refs.roleTree.getCurrentKey()
-      this.listQuery.orgId = this.orgkey
+    handleNodeClick(data) {
+      // 点击左侧树查询对应的用户信息
+      this.listLoading = true;
+      this.orgkey = this.$refs.roleTree.getCurrentKey();
+      this.listQuery.orgId = this.orgkey;
       fetchUserOrgList(this.listQuery).then(response => {
         if (response.data.code === 2000) {
-          this.list = response.data.items
-          this.total = response.data.total
-          this.listLoading = false
+          this.list = response.data.items;
+          this.total = response.data.total;
+          this.listLoading = false;
         } else {
-          this.listLoading = false
+          this.listLoading = false;
           this.$notify({
-            title: '失败',
+            title: "失败",
             message: response.data.message,
-            type: 'error',
+            type: "error",
             duration: 2000
-          })
+          });
         }
-      })
+      });
     },
-    load() { // 查询组织结构数据this.treeListQuery
+    load() {
+      // 查询组织结构数据this.treeListQuery
       fetchOrgList().then(response => {
         if (response.data.code === 2000) {
-          this.roleTree = []
-          this.roleTree = response.data.items
-          console.log(response.data)
+          this.roleTree = [];
+          this.roleTree = response.data.items;
+          console.log(response.data);
         } else {
           this.$notify({
-            title: '失败',
+            title: "失败",
             message: response.data.message,
-            type: 'error',
+            type: "error",
             duration: 2000
-          })
+          });
         }
-      })
+      });
       // this.roleTree.push(...defaultValue.roleList);
     },
     resetTemp() {
       this.temp = {
         USER_ID: undefined,
-        USER_CODE: '',
-        USER_NAME: '',
-        USER_ALIAS: '',
-        USER_PASS: '',
-        USER_PASS2: '',
-        PHONE_MOBILE: '',
-        PHONE_OFFICE: '',
-        PHONE_ORG: '',
-        USER_EMAIL: '',
-        EMAIL_OFFICE: '',
-        USER_IP: '',
+        USER_CODE: "",
+        USER_NAME: "",
+        USER_ALIAS: "",
+        USER_PASS: "",
+        USER_PASS2: "",
+        PHONE_MOBILE: "",
+        PHONE_OFFICE: "",
+        PHONE_ORG: "",
+        USER_EMAIL: "",
+        EMAIL_OFFICE: "",
+        USER_IP: "",
         USER_SEX: 1,
         AUTHENTICATION_TYPE: 1,
         FLAG: 1,
-        ASSOCIATED_ACCOUNT: '',
-        USER_DOMAIN: '',
-        USER_ERP: '',
-        REMARK: '',
-        orgName: '',
-        orgId: ''
-      }
+        ASSOCIATED_ACCOUNT: "",
+        USER_DOMAIN: "",
+        USER_ERP: "",
+        REMARK: "",
+        orgName: "",
+        orgId: ""
+      };
     },
-    handleUpdate(row) { // 打开修改表单
-      if (this.orgkey == null) {
-        this.$notify({// 判断右边记录的勾选数据 和左侧树选中的key值是否为0或者空
-          title: '失败',
-          message: '请选择组织结构',
-          type: 'error',
-          duration: 2000
-        })
-      } else {
-        this.temp = Object.assign({}, row) // copy obj
-        this.temp.USER_PASS2 = row.USER_PASS
-        this.temp.timestamp = new Date(this.temp.timestamp)
-        this.dialogStatus = 'update'
-        this.dialogFormVisible = true
-        this.$nextTick(() => {
-          this.$refs['dataForm'].clearValidate()
-        })
-      }
+    handleUpdate(row) {
+      // 打开修改表单
+      this.temp = Object.assign({}, row); // copy obj
+      this.temp.USER_PASS2 = row.USER_PASS;
+      this.temp.timestamp = new Date(this.temp.timestamp);
+      this.dialogStatus = "update";
+      this.dialogFormVisible = true;
+      this.$nextTick(() => {
+        this.$refs["dataForm"].clearValidate();
+      });
     },
-    handleCreate() { // 打开创建表单
+    handleCreate() {
+      // 打开创建表单
       if (this.orgkey == null) {
-        this.$notify({// 判断右边记录的勾选数据 和左侧树选中的key值是否为0或者空
-          title: '失败',
-          message: '请选择组织结构',
-          type: 'error',
+        this.$notify({
+          // 判断右边记录的勾选数据 和左侧树选中的key值是否为0或者空
+          title: "失败",
+          message: "请选择组织结构",
+          type: "error",
           duration: 2000
-        })
+        });
       } else {
-        this.resetTemp()
-        this.dialogStatus = 'create'
-        this.dialogFormVisible = true
+        this.resetTemp();
+        this.dialogStatus = "create";
+        this.dialogFormVisible = true;
         this.$nextTick(() => {
-          this.$refs['dataForm'].clearValidate()
-        })
+          this.$refs["dataForm"].clearValidate();
+        });
       }
     },
     updateData() {
-      this.$refs['dataForm'].validate(valid => {
-        if (valid) {
-          const tempData = Object.assign({}, this.temp) // 这样就不会共用同一个对象
-          tempData.orgId = this.orgkey
-          updateUserData(tempData).then(response => {
-            var message = response.data.message
-            var title = '失败'
-            var type = 'error'
-            if (response.data.code === 2000) {
-              title = '成功'
-              type = 'success'
-              this.getList()
-              // for (const v of this.list) {
-              //   if (v.id === this.temp.id) {
-              //     const index = this.list.indexOf(v)
-              //     this.list.splice(index, 1, this.temp)
-              //     break
-              //   }
-              // }
-            }
-            this.dialogFormVisible = false
-            this.$notify({
-              title: title,
-              message: message,
-              type: type,
-              duration: 2000
-            })
-          })
-        }
-      })
+      if (this.passwordvalidate === 1) {
+        const tempData = Object.assign({}, this.temp); // 这样就不会共用同一个对象
+        tempData.orgId = this.orgkey;
+        updateUserData(tempData).then(response => {
+          var message = response.data.message;
+          var title = "失败";
+          var type = "error";
+          if (response.data.code === 2000) {
+            title = "成功";
+            type = "success";
+            this.getList();
+            // for (const v of this.list) {
+            //   if (v.id === this.temp.id) {
+            //     const index = this.list.indexOf(v)
+            //     this.list.splice(index, 1, this.temp)
+            //     break
+            //   }
+            // }
+          }
+          this.dialogFormVisible = false;
+          this.$notify({
+            title: title,
+            message: message,
+            type: type,
+            duration: 2000
+          });
+        });
+      } else if (this.passwordvalidate === 0) {
+        this.$refs["dataForm"].validate(valid => {
+          if (valid) {
+            const tempData = Object.assign({}, this.temp); // 这样就不会共用同一个对象
+            tempData.orgId = this.orgkey;
+            updateUserData(tempData).then(response => {
+              var message = response.data.message;
+              var title = "失败";
+              var type = "error";
+              if (response.data.code === 2000) {
+                title = "成功";
+                type = "success";
+                this.getList();
+                // for (const v of this.list) {
+                //   if (v.id === this.temp.id) {
+                //     const index = this.list.indexOf(v)
+                //     this.list.splice(index, 1, this.temp)
+                //     break
+                //   }
+                // }
+              }
+              this.dialogFormVisible = false;
+              this.$notify({
+                title: title,
+                message: message,
+                type: type,
+                duration: 2000
+              });
+            });
+          }
+        });
+      }
     },
     handleDelete(row) {
-      this.temp = Object.assign({}, row) // copy obj
-      this.listUpdate.USER_ID = this.temp.USER_ID
-      this.listUpdate.field = 'deletaStatus'
+      this.temp = Object.assign({}, row); // copy obj
+      this.listUpdate.USER_ID = this.temp.USER_ID;
+      this.listUpdate.field = "deletaStatus";
       updateUserArticle(this.listUpdate).then(response => {
-        this.message = response.data.message
-        this.title = '失败'
-        this.type = 'error'
+        this.message = response.data.message;
+        this.title = "失败";
+        this.type = "error";
         if (response.data.code === 2000) {
           // const index = this.list.indexOf(row)
           // this.list.splice(index, 1)
-          this.getList()
-          this.title = '成功'
-          this.type = 'success'
+          this.getList();
+          this.title = "成功";
+          this.type = "success";
         }
         this.$notify({
           title: this.title,
           message: this.message,
           type: this.type,
           duration: 2000
-        })
-      })
+        });
+      });
     },
     createData() {
-      
-      this.$refs['dataForm'].validate(valid => {
-        if (valid) {
-          // this.temp.USER_ID = parseInt(Math.random() * 100) + 1024 // mock a id
-          // this.temp.author = "ppp" //当前登陆人
-          this.temp.orgId = this.orgkey
-          createUserArticle(this.temp).then(response => {
-            var message = response.data.message
-            var title = '失败'
-            var type = 'error'
-            if (response.data.code === 2000) {
-              title = '成功'
-              type = 'success'
-              // this.list.unshift(this.temp)
-              this.getList()
-            }
-            this.dialogFormVisible = false
-            this.$notify({
-              title: title,
-              message: message,
-              type: type,
-              duration: 2000
-            })
-          })
-        }
-      })
+      if (this.passwordvalidate === 1) {
+        const tempData = Object.assign({}, this.temp); // 这样就不会共用同一个对象
+        tempData.orgId = this.orgkey;
+        updateUserData(tempData).then(response => {
+          var message = response.data.message;
+          var title = "失败";
+          var type = "error";
+          if (response.data.code === 2000) {
+            title = "成功";
+            type = "success";
+            this.getList();
+            // for (const v of this.list) {
+            //   if (v.id === this.temp.id) {
+            //     const index = this.list.indexOf(v)
+            //     this.list.splice(index, 1, this.temp)
+            //     break
+            //   }
+            // }
+          }
+          this.dialogFormVisible = false;
+          this.$notify({
+            title: title,
+            message: message,
+            type: type,
+            duration: 2000
+          });
+        });
+      } else if (this.passwordvalidate === 0) {
+        this.$refs["dataForm"].validate(valid => {
+          if (valid) {
+            const tempData = Object.assign({}, this.temp); // 这样就不会共用同一个对象
+            tempData.orgId = this.orgkey;
+            updateUserData(tempData).then(response => {
+              var message = response.data.message;
+              var title = "失败";
+              var type = "error";
+              if (response.data.code === 2000) {
+                title = "成功";
+                type = "success";
+                this.getList();
+                // for (const v of this.list) {
+                //   if (v.id === this.temp.id) {
+                //     const index = this.list.indexOf(v)
+                //     this.list.splice(index, 1, this.temp)
+                //     break
+                //   }
+                // }
+              }
+              this.dialogFormVisible = false;
+              this.$notify({
+                title: title,
+                message: message,
+                type: type,
+                duration: 2000
+              });
+            });
+          }
+        });
+      }
     },
-    handleModifyStatus(row, status) { // 修改是否激活
-      this.temp = Object.assign({}, row) // copy obj
-      this.listUpdate.USER_ID = this.temp.USER_ID
-      this.listUpdate.field = 'FLAG'
-      this.listUpdate.FLAG = status
+    handleModifyStatus(row, status) {
+      // 修改是否激活
+      this.temp = Object.assign({}, row); // copy obj
+      this.listUpdate.USER_ID = this.temp.USER_ID;
+      this.listUpdate.field = "FLAG";
+      this.listUpdate.FLAG = status;
 
       updateUserFlag(this.listUpdate).then(response => {
-        this.message = response.data.message
-        this.title = '失败'
-        this.type = 'error'
+        this.message = response.data.message;
+        this.title = "失败";
+        this.type = "error";
         if (response.data.code === 2000) {
           // row.FLAG = status
-          this.getList()
-          this.title = '成功'
-          this.type = 'success'
+          this.getList();
+          this.title = "成功";
+          this.type = "success";
         }
 
         this.$notify({
@@ -798,254 +874,275 @@ export default {
           message: this.message,
           type: this.type,
           duration: 2000
-        })
-      })
+        });
+      });
     },
-    handleSelectionChange(val) { // 勾选右边表格时记录勾选的数据
-      this.multipleSelection = val
+    handleSelectionChange(val) {
+      // 勾选右边表格时记录勾选的数据
+      this.multipleSelection = val;
     },
-    updateRole() { // 修改组织结构权限
+    updateRole() {
+      // 修改组织结构权限
       if (this.multipleSelection.length <= 0 || this.tableUserKey2 == null) {
-        this.$notify({// 判断右边记录的勾选数据 和原窗口的登陆账号是否为0或者空
-          title: '失败',
-          message: '请选择登陆账号和用户',
-          type: 'error',
+        this.$notify({
+          // 判断右边记录的勾选数据 和原窗口的登陆账号是否为0或者空
+          title: "失败",
+          message: "请选择登陆账号和用户",
+          type: "error",
           duration: 2000
-        })
+        });
       } else {
-        this.userForLoginUpdate.LOGIN_ID = this.tableUserKey2 // 原窗口的登陆账号
-        this.userForLoginUpdate.arr = this.arr // 右边选中的集合
-        updateUserForLoginArticle(this.userForLoginUpdate).then(response => { // 给登陆账号关联用户
-          var message = response.data.message
-          var title = '失败'
-          var type = 'error'
+        this.userForLoginUpdate.LOGIN_ID = this.tableUserKey2; // 原窗口的登陆账号
+        this.userForLoginUpdate.arr = this.arr; // 右边选中的集合
+        updateUserForLoginArticle(this.userForLoginUpdate).then(response => {
+          // 给登陆账号关联用户
+          var message = response.data.message;
+          var title = "失败";
+          var type = "error";
           if (response.data.code === 2000) {
-            title = '成功'
-            type = 'success'
-            this.arr = []
-            this.getList()
-            this.getListUser()
-            this.userLoginVisible = false
+            title = "成功";
+            type = "success";
+            this.arr = [];
+            this.getList();
+            this.getListUser();
+            this.userLoginVisible = false;
           }
           this.$notify({
             title: title,
             message: message,
             type: type,
             duration: 2000
-          })
-        })
+          });
+        });
       }
-    }, deleteRole() { // 给用户分配角色权限
+    },
+    deleteRole() {
+      // 给用户分配角色权限
       if (this.multipleSelection.length <= 0) {
         this.$notify({
-          title: '失败',
-          message: '请选择用户',
-          type: 'error',
+          title: "失败",
+          message: "请选择用户",
+          type: "error",
           duration: 2000
-        })
+        });
       } else {
-        this.$confirm('将永久删除该用户分配的登陆账号, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          this.userForLoginUpdate.arr = this.arr // 右边选中的集合
-          deleteUserForLoginArticle(this.userForLoginUpdate).then(response => { // 给用户分配组织结构权限
-            var message = response.data.message
-            var title = '失败'
-            var type = 'error'
-            if (response.data.code === 2000) {
-              title = '成功'
-              type = 'success'
-              this.arr = []
-              this.getList()
-              this.getListUser()
-              this.userLoginVisible = false
-            }
-            this.$notify({
-              title: title,
-              message: message,
-              type: type,
-              duration: 2000
-            })
-          })
-        }).catch(() => {
-          this.$notify({
-            title: '失败',
-            message: '已取消清空',
-            type: 'error',
-            duration: 2000
-          })
+        this.$confirm("将永久删除该用户分配的登陆账号, 是否继续?", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
         })
+          .then(() => {
+            this.userForLoginUpdate.arr = this.arr; // 右边选中的集合
+            deleteUserForLoginArticle(this.userForLoginUpdate).then(
+              response => {
+                // 给用户分配组织结构权限
+                var message = response.data.message;
+                var title = "失败";
+                var type = "error";
+                if (response.data.code === 2000) {
+                  title = "成功";
+                  type = "success";
+                  this.arr = [];
+                  this.getList();
+                  this.getListUser();
+                  this.userLoginVisible = false;
+                }
+                this.$notify({
+                  title: title,
+                  message: message,
+                  type: type,
+                  duration: 2000
+                });
+              }
+            );
+          })
+          .catch(() => {
+            this.$notify({
+              title: "失败",
+              message: "已取消清空",
+              type: "error",
+              duration: 2000
+            });
+          });
       }
     },
     handleSizeUserChange(val) {
-      this.listUserQuery.limit = val
-      this.listUserQuery.LOGIN_ID = this.tableUserKey
-      this.getListUser()
+      this.listUserQuery.limit = val;
+      this.listUserQuery.LOGIN_ID = this.tableUserKey;
+      this.getListUser();
     },
     handleCurrentUserChange(val) {
-      this.listUserQuery.page = val
-      this.listUserQuery.LOGIN_ID = this.tableUserKey
-      this.getListUser()
+      this.listUserQuery.page = val;
+      this.listUserQuery.LOGIN_ID = this.tableUserKey;
+      this.getListUser();
     },
     handleUserFilter() {
-      this.listUserQuery.page = 1
-      this.orgKey = undefined
-      this.tableUserKey = undefined
-      this.listUserQuery.LOGIN_ID = this.tableUserKey
-      this.getListUser()
+      this.listUserQuery.page = 1;
+      this.orgKey = undefined;
+      this.tableUserKey = undefined;
+      this.listUserQuery.LOGIN_ID = this.tableUserKey;
+      this.getListUser();
     },
     handleSizeChange(val) {
-      this.listQuery.limit = val
-      this.listQuery.orgId = this.orgKey
-      this.getList()
+      this.listQuery.limit = val;
+      this.listQuery.orgId = this.orgKey;
+      this.getList();
     },
     handleCurrentChange(val) {
-      this.listQuery.page = val
-      this.listQuery.orgId = this.orgKey
-      this.getList()
+      this.listQuery.page = val;
+      this.listQuery.orgId = this.orgKey;
+      this.getList();
     },
     handleRemove(file, fileList) {
-      console.log(file, fileList)
+      console.log(file, fileList);
     },
     handlePreview(file) {
-      console.log(file)
+      console.log(file);
     },
     handleSuccess(res, file, fileList) {
-      var message = res.message
-      var title = '失败'
-      var type = 'error'
+      var message = res.message;
+      var title = "失败";
+      var type = "error";
       if (res.code === 2000) {
-        this.getList()
-        this.load()
-        title = '成功'
-        type = 'success'
-        this.showUpload = false
+        this.getList();
+        this.load();
+        title = "成功";
+        type = "success";
+        this.showUpload = false;
       }
       this.$notify({
         title: title,
         message: message,
         type: type,
         duration: 2000
-      })
+      });
     },
     submitUpload() {
-      this.$refs.upload.submit()
+      this.$refs.upload.submit();
     },
     handleExceed(files, fileList) {
-      this.$message.warning(`当前限制选择 1个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`)
+      this.$message.warning(
+        `当前限制选择 1个文件，本次选择了 ${
+          files.length
+        } 个文件，共选择了 ${files.length + fileList.length} 个文件`
+      );
     },
     beforeRemove(file, fileList) {
       // return this.$confirm(`确定移除 ${file.name}？`)
     },
     handleToUser(row) {
-      this.$store.dispatch('setUserId', row.USER_ID)
-      this.$store.dispatch('setCode', '')
-      this.$router.push({ path: '/' })
+      this.$store.dispatch("setUserId", row.USER_ID);
+      this.$store.dispatch("setCode", "");
+      this.$router.push({ path: "/" });
     },
-    handleDownload() { // 导出
-      this.downloadLoading = true
-      import('@/frame_src/vendor/Export2Excel').then(excel => {
+    handleDownload() {
+      // 导出
+      this.downloadLoading = true;
+      import("@/frame_src/vendor/Export2Excel").then(excel => {
         const tHeader = [
-          '用户编号',
-          '用户名称',
-          '用户别名',
-          '电话-移动',
-          '电话-办公',
-          '电话-分机号',
-          '电子邮箱-常用',
-          '电子邮箱-办公',
-          'IP地址列表',
-          '性别',
-          '是否激活',
-          '域账户',
-          '备注'
-        ]
+          "用户编号",
+          "用户名称",
+          "用户别名",
+          "电话-移动",
+          "电话-办公",
+          "电话-分机号",
+          "电子邮箱-常用",
+          "电子邮箱-办公",
+          "IP地址列表",
+          "性别",
+          "是否激活",
+          "域账户",
+          "备注"
+        ];
         const filterVal = [
-          'USER_CODE',
-          'USER_NAME',
-          'USER_ALIAS',
-          'PHONE_MOBILE',
-          'PHONE_OFFICE',
-          'PHONE_ORG',
-          'USER_EMAIL',
-          'EMAIL_OFFICE',
-          'USER_IP',
-          'USER_SEX',
-          'AUTHENTICATION_TYPE',
-          'FLAG',
-          'USER_DOMAIN',
-          'REMARK'
-        ]
-        const data = this.formatJson(filterVal, this.list)
+          "USER_CODE",
+          "USER_NAME",
+          "USER_ALIAS",
+          "PHONE_MOBILE",
+          "PHONE_OFFICE",
+          "PHONE_ORG",
+          "USER_EMAIL",
+          "EMAIL_OFFICE",
+          "USER_IP",
+          "USER_SEX",
+          "AUTHENTICATION_TYPE",
+          "FLAG",
+          "USER_DOMAIN",
+          "REMARK"
+        ];
+        const data = this.formatJson(filterVal, this.list);
         excel.export_json_to_excel({
           header: tHeader,
           data,
-          filename: '用户信息表'
-        })
-        this.downloadLoading = false
-      })
+          filename: "用户信息表"
+        });
+        this.downloadLoading = false;
+      });
     },
     formatJson(filterVal, jsonData) {
       return jsonData.map(v =>
         filterVal.map(j => {
-          if (j === 'FLAG') {
-            return flagOptionsKeyValue[v[j]]
-          } if (j === 'USER_SEX') {
-            return sexOptionsKeyValue[v[j]]
-          } else if (j === 'AUTHENTICATION_TYPE') {
-            return AUTHENTICATION_TYPEFilterOptionsKeyValue[v[j]]
+          if (j === "FLAG") {
+            return flagOptionsKeyValue[v[j]];
+          }
+          if (j === "USER_SEX") {
+            return sexOptionsKeyValue[v[j]];
+          } else if (j === "AUTHENTICATION_TYPE") {
+            return AUTHENTICATION_TYPEFilterOptionsKeyValue[v[j]];
           } else {
-            return v[j]
+            return v[j];
           }
         })
-      )
+      );
     },
     handleFilter() {
-      this.listQuery.page = 1
-      this.orgKey = undefined
-      this.listQuery.orgId = this.orgKey
-      this.getList()
-    }, tableRowClassName({ row, rowIndex }) { // 表头行的 className 的回调方法，也可以使用字符串为所有表头行设置一个固定的 className。
-      if (rowIndex === 0) {
-        return 'el-button--primary is-active'// 'warning-row'
-      } // 'el-button--primary is-plain'// 'warning-row'
-      return ''
+      this.listQuery.page = 1;
+      this.orgKey = undefined;
+      this.listQuery.orgId = this.orgKey;
+      this.getList();
     },
-    getvalue(value){
-      if(value===0){
-        this.passwordVisible=false;
-        this.passwordTips='请输入密码';
-        this.passwordTips1='请再次输入密码';
-      }
-      else{
-        
-        this.passwordVisible=true;
-        this.passwordTips='PTR账号无需输入此项';
-        this.passwordTips1='PTR账号无需输入此项';
+    tableRowClassName({ row, rowIndex }) {
+      // 表头行的 className 的回调方法，也可以使用字符串为所有表头行设置一个固定的 className。
+      if (rowIndex === 0) {
+        return "el-button--primary is-active"; // 'warning-row'
+      } // 'el-button--primary is-plain'// 'warning-row'
+      return "";
+    },
+    getvalue(value) {
+      if (value === 0) {
+        this.passwordvalidate = 0;
+        console.log(this.passwordvalidate);
+        this.passwordVisible = false;
+        this.passwordTips = "请输入密码";
+        this.passwordTips1 = "请再次输入密码";
+      } else {
+        this.passwordvalidate = 1;
+        console.log(this.passwordvalidate);
+        this.passwordVisible = true;
+        this.passwordTips = "PTR账号无需输入此项";
+        this.passwordTips1 = "PTR账号无需输入此项";
       }
     }
   },
   created() {
-    this.getList()
-    this.load()
+    this.getList();
+    this.load();
   },
   computed: {
     getRoleLevel() {
-      if (this.$store.state.user.roleLevel === 'admin') {
-        return true
+      if (this.$store.state.user.roleLevel === "admin") {
+        return true;
       } else {
-        return false
+        return false;
       }
     },
     headers() {
       return {
-        'X-Token': getToken()
-      }
+        "X-Token": getToken()
+      };
     }
   }
-}
+};
 </script>
 <style lang="scss" scoped>
 </style>
