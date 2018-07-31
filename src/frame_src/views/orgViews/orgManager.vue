@@ -141,7 +141,7 @@ export default {
       formLabelWidth: '120px',
       defaultProps: {
         children: 'children',
-        label: 'orgName',
+        label: 'orgShortName',
         id: 'id'
       },
       fileList: [], // [{ name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100' }, { name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100' }],
@@ -193,6 +193,7 @@ export default {
     },
 
     handleNodeClick(data) { // 把左侧树的选中数据赋值到右边form表单里。
+      console.log(data)
       this.form = data
     },
     newAdd() { // 增加新的角色数据
@@ -316,7 +317,7 @@ export default {
     load() { // 查询数据
       // this.listQuery.sysCode = '1'// 回头注释掉
       fetchOrgList().then(response => {
-        this.roleTree = response.data.items
+        this.roleTree = response.data.items 
         // this.roleTree.push(...defaultValue.roleList);
       })
     },
@@ -333,10 +334,11 @@ export default {
     }
   },
   mounted(){
-    this.getorg();
+    
   },
   created() { // 创建页面的初始化方法
     this.load();
+    this.getorg();
   },
   computed: {
     headers() {

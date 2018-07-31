@@ -49,6 +49,12 @@
         </template>
        </el-table-column>
 
+      <el-table-column width="200px" align="center" label="密碼">
+        <template slot-scope="scope">
+          <span>{{scope.row.USER_PASS}}</span>
+        </template>
+       </el-table-column>
+
       <el-table-column width="110px" align="center" v-if='showUSER_PASS'    :label="$t('userTable.USER_PASS')" >
         <template slot-scope="scope" >
           <span>{{scope.row.USER_PASS}}</span>
@@ -160,7 +166,7 @@
       <el-table-column align="center" :label="$t('userTable.actions')" width="350" class-name="small-padding fixed-width">
         <template slot-scope="scope">
          <el-button type="primary" size="small" @click="handleUpdate(scope.row)">{{$t('userTable.edit')}}</el-button>
-         <el-button type="primary" size="small" @click="handleUserLogin(scope.row)">{{$t('userTable.editUser')}}</el-button>
+         <el-button type="primary" size="small" @click="handleUserLogin(scope.row)">关联账号</el-button>
          <el-button  type="danger" size="small" @click="handleDelete(scope.row)"  v-if='getRoleLevel'>删除</el-button>
         <el-button  type="danger" size="small" @click="handleToUser(scope.row)">{{$t('userTable.toUser')}}</el-button>
         </template>
@@ -415,12 +421,13 @@ export default {
       multipleSelection: [],
       roleTree: [],
       orgKey: undefined,
+      passwordvalidate:1,
       passwordVisible:true,
       passwordTips:'PTR账号无需输入此项',
       passwordTips1:'PTR账号无需输入此项',
       defaultProps: {
         children: 'children',
-        label: 'orgName',
+        label: 'orgShortName',
         id: 'id'
       }, treeListQuery: {
       },
@@ -577,8 +584,8 @@ export default {
       this.temp = Object.assign({}, row) // copy obj
       this.tableUserKey = row.USER_ID
       this.tableUserKey2 = row.USER_ID
-      this.listUserQuery.USER_ID = this.tableUserKey
-      this.getListUser()
+      this.listUserQuery.USER_ID = row.USER_ID
+      this.getListUser(this.listUserQuery)
       this.userLoginVisible = true
     }, renderContent(h, { node, data, store }) { // 给左边树进行遍历
       return (
@@ -613,6 +620,7 @@ export default {
         if (response.data.code === 2000) {
           this.roleTree = []
           this.roleTree = response.data.items
+          console.log(response.data)
         } else {
           this.$notify({
             title: '失败',
@@ -741,6 +749,7 @@ export default {
       })
     },
     createData() {
+      
       this.$refs['dataForm'].validate(valid => {
         if (valid) {
           // this.temp.USER_ID = parseInt(Math.random() * 100) + 1024 // mock a id
@@ -1011,6 +1020,7 @@ export default {
         this.passwordTips1='请再次输入密码';
       }
       else{
+        
         this.passwordVisible=true;
         this.passwordTips='PTR账号无需输入此项';
         this.passwordTips1='PTR账号无需输入此项';
