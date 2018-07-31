@@ -32,6 +32,7 @@ export function pushOrgList(data) { // 同步结果查询
   return request({
     url: '/Org/pushOrgList',
     method: 'post',
-    params:data
+    data
   })
 }
+

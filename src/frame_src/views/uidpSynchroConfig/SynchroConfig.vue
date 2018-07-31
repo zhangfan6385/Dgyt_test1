@@ -13,7 +13,7 @@
     </div>
     <el-card class="box-card">
       <el-table :key='tableKey' :data="list" :header-cell-class-name="tableRowClassName"   v-loading="listLoading" element-loading-text="给我一点时间" border fit highlight-current-row
-      style="width: 100%" @selection-change="handleSelectionChange" ref="table">
+      style="width: 100%" @selection-change="handleSelectionChange" ref="multipleTable">
 
       <el-table-column type="selection" width="50"></el-table-column>
       
@@ -178,20 +178,13 @@ export default {
   data() {
     return {
       multipleSelection: [],
+      arr:[],
       tableKey: 0,
-      list: [{
-        SYNC_ID:'1'
-      },{
-        SYNC_ID:'2'
-      }],
+      list: [],
       total: null,
       result:[],
       listLoading: true,
       TYPE:'请选择同步类型',
-      sync_list:[],
-      sync_obj:{
-        arr:[]
-      },
       listUpdate: {
         field: undefined,
         SYNC_ID: undefined
@@ -200,6 +193,9 @@ export default {
         page: 1,
         limit: 10,
         SYNC_ID: undefined
+      },
+      sync_obj:{
+        sync_list:[]
       },
       statusOptions: ['published', 'draft', 'deleted'],
       editConfig: false,
@@ -327,7 +323,7 @@ export default {
       GetConfigResult(row.SYNC_ID).then(response=>{
         if(response.data.code===2000){
           this.result=response.data.items;
-          console.log(response.data.items);
+          console.log(response.data.items);   
         }
         else{
           this.$notify({
@@ -340,7 +336,7 @@ export default {
       })
     },
     pushOrgList(){
-      this.sync_obj.arr=this.sync_list;
+      this.sync_obj.sync_list=this.arr
       pushOrgList(this.sync_obj).then(response=>{
         if(response.data.code===2000){
           this.title='成功';
@@ -461,17 +457,13 @@ export default {
     }
   },
   watch:{
-    multipleSelection: function() { // 把选中的数据id放到数组里，以便后期传值用
-      this.sync_list = []
+     multipleSelection: function() { // 把选中的数据id放到数组里，以便后期传值用
+      this.arr = []
       for (var i = this.multipleSelection.length - 1; i >= 0; i--) {
         // if (this.multipleSelection[i].roleId !== this.$refs.roleTree.getCurrentKey()) {
-       this.temp = Object.assign({}, this.multipleSelection[i])
-       //this.sync_list.push(this.temp) // this.$refs.multipleTable.toggleRowSelection(this.list[i]);
-        console.log(this.temp)
+        this.arr.push(this.multipleSelection[i]) // this.$refs.multipleTable.toggleRowSelection(this.list[i]);
         // }
       }
-      console.log('SDSD')
-      console.log(this.sync_list)
     }
   },
   created() {
