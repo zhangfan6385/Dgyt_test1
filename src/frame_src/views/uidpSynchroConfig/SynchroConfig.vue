@@ -340,7 +340,6 @@ export default {
       })
     },
     pushOrgList(){
-      console.log(this.sync_list)
       this.sync_obj.arr=this.sync_list;
       pushOrgList(this.sync_obj).then(response=>{
         if(response.data.code===2000){
@@ -464,16 +463,15 @@ export default {
   watch:{
     multipleSelection: function() { // 把选中的数据id放到数组里，以便后期传值用
       this.sync_list = []
-      console.log(this.sync_list);
       for (var i = this.multipleSelection.length - 1; i >= 0; i--) {
         // if (this.multipleSelection[i].roleId !== this.$refs.roleTree.getCurrentKey()) {
-        this.sync_list.push(JSON.parse(JSON.stringify(this.multipleSelection[i]))) // this.$refs.multipleTable.toggleRowSelection(this.list[i]);
-        console.log(1111);
-        console.log(this.sync_list)
-        
+       this.temp = Object.assign({}, this.multipleSelection[i])
+       //this.sync_list.push(this.temp) // this.$refs.multipleTable.toggleRowSelection(this.list[i]);
+        console.log(this.temp)
         // }
       }
-      console.log(JSON.parse(JSON.stringify(this.sync_list[0])))
+      console.log('SDSD')
+      console.log(this.sync_list)
     }
   },
   created() {
