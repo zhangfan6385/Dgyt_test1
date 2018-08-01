@@ -189,7 +189,8 @@ export default {
   methods: {
     getorg(){
       this.Useorg=this.$store.state.user.UseOrg;
-      console.log(this.Useorg);
+      console.log('2222');
+      console.log(this.$store.state.user.UseOrg);
     },
 
     handleNodeClick(data) { // 把左侧树的选中数据赋值到右边form表单里。

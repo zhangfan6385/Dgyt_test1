@@ -33,7 +33,7 @@
       <el-button class="filter-item" type="primary" :loading="downloadLoading" v-waves icon="el-icon-download" @click="handleDownload">{{$t('userTable.export')}}</el-button>
       <el-button  class="filter-item" type="primary" icon="el-icon-edit" @click="showUpload=true">上传</el-button>
     </div>
-   
+                                     <!--主界面table-->
       <el-table :key='tableKey' :data="list" :header-cell-class-name="tableRowClassName"  v-loading="listLoading" element-loading-text="给我一点时间" border fit highlight-current-row
       style="width: 100%">
        
@@ -49,7 +49,7 @@
         </template>
        </el-table-column>
 
-      <el-table-column width="200px" align="center" label="密碼">
+      <el-table-column width="200px" align="center" label="密码">
         <template slot-scope="scope">
           <span>{{scope.row.USER_PASS}}</span>
         </template>
@@ -176,6 +176,8 @@
       <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="listQuery.page" :page-sizes="[5,10,20, 30]" :page-size="listQuery.limit" layout="total, sizes, prev, pager, next, jumper" :total="total">
       </el-pagination>
     </div>
+
+    <!--表单form-->
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
     
       <el-form :rules="rules" ref="dataForm" :model="temp" label-position="left" label-width="120px" style='width: 400px; margin-left:20px;'>
@@ -252,6 +254,8 @@
         <el-button v-else type="primary" @click="updateData">{{$t('userTable.confirm')}}</el-button>
       </div>
     </el-dialog>
+    
+    <!-- 分配dialog-->
  <el-dialog  :visible.sync="userLoginVisible">
   <el-card class="box-card">
    <div class="filter-container">
@@ -348,7 +352,8 @@ import {
   updateUserArticle,
   updateUserFlag,
   fetchUserForLoginList,
-  fetchUserOrgList
+  fetchUserOrgList,
+  fetchUserpParentList
 } from "@/frame_src/api/user";
 import { fetchOrgList } from "@/frame_src/api/org";
 import {
@@ -420,6 +425,7 @@ export default {
       tableKey: 0,
       list: null,
       userList: null,
+      parentlist: null,
       total: null,
       total2: null,
       listLoading: true,
@@ -651,6 +657,23 @@ export default {
       });
       // this.roleTree.push(...defaultValue.roleList);
     },
+    getParentUser(data) {//搜索关联账号
+      fetchUserpParentList(data).then(response => {
+        if (response.data.code === 2000) {
+          this.userList = response.data.items;
+          this.total2 = response.data.total;
+          this.listUserLoading = false;
+        } else {
+          this.listUserLoading = false;
+          this.$notify({
+            title: "失败",
+            message: response.data.message,
+            type: "error",
+            duration: 2000
+          });
+        }
+      });
+    },
     resetTemp() {
       this.temp = {
         USER_ID: undefined,
@@ -794,7 +817,8 @@ export default {
       if (this.passwordvalidate === 1) {
         const tempData = Object.assign({}, this.temp); // 这样就不会共用同一个对象
         tempData.orgId = this.orgkey;
-        updateUserData(tempData).then(response => {
+        this.temp.USER_PASS = "";
+        createUserArticle(tempData).then(response => {
           var message = response.data.message;
           var title = "失败";
           var type = "error";
@@ -966,6 +990,7 @@ export default {
           });
       }
     },
+
     handleSizeUserChange(val) {
       this.listUserQuery.limit = val;
       this.listUserQuery.LOGIN_ID = this.tableUserKey;
@@ -981,7 +1006,7 @@ export default {
       this.orgKey = undefined;
       this.tableUserKey = undefined;
       this.listUserQuery.LOGIN_ID = this.tableUserKey;
-      this.getListUser();
+      this.getParentUser(this.listUserQuery);
     },
     handleSizeChange(val) {
       this.listQuery.limit = val;
