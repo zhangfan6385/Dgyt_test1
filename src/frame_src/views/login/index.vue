@@ -67,18 +67,22 @@
 
 <script>
 // import { isvalidUsername } from '@/frame_src/utils/validate'
-import LangSelect from '@/frame_src/components/LangSelect'
-import LogInUser from './logInUser'
-import { Message } from 'element-ui'
-import {GetTitle} from '@/frame_src/api/title'
-const userOptions = [{ key: 'ptr账号', user_code: 'ptrUser' }, { key: '员工账号', user_code: 'user' }, { key: '本地账号', user_code: 'localUser' }]
+import LangSelect from "@/frame_src/components/LangSelect";
+import LogInUser from "./logInUser";
+import { Message } from "element-ui";
+import { GetTitle } from "@/frame_src/api/title";
+const userOptions = [
+  { key: "ptr账号", user_code: "ptrUser" },
+  { key: "员工账号", user_code: "user" },
+  { key: "本地账号", user_code: "localUser" }
+];
 const userOptionsKeyValue = userOptions.reduce((acc, cur) => {
-  acc[cur.key] = cur.user_code
-  return acc
-}, {})
+  acc[cur.key] = cur.user_code;
+  return acc;
+}, {});
 export default {
   components: { LangSelect, LogInUser },
-  name: 'login',
+  name: "login",
   data() {
     // const validateUsername = (rule, value, callback) => {
     //   if (!isvalidUsername(value)) {
@@ -89,81 +93,85 @@ export default {
     // }
     const validatePassword = (rule, value, callback) => {
       if (value.length < 6) {
-        callback(new Error('密码不能小于6位！'))
+        callback(new Error("密码不能小于6位！"));
       } else {
-        callback()
+        callback();
       }
-    }
+    };
     return {
       loginForm: {
-      username: '',
-        password: '',
-        userDomain: ''
+        username: "",
+        password: "",
+        userDomain: ""
       },
       loginRules: {
         // username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
+        password: [
+          { required: true, trigger: "blur", validator: validatePassword }
+        ]
       },
-      passwordType: 'password',
+      passwordType: "password",
       loading: false,
       showDialog: false,
-      radio:'PTR认证',
-      list:[],
-      sysmessage:'测试平台',
-      code:'',
-      copyright:''
-    }
+      radio: "PTR认证",
+      list: [],
+      sysmessage: "测试平台",
+      code: "PTR_IDENT",
+      copyright: ""
+    };
   },
   methods: {
-
     handleCommand(command) {
-      this.radio=command;
-      for(var item of this.list){
-        if(item.key==command){
-          this.code=item.user_code;
+      this.radio = command;
+      for (var item of this.list) {
+        if (item.key == command) {
+          this.code = item.user_code;
         }
       }
     },
 
     showPwd() {
-      if (this.passwordType === 'password') {
-        this.passwordType = ''
+      if (this.passwordType === "password") {
+        this.passwordType = "";
       } else {
-        this.passwordType = 'password'
+        this.passwordType = "password";
       }
     },
     handleLogin() {
-      this.$store.state.user.token='';
+      this.$store.state.user.token = "";
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true;
-          this.loginForm.userDomain=this.code;
+          this.loginForm.userDomain = this.code;
           console.log(this.loginForm); // this.radio // 后改需求走登陆账号 所以没有 域账号的说法了
-          this.$store.dispatch('LoginByUsername', this.loginForm).then(response => {
-            this.$store.dispatch('setRoleLevel', response.data.roleLevel)
-            if (response.data.roleLevel === 'admin') {
-              this.updateShowDialog('')
-            } else {
-              var userList = this.$store.state.user.userList
-              if (userList.length === 1) {
-                // this.$store.dispatch('setDepartCode', orglist[0].orgId)
-                // this.$store.dispatch('setDepartName', orglist[0].orgName)
-                this.$store.dispatch('setUserId', userList[0].USER_ID)
-                this.updateShowDialog('')
+          this.$store
+            .dispatch("LoginByUsername", this.loginForm)
+            .then(response => {
+              this.$store.dispatch("setRoleLevel", response.data.roleLevel);
+              if (response.data.roleLevel === "admin") {
+                this.updateShowDialog("");
               } else {
-                this.showDialog = true
-              }
-              this.loading = false
-            }// this.$router.push({ path: '/' })
-          }).catch((err) => {
-            this.loading = false
-            Message.error(err)
-          })
+                var userList = this.$store.state.user.userList;
+                if (userList.length === 1) {
+                  // this.$store.dispatch('setDepartCode', orglist[0].orgId)
+                  // this.$store.dispatch('setDepartName', orglist[0].orgName)
+                  this.$store.dispatch("setUserId", userList[0].USER_ID);
+                  this.updateShowDialog("");
+                } else {
+                  this.showDialog = true;
+                }
+                this.loading = false;
+              } // this.$router.push({ path: '/' })
+            })
+            .catch(err => {
+              this.loading = false;
+              Message.error(err);
+            });
         } else {
-          console.log('error submit!!')
-          return false
+          console.log("error submit!!");
+          return false;
         }
-      })
+      });
     },
     afterQRScan() {
       // const hash = window.location.hash.slice(1)
@@ -182,26 +190,29 @@ export default {
       //     this.$router.push({ path: '/' })
       //   })
       // }
-    }, updateShowDialog(val) {
-      this.showDialog = false
-      this.$router.push({ path: '/' })
     },
-    GetTitle(){
-      GetTitle().then(response=>{
+    updateShowDialog(val) {
+      this.showDialog = false;
+      this.$router.push({ path: "/" });
+    },
+    GetTitle() {
+      GetTitle().then(response => {
         //console.log(response.data.copyright.CONF_VALUE);
         //console.log(response.data.itemtype);
         //console.log(response.data.cloudorg.CONF_VALUE);
-        this.copyright=response.data.copyright.CONF_VALUE;
-        this.sysmessage=response.data.sysname.CONF_VALUE;
-        this.$store.state.user.UseOrg=Boolean(response.data.cloudorg.CONF_VALUE);
+        this.copyright = response.data.copyright.CONF_VALUE;
+        this.sysmessage = response.data.sysname.CONF_VALUE;
+        this.$store.state.user.UseOrg = Boolean(
+          response.data.cloudorg.CONF_VALUE
+        );
         console.log(this.$store.state.user.UseOrg);
-        this.$store.state.user.sysName=response.data.sysname.CONF_VALUE;
-        this.list=response.data.itemtype;
-      })
+        this.$store.state.user.sysName = response.data.sysname.CONF_VALUE;
+        this.list = response.data.itemtype;
+      });
     }
   },
 
-  mounted(){
+  mounted() {
     this.GetTitle();
   },
   created() {
@@ -210,13 +221,13 @@ export default {
   destroyed() {
     // window.removeEventListener('hashchange', this.afterQRScan)
   }
-}
+};
 </script>
 
 <style rel="stylesheet/scss" lang="scss">
 // $bg:#2d3a4b;
 $bg: rgb(22, 86, 155);
-$light_gray:#eee;
+$light_gray: #eee;
 
 /* reset element-ui css */
 .login-container {
@@ -246,7 +257,7 @@ $light_gray:#eee;
     border-radius: 5px;
     color: #454545;
   }
-  
+
   .logo {
     text-align: center;
     line-height: 50px;
@@ -269,8 +280,8 @@ $light_gray:#eee;
 
 <style rel="stylesheet/scss" lang="scss" scoped>
 $bg: rgb(22, 86, 155);
-$dark_gray:#dee7e8; // #889aa4;
-$light_gray:#eee;
+$dark_gray: #dee7e8; // #889aa4;
+$light_gray: #eee;
 
 .login-container {
   position: fixed;
@@ -329,14 +340,14 @@ $light_gray:#eee;
     right: 35px;
     bottom: 28px;
   }
-  .copyright{
+  .copyright {
     position: fixed;
-    bottom:0px;
-    margin-left:150px;
-    margin-bottom:35px;
-    color:gray;
-    font-family:"华文楷体";
-    font-size:13px;
+    bottom: 0px;
+    margin-left: 150px;
+    margin-bottom: 35px;
+    color: gray;
+    font-family: "华文楷体";
+    font-size: 13px;
   }
 }
 </style>

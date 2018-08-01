@@ -3,7 +3,7 @@
     <div class="filter-container">
        <el-input @keyup.enter.native="handleFilter" style="width: 150px;"  :placeholder="$t('logInfoTable.USER_NAME')" v-model="listQuery.USER_NAME">
       </el-input>
-      <el-input v-model="listQuery.LOG_CONTENT" type="text" placeholder="输入用户账号" style="width: 150px;"></el-input> 
+      <el-input v-model="listQuery.USER_DOMAIN" type="text" placeholder="输入用户账号" style="width: 150px;"></el-input> 
       <!-- <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" :placeholder="$t('logInfoTable.LOG_TYPE')" v-model="listQuery.LOG_TYPE">
       </el-input>  -->
       <el-date-picker v-model="listQuery.BEGIN_ACCESS_TIME" type="date" placeholder="选择开始日期" style="width: 180px;"  value-format="yyyy-MM-dd"></el-date-picker>
@@ -21,7 +21,7 @@
       </el-table-column>
        <el-table-column width="140px" class="link-type"  align="center" :label="'账号'">
         <template slot-scope="scope">
-          <span>{{scope.row.USER_ID}}</span>
+          <span>{{scope.row.USER_DOMAIN}}</span>
         </template>
       </el-table-column>
       <el-table-column width="150px" align="center" :label="'姓名'">
@@ -48,10 +48,10 @@
       </el-table-column>
       <el-table-column width="100px" align="center" :label="'警告级别'">
         <template slot-scope="scope">
-          <span v-if="scope.row.ALARM_LEVEL='1'">正常</span>
-          <span v-else-if="scope.row.ALARM_LEVEL='2'">一般</span>
-          <span v-else-if="scope.row.ALARM_LEVEL='3'">严重</span>
-          <span v-else-if="scope.row.ALARM_LEVEL='4'">非常严重</span>
+          <span v-if="scope.row.ALARM_LEVEL===1">正常</span>
+          <span v-else-if="scope.row.ALARM_LEVEL===2">一般</span>
+          <span v-else-if="scope.row.ALARM_LEVEL===3">严重</span>
+          <span v-else-if="scope.row.ALARM_LEVEL===4">非常严重</span>
         </template>
       </el-table-column>
       <el-table-column width="270px" align="center" :label="'操作内容'">
@@ -110,7 +110,8 @@ export default {
       listLoading: true,
       value1:'',
       listQuery: {
-        USER_NAME: undefined,
+        USER_DOMAIN:'',
+        USER_NAME: '',
         BEGIN_ACCESS_TIME:'',
         END_ACCESS_TIME:'',
         USER_ID:'',
@@ -140,6 +141,7 @@ export default {
       fetchLogInfoList(this.listQuery).then(response => {
         if (response.data.code === 2000) {
           this.list = response.data.items
+          console.log(this.list)
           this.total = response.data.total
           this.listLoading = false
         } else {
