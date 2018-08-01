@@ -723,11 +723,13 @@ export default {
       } else {
         this.resetTemp();
         this.dialogStatus = "create";
+        console.log(this.dialogStatus);
         this.dialogFormVisible = true;
         this.$nextTick(() => {
           this.$refs["dataForm"].clearValidate();
         });
       }
+      
     },
     updateData() {
       if (this.passwordvalidate === 1) {
@@ -847,7 +849,7 @@ export default {
           if (valid) {
             const tempData = Object.assign({}, this.temp); // 这样就不会共用同一个对象
             tempData.orgId = this.orgkey;
-            updateUserData(tempData).then(response => {
+             createUserArticle(tempData).then(response => {
               var message = response.data.message;
               var title = "失败";
               var type = "error";

@@ -6,8 +6,8 @@
       <el-input v-model="listQuery.LOG_CONTENT" type="text" placeholder="输入用户账号" style="width: 150px;"></el-input> 
       <!-- <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" :placeholder="$t('logInfoTable.LOG_TYPE')" v-model="listQuery.LOG_TYPE">
       </el-input>  -->
-      <el-date-picker v-model="listQuery.BEGIN_ACCESS_TIME" type="date" placeholder="选择开始日期" style="width: 180px;"></el-date-picker>
-      <el-date-picker v-model="listQuery.END_ACCESS_TIME" type="date" placeholder="选择结束日期" style="width: 180px;"></el-date-picker>
+      <el-date-picker v-model="listQuery.BEGIN_ACCESS_TIME" type="date" placeholder="选择开始日期" style="width: 180px;"  value-format="yyyy-MM-dd"></el-date-picker>
+      <el-date-picker v-model="listQuery.END_ACCESS_TIME" type="date" placeholder="选择结束日期" style="width: 180px;"  value-format="yyyy-MM-dd"></el-date-picker>
       <el-button  type="primary" v-waves icon="el-icon-search" @click="handleFilter">{{$t('logInfoTable.search')}}</el-button>
       <el-button  type="primary" :loading="downloadLoading" v-waves icon="el-icon-download" @click="handleDownload">{{$t('logInfoTable.export')}}</el-button>
     </div>
@@ -205,6 +205,7 @@ export default {
       )
     },
     handleFilter() {
+      /*
       if(this.listQuery.BEGIN_ACCESS_TIME==''&&this.listQuery.END_ACCESS_TIME!=''){
         const start=new Date();
         this.listQuery.BEGIN_ACCESS_TIME=start.setTime(start.getTime());
@@ -213,6 +214,8 @@ export default {
         const end=new Date();
         this.listQuery.END_ACCESS_TIME=end.setTime(end.getTime()+3600 * 1000 * 24 * 7);
       }
+      */
+        console.log(this.listQuery)
         this.listQuery.page = 1
         this.getList()
     }, tableRowClassName({ row, rowIndex }) {
