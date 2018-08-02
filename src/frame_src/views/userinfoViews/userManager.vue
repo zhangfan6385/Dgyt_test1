@@ -1093,7 +1093,6 @@ export default {
           "USER_IP",
           "USER_SEX",
           "AUTHENTICATION_TYPE",
-          "FLAG",
           "USER_DOMAIN",
           "REMARK"
         ];

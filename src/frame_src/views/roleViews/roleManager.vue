@@ -184,6 +184,7 @@ export default {
           this.deleteFromTree(this.roleTree, this.form.id, 'id')
           this.title = '成功'
           this.newAdd()
+          this.$refs['form'].resetFields();
         }
         this.message = response.data.message
         this.$notify({

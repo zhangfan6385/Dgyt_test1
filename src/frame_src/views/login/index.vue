@@ -113,7 +113,7 @@ export default {
       passwordType: "password",
       loading: false,
       showDialog: false,
-      radio: "PTR认证",
+      radio: "",
       list: [],
       sysmessage: "测试平台",
       code: "PTR_IDENT",
@@ -138,40 +138,44 @@ export default {
       }
     },
     handleLogin() {
-      this.$store.state.user.token = "";
-      this.$refs.loginForm.validate(valid => {
-        if (valid) {
-          this.loading = true;
-          this.loginForm.userDomain = this.code;
-          console.log(this.loginForm); // this.radio // 后改需求走登陆账号 所以没有 域账号的说法了
-          this.$store
-            .dispatch("LoginByUsername", this.loginForm)
-            .then(response => {
-              this.$store.dispatch("setRoleLevel", response.data.roleLevel);
-              if (response.data.roleLevel === "admin") {
-                this.updateShowDialog("");
-              } else {
-                var userList = this.$store.state.user.userList;
-                if (userList.length === 1) {
-                  // this.$store.dispatch('setDepartCode', orglist[0].orgId)
-                  // this.$store.dispatch('setDepartName', orglist[0].orgName)
-                  this.$store.dispatch("setUserId", userList[0].USER_ID);
+      if (this.radio === "") {
+        alert("请选择登录类型");
+      } else {
+        this.$store.state.user.token = "";
+        this.$refs.loginForm.validate(valid => {
+          if (valid) {
+            this.loading = true;
+            this.loginForm.userDomain = this.code;
+            console.log(this.loginForm); // this.radio // 后改需求走登陆账号 所以没有 域账号的说法了
+            this.$store
+              .dispatch("LoginByUsername", this.loginForm)
+              .then(response => {
+                this.$store.dispatch("setRoleLevel", response.data.roleLevel);
+                if (response.data.roleLevel === "admin") {
                   this.updateShowDialog("");
                 } else {
-                  this.showDialog = true;
-                }
+                  var userList = this.$store.state.user.userList;
+                  if (userList.length === 1) {
+                    // this.$store.dispatch('setDepartCode', orglist[0].orgId)
+                    // this.$store.dispatch('setDepartName', orglist[0].orgName)
+                    this.$store.dispatch("setUserId", userList[0].USER_ID);
+                    this.updateShowDialog("");
+                  } else {
+                    this.showDialog = true;
+                  }
+                  this.loading = false;
+                } // this.$router.push({ path: '/' })
+              })
+              .catch(err => {
                 this.loading = false;
-              } // this.$router.push({ path: '/' })
-            })
-            .catch(err => {
-              this.loading = false;
-              Message.error(err);
-            });
-        } else {
-          console.log("error submit!!");
-          return false;
-        }
-      });
+                Message.error(err);
+              });
+          } else {
+            console.log("error submit!!");
+            return false;
+          }
+        });
+      }
     },
     afterQRScan() {
       // const hash = window.location.hash.slice(1)

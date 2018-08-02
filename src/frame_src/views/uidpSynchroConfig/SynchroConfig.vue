@@ -51,11 +51,6 @@
         </template>
       </el-table-column>
 
-      <el-table-column width="180px" align="center" label="最近同步时间">
-        <template slot-scope="scope">
-          <span>{{scope.row.SERVER_IP}}</span>
-        </template>
-      </el-table-column>
 
       <el-table-column width="140px" align="center" label="备注">
         <template slot-scope="scope">
@@ -86,17 +81,7 @@
         <el-form-item  label="用户密码" prop="USER_PASS">
             <el-input v-model="temp.USER_PASS"></el-input>
         </el-form-item>
-
-        <el-form-item  label="同步类型" prop="SYNC_TYPE">
-           <el-dropdown @command="handleCommand">
-              <span class="el-dropdown-link">
-                {{TYPE}}<i class="el-icon-arrow-down el-icon--right"></i>
-              </span>
-              <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item v-model="temp.SYNC_TYPE" command="同步类型1">同步类型1</el-dropdown-item>
-              </el-dropdown-menu>
-            </el-dropdown>
-        </el-form-item> 
+        
 
         <el-form-item  label="服务器IP" prop="SERVER_IP">
             <el-input v-model="temp.SERVER_IP"></el-input>
@@ -202,12 +187,12 @@ export default {
       temp: {
         USER_CODE:'',
         USER_PASS:'',
-        SYNC_ID: '',
+        SYNC_TYPE:'',
         SYNC_FLAG:'1',
         SERVER_IP: '',
         SERVER_PORT: '',
         SERVER_URL:'',
-        ADDRESS_URL:'',
+        REMARK:''
       },
       dialogFormVisible: false,
       resultVisible:false,
@@ -258,11 +243,12 @@ export default {
       this.temp = {
         USER_CODE:'',
         USER_PASS:'',
-        SYNC_ID: '',
+        SYNC_TYPE:'',
+        SYNC_FLAG:'1',
         SERVER_IP: '',
         SERVER_PORT: '',
         SERVER_URL:'',
-        ADDRESS_URL:'',
+        REMARK:''
       }
     },
     handleCommand(command) {
