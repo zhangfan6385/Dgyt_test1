@@ -2,7 +2,10 @@
     <div class="app-container calendar-list-container"> 
     <div class="filter-container">
        <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" :placeholder="$t('configTable.CONF_NAME')" v-model="listQuery.CONF_NAME">
-      </el-input> 
+      </el-input>
+
+       <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" :placeholder="$t('configTable.CONF_CODE')" v-model="listQuery.CONF_CODE">
+      </el-input>  
       
       <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">{{$t('configTable.search')}}</el-button>
       <el-button class="filter-item" style="margin-left: 10px;" @click="handleCreate" type="primary" icon="el-icon-edit">{{$t('configTable.add')}}</el-button>
@@ -12,22 +15,26 @@
     <el-card class="box-card">
       <el-table :key='tableKey' :data="list" :header-cell-class-name="tableRowClassName"   v-loading="listLoading" element-loading-text="给我一点时间" border fit highlight-current-row
       style="width: 100%">
-       <el-table-column width="140px" align="center" :label="$t('configTable.CONF_NAME')">
-        <template slot-scope="scope">
-          <span>{{scope.row.CONF_NAME}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column width="140px" align="center" :label="$t('configTable.CONF_CODE')">
+
+      <el-table-column width="180px" align="center" :label="$t('configTable.')">
         <template slot-scope="scope">
           <span>{{scope.row.CONF_CODE}}</span>
         </template>
       </el-table-column>
-        <el-table-column width="140px" align="center" :label="$t('configTable.CONF_VALUE')">
+
+      <el-table-column width="180px" align="center" :label="$t('configTable.CONF_VALUE')">
         <template slot-scope="scope">
           <span>{{scope.row.CONF_VALUE}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" :label="$t('configTable.actions')" width="150" class-name="small-padding fixed-width">
+
+       <el-table-column width="180px" align="center" :label="$t('configTable.CONF_NAME')">
+        <template slot-scope="scope">
+          <span>{{scope.row.CONF_NAME}}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column align="center" :label="$t('configTable.actions')" width="180px" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">{{$t('configTable.edit')}}</el-button>
           <!--
@@ -44,9 +51,6 @@
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
     
       <el-form :rules="rules" ref="dataForm" :model="temp" label-position="left" label-width="120px" style='width: 400px; margin-left:20px;'>
-     <el-form-item  :label="$t('configTable.CONF_NAME')" prop="CONF_NAME">
-          <el-input v-model="temp.CONF_NAME"></el-input>
-    </el-form-item> 
     <el-form-item v-if="dialogStatus=='create'"  :label="$t('configTable.CONF_CODE')" prop="CONF_CODE">
        <el-input v-model="temp.CONF_CODE"></el-input>
     </el-form-item>
@@ -56,6 +60,10 @@
     <el-form-item :label="$t('configTable.CONF_VALUE')" prop="CONF_VALUE">
       <el-input v-model="temp.CONF_VALUE" ></el-input>
     </el-form-item>
+
+    <el-form-item  :label="$t('configTable.CONF_NAME')" prop="CONF_NAME">
+      <el-input v-model="temp.CONF_NAME"></el-input>
+    </el-form-item> 
          
       </el-form> 
         <div slot="footer" class="dialog-footer">
@@ -95,7 +103,8 @@ export default {
       listQuery: {
         page: 1,
         limit: 20,
-        CONF_NAME: undefined
+        CONF_NAME: undefined,
+        CONF_VALUE:''
       },
       statusOptions: ['published', 'draft', 'deleted'],
 
@@ -104,8 +113,6 @@ export default {
         CONF_CODE: '',
         CONF_NAME: '',
         CONF_VALUE: '',
-        CLOUD_ORG:'',
-        CLOUD_ADDRESS:'',
       },
       dialogFormVisible: false,
       dialogStatus: '',
@@ -151,8 +158,6 @@ export default {
         CONF_CODE: '',
         CONF_NAME: '',
         CONF_VALUE: '',
-        CLOUD_ORG:'',
-        CLOUD_ADDRESS:'',
       }
     },
     handleUpdate(row) { // 修改数据弹出修改表单

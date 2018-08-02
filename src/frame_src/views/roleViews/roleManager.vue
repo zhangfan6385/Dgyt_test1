@@ -84,10 +84,10 @@ export default {
       rules: {// 用于校验
 
         groupCode: [
-          { required: true, message: 'groupCode is required', trigger: 'change' }
+          { required: true, message: '角色编号不能为空', trigger: 'change' }
         ],
         groupName: [
-          { required: true, message: 'groupName is required', trigger: 'change' }
+          { required: true, message: '角色名称不能为空', trigger: 'change' }
         ]
       },
       resourceTree: [],
@@ -144,6 +144,7 @@ export default {
               type: type,
               duration: 2000
             })
+            this.$refs['form'].resetFields();
           })
         }
       })
@@ -166,6 +167,7 @@ export default {
               type: type,
               duration: 2000
             })
+            this.$refs['form'].resetFields();
           })
         }
       })
@@ -182,6 +184,7 @@ export default {
           this.deleteFromTree(this.roleTree, this.form.id, 'id')
           this.title = '成功'
           this.newAdd()
+          this.$refs['form'].resetFields();
         }
         this.message = response.data.message
         this.$notify({
@@ -209,6 +212,7 @@ export default {
             type: 'error',
             duration: 2000
           })
+          
         }
       })
     },

@@ -61,7 +61,8 @@ export default {
       listUpdate: {
         password: '',
         newpassword: '',
-        userid: ''
+        userid: '',
+        roleLevel:''
       },
       pwdRules: {
         password: [
@@ -80,6 +81,7 @@ export default {
   watch: {},
   methods: {
     resetForm(formName) {
+      console.log(this.$store.state.user.roleLevel);
       this.$refs[formName].resetFields()
     },
     submitForm(formName) { // 提交修改密码
@@ -90,7 +92,8 @@ export default {
           //  var userCode = this.$store.state.user.code //获取登陆信息的 俩种方式
           //   var name = this.$store.getters.name
           // this.listUpdate.userid = this.$store.state.user.userId
-          this.listUpdate.userid = this.$store.state.user.loginUserCode
+          this.listUpdate.userid = this.$store.state.user.code;
+          this.listUpdate.roleLevel=this.$store.state.user.roleLevel;
           updatePasswordData(this.listUpdate).then(response => {
             this.message = response.data.message
             this.title = '失败'

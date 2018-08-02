@@ -8,12 +8,15 @@
       
       <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">{{$t('configTable.search')}}</el-button>
       <el-button class="filter-item" style="margin-left: 10px;" @click="handleCreate" type="primary" icon="el-icon-edit">{{$t('configTable.add')}}</el-button>
+      <el-button class="filter-item" style="margin-left: 10px;" @click="pushOrgList" type="primary" icon="el-icon-circle-check">同步</el-button>
  
     </div>
     <el-card class="box-card">
       <el-table :key='tableKey' :data="list" :header-cell-class-name="tableRowClassName"   v-loading="listLoading" element-loading-text="给我一点时间" border fit highlight-current-row
-      style="width: 100%">
+      style="width: 100%" @selection-change="handleSelectionChange" ref="multipleTable">
 
+      <el-table-column type="selection" width="50"></el-table-column>
+      
       <el-table-column width="140px" align="center" label="服务器IP">
         <template slot-scope="scope">
           <span>{{scope.row.SERVER_IP}}</span>
@@ -32,17 +35,32 @@
       <el-table-column width="140px" align="center" label="是否推送服务">
         <template slot-scope="scope">
           <span v-if="scope.row.SYNC_FLAG=='0'">否</span>
-          <span v-if="scope.row.SYNC_FLAG=='1'">是</span>
+          <span v-else-if="scope.row.SYNC_FLAG=='1'">是</span>
         </template>
       </el-table-column>
+
+            <el-table-column width="140px" align="center" label="用户名">
+        <template slot-scope="scope">
+          <span>{{scope.row.USER_CODE}}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column width="140px" align="center" label="用户密码">
+        <template slot-scope="scope">
+          <span>{{scope.row.USER_PASS}}</span>
+        </template>
+      </el-table-column>
+
+
       <el-table-column width="140px" align="center" label="备注">
         <template slot-scope="scope">
           <span>{{scope.row.REMARK}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="操作" width="300" class-name="small-padding fixed-width">
+      <el-table-column align="center" label="操作" width="250" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">{{$t('configTable.edit')}}</el-button>
+          <el-button type="primary" size="mini" @click="handleResult(scope.row)">同步记录</el-button>
           <el-button size="mini" type="danger" @click="handleDelete(scope.row)">{{$t('configTable.delete')}}</el-button>
         </template>
       </el-table-column>
@@ -55,6 +73,14 @@
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
     
       <el-form :rules="rules" ref="dataForm" :model="temp" label-position="left" label-width="120px" style='width: 400px; margin-left:20px;'>
+        
+        <el-form-item  label="用户名" prop="USER_CODE">
+            <el-input v-model="temp.USER_CODE"></el-input>
+        </el-form-item>
+
+        <el-form-item  label="用户密码" prop="USER_PASS">
+            <el-input v-model="temp.USER_PASS"></el-input>
+        </el-form-item>
         
 
         <el-form-item  label="服务器IP" prop="SERVER_IP">
@@ -85,6 +111,32 @@
         <el-button v-else type="primary" @click="updateData">{{$t('configTable.confirm')}}</el-button>
       </div>
     </el-dialog>
+
+    <el-dialog title="同步记录" :visible.sync="resultVisible" width="900px"> 
+          <el-card class="box-card">
+      <el-table :key='tableKey' :data="result" :header-cell-class-name="tableRowClassName"   v-loading="listLoading" element-loading-text="给我一点时间" border fit highlight-current-row
+      style="width: 100%">
+
+
+      <el-table-column width="140px" align="center" label="发送方地址" prop="SEND_URL">
+
+      </el-table-column>
+
+      <el-table-column width="140px" align="center" label="接收方地址" prop="RECEIVE_URL">
+      </el-table-column>
+
+      <el-table-column width="140px" align="center" label="发送内容" prop="SYNC_CONTENT">
+      </el-table-column>
+
+      <el-table-column width="140px" align="center" label="发送结果" prop="SYNC_CONTENT">
+      </el-table-column>
+
+      <el-table-column width="140px" align="center" label="错误信息" prop="ERROR_INFO">
+      </el-table-column>
+
+    </el-table>
+    </el-card>
+    </el-dialog>
  
     </div>
 </template>
@@ -93,11 +145,16 @@ import {
   fetchSynchroConfigList,
   createSynchroConfigArticle,
   updateSynchroConfigData,
-  DeleteSynchroConfigArticle
+  DeleteSynchroConfigArticle,
+  pushOrgList
 } from '@/frame_src/api/synchroConfig'
+
+import{
+      GetConfigResult
+} from '@/frame_src/api/configResult'
+
 import waves from '@/frame_src/directive/waves' // 水波纹指令
 // import { parseTime } from '@/frame_src/utils'
-
 export default {
   name: 'uidpConfigManager',
   directives: {
@@ -105,10 +162,14 @@ export default {
   },
   data() {
     return {
+      multipleSelection: [],
+      arr:[],
       tableKey: 0,
-      list: null,
+      list: [],
       total: null,
+      result:[],
       listLoading: true,
+      TYPE:'请选择同步类型',
       listUpdate: {
         field: undefined,
         SYNC_ID: undefined
@@ -118,17 +179,23 @@ export default {
         limit: 10,
         SYNC_ID: undefined
       },
+      sync_obj:{
+        sync_list:[]
+      },
       statusOptions: ['published', 'draft', 'deleted'],
-
       editConfig: false,
       temp: {
-        SYNC_ID: '',
+        USER_CODE:'',
+        USER_PASS:'',
+        SYNC_TYPE:'',
+        SYNC_FLAG:'1',
         SERVER_IP: '',
         SERVER_PORT: '',
         SERVER_URL:'',
-        ADDRESS_URL:'',
+        REMARK:''
       },
       dialogFormVisible: false,
+      resultVisible:false,
       dialogStatus: '',
       textMap: {
         update: '修改云同步配置',
@@ -137,7 +204,6 @@ export default {
       dialogPvVisible: false,
       pvData: [],
       rules: {
-
         SYNC_ID: [
           { required: true, message: '配置表主键不能为空', trigger: 'change' }
         ],
@@ -156,7 +222,7 @@ export default {
   },
   methods: {
     getList() {
-      this.listLoading = true
+      this.listLoading = false;
       fetchSynchroConfigList(this.listQuery).then(response => {
         if (response.data.code === 2000) {
           this.list = response.data.items
@@ -175,13 +241,21 @@ export default {
     },
     resetTemp() {
       this.temp = {
-        SYNC_ID: '',
+        USER_CODE:'',
+        USER_PASS:'',
+        SYNC_TYPE:'',
+        SYNC_FLAG:'1',
         SERVER_IP: '',
         SERVER_PORT: '',
         SERVER_URL:'',
-        ADDRESS_URL:'',
+        REMARK:''
       }
     },
+    handleCommand(command) {
+      this.TYPE=command;
+      this.temp.SYNC_TYPE=command;
+      console.log(this.temp.SYNC_TYPE);
+      },
     handleUpdate(row) { // 修改数据弹出修改表单
       this.temp = Object.assign({}, row) // copy obj
       this.temp.timestamp = new Date(this.temp.timestamp)
@@ -228,6 +302,43 @@ export default {
             })
           })
         }
+      })
+    },
+    handleResult(row){
+      this.resultVisible=true;
+      GetConfigResult(row.SYNC_ID).then(response=>{
+        if(response.data.code===2000){
+          this.result=response.data.items;
+          console.log(response.data.items);   
+        }
+        else{
+          this.$notify({
+            title: '失败',
+            message: response.data.message,
+            type: 'error',
+            duration: 2000
+          })
+        }
+      })
+    },
+    pushOrgList(){
+      this.sync_obj.sync_list=this.arr
+      pushOrgList(this.sync_obj).then(response=>{
+        if(response.data.code===2000){
+          this.title='成功';
+          this.type='success';
+        }
+        else{
+          this.message=response.data.message;
+          this.title='失败';
+          this.type='error';
+        }
+        this.$notify({
+          title: this.title,
+          message: this.message,
+          type: this.type,
+          duration: 2000
+        })
       })
     },
     handleDelete(row) {
@@ -326,6 +437,19 @@ export default {
         return 'el-button--primary is-active'// 'warning-row'
       } // 'el-button--primary is-plain'// 'warning-row'
       return ''
+    },
+    handleSelectionChange(val){
+      this.multipleSelection = val;
+    }
+  },
+  watch:{
+     multipleSelection: function() { // 把选中的数据id放到数组里，以便后期传值用
+      this.arr = []
+      for (var i = this.multipleSelection.length - 1; i >= 0; i--) {
+        // if (this.multipleSelection[i].roleId !== this.$refs.roleTree.getCurrentKey()) {
+        this.arr.push(this.multipleSelection[i]) // this.$refs.multipleTable.toggleRowSelection(this.list[i]);
+        // }
+      }
     }
   },
   created() {

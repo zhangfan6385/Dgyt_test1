@@ -71,27 +71,32 @@ router.beforeEach((to, from, next) => {
       next({ path: '/' })
       NProgress.done() // if current page is dashboard will not trigger	afterEach hook, so manually handle it
     } else {
+      
       if (store.getters.code.length === 0) { // 判断当前用户是否已拉取完user_info信息
+        
         store.dispatch('GetUserInfo').then(res => { // 拉取user_info
           // const roles = res.data.roles // note: roles 必须是一个数组 array! 像这样: ['editor','develop']
           const query = { sysCode: store.getters.sysCode, userId: store.getters.userId }
-          if (store.getters.userId === '') {
+          console.log("我是getteruserid");
+          console.log(store.getters.userId + "我是getteruserid");
+          /*
+          if (store.state.userId === '') {
             Message.error('请选择用户！')
             next({ path: '/' })
-          } else {
-            fetchPermission(query).then(response => {
-              const menus = response.data// .items
-              console.log(menus)
-              const routeStru = generateRouteStruc(menus)
-              if (routeStru) {
-                routeStru.push({ path: '*', redirect: '/404', hidden: true })
-              }
-              store.dispatch('GenerateRoutes', { 'routeMap': routeStru }).then(() => { // 根据roles权限生成可访问的路由表
-                router.addRoutes(store.getters.addRouters) // 动态添加可访问路由表
-                next({ ...to, replace: true }) // hack方法 确保addRoutes已完成 ,set the replace: true so the navigation will not leave a history record
-              })
+          } else {}
+            */
+          fetchPermission(query).then(response => {
+            const menus = response.data//.items
+            console.log(menus)
+            const routeStru = generateRouteStruc(menus)
+            if (routeStru) {
+              routeStru.push({ path: '*', redirect: '/404', hidden: true })
+            }
+            store.dispatch('GenerateRoutes', { 'routeMap': routeStru }).then(() => { // 根据roles权限生成可访问的路由表
+              router.addRoutes(store.getters.addRouters) // 动态添加可访问路由表
+              next({ ...to, replace: true }) // hack方法 确保addRoutes已完成 ,set the replace: true so the navigation will not leave a history record
             })
-          }
+          })
         }).catch((err) => {
           store.dispatch('FedLogOut').then(() => {
             Message.error(err || 'Verification failed, please login again')

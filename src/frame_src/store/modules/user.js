@@ -23,8 +23,8 @@ const user = {
     departName: '',
     userId: '',
     userSex: '',
-    roleLevel: ''
-
+    roleLevel: '',
+    UseOrg:''
   },
 
   mutations: {

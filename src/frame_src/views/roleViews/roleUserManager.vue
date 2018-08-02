@@ -15,7 +15,7 @@
     <el-card class="box-card">
    
     <div class="filter-container">
-       <el-input @keyup.enter.native="handleFilter" style="width: 150px;" class="filter-item" :placeholder="$t('userTable.USER_NAME')" v-model="listQuery.USER_NAME">
+       <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" :placeholder="$t('userTable.USER_NAME')" v-model="listQuery.USER_NAME">
       </el-input>
       <el-select clearable style="width: 120px" class="filter-item" v-model="listQuery.FLAG" :placeholder="$t('userTable.FLAG')">
         <el-option v-for="item in flagOptions" :key="item.key" :label="item.flag_name" :value="item.key">
@@ -39,33 +39,33 @@
           width="50"> 
         </el-table-column>
 
-<el-table-column width="200px" align="center" :label="$t('userTable.USER_DOMAIN')">
+<el-table-column width="110px" align="center" :label="$t('userTable.USER_DOMAIN')">
         <template slot-scope="scope">
           <span>{{scope.row.USER_DOMAIN}}</span>
         </template>
       </el-table-column>
       
-      <el-table-column width="200px" align="center" :label="$t('userTable.USER_NAME')">
+      <el-table-column width="110px" align="center" :label="$t('userTable.USER_NAME')">
         <template slot-scope="scope">
           <span>{{scope.row.USER_NAME}}</span>
         </template>
       </el-table-column>
-      <el-table-column width="200px" align="center" :label="$t('userTable.USER_CODE')">
+      <el-table-column width="110px" align="center" :label="$t('userTable.USER_CODE')">
         <template slot-scope="scope">
           <span>{{scope.row.USER_CODE}}</span>
         </template>
       </el-table-column>
       <el-table-column width="110px" align="center" :label="$t('userTable.FLAG')">
         <template slot-scope="scope">
-          <el-tag>{{scope.row.FLAG | typeFilter}}</el-tag>
+          <span>{{scope.row.FLAG | typeFilter}}</span>
         </template>
        </el-table-column>
-      <el-table-column min-width="200px"  align="center" :label="$t('userTable.REMARK')">
+      <el-table-column min-width="180px"  align="center" :label="$t('userTable.REMARK')">
         <template slot-scope="scope">
           <span>{{scope.row.REMARK}}</span>
         </template>
        </el-table-column>
-       <el-table-column min-width="250px"  align="center" :label="$t('userTable.groupName')">
+       <el-table-column min-width="110px"  align="center" :label="$t('userTable.groupName')">
         <template slot-scope="scope">
           <span>{{scope.row.groupName}}</span>
         </template>
@@ -108,7 +108,7 @@ export default {
   data() {
     return {
       tableKey: 0,
-      list: null,
+      list: [],
       total: null,
       listLoading: true,
       showUserPass: false,
@@ -149,7 +149,7 @@ export default {
 
       }, listUpdate: {
 
-        roleId: undefined,
+        GROUP_ID: undefined,
         arr: []
       },
       roleTree: [],
@@ -244,7 +244,7 @@ export default {
           duration: 2000
         })
       } else {
-        this.listUpdate.roleId = this.$refs.roleTree.getCurrentKey()
+        this.listUpdate.GROUP_ID = this.$refs.roleTree.getCurrentKey()
         this.listUpdate.arr = this.arr
         updateUserRoleArticle(this.listUpdate).then(response => {
           var message = response.data.message
@@ -279,7 +279,9 @@ export default {
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
+          this.listUpdate.GROUP_ID = this.$refs.roleTree.getCurrentKey()
           this.listUpdate.arr = this.arr
+          console.log(this.listUpdate.GROUP_ID);
           deleteUserRoleArticle(this.listUpdate).then(response => {
             var message = response.data.message
             var title = '失败'

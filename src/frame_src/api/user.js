@@ -62,3 +62,11 @@ export function fetchUserOrgList(query) { // 根据查询带orgid的 用户信�
     params: query
   })
 }
+
+export function fetchUserpParentList(query) { // 查询关联账号
+  return request({
+    url: '/user/fetchUserForAllList',
+    method: 'get',
+    params: query
+  })
+}

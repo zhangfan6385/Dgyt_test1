@@ -7,7 +7,7 @@ import { getToken } from '@/frame_src/utils/auth'
 axios.defaults
 const service = axios.create({
   baseURL: process.env.BASE_API, // api的base_url
-  timeout: 5000 // request timeout
+  timeout: 50000 // request timeout
 })
 
 // request interceptor

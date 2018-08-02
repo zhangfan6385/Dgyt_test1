@@ -75,6 +75,13 @@ const menuList1 = [
         { 'id': 112, 'MODULE_ROUTE': 'log-info-manager', 'MODULE_OBJ': 'logInfoManager', 'parentId': 8, 'sort': 2, 'MENU_NAME': '日志查看', 'MODULE_URL': 'frame_src/views/logInfoViews/', 'MENU_ICON': 'fa fa-universal-access', 'children': [], 'MENU_PROP': '1', 'roleId': [27, 28] }
       ],
     'MENU_PROP': '1', 'roleId': [27, 28]
+  },
+  {
+    'id': 9, 'MODULE_ROUTE': '/userinfoViews', 'MODULE_OBJ': '', 'parentId': null, 'sort': 6, 'MENU_NAME': '用户信息', 'MODULE_URL': 'frame_src/views/logInfoViews', 'MENU_ICON': 'fa fa-cog', 'children':
+      [
+        { 'id': 112, 'MODULE_ROUTE': 'user-manager', 'MODULE_OBJ': 'userManager', 'parentId': 9, 'sort': 2, 'MENU_NAME': '角色管理', 'MODULE_URL': 'frame_src/views/userinfoViews/', 'MENU_ICON': 'fa fa-universal-access', 'children': [], 'MENU_PROP': '1', 'roleId': [27, 28] }
+      ],
+    'MENU_PROP': '1', 'roleId': [27, 28]
   }
 ]
 
