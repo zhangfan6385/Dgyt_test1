@@ -5,10 +5,10 @@
  <h5 v-if="!Useorg">本地组织机构</h5>
  <h5 v-else-if="Useorg">云组织机构</h5>
  
- <el-button class="filter-item" style="margin-left: 10px;" @click="newAdd" type="primary" icon="el-icon-edit" :disabled="Useorg">添加</el-button>
+ <el-button class="filter-item" style="margin-left: 10px;" @click="newAdd" type="primary" icon="el-icon-edit" v-if="!Useorg">添加</el-button>
      </h3>
       <h3 class="box-title" slot="header" style="width: 25%;"> 
-      <el-button  class="filter-item" type="primary" icon="el-icon-edit" @click="showUpload=true" :disabled="Useorg" >上传</el-button>
+      <el-button  class="filter-item" type="primary" icon="el-icon-edit" @click="showUpload=true" v-if="!Useorg" >上传</el-button>
  
         <!-- <input id="excel-upload-input" ref="excel-upload-input" type="file" accept=".xlsx, .xls" class="c-hide" @change="handkeFileChange"> -->
 <!--  <el-button style="margin-left:16px;" size="mini" type="primary" @click="handleUpload">browse</el-button>
@@ -80,7 +80,7 @@
               <!-- <el-col :span="12" :xs="24" :sm="24" :md="9" :lg="9" :xl="9">-->
               <el-form-item label="" :label-width="formLabelWidth"> 
               
-              <el-button v-if="form.id==null" size="mini" type="primary"    @click="onOkSubmit" :disabled="Useorg">{{$t('orgTable.add')}}
+              <el-button v-if="form.id==null&&!Useorg" size="mini" type="primary"    @click="onOkSubmit">{{$t('orgTable.add')}}
               </el-button>
                 <el-button  v-if="form.id!=null"   size="mini" type="primary"   @click="onUpdateSubmit" >{{$t('orgTable.edit')}}
               </el-button> 
@@ -124,6 +124,7 @@ import panel from '@/frame_src/components/TreeList/panel.vue'
 import selectTree from '@/frame_src/components/TreeList/selectTree.vue'
 import treeter from '@/frame_src/components/TreeList/treeter'
 import { getToken } from '@/frame_src/utils/auth'
+import { GetTitle } from "@/frame_src/api/title"
 export default {
   mixins: [treeter],
   components: {
@@ -187,8 +188,12 @@ export default {
     }
   },
   methods: {
-    getorg(){
-      this.Useorg=this.$store.state.user.UseOrg;
+     getorg() {
+      GetTitle().then(response => {
+        this.Useorg= Boolean(
+          response.data.cloudorg.CONF_VALUE
+        );
+      });
     },
 
     handleNodeClick(data) { // 把左侧树的选中数据赋值到右边form表单里。
