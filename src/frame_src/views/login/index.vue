@@ -114,9 +114,9 @@ export default {
       loading: false,
       showDialog: false,
       radio: "",
+      code: "",
       list: [],
       sysmessage: "测试平台",
-      code: "PTR_IDENT",
       copyright: ""
     };
   },
@@ -138,44 +138,40 @@ export default {
       }
     },
     handleLogin() {
-      if (this.radio === "") {
-        alert("请选择登录类型");
-      } else {
-        this.$store.state.user.token = "";
-        this.$refs.loginForm.validate(valid => {
-          if (valid) {
-            this.loading = true;
-            this.loginForm.userDomain = this.code;
-            console.log(this.loginForm); // this.radio // 后改需求走登陆账号 所以没有 域账号的说法了
-            this.$store
-              .dispatch("LoginByUsername", this.loginForm)
-              .then(response => {
-                this.$store.dispatch("setRoleLevel", response.data.roleLevel);
-                if (response.data.roleLevel === "admin") {
+      this.$store.state.user.token = "";
+      this.$refs.loginForm.validate(valid => {
+        if (valid) {
+          this.loading = true;
+          this.loginForm.userDomain = this.code;
+          //console.log(this.loginForm); // this.radio // 后改需求走登陆账号 所以没有 域账号的说法了
+          this.$store
+            .dispatch("LoginByUsername", this.loginForm)
+            .then(response => {
+              this.$store.dispatch("setRoleLevel", response.data.roleLevel);
+              if (response.data.roleLevel === "admin") {
+                this.updateShowDialog("");
+              } else {
+                var userList = this.$store.state.user.userList;
+                if (userList.length === 1) {
+                  // this.$store.dispatch('setDepartCode', orglist[0].orgId)
+                  // this.$store.dispatch('setDepartName', orglist[0].orgName)
+                  this.$store.dispatch("setUserId", userList[0].USER_ID);
                   this.updateShowDialog("");
                 } else {
-                  var userList = this.$store.state.user.userList;
-                  if (userList.length === 1) {
-                    // this.$store.dispatch('setDepartCode', orglist[0].orgId)
-                    // this.$store.dispatch('setDepartName', orglist[0].orgName)
-                    this.$store.dispatch("setUserId", userList[0].USER_ID);
-                    this.updateShowDialog("");
-                  } else {
-                    this.showDialog = true;
-                  }
-                  this.loading = false;
-                } // this.$router.push({ path: '/' })
-              })
-              .catch(err => {
+                  this.showDialog = true;
+                }
                 this.loading = false;
-                Message.error(err);
-              });
-          } else {
-            console.log("error submit!!");
-            return false;
-          }
-        });
-      }
+              } // this.$router.push({ path: '/' })
+            })
+            .catch(err => {
+              this.loading = false;
+              Message.error(err);
+            });
+        } else {
+          //console.log("error submit!!");
+          return false;
+        }
+      });
     },
     afterQRScan() {
       // const hash = window.location.hash.slice(1)
@@ -209,9 +205,12 @@ export default {
         this.$store.state.user.UseOrg = Boolean(
           response.data.cloudorg.CONF_VALUE
         );
-        console.log(this.$store.state.user.UseOrg);
+        //console.log(this.$store.state.user.UseOrg);
         this.$store.state.user.sysName = response.data.sysname.CONF_VALUE;
         this.list = response.data.itemtype;
+        //console.log(this.list[0]);
+        this.radio = this.list[0].key;
+        this.code = this.list[0].user_code;
       });
     }
   },

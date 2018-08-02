@@ -645,7 +645,6 @@ export default {
         if (response.data.code === 2000) {
           this.roleTree = [];
           this.roleTree = response.data.items;
-          console.log(response.data);
         } else {
           this.$notify({
             title: "失败",
@@ -723,7 +722,6 @@ export default {
       } else {
         this.resetTemp();
         this.dialogStatus = "create";
-        console.log(this.dialogStatus);
         this.dialogFormVisible = true;
         this.$nextTick(() => {
           this.$refs["dataForm"].clearValidate();
@@ -1137,13 +1135,11 @@ export default {
     getvalue(value) {
       if (value === 0) {
         this.passwordvalidate = 0;
-        console.log(this.passwordvalidate);
         this.passwordVisible = false;
         this.passwordTips = "请输入密码";
         this.passwordTips1 = "请再次输入密码";
       } else {
         this.passwordvalidate = 1;
-        console.log(this.passwordvalidate);
         this.passwordVisible = true;
         this.passwordTips = "PTR账号无需输入此项";
         this.passwordTips1 = "PTR账号无需输入此项";

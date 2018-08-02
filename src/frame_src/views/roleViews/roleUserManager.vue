@@ -281,7 +281,6 @@ export default {
         }).then(() => {
           this.listUpdate.GROUP_ID = this.$refs.roleTree.getCurrentKey()
           this.listUpdate.arr = this.arr
-          console.log(this.listUpdate.GROUP_ID);
           deleteUserRoleArticle(this.listUpdate).then(response => {
             var message = response.data.message
             var title = '失败'

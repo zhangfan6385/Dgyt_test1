@@ -81,7 +81,7 @@
         <el-form-item  label="用户密码" prop="USER_PASS">
             <el-input v-model="temp.USER_PASS"></el-input>
         </el-form-item>
-        
+
 
         <el-form-item  label="服务器IP" prop="SERVER_IP">
             <el-input v-model="temp.SERVER_IP"></el-input>
@@ -254,7 +254,6 @@ export default {
     handleCommand(command) {
       this.TYPE=command;
       this.temp.SYNC_TYPE=command;
-      console.log(this.temp.SYNC_TYPE);
       },
     handleUpdate(row) { // 修改数据弹出修改表单
       this.temp = Object.assign({}, row) // copy obj
@@ -308,8 +307,7 @@ export default {
       this.resultVisible=true;
       GetConfigResult(row.SYNC_ID).then(response=>{
         if(response.data.code===2000){
-          this.result=response.data.items;
-          console.log(response.data.items);   
+          this.result=response.data.items;  
         }
         else{
           this.$notify({

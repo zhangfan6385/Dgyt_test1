@@ -158,7 +158,7 @@
     },
     methods: {
       selectIcon(svgIcon) {
-        console.log(svgIcon)
+        //(svgIcon)
         // this.form.MENU_ICON = event.target.className
         this.form.MENU_ICON = svgIcon
         this.selectIconDialog = false
@@ -297,7 +297,7 @@
         this.form.SYS_CODE = this.sysCode
         const query = { sysCode: this.sysCode }
         fetchMenuList(query).then(response => {
-          console.log(response.data)
+          //console.log(response.data)
           this.menuTree = response.data
           this.menuSelectTree = response.data
         })

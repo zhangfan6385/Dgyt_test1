@@ -112,6 +112,7 @@ const user = {
             const data = response.data
             // commit('SET_ORG_LIST', data.orgList)
             commit('SET_USER_LIST', data.userList)
+            commit('SET_USER_ID', data.userId)
             commit('SET_TOKEN', data.token)
             setToken(response.data.token)
             resolve(response)
@@ -137,11 +138,9 @@ const user = {
           // } else {
           //   reject('getInfo: roles must be a non-null array !')
           // }
-
           commit('SET_NAME', data.name)
           commit('SET_AVATAR', data.avatar)
           commit('SET_INTRODUCTION', data.introduction)
-
           commit('SET_SYS_CODE', data.sysCode)// 设置当前系统编码
           commit('SET_SYS_NAME', data.sysName)// 设置当前系统名称
           commit('SET_DEPART_CODE', data.departCode)

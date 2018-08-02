@@ -81,7 +81,6 @@ export default {
   watch: {},
   methods: {
     resetForm(formName) {
-      console.log(this.$store.state.user.roleLevel);
       this.$refs[formName].resetFields()
     },
     submitForm(formName) { // 提交修改密码

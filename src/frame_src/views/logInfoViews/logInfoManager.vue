@@ -141,7 +141,7 @@ export default {
       fetchLogInfoList(this.listQuery).then(response => {
         if (response.data.code === 2000) {
           this.list = response.data.items
-          console.log(this.list)
+          //console.log(this.list)
           this.total = response.data.total
           this.listLoading = false
         } else {
@@ -217,7 +217,7 @@ export default {
         this.listQuery.END_ACCESS_TIME=end.setTime(end.getTime()+3600 * 1000 * 24 * 7);
       }
       */
-        console.log(this.listQuery)
+        //(this.listQuery)
         this.listQuery.page = 1
         this.getList()
     }, tableRowClassName({ row, rowIndex }) {
