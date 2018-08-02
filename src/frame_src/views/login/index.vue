@@ -149,6 +149,7 @@ export default {
             .then(response => {
               this.$store.dispatch("setRoleLevel", response.data.roleLevel);
               if (response.data.roleLevel === "admin") {
+                this.$store.dispatch("setUserId",null);
                 this.updateShowDialog("");
               } else {
                 var userList = this.$store.state.user.userList;
@@ -205,10 +206,9 @@ export default {
         this.$store.state.user.UseOrg = Boolean(
           response.data.cloudorg.CONF_VALUE
         );
-        //console.log(this.$store.state.user.UseOrg);
         this.$store.state.user.sysName = response.data.sysname.CONF_VALUE;
         this.list = response.data.itemtype;
-        //console.log(this.list[0]);
+
         this.radio = this.list[0].key;
         this.code = this.list[0].user_code;
       });

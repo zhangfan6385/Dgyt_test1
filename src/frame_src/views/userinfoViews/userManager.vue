@@ -334,6 +334,7 @@
             :file-list="fileList">
             <el-button   class="filter-item"  type="primary" icon="el-icon-edit">点击上传</el-button>
           </el-upload>
+          <a :href="urldownload">模板下載</a>
      </div>
     </el-card>
   </el-dialog>
@@ -421,6 +422,7 @@ export default {
     return {
       showUpload: false,
       urlUpload: process.env.BASE_API + "user/uploadUserArticle",
+      urldownload:process.env.BASE_API+"ExcelModel/用户.xlsx",
       fileList: [],
       tableKey: 0,
       list: null,
@@ -604,6 +606,7 @@ export default {
       this.temp = Object.assign({}, row); // copy obj
       this.tableUserKey = row.USER_ID;
       this.tableUserKey2 = row.USER_ID;
+      
       this.listUserQuery.USER_ID = row.USER_ID;
       this.getListUser(this.listUserQuery);
       this.userLoginVisible = true;

@@ -4,11 +4,14 @@
     <h3 class="box-title" slot="header" style="width: 25%;"> 
  <h5 v-if="!Useorg">本地组织机构</h5>
  <h5 v-else-if="Useorg">云组织机构</h5>
+
  
  <el-button class="filter-item" style="margin-left: 10px;" @click="newAdd" type="primary" icon="el-icon-edit" v-if="!Useorg">添加</el-button>
      </h3>
       <h3 class="box-title" slot="header" style="width: 25%;"> 
       <el-button  class="filter-item" type="primary" icon="el-icon-edit" @click="showUpload=true" v-if="!Useorg" >上传</el-button>
+      
+      
  
         <!-- <input id="excel-upload-input" ref="excel-upload-input" type="file" accept=".xlsx, .xls" class="c-hide" @change="handkeFileChange"> -->
 <!--  <el-button style="margin-left:16px;" size="mini" type="primary" @click="handleUpload">browse</el-button>
@@ -107,6 +110,7 @@
             :file-list="fileList">
             <el-button   class="filter-item"  type="primary" icon="el-icon-edit">点击上传</el-button>
           </el-upload>
+          <a :href="urldownload" v-if="!Useorg">模板下載</a>
      </div>
     </el-card>
   </el-dialog>
@@ -136,6 +140,7 @@ export default {
     return {
       showUpload: false,
       urlUpload: process.env.BASE_API + 'org/uploadOrgArticle',
+      urldownload:process.env.BASE_API+"ExcelModel/组织机构.xlsx",
       dialogLoading: false,
       dialogVisible: false,
       Useorg:undefined,
