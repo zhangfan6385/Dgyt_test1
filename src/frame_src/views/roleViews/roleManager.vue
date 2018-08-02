@@ -138,7 +138,7 @@ export default {
               this.newAdd()
               this.load()
             }
-            this.$notify({
+            this.$notify({   position: 'bottom-right',
               title: title,
               message: message,
               type: type,
@@ -161,7 +161,7 @@ export default {
               this.newAdd()
               this.load()
             }
-            this.$notify({
+            this.$notify({   position: 'bottom-right',
               title: title,
               message: message,
               type: type,
@@ -187,7 +187,7 @@ export default {
           this.$refs['form'].resetFields();
         }
         this.message = response.data.message
-        this.$notify({
+        this.$notify({   position: 'bottom-right',
           title: this.title,
           message: this.message,
           type: 'success',
@@ -206,7 +206,7 @@ export default {
           // this.roleTree.push(...defaultValue.roleList);
         } else {
           this.listLoading = false
-          this.$notify({
+          this.$notify({   position: 'bottom-right',
             title: '失败',
             message: response.data.message,
             type: 'error',

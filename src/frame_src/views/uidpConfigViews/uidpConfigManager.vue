@@ -144,7 +144,7 @@ export default {
           this.listLoading = false
         } else {
           this.listLoading = false
-          this.$notify({
+          this.$notify({   position: 'bottom-right',
             title: '失败',
             message: response.data.message,
             type: 'error',
@@ -198,7 +198,7 @@ export default {
               // }
             }
             this.dialogFormVisible = false
-            this.$notify({
+            this.$notify({   position: 'bottom-right',
               title: title,
               message: message,
               type: type,
@@ -223,7 +223,7 @@ export default {
           this.title = '成功'
           this.type = 'success'
         }
-        this.$notify({
+        this.$notify({   position: 'bottom-right',
           title: this.title,
           message: this.message,
           type: this.type,
@@ -247,7 +247,7 @@ export default {
               // this.list.unshift(this.temp)
             }
             this.dialogFormVisible = false
-            this.$notify({
+            this.$notify({   position: 'bottom-right',
               title: title,
               message: message,
               type: type,

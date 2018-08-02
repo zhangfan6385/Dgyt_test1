@@ -270,7 +270,7 @@ export default {
           createArticle(this.temp).then(() => {
             this.list.unshift(this.temp)
             this.dialogFormVisible = false
-            this.$notify({
+            this.$notify({   position: 'bottom-right',
               title: '成功',
               message: '创建成功',
               type: 'success',
@@ -303,7 +303,7 @@ export default {
               }
             }
             this.dialogFormVisible = false
-            this.$notify({
+            this.$notify({   position: 'bottom-right',
               title: '成功',
               message: '更新成功',
               type: 'success',
@@ -314,7 +314,7 @@ export default {
       })
     },
     handleDelete(row) {
-      this.$notify({
+      this.$notify({   position: 'bottom-right',
         title: '成功',
         message: '删除成功',
         type: 'success',

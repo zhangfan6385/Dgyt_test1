@@ -227,7 +227,7 @@ export default {
       this.$refs.postForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.$notify({
+          this.$notify({   position: 'bottom-right',
             title: '成功',
             message: '发布文章成功',
             type: 'success',

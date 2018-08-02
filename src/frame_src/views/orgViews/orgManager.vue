@@ -224,7 +224,7 @@ export default {
               this.newAdd()
               this.load()
             }
-            this.$notify({
+            this.$notify({   position: 'bottom-right',
               title: title,
               message: message,
               type: type,
@@ -247,7 +247,7 @@ export default {
               this.newAdd()
               this.load()
             }
-            this.$notify({
+            this.$notify({   position: 'bottom-right',
               title: title,
               message: message,
               type: type,
@@ -271,7 +271,7 @@ export default {
           this.newAdd()
           //  this.load2();
         }
-        this.$notify({
+        this.$notify({   position: 'bottom-right',
           title: title,
           message: message,
           type: type,
@@ -295,7 +295,7 @@ export default {
         title = '成功'
         type = 'success'
       }
-      this.$notify({
+      this.$notify({   position: 'bottom-right',
         title: title,
         message: message,
         type: type,

@@ -227,7 +227,7 @@ export default {
           this.listUserLoading = false
         } else {
           this.listUserLoading = false
-          this.$notify({
+          this.$notify({   position: 'bottom-right',
             title: '失败',
             message: response.data.message,
             type: 'error',
@@ -245,7 +245,7 @@ export default {
           this.listLoading = false
         } else {
           this.listLoading = false
-          this.$notify({
+          this.$notify({   position: 'bottom-right',
             title: '失败',
             message: response.data.message,
             type: 'error',
@@ -307,7 +307,7 @@ export default {
               // }
             }
             this.dialogFormVisible = false
-            this.$notify({
+            this.$notify({   position: 'bottom-right',
               title: title,
               message: message,
               type: type,
@@ -332,7 +332,7 @@ export default {
           this.title = '成功'
           this.type = 'success'
         }
-        this.$notify({
+        this.$notify({   position: 'bottom-right',
           title: this.title,
           message: this.message,
           type: this.type,
@@ -356,7 +356,7 @@ export default {
               this.getList()
             }
             this.dialogFormVisible = false
-            this.$notify({
+            this.$notify({   position: 'bottom-right',
               title: title,
               message: message,
               type: type,
@@ -367,7 +367,7 @@ export default {
       })
     }, updateRole() { // 修改组织结构权限
       if (this.multipleSelection.length <= 0 || this.tableUserKey2 == null) {
-        this.$notify({// 判断右边记录的勾选数据 和原窗口的登陆账号是否为0或者空
+        this.$notify({   position: 'bottom-right',// 判断右边记录的勾选数据 和原窗口的登陆账号是否为0或者空
           title: '失败',
           message: '请选择登陆账号和用户',
           type: 'error',
@@ -388,7 +388,7 @@ export default {
             this.getListUser()
             this.userLoginVisible = false
           }
-          this.$notify({
+          this.$notify({   position: 'bottom-right',
             title: title,
             message: message,
             type: type,
@@ -398,7 +398,7 @@ export default {
       }
     }, deleteRole() { // 给用户分配角色权限
       if (this.multipleSelection.length <= 0) {
-        this.$notify({
+        this.$notify({   position: 'bottom-right',
           title: '失败',
           message: '请选择用户',
           type: 'error',
@@ -423,7 +423,7 @@ export default {
               this.getListUser()
               this.userLoginVisible = false
             }
-            this.$notify({
+            this.$notify({   position: 'bottom-right',
               title: title,
               message: message,
               type: type,
@@ -431,7 +431,7 @@ export default {
             })
           })
         }).catch(() => {
-          this.$notify({
+          this.$notify({   position: 'bottom-right',
             title: '失败',
             message: '已取消清空',
             type: 'error',

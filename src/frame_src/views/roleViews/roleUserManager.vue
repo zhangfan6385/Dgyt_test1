@@ -194,7 +194,7 @@ export default {
           // this.roleTree.push(...defaultValue.roleList);
         } else {
           this.listLoading = false
-          this.$notify({
+          this.$notify({   position: 'bottom-right',
             title: '失败',
             message: response.data.message,
             type: 'error',
@@ -237,7 +237,7 @@ export default {
       })
     }, updateRole() { // 给用户分配角色权限
       if (this.multipleSelection.length <= 0 || this.$refs.roleTree.getCurrentKey() == null) {
-        this.$notify({
+        this.$notify({   position: 'bottom-right',
           title: '失败',
           message: '请选择角色和用户',
           type: 'error',
@@ -257,7 +257,7 @@ export default {
             this.getList()
             this.load()
           }
-          this.$notify({
+          this.$notify({   position: 'bottom-right',
             title: title,
             message: message,
             type: type,
@@ -267,7 +267,7 @@ export default {
       }
     }, deleteRole() { // 给用户分配角色权限
       if (this.multipleSelection.length <= 0) {
-        this.$notify({
+        this.$notify({   position: 'bottom-right',
           title: '失败',
           message: '请选择用户',
           type: 'error',
@@ -292,7 +292,7 @@ export default {
               this.getList()
               this.load()
             }
-            this.$notify({
+            this.$notify({   position: 'bottom-right',
               title: title,
               message: message,
               type: type,
@@ -300,7 +300,7 @@ export default {
             })
           })
         }).catch(() => {
-          this.$notify({
+          this.$notify({   position: 'bottom-right',
             title: '失败',
             message: '已取消清空',
             type: 'error',

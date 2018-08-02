@@ -90,7 +90,7 @@
       configRoleResources() {
         const checkedKeys = this.$refs.resourceTree.getCheckedKeys()
         if (checkedKeys.length <= 0 || this.$refs.roleTree.getCurrentKey() == null) {
-          this.$notify({
+          this.$notify({   position: 'bottom-right',
             title: '提示信息',
             message: '请选择角色和菜单',
             type: 'error',
@@ -106,7 +106,7 @@
           } else {
             type = 'error'
           }
-          this.$notify({
+          this.$notify({   position: 'bottom-right',
             title: '提示信息',
             message: response.data.message,
             type: type,

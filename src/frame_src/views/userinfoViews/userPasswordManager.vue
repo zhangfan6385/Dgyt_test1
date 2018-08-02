@@ -102,7 +102,7 @@ export default {
               this.type = 'success'
               this.resetForm(formName)
             }
-            this.$notify({
+            this.$notify({   position: 'bottom-right',
               title: this.title,
               message: this.message,
               type: this.type,

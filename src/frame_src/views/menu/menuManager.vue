@@ -198,7 +198,7 @@
           } else {
             type = 'error'
           }
-          this.$notify({
+          this.$notify({   position: 'bottom-right',
             title: '提示信息',
             message: response.data.message,
             type: type,
@@ -225,7 +225,7 @@
               this.newAdd()
               this.loadSelectTree()
             }
-            this.$notify({
+            this.$notify({   position: 'bottom-right',
               title: '提示信息',
               message: response.data.message,
               type: 'success',
@@ -265,7 +265,7 @@
                 } else {
                   type = 'error'
                 }
-                this.$notify({
+                this.$notify({   position: 'bottom-right',
                   title: '提示信息',
                   message: response.data.message,
                   type: type,
@@ -284,7 +284,7 @@
             } else {
               type = 'error'
             }
-            this.$notify({
+            this.$notify({   position: 'bottom-right',
               title: '提示信息',
               message: response.data.message,
               type: type,
