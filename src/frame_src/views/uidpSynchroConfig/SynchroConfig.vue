@@ -8,7 +8,7 @@
       
       <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">{{$t('configTable.search')}}</el-button>
       <el-button class="filter-item" style="margin-left: 10px;" @click="handleCreate" type="primary" icon="el-icon-edit">{{$t('configTable.add')}}</el-button>
-      <el-button class="filter-item" style="margin-left: 10px;" @click="pushOrgList" type="primary" icon="el-icon-circle-check">同步</el-button>
+      <el-button class="filter-item" style="margin-left: 10px;" @click="pushOrgList" type="primary" icon="el-icon-circle-check" :disabled="together">同步</el-button>
  
     </div>
     <el-card class="box-card">
@@ -34,8 +34,8 @@
       </el-table-column>
       <el-table-column width="140px" align="center" label="是否推送服务">
         <template slot-scope="scope">
-          <span v-if="scope.row.SYNC_FLAG=='0'">否</span>
-          <span v-else-if="scope.row.SYNC_FLAG=='1'">是</span>
+          <span v-if="scope.row.SYNC_FLAG=='0'">是</span>
+          <span v-else-if="scope.row.SYNC_FLAG=='1'">否</span>
         </template>
       </el-table-column>
 
@@ -162,6 +162,7 @@ export default {
   },
   data() {
     return {
+      together:false,
       multipleSelection: [],
       arr:[],
       tableKey: 0,
@@ -188,7 +189,7 @@ export default {
         USER_CODE:'',
         USER_PASS:'',
         SYNC_TYPE:'',
-        SYNC_FLAG:'1',
+        SYNC_FLAG:'',
         SERVER_IP: '',
         SERVER_PORT: '',
         SERVER_URL:'',
@@ -233,7 +234,7 @@ export default {
           this.$notify({   position: 'bottom-right',
             title: '失败',
             message: response.data.message,
-            type: 'error',
+            type: 'err  or',
             duration: 2000
           })
         }
@@ -251,10 +252,13 @@ export default {
         REMARK:''
       }
     },
+    /*
     handleCommand(command) {
       this.TYPE=command;
       this.temp.SYNC_TYPE=command;
+      console.log(this.temp.SYNC_TYPE)
       },
+    */
     handleUpdate(row) { // 修改数据弹出修改表单
       this.temp = Object.assign({}, row) // copy obj
       this.temp.timestamp = new Date(this.temp.timestamp)
@@ -320,6 +324,7 @@ export default {
       })
     },
     pushOrgList(){
+      this.together=true;
       this.sync_obj.sync_list=this.arr
       pushOrgList(this.sync_obj).then(response=>{
         if(response.data.code===2000){
@@ -337,6 +342,7 @@ export default {
           type: this.type,
           duration: 2000
         })
+        this.together=false;
       })
     },
     handleDelete(row) {

@@ -82,6 +82,13 @@ const menuList1 = [
         { 'id': 112, 'MODULE_ROUTE': 'user-manager', 'MODULE_OBJ': 'userManager', 'parentId': 9, 'sort': 2, 'MENU_NAME': '角色管理', 'MODULE_URL': 'frame_src/views/userinfoViews/', 'MENU_ICON': 'fa fa-universal-access', 'children': [], 'MENU_PROP': '1', 'roleId': [27, 28] }
       ],
     'MENU_PROP': '1', 'roleId': [27, 28]
+  },
+  {
+    'id': 10, 'MODULE_ROUTE': '/uidpSynchroConfig', 'MODULE_OBJ': '', 'parentId': null, 'sort': 6, 'MENU_NAME': '云配置', 'MODULE_URL': 'frame_src/views/uidpSynchroConfig', 'MENU_ICON': 'fa fa-cog', 'children':
+      [
+        { 'id': 101, 'MODULE_ROUTE': 'SynchroConfig', 'MODULE_OBJ': 'SynchroConfig', 'parentId': 10, 'sort': 2, 'MENU_NAME': '云配置管理', 'MODULE_URL': 'frame_src/views/uidpSynchroConfig/', 'MENU_ICON': 'fa fa-universal-access', 'children': [], 'MENU_PROP': '1', 'roleId': [27, 28] }
+      ],
+    'MENU_PROP': '1', 'roleId': [27, 28]
   }
 ]
 
