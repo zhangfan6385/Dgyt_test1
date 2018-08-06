@@ -1,5 +1,5 @@
 
-//import Mock from 'mockjs'
+import Mock from 'mockjs'
 //import loginAPI from './login'
 //import logInfoAPI from './logInfo'
 //import userAPI from './user'
