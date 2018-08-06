@@ -117,8 +117,8 @@ export default {
       code: "",
       list: [],
       sysmessage: "测试平台",
-      copyright: ""
-    };
+      copyright: "",
+    }
   },
   methods: {
     handleCommand(command) {
@@ -201,16 +201,17 @@ export default {
         //console.log(response.data.copyright.CONF_VALUE);
         //console.log(response.data.itemtype);
         //console.log(response.data.cloudorg.CONF_VALUE);
+        console.log(response.data)
         this.copyright = response.data.copyright.CONF_VALUE;
         this.sysmessage = response.data.sysname.CONF_VALUE;
         this.$store.state.user.UseOrg = Boolean(
-          response.data.cloudorg.CONF_VALUE
+          response.data.cloudorg.CONF_VALUE      
         );
         this.$store.state.user.sysName = response.data.sysname.CONF_VALUE;
         this.list = response.data.itemtype;
-
         this.radio = this.list[0].key;
         this.code = this.list[0].user_code;
+
       });
     }
   },
