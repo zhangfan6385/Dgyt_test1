@@ -66,7 +66,16 @@ export default {
       if (!route) {
         return false
       }
-      this.$store.dispatch('addVisitedViews', route)
+      var activeTag = document.querySelector('.tags-view-container .tags-view-wrapper .tags-view-item.active')
+      var activeColor = '#3A8EE6'
+      if (activeTag != null) {
+        activeColor = activeTag.style.backgroundColor
+        activeTag.removeAttribute('style')
+      }
+      this.$store.dispatch('addVisitedViews', route).then(res => {
+        var newActiveTag = document.querySelector('.tags-view-container .tags-view-wrapper .tags-view-item.active')
+        newActiveTag.style.cssText = 'background-color:' + activeColor + ';border-color:' + activeColor// 替换颜色
+      })
     },
     moveToCurrentTag() {
       const tags = this.$refs.tag
