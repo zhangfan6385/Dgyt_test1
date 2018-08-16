@@ -1,4 +1,4 @@
-import { param2Obj } from '@/frame_src/utils'
+﻿import { param2Obj } from '@/frame_src/utils'
 import merge from 'element-ui/src/utils/merge'
 const roleMenuList = [
   {
@@ -27,15 +27,30 @@ const testMenuList = [
 ]
 
 const menuList1 = [
-  {
-    'id': 1, 'MODULE_ROUTE': '/userinfoViews', 'MODULE_OBJ': '', 'parentId': null, 'sort': 0, 'MENU_NAME': '用户管理', 'MODULE_URL': 'frame_src/views/userinfoViews', 'MENU_ICON': 'fa fa-dashboard', 'children': [
-      { 'id': 91, 'MODULE_ROUTE': 'user-login-manager', 'MODULE_OBJ': 'userLoginManager', 'parentId': 31, 'sort': 0, 'MENU_NAME': '登陆用户', 'MODULE_URL': 'frame_src/views/userinfoViews/', 'MENU_ICON': 'fa fa-bank', 'children': [], 'MENU_PROP': '1', 'roleId': [26, 27] },
-      { 'id': 92, 'MODULE_ROUTE': 'user-manager', 'MODULE_OBJ': 'userManager', 'parentId': 31, 'sort': 0, 'MENU_NAME': '注册用户', 'MODULE_URL': 'frame_src/views/userinfoViews/', 'MENU_ICON': 'fa fa-bank', 'children': [], 'MENU_PROP': '1', 'roleId': [26, 27] },
-      { 'id': 93, 'MODULE_ROUTE': 'user-password-manager', 'MODULE_OBJ': 'userPasswordManager', 'parentId': 31, 'sort': 0, 'MENU_NAME': '修改密码', 'MODULE_URL': 'frame_src/views/userinfoViews/', 'MENU_ICON': 'fa fa-area-chart', 'children': [], 'MENU_PROP': '1', 'roleId': [26, 27] },
-      { 'id': 1000, 'MODULE_ROUTE': 'test1', 'MODULE_OBJ': 'test1', 'parentId': 31, 'sort': 0, 'MENU_NAME': '第三方应用演示', 'MODULE_URL': 'app_src/views/', 'MENU_ICON': 'fa fa-area-chart', 'children': [], 'MENU_PROP': '1', 'roleId': [26, 27] },
-      { 'id': 1001, 'MODULE_ROUTE': 'test2', 'MODULE_OBJ': 'test', 'parentId': 31, 'sort': 0, 'MENU_NAME': '第三方网页演示', 'MODULE_URL': 'app_src/views/', 'MENU_ICON': 'fa fa-area-chart', 'children': [], 'MENU_PROP': '1', 'roleId': [26, 27] }
-    ],
-    'MENU_PROP': '1', 'roleId': [26, 27]
+{
+    'SYS_CODE': '0',
+    'id': '6b773e53-3f3c-4f58-8e89-86a5e223ac33',
+    'MENU_NAME': 'Demo',
+    'parentId': '',
+    'MENU_ICON': 'documentation',
+    'MODULE_URL': 'frame_src/views/demo',
+    'MODULE_ROUTE': '/demo',
+    'MODULE_OBJ': '',
+    'MENU_PROP': '1',
+    'MENU_ORDER': 6,
+    'children': [{
+      'SYS_CODE': '0',
+      'id': 'dd901286-d7ba-4c3b-b75a-84c0edc42eff',
+      'MENU_NAME': 'Demo案例',
+      'parentId': '6b773e53-3f3c-4f58-8e89-86a5e223ac33',
+      'MENU_ICON': 'documentation',
+      'MODULE_URL': 'frame_src/views/demo/',
+      'MODULE_ROUTE': 'demo',
+      'MODULE_OBJ': 'demo',
+      'MENU_PROP': '1',
+      'MENU_ORDER': 0,
+      'children': []
+    }]
   },
   {
     'id': 31, 'MODULE_ROUTE': '/uidpConfigViews', 'MODULE_OBJ': '', 'parentId': null, 'sort': 1, 'MENU_NAME': '基础信息管理', 'MODULE_URL': 'frame_src/views/uidpConfigViews', 'MENU_ICON': 'fa fa-upload', 'children':
