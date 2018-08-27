@@ -106,8 +106,8 @@
         </el-form-item> 
         
         <el-form-item label="是否推送服务" prop="SYNC_FLAG">
-            <el-radio v-model="temp.SYNC_FLAG" label="0">开启</el-radio>
-            <el-radio v-model="temp.SYNC_FLAG" label="1">关闭</el-radio>
+            <el-radio v-model="temp.SYNC_FLAG" :label="0">开启</el-radio>
+            <el-radio v-model="temp.SYNC_FLAG" :label="1">关闭</el-radio>
         </el-form-item>
 
         <el-form-item label="备注" prop="REMARK">
