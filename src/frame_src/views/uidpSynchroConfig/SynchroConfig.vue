@@ -27,9 +27,14 @@
           <span>{{scope.row.SERVER_PORT}}</span>
         </template>
       </el-table-column>
-      <el-table-column width="140px" align="center" label="服务器地址">
+      <el-table-column width="140px" align="center" label="服务地址">
         <template slot-scope="scope">
           <span>{{scope.row.SERVER_URL}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column width="140px" align="center" label="认证地址">
+        <template slot-scope="scope">
+          <span>{{scope.row.AUTHENTICATION_URL}}</span>
         </template>
       </el-table-column>
       <el-table-column width="140px" align="center" label="是否推送服务">
@@ -92,9 +97,14 @@
         </el-form-item>
     
 
-        <el-form-item  label="服务器地址" prop="SERVER_URL">
+        <el-form-item  label="服务地址" prop="SERVER_URL">
             <el-input v-model="temp.SERVER_URL"></el-input>
         </el-form-item> 
+        
+        <el-form-item  label="认证地址" prop="AUTHENTICATION_URL">
+            <el-input v-model="temp.AUTHENTICATION_URL"></el-input>
+        </el-form-item> 
+        
         <el-form-item label="是否推送服务" prop="SYNC_FLAG">
             <el-radio v-model="temp.SYNC_FLAG" label="0">开启</el-radio>
             <el-radio v-model="temp.SYNC_FLAG" label="1">关闭</el-radio>
@@ -193,6 +203,7 @@ export default {
         SERVER_IP: '',
         SERVER_PORT: '',
         SERVER_URL:'',
+        AUTHENTICATION_URL:'',
         REMARK:''
       },
       dialogFormVisible: false,
@@ -249,6 +260,7 @@ export default {
         SERVER_IP: '',
         SERVER_PORT: '',
         SERVER_URL:'',
+        AUTHENTICATION_URL:'',
         REMARK:''
       }
     },
