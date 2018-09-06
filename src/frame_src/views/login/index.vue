@@ -43,7 +43,7 @@
        <br>
       <el-button type="primary" style="width:100%;margin-bottom:30px;background-color:#409EFF;border-color:#409EFF" :loading="loading" @click.native.prevent="handleLogin">{{$t('login.logIn')}}</el-button>
       <div class="copyright">
-        ©{{copyright}}版权所有
+        ©{{copyright}}
       </div>
 
       <!-- <div class="tips">
@@ -198,10 +198,6 @@ export default {
     },
     GetTitle() {
       GetTitle().then(response => {
-        //console.log(response.data.copyright.CONF_VALUE);
-        //console.log(response.data.itemtype);
-        //console.log(response.data.cloudorg.CONF_VALUE);
-        console.log(response.data)
         this.copyright = response.data.copyright.CONF_VALUE;
         this.sysmessage = response.data.sysname.CONF_VALUE;
         this.$store.state.user.UseOrg = Boolean(
@@ -211,7 +207,7 @@ export default {
         this.list = response.data.itemtype;
         this.radio = this.list[0].key;
         this.code = this.list[0].user_code;
-
+        document.title=this.sysmessage;
       });
     }
   },
@@ -350,7 +346,7 @@ $light_gray: #eee;
     margin-left: 150px;
     margin-bottom: 35px;
     color: gray;
-    font-family: "华文楷体";
+    font-family: "微软雅黑";
     font-size: 13px;
   }
 }

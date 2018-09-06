@@ -279,8 +279,9 @@
             let type = 'success'
             if (response.data.code === 2000) {
               type = 'success'
-              this.updateTreeNode(this.menuTree, merge({}, this.form))
+             this.updateTreeNode(this.menuTree, merge({}, this.form))
               this.loadSelectTree()
+              this.load();
             } else {
               type = 'error'
             }

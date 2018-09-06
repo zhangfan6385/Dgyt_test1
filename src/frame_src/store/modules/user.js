@@ -24,7 +24,8 @@ const user = {
     userId: '',
     userSex: '',
     roleLevel: '',
-    UseOrg:''
+    UseOrg:'',
+    userType:'0'
   },
 
   mutations: {
@@ -81,6 +82,9 @@ const user = {
     },
     SET_ROLE_LEVEL: (state, roleLevel) => {
       state.roleLevel = roleLevel
+    },
+    SET_USERTYPE:(state,userType)=>{
+      state.userType=userType
     }
   },
 
@@ -149,6 +153,7 @@ const user = {
           commit('SET_USER_SEX', data.userSex)
           commit('SET_CODE', data.userCode)
           commit('SET_TOKEN', data.token)
+          commit('SET_USERTYPE', data.userType)
           resolve(response)
         }).catch(error => {
           reject(error)

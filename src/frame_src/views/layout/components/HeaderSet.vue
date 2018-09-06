@@ -33,9 +33,9 @@
             <i class="el-icon-caret-bottom"></i>
         </div>
         <!-- <svg-icon icon-class="user" style="color:white;width:25px;height:25px;vertical-align: middle;cursor: pointer;"/> -->
-        <el-dropdown-menu slot="dropdown">
+        <el-dropdown-menu slot="dropdown" v-if="menu_prop==='0'">
           <router-link to="/userinfoViews/user-password-manager">
-            <el-dropdown-item>
+            <el-dropdown-item >
               修改密码
             </el-dropdown-item>
           </router-link>
@@ -44,7 +44,14 @@
             <span @click="logout" style="display:block;">{{$t('navbar.logOut')}}</span>
           </el-dropdown-item>
         </el-dropdown-menu>
+         <el-dropdown-menu slot="dropdown" v-if="menu_prop==='1'">
+
+          <el-dropdown-item>
+            <span @click="logout" style="display:block;">{{$t('navbar.logOut')}}</span>
+          </el-dropdown-item>
+        </el-dropdown-menu>
       </el-dropdown>
+    
     </div>
   </el-menu>
 </template>
@@ -63,7 +70,7 @@ export default {
     ThemePicker
   }, data() {
     return {
-
+      menu_prop:'0'
     }
   },
   computed: {
@@ -92,7 +99,10 @@ export default {
         location.reload()// In order to re-instantiate the vue-router object to avoid bugs
       })
     }
-  }
+  },
+  mounted() {
+    this.menu_prop =this.$store.state.user.userType;
+  },
 }
 </script>
 
