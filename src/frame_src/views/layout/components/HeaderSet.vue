@@ -97,11 +97,17 @@ export default {
     logout() {
       this.$store.dispatch('LogOut').then(() => {
         location.reload()// In order to re-instantiate the vue-router object to avoid bugs
+        //this.$router.push({path:'/login'})
       })
+
     }
+  },
+  created(){
+    
   },
   mounted() {
     this.menu_prop =this.$store.state.user.userType;
+    
   },
 }
 </script>

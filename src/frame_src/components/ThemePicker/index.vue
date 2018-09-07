@@ -35,9 +35,12 @@ export default {
 
   methods: {
     handleSetLanguage(style) {
+      this.$store.state.user.themClass=style
       const themeCluster = this.getThemeCluster(style.replace('#', ''))
+      
       const originalCluster = this.getThemeCluster(lastTheme.replace('#', ''))
       var tagsColor = document.querySelector('.tags-view-container .tags-view-wrapper .tags-view-item.active')
+      console.log(style+'dd')
       tagsColor.style.cssText = 'background-color:' + style + ';border-color:' + style// 替换颜色
       var subMenu = document.querySelector('.sidebar-container .theme')
       if (style === '#3A8EE6') { // 蓝
@@ -161,45 +164,53 @@ export default {
       clusters.push(shadeColor(theme, 0.1))
       return clusters
     }
-  }, created() {
-    const style = '#3A8EE6'//409EFF
-    const themeCluster = this.getThemeCluster(style.replace('#', ''))
-    const originalCluster = this.getThemeCluster(lastTheme.replace('#', ''))
-    const getHandler = (variable, id) => {
-      return () => {
-        const originalCluster = this.getThemeCluster(ORIGINAL_THEME.replace('#', ''))
-        const newStyle = this.updateStyle(this[variable], originalCluster, themeCluster)
-        let styleTag = document.getElementById(id)
-        if (!styleTag) {
-          styleTag = document.createElement('style')
-          styleTag.setAttribute('id', id)
-          document.head.appendChild(styleTag)
-        }
-        styleTag.innerText = newStyle
-      }
-    }
+  },
+  beforeUpdate() {
+    var st=this.$store.state.user.themClass
+    //  this.handleSetLanguage(st)
+  },
+  created() {
+    //console.log(this.$store.state.user.themClass+'sdfd');
+    //this.handleSetLanguage(this.$store.state.user.themClass)
+  //   const style = '#3A8EE6'//409EFF
+  //   //const style=this.$store.state.user.themClass
+  //   const themeCluster = this.getThemeCluster(style.replace('#', ''))
+  //   const originalCluster = this.getThemeCluster(lastTheme.replace('#', ''))
+  //   const getHandler = (variable, id) => {
+  //     return () => {
+  //       const originalCluster = this.getThemeCluster(ORIGINAL_THEME.replace('#', ''))
+  //       const newStyle = this.updateStyle(this[variable], originalCluster, themeCluster)
+  //       let styleTag = document.getElementById(id)
+  //       if (!styleTag) {
+  //         styleTag = document.createElement('style')
+  //         styleTag.setAttribute('id', id)
+  //         document.head.appendChild(styleTag)
+  //       }
+  //       styleTag.innerText = newStyle
+  //     }
+  //   }
 
-    const chalkHandler = getHandler('chalk', 'chalk-style')
+  //   const chalkHandler = getHandler('chalk', 'chalk-style')
 
-    if (!this.chalk) {
-      const url = `https://unpkg.com/element-ui@${version}/lib/theme-chalk/index.css`
-      this.getCSSString(url, chalkHandler, 'chalk')
-    } else {
-      chalkHandler()
-    }
+  //   if (!this.chalk) {
+  //     const url = `https://unpkg.com/element-ui@${version}/lib/theme-chalk/index.css`
+  //     this.getCSSString(url, chalkHandler, 'chalk')
+  //   } else {
+  //     chalkHandler()
+  //   }
 
-    const styles = [].slice.call(document.querySelectorAll('style'))
-      .filter(style => {
-        const text = style.innerText
-        return new RegExp(lastTheme, 'i').test(text) && !/Chalk Variables/.test(text)
-      })
-    styles.forEach(style => {
-      const { innerText } = style
-      if (typeof innerText !== 'string') return
-      style.innerText = this.updateStyle(innerText, originalCluster, themeCluster)
-    })
-    lastTheme = style
-  }
+  //   const styles = [].slice.call(document.querySelectorAll('style'))
+  //     .filter(style => {
+  //       const text = style.innerText
+  //       return new RegExp(lastTheme, 'i').test(text) && !/Chalk Variables/.test(text)
+  //     })
+  //   styles.forEach(style => {
+  //     const { innerText } = style
+  //     if (typeof innerText !== 'string') return
+  //     style.innerText = this.updateStyle(innerText, originalCluster, themeCluster)
+  //   })
+  //   lastTheme = style
+   }
 }
 </script>
 
