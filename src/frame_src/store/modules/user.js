@@ -26,7 +26,7 @@ const user = {
     roleLevel: '',
     UseOrg:'',
     userType:'0',
-    themClass:'#C03639'
+    themClass:'#3A8EE6'//蓝色
   },
 
   mutations: {
