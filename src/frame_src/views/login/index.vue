@@ -19,47 +19,51 @@
             </el-header>
             <el-main>
                 <el-row type="flex">
-                    <el-col :span="24">
-                        <div class="loginform">
-                            <div class="header">
-                                <div class="logo">
-                                    用户登录
+                    <el-col :span="2"></el-col>
+                    <el-col :span="20">
+                        <div class="background">
+                            <!-- <img src="../../../frame_src/imgs/background.png" alt=""> -->
+                            <div class="loginform">
+                                <div class="header">
+                                    <div class="logo">
+                                        用户登录
+                                    </div>
                                 </div>
+                                <el-form class="login-form" autoComplete="on" :model="loginForm" :rules="loginRules" ref="loginForm" label-position="left">
+                                    <el-form-item prop="username">
+                                        <el-input name="username" type="text" v-model="loginForm.username" autoComplete="on" placeholder="请输入账号">
+                                            <template slot="prepend">
+                                                <svg-icon icon-class="user" />
+                                            </template>
+                                            <el-dropdown class="show-pwd" @command="handleCommand" slot="append">
+                                                <span class="el-dropdown-link">
+                                                    {{radio}}<i class="el-icon-arrow-down el-icon--right"></i>
+                                                </span>
+                                                <el-dropdown-menu slot="dropdown">
+                                                    <div v-for="(item,index) in list" :key="index">
+                                                        <el-dropdown-item :command="item.key">{{item.key}}</el-dropdown-item>
+                                                    </div>
+                                                </el-dropdown-menu>
+                                            </el-dropdown>
+                                        </el-input>
+                                    </el-form-item>
+
+                                    <el-form-item prop="password">
+                                        <el-input name="password" :type="passwordType" @keyup.enter.native="handleLogin" v-model="loginForm.password" autoComplete="on" placeholder="密码">
+                                            <template slot="prepend">
+                                                <svg-icon icon-class="password" />
+                                            </template>
+                                            <template slot="append">
+                                                <el-button icon="el-icon-view" @click="showPwd" />
+                                            </template>
+                                        </el-input>
+                                    </el-form-item>
+
+                                    <el-form-item>
+                                        <el-button type="primary" class="button" :loading="loading" @click.native.prevent="handleLogin">用户登录</el-button>
+                                    </el-form-item>
+                                </el-form>
                             </div>
-                            <el-form class="login-form" autoComplete="on" :model="loginForm" :rules="loginRules" ref="loginForm" label-position="left">
-                                <el-form-item prop="username">
-                                    <el-input name="username" type="text" v-model="loginForm.username" autoComplete="on" placeholder="请输入账号">
-                                        <template slot="prepend">
-                                            <svg-icon icon-class="user" />
-                                        </template>
-                                        <el-dropdown class="show-pwd" @command="handleCommand" slot="append">
-                                            <span class="el-dropdown-link">
-                                                {{radio}}<i class="el-icon-arrow-down el-icon--right"></i>
-                                            </span>
-                                            <el-dropdown-menu slot="dropdown">
-                                                <div v-for="(item,index) in list" :key="index">
-                                                    <el-dropdown-item :command="item.key">{{item.key}}</el-dropdown-item>
-                                                </div>
-                                            </el-dropdown-menu>
-                                        </el-dropdown>
-                                    </el-input>
-                                </el-form-item>
-
-                                <el-form-item prop="password">
-                                    <el-input name="password" :type="passwordType" @keyup.enter.native="handleLogin" v-model="loginForm.password" autoComplete="on" placeholder="密码">
-                                        <template slot="prepend">
-                                            <svg-icon icon-class="password" />
-                                        </template>
-                                        <template slot="append">
-                                            <el-button icon="el-icon-view" @click="showPwd" />
-                                        </template>
-                                    </el-input>
-                                </el-form-item>
-
-                                <el-form-item>
-                                    <el-button type="primary" class="button" :loading="loading" @click.native.prevent="handleLogin">用户登录</el-button>
-                                </el-form-item>
-                            </el-form>
                         </div>
                     </el-col>
                 </el-row>
@@ -151,6 +155,7 @@ export default {
             }
         },
         handleLogin() {
+            //console.log(this.$store.state.user.themClass+'zzzzzzzzzzzz')
             this.$store.state.user.token = "";
             this.$refs.loginForm.validate(valid => {
                 if (valid) {
@@ -299,19 +304,34 @@ export default {
         }
     }
     .el-main {
-        background-color: blue;
+        background-color: rgb(82, 82, 236);
         min-height: 520px;
-        // -webkit-filter: blur(5px);
-        // -moz-filter: blur(5px);
-        // -ms-filter: blur(5px);
-        // filter: blur(5px);
-        // //background: url(xxxxxxxxxxx);
-        // overflow: hidden;
+        background: url("../../../frame_src/imgs/background.png");
+        //background-repeat: no-repeat;
+        background-position: center;
+        overflow: hidden;
+        position: relative;
+        .background {
+            //width: 180px;
+            //height: 180px;
+            //overflow: hidden;
+            position: relative;
+        }
+        .background:after {
+            position: absolute;
+            content: "";
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            box-shadow: 0 0 30px 10px rgb(82, 82, 236) inset;
+        }
         .loginform {
-            margin-top: 15px;
+            //position: absolute;
+            margin-top: 25px;
             background: white;
-            width: 400px;
-            height: 430px;
+            width: 380px;
+            height: 400px;
             border-radius: 10px;
             filter: alpha(opacity=50);
             -moz-opacity: 0.8;
@@ -319,6 +339,7 @@ export default {
             opacity: 0.8;
             float: right;
             margin-right: 10%;
+            z-index: 2;
             .header {
                 line-height: 40px;
                 font-size: 15px;
@@ -341,7 +362,7 @@ export default {
                 .el-input {
                     margin-top: 13%;
                     margin-left: 15%;
-                    width: 70%;
+                    width: 80%;
                 }
             }
             .el-form-item__error {
@@ -355,6 +376,15 @@ export default {
             }
         }
     }
+    // .el-main:after {
+    //     position: absolute;
+    //     width: 100%;
+    //     height: 100%;
+    //     top: 0;
+    //     left: 0;
+    //     //border-radius: 50%;
+    //     box-shadow: 0 0 30px 10px rgba(255, 255, 255, 0.7) inset;
+    // }
     .el-footer {
         background: white;
         height: 150px;

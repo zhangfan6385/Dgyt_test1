@@ -26,7 +26,7 @@ const user = {
     roleLevel: '',
     UseOrg:'',
     userType:'0',
-    themClass:'#3A8EE6'
+    themClass:'#C03639'
   },
 
   mutations: {
@@ -86,6 +86,9 @@ const user = {
     },
     SET_USERTYPE:(state,userType)=>{
       state.userType=userType
+    },
+    SET_THEMECLS:(state,themClass)=>{
+      state.themClass=themClass
     }
   },
 
@@ -106,6 +109,10 @@ const user = {
     }, setCode({ commit }, code) {
       commit('SET_CODE', code)
     },
+    setThemClass({commit},themClass){
+      commit('SET_THEMECLS',themClass)
+    },
+
 
     // 用户名登录
     LoginByUsername({ commit }, userInfo) {

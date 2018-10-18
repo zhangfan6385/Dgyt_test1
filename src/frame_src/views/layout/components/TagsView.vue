@@ -67,7 +67,8 @@ export default {
         return false
       }
       var activeTag = document.querySelector('.tags-view-container .tags-view-wrapper .tags-view-item.active')
-      var activeColor = '#3A8EE6'
+      var activeColor = this.$store.state.user.themClass
+      //console.log(activeColor+"ccccc");
       if (activeTag != null) {
         activeColor = activeTag.style.backgroundColor
         activeTag.removeAttribute('style')
