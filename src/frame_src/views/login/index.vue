@@ -85,7 +85,7 @@
 import LangSelect from "@/frame_src/components/LangSelect";
 import LogInUser from "./logInUser";
 import { Message } from "element-ui";
-import { GetTitle } from "@/frame_src/api/title";
+import { GetTitle,GetColor } from "@/frame_src/api/title";
 const userOptions = [
     { key: "ptr账号", user_code: "ptrUser" },
     { key: "员工账号", user_code: "user" },
@@ -236,6 +236,9 @@ export default {
                 document.title = this.sysmessage;
             });
         },
+        GetColor(){
+            this.$store.dispatch('GetColor','')
+        },
         getTime() {
             let date = new Date();
             let year = date.getFullYear();
@@ -264,6 +267,11 @@ export default {
                 "点";
         }
     },
+
+    beforeMount() {
+        this.GetColor();
+    },
+
 
     mounted() {
         this.GetTitle();

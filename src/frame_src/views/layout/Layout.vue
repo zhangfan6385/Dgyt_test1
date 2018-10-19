@@ -34,7 +34,9 @@
 <script>
 import { Navbar, Sidebar, AppMain, TagsView, HeaderSet } from "./components";
 import ResizeMixin from "./mixin/ResizeHandler";
-const ORIGINAL_THEME = "#409EFF";
+const version = require("element-ui/package.json").version; // element-ui version from node_modules
+const ORIGINAL_THEME = "#409EFF"; // default color
+// const ORIGINAL_THEME = '#3A8EE6' // default color
 var lastTheme = "#3A8EE6";
 
 export default {
@@ -82,6 +84,11 @@ export default {
         },
         changeSideBarColour() {
             let style = this.$store.state.user.themClass;
+            const themeCluster = this.getThemeCluster(style.replace("#", ""));
+            const originalCluster = this.getThemeCluster(
+                lastTheme.replace("#", "")
+            );
+            console.log("changeSideBarColour" + style);
             var subMenu = document.querySelector(".sidebar-container .theme");
             if (style === "#3A8EE6") {
                 // 蓝
@@ -108,6 +115,53 @@ export default {
                 subMenu.classList.remove("themeGreen", "themeRed", "themeGray");
                 subMenu.classList.add("themeBlue");
             }
+            const getHandler = (variable, id) => {
+                return () => {
+                    const originalCluster = this.getThemeCluster(
+                        ORIGINAL_THEME.replace("#", "")
+                    );
+                    const newStyle = this.updateStyle(
+                        this[variable],
+                        originalCluster,
+                        themeCluster
+                    );
+                    let styleTag = document.getElementById(id);
+                    if (!styleTag) {
+                        styleTag = document.createElement("style");
+                        styleTag.setAttribute("id", id);
+                        document.head.appendChild(styleTag);
+                    }
+                    styleTag.innerText = newStyle;
+                };
+            };
+
+            const chalkHandler = getHandler("chalk", "chalk-style");
+
+            if (!this.chalk) {
+                const url = `https://unpkg.com/element-ui@${version}/lib/theme-chalk/index.css`;
+                this.getCSSString(url, chalkHandler, "chalk");
+            } else {
+                chalkHandler();
+            }
+
+            const styles = [].slice
+                .call(document.querySelectorAll("style"))
+                .filter(style => {
+                    const text = style.innerText;
+                    return (
+                        new RegExp(lastTheme, "i").test(text) &&
+                        !/Chalk Variables/.test(text)
+                    );
+                });
+            styles.forEach(style => {
+                const { innerText } = style;
+                if (typeof innerText !== "string") return;
+                style.innerText = this.updateStyle(
+                    innerText,
+                    originalCluster,
+                    themeCluster
+                );
+            });
         },
         changeTagColour() {
             const route = "/";
@@ -115,7 +169,7 @@ export default {
             var tagsColor = document.querySelector(
                 ".tags-view-container .tags-view-wrapper .tags-view-item.active"
             );
-            console.log(tagsColor)
+            console.log(tagsColor);
 
             //console.log(this.$store.state.user.themClass);
             if (tagsColor.style === null) {
@@ -129,22 +183,90 @@ export default {
                 //         ";border-color:" +
                 //         activeColor; // 替换颜色
                 //});
-                console.log('111111111111111')
+                console.log("111111111111111");
             } else {
                 tagsColor.style.cssText =
                     "background-color:" + style + ";border-color:" + style; // 替换颜色
                 console.log(tagsColor.style.cssText);
             }
+        },
+        updateStyle(style, oldCluster, newCluster) {
+            let newStyle = style;
+            oldCluster.forEach((color, index) => {
+                newStyle = newStyle.replace(
+                    new RegExp(color, "ig"),
+                    newCluster[index]
+                );
+            });
+            return newStyle;
+        },
+
+        getCSSString(url, callback, variable) {
+            const xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    this[variable] = xhr.responseText.replace(
+                        /@font-face{[^}]+}/,
+                        ""
+                    );
+                    callback();
+                }
+            };
+            xhr.open("GET", url);
+            xhr.send();
+        },
+
+        getThemeCluster(theme) {
+            const tintColor = (color, tint) => {
+                let red = parseInt(color.slice(0, 2), 16);
+                let green = parseInt(color.slice(2, 4), 16);
+                let blue = parseInt(color.slice(4, 6), 16);
+
+                if (tint === 0) {
+                    // when primary color is in its rgb space
+                    return [red, green, blue].join(",");
+                } else {
+                    red += Math.round(tint * (255 - red));
+                    green += Math.round(tint * (255 - green));
+                    blue += Math.round(tint * (255 - blue));
+
+                    red = red.toString(16);
+                    green = green.toString(16);
+                    blue = blue.toString(16);
+
+                    return `#${red}${green}${blue}`;
+                }
+            };
+
+            const shadeColor = (color, shade) => {
+                let red = parseInt(color.slice(0, 2), 16);
+                let green = parseInt(color.slice(2, 4), 16);
+                let blue = parseInt(color.slice(4, 6), 16);
+
+                red = Math.round((1 - shade) * red);
+                green = Math.round((1 - shade) * green);
+                blue = Math.round((1 - shade) * blue);
+
+                red = red.toString(16);
+                green = green.toString(16);
+                blue = blue.toString(16);
+
+                return `#${red}${green}${blue}`;
+            };
+
+            const clusters = [theme];
+            for (let i = 0; i <= 9; i++) {
+                clusters.push(tintColor(theme, Number((i / 10).toFixed(2))));
+            }
+            clusters.push(shadeColor(theme, 0.1));
+            return clusters;
         }
     },
     mounted() {
         this.changeSideBarColour();
         this.changeTagColour();
-        
     },
-    updated() {
-        
-    }
+    updated() {}
 };
 </script>
 

@@ -1,5 +1,6 @@
 import { loginByUsername, getUserInfo } from '@/frame_src/api/login'
 import { getToken, setToken, removeToken } from '@/frame_src/utils/auth'
+import { GetColor } from '@/frame_src/api/title'
 
 const user = {
   state: {
@@ -128,6 +129,23 @@ const user = {
             reject(response.data.message)
           }
         }).catch(error => {
+          reject(error) 
+        })
+      })
+    },
+
+    GetColor({commit}){
+      return new Promise((resolve,reject)=>{
+        GetColor('').then(response=>{
+          if(response.data.code===2000){
+            const data=response.data
+            commit('SET_THEMECLS',data.item.CONF_VALUE)
+            console.log(data.item.CONF_VALUE)
+            resolve(response)
+          }else{
+            reject(response.data.message)
+          }
+        }).catch(error=>{
           reject(error)
         })
       })

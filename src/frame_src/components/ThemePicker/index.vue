@@ -40,7 +40,6 @@ export default {
       
       const originalCluster = this.getThemeCluster(lastTheme.replace('#', ''))
       var tagsColor = document.querySelector('.tags-view-container .tags-view-wrapper .tags-view-item.active')
-      console.log(style+'dd')
       tagsColor.style.cssText = 'background-color:' + style + ';border-color:' + style// 替换颜色
       var subMenu = document.querySelector('.sidebar-container .theme')
       if (style === '#3A8EE6') { // 蓝
