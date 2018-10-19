@@ -6,6 +6,7 @@ import permission from './modules/permission'
 import tagsView from './modules/tagsView'
 import user from './modules/user'
 import getters from './getters'
+import createPersistedState from 'vuex-persistedstate';
 
 Vue.use(Vuex)
 
@@ -17,7 +18,10 @@ const store = new Vuex.Store({
     tagsView,
     user
   },
-  getters
+  getters,
+  // plugins: [createPersistedState({
+  //   storage:window.sessionStorage
+  // })]
 })
 
 export default store
