@@ -12,11 +12,15 @@
                     </el-col>
                     <el-col :span="10">
                         <div class="info">
-                            大港油田信息中心|{{currentTime}}
+                            {{currentTime}}
                         </div>
                     </el-col>
                 </el-row>
             </el-header>
+            <div  style="width:100%;height:100%;" class="back">
+                <el-row type="flex" >
+                    <!-- <el-col :span="2"></el-col> -->
+                    <el-col  :span="24">
             <el-main>
                 <el-row type="flex">
                     <el-col :span="24">
@@ -63,7 +67,10 @@
                         </div>
                     </el-col>
                 </el-row>
-            </el-main>
+            </el-main></el-col>
+             <!-- <el-col :span="2"></el-col> -->
+            </el-row></div>
+
             <el-footer>
                 <div class="copyright">
                     ©{{copyright}}
@@ -298,8 +305,29 @@ export default {
             color: gray;
         }
     }
+//     .back {
+//     overflow: hidden;
+//     background:rgb(35, 48, 148);
+//     box-shadow:0 0 150px 300px rgba(12, 25, 141, 0.7) inset;
+// }
     .el-main {
-        background-color: blue;
+//         :after{
+//   position:absolute;
+//   content:'';
+//   width:100%;
+//   height:100%;
+//   top:0;
+//   left:0;
+//   border-radius:2%;
+//   box-shadow:0 0 30px 10px rgba(29, 25, 221, 0.7) inset;
+// }
+        border-left:0px;
+        box-shadow:0 0 40px 30px rgba(12, 25, 141, 0.7) inset;
+        width:100%;//1100px;
+       // margin-left:30px;
+        background:url('../../../frame_src/imgs/loginback.png');
+        background-repeat: no-repeat;
+        background-size:100%;
         min-height: 520px;
         // -webkit-filter: blur(5px);
         // -moz-filter: blur(5px);
@@ -355,6 +383,7 @@ export default {
             }
         }
     }
+    
     .el-footer {
         background: white;
         height: 150px;
