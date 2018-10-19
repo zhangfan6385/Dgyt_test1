@@ -369,7 +369,7 @@ export default {
                 .el-input {
                     margin-top: 13%;
                     margin-left: 15%;
-                    width: 70%;
+                    width: 80%;
                 }
             }
             .el-form-item__error {

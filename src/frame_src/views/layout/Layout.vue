@@ -110,23 +110,41 @@ export default {
             }
         },
         changeTagColour() {
+            const route = "/";
             let style = this.$store.state.user.themClass;
             var tagsColor = document.querySelector(
                 ".tags-view-container .tags-view-wrapper .tags-view-item.active"
             );
+            console.log(tagsColor)
 
             //console.log(this.$store.state.user.themClass);
-            tagsColor.style.cssText =
-                "background-color:" + style + ";border-color:" + style; // 替换颜色
-            console.log(tagsColor.style.cssText);
+            if (tagsColor.style === null) {
+                // this.$store.dispatch("addVisitedViews", route).then(res => {
+                //     var newActiveTag = document.querySelector(
+                //         ".tags-view-container .tags-view-wrapper .tags-view-item.active"
+                //     );
+                //     newActiveTag.style.cssText =
+                //         "background-color:" +
+                //         activeColor +
+                //         ";border-color:" +
+                //         activeColor; // 替换颜色
+                //});
+                console.log('111111111111111')
+            } else {
+                tagsColor.style.cssText =
+                    "background-color:" + style + ";border-color:" + style; // 替换颜色
+                console.log(tagsColor.style.cssText);
+            }
         }
     },
     mounted() {
         this.changeSideBarColour();
+        this.changeTagColour();
+        
     },
     updated() {
-        this.changeTagColour();
-    },
+        
+    }
 };
 </script>
 

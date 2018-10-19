@@ -9,3 +9,11 @@ export function GetTitle(query) { //查询登录标题
     params:query
   })
 }
+
+export function GetTitle(query) { //查询登录标题
+  return request({
+    url: 'Conf/getColor',
+    method: 'get',
+    params:query
+  })
+}

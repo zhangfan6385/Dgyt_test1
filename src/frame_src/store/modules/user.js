@@ -86,6 +86,9 @@ const user = {
     },
     SET_USERTYPE:(state,userType)=>{
       state.userType=userType
+    },
+    SET_THEMECLS:(state,themClass)=>{
+      state.themClass=themClass
     }
   },
 
