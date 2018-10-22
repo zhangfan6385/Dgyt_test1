@@ -350,17 +350,17 @@ export default {
         //background-size:cover;
         background-position: center;
         .loginform {
-            margin-top: 15px;
+            margin-top: 5%;
             background: white;
-            width: 400px;
-            height: 430px;
+            width: 350px;
+            height: 360px;
             border-radius: 10px;
             filter: alpha(opacity=50);
             -moz-opacity: 0.8;
             -khtml-opacity: 0.8;
             opacity: 0.8;
             float: right;
-            margin-right: 10%;
+            margin-right: 15%;
             .header {
                 line-height: 40px;
                 font-size: 15px;
@@ -371,7 +371,7 @@ export default {
                 background-color: rgba(184, 179, 179, 0.904);
             }
             .logo {
-                margin-left: 15%;
+                margin-left: 10%;
             }
             .el-form-item {
                 // border: 1px solid rgba(255, 255, 255, 0.1);
@@ -382,12 +382,12 @@ export default {
             .login-form {
                 .el-input {
                     margin-top: 13%;
-                    margin-left: 15%;
+                    margin-left: 10%;
                     width: 80%;
                 }
             }
             .el-form-item__error {
-                margin-left: 15%;
+                margin-left: 10%;
             }
             .button {
                 float: right;
