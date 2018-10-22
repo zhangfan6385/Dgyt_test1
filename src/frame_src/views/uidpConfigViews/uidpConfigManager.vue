@@ -49,7 +49,7 @@
     </div>
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
 
-      <el-form :rules="rules" ref="dataForm" :model="temp" label-position="left" label-width="120px" style='width: 400px; margin-left:20px;'>
+      <el-form :rules="rules" ref="dataForm" :model="temp" label-position="left" label-width="120px" style='width: 450px; margin-left:20px;'>
         <el-form-item v-if="dialogStatus=='create'" :label="$t('configTable.CONF_CODE')" prop="CONF_CODE">
           <el-input v-model="temp.CONF_CODE"></el-input>
         </el-form-item>
@@ -57,13 +57,19 @@
           <span>{{temp.CONF_CODE}}</span>
         </el-form-item>
         <el-form-item :label="$t('configTable.CONF_VALUE')" prop="CONF_VALUE">
-          <el-input v-model="temp.CONF_VALUE"></el-input>
-          <div v-if="temp.CONF_CODE==='COLOR'">
+          <el-input v-model="temp.CONF_VALUE" v-if="temp.CONF_CODE!='COLOR'"></el-input>
+          <el-radio-group v-model="temp.CONF_VALUE" v-else-if="temp.CONF_CODE==='COLOR'">
+              <el-radio :label="'#3A8EE6'"><span style="color:#3A8EE6">蓝色</span></el-radio>
+              <el-radio :label="'#C03639'"><span style="color:#C03639">红色</span></el-radio>
+              <el-radio :label="'#30B08F'"><span style="color:#30B08F">绿色</span></el-radio>
+              <el-radio :label="'#909399'"><span style="color:#909399">灰色</span></el-radio>
+          </el-radio-group>
+          <!-- <div v-if="temp.CONF_CODE==='COLOR'">
             提示：<span style="color:#3A8EE6">蓝色#3A8EE6</span>,
             <span style="color:#C03639">红色#C03639</span>,
             <span style="color:#30B08F">绿色#30B08F</span>,
             <span style="color:#909399">灰色#909399</span>。
-          </div>
+          </div> -->
         </el-form-item>
 
         <el-form-item :label="$t('configTable.CONF_NAME')" prop="CONF_NAME">
@@ -326,4 +332,9 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.filter-container{
+    .el-radio-group{
+        width: 300px;
+    }
+}
 </style>

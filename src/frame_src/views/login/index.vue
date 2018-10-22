@@ -331,18 +331,12 @@ export default {
 // }
         border-left:0px;
         box-shadow:0 0 40px 30px rgba(12, 25, 141, 0.7) inset;
-        width:100%;//1100px;
-       // margin-left:30px;
+        //width:100%;//1100px;
         background:url('../../../frame_src/imgs/loginback.png');
         background-repeat: no-repeat;
-        background-size:100%;
-        min-height: 520px;
-        // -webkit-filter: blur(5px);
-        // -moz-filter: blur(5px);
-        // -ms-filter: blur(5px);
-        // filter: blur(5px);
-        // //background: url(xxxxxxxxxxx);
-        // overflow: hidden;
+        //background-size:cover;
+        background-position: center;
+        height: 530px;
         .loginform {
             margin-top: 15px;
             background: white;
