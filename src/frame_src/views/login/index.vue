@@ -344,7 +344,7 @@ export default {
         border-left: 0px;
         box-shadow: 0 0 40px 30px #2f409a inset;
         width: 100%; //1100px;
-        height: 100%;
+        height: 550px;
         background: url("../../../frame_src/imgs/loginback.png");
         background-repeat: no-repeat;
         //background-size:cover;
