@@ -117,7 +117,7 @@ function filterAsyncRouter(asyncRouterMap, updateMenu) {
     if (route.id === updateMenu.id) {
       route.name = updateMenu.name
       if (updateMenu.icon.indexOf('fa+') >= 0) {
-        console.log('success')
+        //('success')
         route.icon = updateMenu.icon.replace('fa+', 'fa ')
       } else {
         route.icon = updateMenu.icon
@@ -141,7 +141,7 @@ function filterAsyncRouterDelete(asyncRouterMap, menuId) {
   for (let i = 0; i < asyncRouterMap.length; i++) {
     var route = asyncRouterMap[i]
     if (route.id === menuId) {
-      console.log('deleteSuccess')
+      //console.log('deleteSuccess')
       asyncRouterMap.splice(i, 1)
       return asyncRouterMap
     }
@@ -165,7 +165,7 @@ export default {
       }
       newMenu.children = []
       const parentMenu = menuList1.filter((item) => item.id === newMenu.parentId)
-      console.log(parentMenu)
+      //console.log(parentMenu)
       parentMenu[0].children.push(newMenu)
       localStorage.setItem('PERMISSION', JSON.stringify(menuList1))
       return {
@@ -215,11 +215,11 @@ export default {
       } else {
         currentRoute = menuList1
       }
-      console.log(keyCode)
-      console.log(typeof (keyCode))
+      //console.log(keyCode)
+      //console.log(typeof (keyCode))
       var accessedRouters = filterAsyncRouterDelete(currentRoute, Number(keyCode))
       localStorage.setItem('PERMISSION', JSON.stringify(accessedRouters))
-      console.log(accessedRouters)
+      //console.log(accessedRouters)
 
       return {
         operCode: operCode,

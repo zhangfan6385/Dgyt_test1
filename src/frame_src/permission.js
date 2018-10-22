@@ -75,8 +75,6 @@ router.beforeEach((to, from, next) => {
         store.dispatch('GetUserInfo').then(res => { // 拉取user_info
           // const roles = res.data.roles // note: roles 必须是一个数组 array! 像这样: ['editor','develop']
           const query = { sysCode: store.getters.sysCode, userId: store.getters.userId }
-          //console.log("我是getteruserid");
-          //console.log(store.getters.userId + "我是getteruserid");
           /*
           if (store.state.userId === '') {
             Message.error('请选择用户！')

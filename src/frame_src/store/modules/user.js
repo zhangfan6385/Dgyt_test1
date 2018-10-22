@@ -140,7 +140,7 @@ const user = {
           if(response.data.code===2000){
             const data=response.data
             commit('SET_THEMECLS',data.item.CONF_VALUE)
-            console.log(data.item.CONF_VALUE)
+            //console.log(data.item.CONF_VALUE)
             resolve(response)
           }else{
             reject(response.data.message)

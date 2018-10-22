@@ -88,7 +88,7 @@ export default {
             const originalCluster = this.getThemeCluster(
                 lastTheme.replace("#", "")
             );
-            console.log("changeSideBarColour" + style);
+            //console.log("changeSideBarColour" + style);
             var subMenu = document.querySelector(".sidebar-container .theme");
             if (style === "#3A8EE6") {
                 // 蓝

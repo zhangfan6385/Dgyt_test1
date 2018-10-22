@@ -17,59 +17,69 @@
                     </el-col>
                 </el-row>
             </el-header>
-            <div  style="width:100%;height:100%;" class="back">
-                <el-row type="flex" >
-                    <!-- <el-col :span="2"></el-col> -->
-                    <el-col  :span="24">
-            <el-main>
+            <div style="width:100%;height:100%;" class="back">
                 <el-row type="flex">
-                    <el-col :span="24">
-                        <div class="loginform">
-                            <div class="header">
-                                <div class="logo">
-                                    用户登录
-                                </div>
-                            </div>
-                            <el-form class="login-form" autoComplete="on" :model="loginForm" :rules="loginRules" ref="loginForm" label-position="left">
-                                <el-form-item prop="username">
-                                    <el-input name="username" type="text" v-model="loginForm.username" autoComplete="on" placeholder="请输入账号">
-                                        <template slot="prepend">
-                                            <svg-icon icon-class="user" />
-                                        </template>
-                                        <el-dropdown class="show-pwd" @command="handleCommand" slot="append">
-                                            <span class="el-dropdown-link">
-                                                {{radio}}<i class="el-icon-arrow-down el-icon--right"></i>
-                                            </span>
-                                            <el-dropdown-menu slot="dropdown">
-                                                <div v-for="(item,index) in list" :key="index">
-                                                    <el-dropdown-item :command="item.key">{{item.key}}</el-dropdown-item>
-                                                </div>
-                                            </el-dropdown-menu>
-                                        </el-dropdown>
-                                    </el-input>
-                                </el-form-item>
+                    <el-col :span="2"></el-col>
+                    <el-col :span="20">
+                        <el-main>
+                            <!-- <div class="mainbackground">
+                    <el-row type="flex">
+                        <el-col :span="2"></el-col>
+                        <el-col :span="20">
 
-                                <el-form-item prop="password">
-                                    <el-input name="password" :type="passwordType" @keyup.enter.native="handleLogin" v-model="loginForm.password" autoComplete="on" placeholder="密码">
-                                        <template slot="prepend">
-                                            <svg-icon icon-class="password" />
-                                        </template>
-                                        <template slot="append">
-                                            <el-button icon="el-icon-view" @click="showPwd" />
-                                        </template>
-                                    </el-input>
-                                </el-form-item>
+                        </el-col>
+                    </el-row>
+                </div> -->
+                            <el-row type="flex">
+                                <el-col :span="24">
+                                    <div class="loginform">
+                                        <div class="header">
+                                            <div class="logo">
+                                                用户登录
+                                            </div>
+                                        </div>
+                                        <el-form class="login-form" autoComplete="on" :model="loginForm" :rules="loginRules" ref="loginForm" label-position="left">
+                                            <el-form-item prop="username">
+                                                <el-input name="username" type="text" v-model="loginForm.username" autoComplete="on" placeholder="请输入账号">
+                                                    <template slot="prepend">
+                                                        <svg-icon icon-class="user" />
+                                                    </template>
+                                                    <el-dropdown class="show-pwd" @command="handleCommand" slot="append">
+                                                        <span class="el-dropdown-link">
+                                                            {{radio}}<i class="el-icon-arrow-down el-icon--right"></i>
+                                                        </span>
+                                                        <el-dropdown-menu slot="dropdown">
+                                                            <div v-for="(item,index) in list" :key="index">
+                                                                <el-dropdown-item :command="item.key">{{item.key}}</el-dropdown-item>
+                                                            </div>
+                                                        </el-dropdown-menu>
+                                                    </el-dropdown>
+                                                </el-input>
+                                            </el-form-item>
 
-                                <el-form-item>
-                                    <el-button type="primary" class="button" :loading="loading" @click.native.prevent="handleLogin">用户登录</el-button>
-                                </el-form-item>
-                            </el-form>
-                        </div>
+                                            <el-form-item prop="password">
+                                                <el-input name="password" :type="passwordType" @keyup.enter.native="handleLogin" v-model="loginForm.password" autoComplete="on" placeholder="密码">
+                                                    <template slot="prepend">
+                                                        <svg-icon icon-class="password" />
+                                                    </template>
+                                                    <template slot="append">
+                                                        <el-button icon="el-icon-view" @click="showPwd" />
+                                                    </template>
+                                                </el-input>
+                                            </el-form-item>
+
+                                            <el-form-item>
+                                                <el-button type="primary" class="button" :loading="loading" @click.native.prevent="handleLogin">用户登录</el-button>
+                                            </el-form-item>
+                                        </el-form>
+                                    </div>
+                                </el-col>
+                            </el-row>
+                        </el-main>
                     </el-col>
+                    <!-- <el-col :span="2"></el-col> -->
                 </el-row>
-            </el-main></el-col>
-             <!-- <el-col :span="2"></el-col> -->
-            </el-row></div>
+            </div>
 
             <el-footer>
                 <div class="copyright">
@@ -85,7 +95,7 @@
 import LangSelect from "@/frame_src/components/LangSelect";
 import LogInUser from "./logInUser";
 import { Message } from "element-ui";
-import { GetTitle,GetColor } from "@/frame_src/api/title";
+import { GetTitle, GetColor } from "@/frame_src/api/title";
 const userOptions = [
     { key: "ptr账号", user_code: "ptrUser" },
     { key: "员工账号", user_code: "user" },
@@ -236,8 +246,8 @@ export default {
                 document.title = this.sysmessage;
             });
         },
-        GetColor(){
-            this.$store.dispatch('GetColor','')
+        GetColor() {
+            this.$store.dispatch("GetColor", "");
         },
         getTime() {
             let date = new Date();
@@ -271,7 +281,6 @@ export default {
     beforeMount() {
         this.GetColor();
     },
-
 
     mounted() {
         this.GetTitle();
@@ -313,30 +322,33 @@ export default {
             color: gray;
         }
     }
-//     .back {
-//     overflow: hidden;
-//     background:rgb(35, 48, 148);
-//     box-shadow:0 0 150px 300px rgba(12, 25, 141, 0.7) inset;
-// }
+    //     .back {
+    //     overflow: hidden;
+    //     background:rgb(35, 48, 148);
+    //     box-shadow:0 0 150px 300px rgba(12, 25, 141, 0.7) inset;
+    // }
+    .back {
+        background: #2f409a;
+    }
     .el-main {
-//         :after{
-//   position:absolute;
-//   content:'';
-//   width:100%;
-//   height:100%;
-//   top:0;
-//   left:0;
-//   border-radius:2%;
-//   box-shadow:0 0 30px 10px rgba(29, 25, 221, 0.7) inset;
-// }
-        border-left:0px;
-        box-shadow:0 0 40px 30px rgba(12, 25, 141, 0.7) inset;
-        //width:100%;//1100px;
-        background:url('../../../frame_src/imgs/loginback.png');
+        //         :after{
+        //   position:absolute;
+        //   content:'';
+        //   width:100%;
+        //   height:100%;
+        //   top:0;
+        //   left:0;
+        //   border-radius:2%;
+        //   box-shadow:0 0 30px 10px rgba(29, 25, 221, 0.7) inset;
+        // }
+        border-left: 0px;
+        box-shadow: 0 0 40px 30px #2f409a inset;
+        width: 100%; //1100px;
+        height: 100%;
+        background: url("../../../frame_src/imgs/loginback.png");
         background-repeat: no-repeat;
         //background-size:cover;
         background-position: center;
-        height: 530px;
         .loginform {
             margin-top: 15px;
             background: white;
@@ -385,7 +397,7 @@ export default {
             }
         }
     }
-    
+
     .el-footer {
         background: white;
         height: 150px;
