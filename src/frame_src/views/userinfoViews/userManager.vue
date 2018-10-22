@@ -586,8 +586,10 @@ export default {
             this.listUserLoading = true;
             fetchUserForLoginList(this.listUserQuery).then(response => {
                 if (response.data.code === 2000) {
+                    if(response.data.items.length>0){
                     this.userList = response.data.items;
                     this.total2 = response.data.total;
+                    }
                     this.listUserLoading = false;
                 } else {
                     this.listUserLoading = false;
