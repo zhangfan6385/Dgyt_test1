@@ -46,11 +46,12 @@
                                                     </template>
                                                     <el-dropdown class="show-pwd" @command="handleCommand" slot="append">
                                                         <span class="el-dropdown-link">
-                                                            {{radio}}<i class="el-icon-arrow-down el-icon--right"></i>
+                                                            <span style="font-size:8px">{{radio}}</span>
+                                                            <i class="el-icon-arrow-down el-icon--right"></i>
                                                         </span>
                                                         <el-dropdown-menu slot="dropdown">
                                                             <div v-for="(item,index) in list" :key="index">
-                                                                <el-dropdown-item :command="item.key">{{item.key}}</el-dropdown-item>
+                                                                <el-dropdown-item :command="item.key"><span style="font-size:10px">{{item.key}}</span></el-dropdown-item>
                                                             </div>
                                                         </el-dropdown-menu>
                                                     </el-dropdown>
@@ -352,7 +353,7 @@ export default {
         .loginform {
             margin-top: 5%;
             background: white;
-            width: 350px;
+            width: 390px;
             height: 360px;
             border-radius: 10px;
             filter: alpha(opacity=50);
@@ -360,7 +361,7 @@ export default {
             -khtml-opacity: 0.8;
             opacity: 0.8;
             float: right;
-            margin-right: 15%;
+            margin-right: 10%;
             .header {
                 line-height: 40px;
                 font-size: 15px;
@@ -389,11 +390,19 @@ export default {
             .el-form-item__error {
                 margin-left: 10%;
             }
+            .el-input-group__append {
+                padding: 0 15px;
+            }
             .button {
                 float: right;
                 width: 30%;
-                margin-right: 15%;
+                margin-right: 10%;
                 margin-top: 30px;
+            }
+            .el-dropdown-link {
+                .el-input-group__append {
+                    width: 15px;
+                }
             }
         }
     }

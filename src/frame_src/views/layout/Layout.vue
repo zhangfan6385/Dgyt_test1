@@ -76,6 +76,15 @@ export default {
             } else {
                 return "大港油田软件研发平台";
             }
+        },
+        HasColor() {
+            return this.$store.state.user.themClass;
+        }
+    },
+    watch: {
+        HasColor(data) {
+            this.changeSideBarColour();
+            this.changeTagColour();
         }
     },
     methods: {
@@ -242,13 +251,19 @@ export default {
             }
             clusters.push(shadeColor(theme, 0.1));
             return clusters;
+        },
+        GetColor() {
+            this.$store.dispatch("GetColor", "");
+            console.log(this.$store.state.user.themClass);
         }
+    },
+    beforeMount() {
+        this.GetColor();
     },
     mounted() {
         this.changeSideBarColour();
         this.changeTagColour();
-    },
-    updated() {}
+    }
 };
 </script>
 
