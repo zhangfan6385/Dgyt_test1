@@ -7,6 +7,7 @@
         <el-tree v-if="roleTree"
                  :data="roleTree"
                  ref="roleTree" 
+                 
                  highlight-current
                  :render-content="renderContent"
                  @node-click="handleNodeClick" clearable node-key="id" :props="defaultProps"></el-tree>
@@ -1219,5 +1220,9 @@ export default {
   }
 };
 </script>
-<style lang="scss" scoped>
+<style lang="scss" >
+.el-tree--highlight-current .el-tree-node.is-current>.el-tree-node__content{
+  background-color:rgb(170, 166, 166) !important;
+  }
+  .el-tree-node__content:hover{background-color:#c5c7c9 !important;}
 </style>
