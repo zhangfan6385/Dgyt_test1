@@ -7,7 +7,7 @@
             <el-tree v-if="roleTree"
                     :data="roleTree"
                     ref="roleTree"
-                    :default-expand-all=true
+                    :default-expand-all='false'
                     :expand-on-click-node='false'
                     :show-checkbox='false'
                     highlight-current
@@ -20,9 +20,9 @@
                     <el-tree
                         :data="resourceTree"
                         ref="resourceTree"
-                        :default-expand-all=true
+                        :default-expand-all='false'
                         show-checkbox
-                        check-strictly
+                        
                         node-key="id"
                         v-loading="dialogLoading"
                         :props="defaultMenuProps">
