@@ -963,7 +963,7 @@ export default {
             type = "success";
             this.arr = [];
             this.getList();
-            this.getListUser();
+            //this.getListUser();
             this.getParentUser(this.listUserQuery);
             this.userLoginVisible = false;
           }
@@ -1006,7 +1006,7 @@ export default {
                   this.arr = [];
                   this.getList();
                   this.getListUser();
-                  this.getParentUser(this.listUserQuery);
+                  //this.getParentUser(this.listUserQuery);
                   this.userLoginVisible = false;
                 }
                 this.$notify({   position: 'bottom-right',
@@ -1032,12 +1032,12 @@ export default {
     handleSizeUserChange(val) {
       this.listUserQuery.limit = val;
       this.listUserQuery.LOGIN_ID = this.tableUserKey;
-      this.getListUser();
+     this.getParentUser(this.listUserQuery);
     },
     handleCurrentUserChange(val) {
       this.listUserQuery.page = val;
       this.listUserQuery.LOGIN_ID = this.tableUserKey;
-      this.getListUser();
+      this.getParentUser(this.listUserQuery);
     },
     handleUserFilter() {
       this.listUserQuery.page = 1;
@@ -1049,12 +1049,12 @@ export default {
     handleSizeChange(val) {
       this.listQuery.limit = val;
       this.listQuery.orgId = this.orgKey;
-      this.getList();
+      this.getParentUser(this.listUserQuery);
     },
     handleCurrentChange(val) {
       this.listQuery.page = val;
       this.listQuery.orgId = this.orgKey;
-      this.getList();
+     this.getParentUser(this.listUserQuery);
     },
     handleRemove(file, fileList) {
       console.log(file, fileList);
