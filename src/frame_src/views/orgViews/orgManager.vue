@@ -76,9 +76,9 @@
 
                   <el-button v-if="form.id==null&&!Useorg" size="mini" type="primary" @click="onOkSubmit">{{$t('orgTable.add')}}
                   </el-button>
-                  <el-button v-if="form.id!=null" size="mini" type="primary" @click="onUpdateSubmit">{{$t('orgTable.edit')}}
+                  <el-button v-if="form.id!=null&&!Useorg" size="mini" type="primary" @click="onUpdateSubmit">{{$t('orgTable.edit')}}
                   </el-button>
-                  <el-button size="mini" type="danger" @click="deleteSelected" v-show="form.id && form.id!=null">{{$t('orgTable.delete')}}
+                  <el-button size="mini" type="danger" @click="deleteSelected" v-show="form.id && form.id!=null&&!Useorg">{{$t('orgTable.delete')}}
                   </el-button>
 
                 </el-form-item>

@@ -274,7 +274,8 @@ export default {
     cancel: '取 消',
     confirm: '确 定',
     author: '操作人',
-    mount: '分配'
+    mount: '分配',
+    syncLog:'同步记录'
   },
   orgTable: {
     dynamicTips1: '固定表头, 按照表头顺序排序',

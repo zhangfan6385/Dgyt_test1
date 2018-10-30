@@ -60,10 +60,10 @@
             <span>{{scope.row.REMARK}}</span>
           </template>
         </el-table-column>
-        <el-table-column align="center" label="操作" width="250" class-name="small-padding fixed-width">
+        <el-table-column align="center" label="操作" width="260" class-name="small-padding fixed-width">
           <template slot-scope="scope">
             <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">{{$t('configTable.edit')}}</el-button>
-            <el-button type="primary" size="mini" @click="handleResult(scope.row)">同步记录</el-button>
+            <el-button type="primary" size="mini" @click="handleResult(scope.row)" style="width:75px">{{$t('configTable.syncLog')}}</el-button>
             <el-button size="mini" type="danger" @click="handleDelete(scope.row)">{{$t('configTable.delete')}}</el-button>
           </template>
         </el-table-column>
@@ -75,37 +75,36 @@
     </div>
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
 
-      <el-form :rules="rules" ref="dataForm" :model="temp" label-position="left" label-width="120px" style='width: 400px; margin-left:20px;'>
+      <el-form :rules="rules" ref="dataForm" :model="temp" label-position="left" label-width="160px" style='width: 580px; margin-left:20px;'>
 
-        <el-form-item label="用户名" prop="USER_CODE">
-          <el-input v-model="temp.USER_CODE"></el-input>
+        <el-form-item label="接入系统-用户名" prop="USER_CODE">
+          <el-input v-model="temp.USER_CODE" ></el-input>
         </el-form-item>
 
-        <el-form-item label="用户密码" prop="USER_PASS">
+        <el-form-item label="接入系统-用户密码" prop="USER_PASS">
           <el-input v-model="temp.USER_PASS"></el-input>
         </el-form-item>
 
-        <el-form-item label="服务器IP" prop="SERVER_IP">
+        <el-form-item label="接入系统-服务器IP" prop="SERVER_IP">
           <el-input v-model="temp.SERVER_IP"></el-input>
         </el-form-item>
 
-        <el-form-item label="服务器端口" prop="SERVER_PORT">
+        <el-form-item label="接入系统-服务器端口" prop="SERVER_PORT">
           <el-input v-model="temp.SERVER_PORT"></el-input>
         </el-form-item>
 
-        <el-form-item label="服务地址" prop="SERVER_URL">
+        <el-form-item label="接入系统-服务地址" prop="SERVER_URL">
           <el-input v-model="temp.SERVER_URL"></el-input>
         </el-form-item>
 
-        <el-form-item label="认证地址" prop="AUTHENTICATION_URL">
+        <el-form-item label="接入系统-认证地址" prop="AUTHENTICATION_URL">
           <el-input v-model="temp.AUTHENTICATION_URL"></el-input>
         </el-form-item>
 
         <el-form-item label="是否推送服务" prop="SYNC_FLAG">
           <el-radio v-model="temp.SYNC_FLAG" :label="0">开启</el-radio>
           <el-radio v-model="temp.SYNC_FLAG" :label="1">关闭</el-radio>
-        </el-form-item>
-
+</el-form-item>
         <el-form-item label="备注" prop="REMARK">
           <el-input v-model="temp.REMARK"></el-input>
         </el-form-item>
@@ -191,7 +190,7 @@ export default {
                 USER_CODE: "",
                 USER_PASS: "",
                 SYNC_TYPE: "",
-                SYNC_FLAG: "",
+                SYNC_FLAG: 1,
                 SERVER_IP: "",
                 SERVER_PORT: "",
                 SERVER_URL: "",
@@ -208,6 +207,20 @@ export default {
             dialogPvVisible: false,
             pvData: [],
             rules: {
+                 USER_CODE: [
+                    {
+                        required: true,
+                        message: "用户名不能为空",
+                        trigger: "change"
+                    }
+                ],
+                 USER_PASS: [
+                    {
+                        required: true,
+                        message: "密码不能为空",
+                        trigger: "change"
+                    }
+                ],
                 SYNC_ID: [
                     {
                         required: true,
@@ -233,6 +246,20 @@ export default {
                     {
                         required: true,
                         message: "服务器地址不能为空",
+                        trigger: "change"
+                    }
+                ],
+                AUTHENTICATION_URL: [
+                    {
+                        required: true,
+                        message: "认证地址不能为空",
+                        trigger: "change"
+                    }
+                ],
+                SYNC_FLAG: [
+                    {
+                        required: true,
+                        message: "启用状态不能为空",
                         trigger: "change"
                     }
                 ]
@@ -265,7 +292,7 @@ export default {
                 USER_CODE: "",
                 USER_PASS: "",
                 SYNC_TYPE: "",
-                SYNC_FLAG: "1",
+                SYNC_FLAG: 1,
                 SERVER_IP: "",
                 SERVER_PORT: "",
                 SERVER_URL: "",
