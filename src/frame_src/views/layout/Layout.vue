@@ -254,7 +254,7 @@ export default {
         },
         GetColor() {
             this.$store.dispatch("GetColor", "");
-            console.log(this.$store.state.user.themClass);
+            //console.log(this.$store.state.user.themClass);
         }
     },
     beforeMount() {

@@ -1,90 +1,90 @@
 <template>
-  <div class="app-container calendar-list-container">
-    <div class="filter-container">
-      <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" :placeholder="$t('configTable.CONF_NAME')" v-model="listQuery.CONF_NAME">
-      </el-input>
+    <div class="app-container calendar-list-container">
+        <div class="filter-container">
+            <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" :placeholder="$t('configTable.CONF_NAME')" v-model="listQuery.CONF_NAME">
+            </el-input>
 
-      <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" :placeholder="$t('configTable.CONF_CODE')" v-model="listQuery.CONF_CODE">
-      </el-input>
+            <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" :placeholder="$t('configTable.CONF_CODE')" v-model="listQuery.CONF_CODE">
+            </el-input>
 
-      <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">{{$t('configTable.search')}}</el-button>
-      <el-button class="filter-item" style="margin-left: 10px;" @click="handleCreate" type="primary" icon="el-icon-edit">{{$t('configTable.add')}}</el-button>
-      <el-button class="filter-item" type="primary" :loading="downloadLoading" v-waves icon="el-icon-download" @click="handleDownload">{{$t('configTable.export')}}</el-button>
+            <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">{{$t('configTable.search')}}</el-button>
+            <el-button class="filter-item" style="margin-left: 10px;" @click="handleCreate" type="primary" icon="el-icon-edit">{{$t('configTable.add')}}</el-button>
+            <el-button class="filter-item" type="primary" :loading="downloadLoading" v-waves icon="el-icon-download" @click="handleDownload">{{$t('configTable.export')}}</el-button>
 
-    </div>
-    <el-card class="box-card">
-      <el-table :key='tableKey' :data="list" :header-cell-class-name="tableRowClassName" v-loading="listLoading" element-loading-text="给我一点时间" border fit highlight-current-row style="width: 100%">
+        </div>
+        <el-card class="box-card">
+            <el-table :key='tableKey' :data="list" :header-cell-class-name="tableRowClassName" v-loading="listLoading" element-loading-text="给我一点时间" border fit highlight-current-row style="width: 100%">
 
-        <el-table-column width="180px" align="center" :label="$t('configTable.CONF_CODE')">
-          <template slot-scope="scope">
-            <span>{{scope.row.CONF_CODE}}</span>
-          </template>
-        </el-table-column>
+                <el-table-column width="180px" align="center" :label="$t('configTable.CONF_CODE')">
+                    <template slot-scope="scope">
+                        <span>{{scope.row.CONF_CODE}}</span>
+                    </template>
+                </el-table-column>
 
-        <el-table-column width="180px" align="center" :label="$t('configTable.CONF_VALUE')">
-          <template slot-scope="scope">
-            <span>{{scope.row.CONF_VALUE}}</span>
-          </template>
-        </el-table-column>
+                <el-table-column width="180px" align="center" :label="$t('configTable.CONF_VALUE')">
+                    <template slot-scope="scope">
+                        <span>{{scope.row.CONF_VALUE}}</span>
+                    </template>
+                </el-table-column>
 
-        <el-table-column width="180px" align="center" :label="$t('configTable.CONF_NAME')">
-          <template slot-scope="scope">
-            <span>{{scope.row.CONF_NAME}}</span>
-          </template>
-        </el-table-column>
+                <el-table-column width="180px" align="center" :label="$t('configTable.CONF_NAME')">
+                    <template slot-scope="scope">
+                        <span>{{scope.row.CONF_NAME}}</span>
+                    </template>
+                </el-table-column>
 
-        <el-table-column align="center" :label="$t('configTable.actions')" width="180px" class-name="small-padding fixed-width">
-          <template slot-scope="scope">
-            <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">{{$t('configTable.edit')}}</el-button>
-            <!--
+                <el-table-column align="center" :label="$t('configTable.actions')" width="180px" class-name="small-padding fixed-width">
+                    <template slot-scope="scope">
+                        <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">{{$t('configTable.edit')}}</el-button>
+                        <!--
           <el-button size="mini" type="danger" @click="handleDelete(scope.row)">{{$t('configTable.delete')}}</el-button>
           -->
-          </template>
-        </el-table-column>
-      </el-table>
-    </el-card>
-    <div class="pagination-container">
-      <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="listQuery.page" :page-sizes="[10,20,30, 50]" :page-size="listQuery.limit" layout="total, sizes, prev, pager, next, jumper" :total="total">
-      </el-pagination>
-    </div>
-    <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
+                    </template>
+                </el-table-column>
+            </el-table>
+        </el-card>
+        <div class="pagination-container">
+            <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="listQuery.page" :page-sizes="[10,20,30, 50]" :page-size="listQuery.limit" layout="total, sizes, prev, pager, next, jumper" :total="total">
+            </el-pagination>
+        </div>
+        <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
 
-      <el-form :rules="rules" ref="dataForm" :model="temp" label-position="left" label-width="120px" style='width: 450px; margin-left:20px;'>
-        <el-form-item v-if="dialogStatus=='create'" :label="$t('configTable.CONF_CODE')" prop="CONF_CODE">
-          <el-input v-model="temp.CONF_CODE"></el-input>
-        </el-form-item>
-        <el-form-item v-else :label="$t('configTable.CONF_CODE')" prop="CONF_CODE">
-          <span>{{temp.CONF_CODE}}</span>
-        </el-form-item>
-        <el-form-item :label="$t('configTable.CONF_VALUE')" prop="CONF_VALUE">
-          <el-input v-model="temp.CONF_VALUE" v-if="temp.CONF_CODE!='COLOR'"></el-input>
-          <el-radio-group v-model="temp.CONF_VALUE" v-else-if="temp.CONF_CODE==='COLOR'">
-              <el-radio :label="'#3A8EE6'"><span style="color:#3A8EE6">蓝色</span></el-radio>
-              <el-radio :label="'#C03639'"><span style="color:#C03639">红色</span></el-radio>
-              <el-radio :label="'#30B08F'"><span style="color:#30B08F">绿色</span></el-radio>
-              <el-radio :label="'#909399'"><span style="color:#909399">灰色</span></el-radio>
-          </el-radio-group>
-          <!-- <div v-if="temp.CONF_CODE==='COLOR'">
+            <el-form :rules="rules" ref="dataForm" :model="temp" label-position="left" label-width="120px" style='width: 450px; margin-left:20px;'>
+                <el-form-item v-if="dialogStatus=='create'" :label="$t('configTable.CONF_CODE')" prop="CONF_CODE">
+                    <el-input v-model="temp.CONF_CODE"></el-input>
+                </el-form-item>
+                <el-form-item v-else :label="$t('configTable.CONF_CODE')" prop="CONF_CODE">
+                    <span>{{temp.CONF_CODE}}</span>
+                </el-form-item>
+                <el-form-item :label="$t('configTable.CONF_VALUE')" prop="CONF_VALUE">
+                    <el-input v-model="temp.CONF_VALUE" v-if="temp.CONF_CODE!='COLOR'"></el-input>
+                    <el-radio-group v-model="temp.CONF_VALUE" v-else-if="temp.CONF_CODE==='COLOR'">
+                        <el-radio :label="'#3A8EE6'"><span style="color:#3A8EE6">蓝色</span></el-radio>
+                        <el-radio :label="'#C03639'"><span style="color:#C03639">红色</span></el-radio>
+                        <el-radio :label="'#30B08F'"><span style="color:#30B08F">绿色</span></el-radio>
+                        <el-radio :label="'#909399'"><span style="color:#909399">灰色</span></el-radio>
+                    </el-radio-group>
+                    <!-- <div v-if="temp.CONF_CODE==='COLOR'">
             提示：<span style="color:#3A8EE6">蓝色#3A8EE6</span>,
             <span style="color:#C03639">红色#C03639</span>,
             <span style="color:#30B08F">绿色#30B08F</span>,
             <span style="color:#909399">灰色#909399</span>。
           </div> -->
-        </el-form-item>
+                </el-form-item>
 
-        <el-form-item :label="$t('configTable.CONF_NAME')" prop="CONF_NAME">
-          <el-input v-model="temp.CONF_NAME"></el-input>
-        </el-form-item>
+                <el-form-item :label="$t('configTable.CONF_NAME')" prop="CONF_NAME">
+                    <el-input v-model="temp.CONF_NAME"></el-input>
+                </el-form-item>
 
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">{{$t('configTable.cancel')}}</el-button>
-        <el-button v-if="dialogStatus=='create'" type="primary" @click="createData">{{$t('configTable.confirm')}}</el-button>
-        <el-button v-else type="primary" @click="updateData">{{$t('configTable.confirm')}}</el-button>
-      </div>
-    </el-dialog>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="dialogFormVisible = false">{{$t('configTable.cancel')}}</el-button>
+                <el-button v-if="dialogStatus=='create'" type="primary" @click="createData">{{$t('configTable.confirm')}}</el-button>
+                <el-button v-else type="primary" @click="updateData">{{$t('configTable.confirm')}}</el-button>
+            </div>
+        </el-dialog>
 
-  </div>
+    </div>
 </template>
 <script>
 import {
@@ -332,8 +332,8 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.filter-container{
-    .el-radio-group{
+.filter-container {
+    .el-radio-group {
         width: 300px;
     }
 }

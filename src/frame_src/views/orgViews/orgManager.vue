@@ -26,7 +26,7 @@
               <el-form :rules="rules" :model="form" ref="form">
                 <el-form-item :label="$t('orgTable.parent')" :label-width="formLabelWidth">
                   <!--<el-input v-model="form.parentId" auto-complete="off"></el-input>-->
-                  <el-select-tree v-model="form.parentId" :treeData="roleTree" :propNames="defaultProps" clearable placeholder="请选择父级" prop="">
+                  <el-select-tree v-model="form.parentId" :treeData="roleTree" ref="formRoleTree" :propNames="defaultProps"   @nodeClick="nodeClick" clearable placeholder="请选择父级" prop="">
                   </el-select-tree>
                 </el-form-item>
                 <el-form-item :label="$t('orgTable.orgCode')" prop="orgCode" :label-width="formLabelWidth">
@@ -202,6 +202,12 @@ export default {
             // 把左侧树的选中数据赋值到右边form表单里。
             this.form = data;
         },
+
+        nodeClick(data){
+            //console.log(data)
+            this.form.orgName=data.orgName;
+        },
+
         newAdd() {
             // 增加新的角色数据
             this.$refs["form"].resetFields();

@@ -303,6 +303,7 @@ export default {
         this.visible = false
         this.selectedLabel = nodeData[this.propNames.label]
         this.selected = nodeData
+        this.$emit('nodeClick',nodeData)
         this.handleResize()
       },
       handleCheckChange(data, checked, indeterminate) {
