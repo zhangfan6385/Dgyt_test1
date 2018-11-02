@@ -76,6 +76,9 @@
                                     </div>
                                 </el-col>
                             </el-row>
+                            <el-dialog width="40%" :title="$t('login.loginToUserCode')" :visible.sync="showDialog" append-to-body>
+                                <log-in-user :updateShowDialog='updateShowDialog' />
+                            </el-dialog>
                         </el-main>
                     </el-col>
                     <!-- <el-col :span="2"></el-col> -->
