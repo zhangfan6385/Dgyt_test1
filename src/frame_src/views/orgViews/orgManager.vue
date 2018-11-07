@@ -253,6 +253,10 @@ export default {
             // 修改角色信息方法
             this.$refs["form"].validate(valid => {
                 if (valid) {
+                    if(this.form.ISINVALID=='1'){
+                        this.form.orgShortName=this.form.orgShortName.replace('(无效)','')
+                         this.form.orgName=this.form.orgName.replace('(无效)','')
+                    }
                     updateOrgData(this.form).then(response => {
                         // 调用修改方法
                         var message = response.data.message;
