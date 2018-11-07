@@ -32,3 +32,8 @@ export default {
   }
 }
 </script>
+<style>
+#app .sidebar-container .svg-icon {
+  margin-right:0px;
+}
+</style>
