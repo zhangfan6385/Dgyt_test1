@@ -21,19 +21,19 @@
                     </template>
                 </el-table-column>
 
-                <el-table-column width="180px" align="center" :label="$t('configTable.CONF_VALUE')">
+                <el-table-column width="200px" align="center" :label="$t('configTable.CONF_VALUE')">
                     <template slot-scope="scope">
                         <span>{{scope.row.CONF_VALUE}}</span>
                     </template>
                 </el-table-column>
 
-                <el-table-column width="180px" align="center" :label="$t('configTable.CONF_NAME')">
+                <el-table-column width="300px" align="center" :label="$t('configTable.CONF_NAME')">
                     <template slot-scope="scope">
                         <span>{{scope.row.CONF_NAME}}</span>
                     </template>
                 </el-table-column>
 
-                <el-table-column align="center" :label="$t('configTable.actions')" width="180px" class-name="small-padding fixed-width">
+                <el-table-column align="center" :label="$t('configTable.actions')" width="80px" class-name="small-padding fixed-width">
                     <template slot-scope="scope">
                         <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">{{$t('configTable.edit')}}</el-button>
                         <!--
