@@ -11,7 +11,6 @@
                     :expand-on-click-node='false'
                     :show-checkbox='false'
                     highlight-current
-                 
                     @node-click="handleNodeClick" clearable node-key="id" :props="defaultProps"></el-tree>
         </el-col>
         <el-col :span="16">
