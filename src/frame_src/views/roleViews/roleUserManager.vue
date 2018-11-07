@@ -4,7 +4,7 @@
    
  <el-row slot="body" :gutter="24" style="margin-bottom: 20px;">
      <el-col :span="6" :xs="24" :sm="24" :md="6" :lg="6" style="margin-bottom: 20px;">
-        <el-tree v-if="roleTree"
+        <el-tree v-if="roleTree" style="font-size:14px"
                  :data="roleTree"
                  ref="roleTree" 
                  highlight-current

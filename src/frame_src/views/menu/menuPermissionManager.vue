@@ -4,14 +4,14 @@
         
         <el-row slot="body" :gutter="24" style="margin-bottom: 20px;">
         <el-col :span="8" style="margin-bottom: 20px;">
-            <el-tree v-if="roleTree"
+            <el-tree v-if="roleTree" style="font-size:14px"
                     :data="roleTree"
                     ref="roleTree"
                     :default-expand-all='false'
                     :expand-on-click-node='false'
                     :show-checkbox='false'
                     highlight-current
-                    :render-content="renderContent"
+                 
                     @node-click="handleNodeClick" clearable node-key="id" :props="defaultProps"></el-tree>
         </el-col>
         <el-col :span="16">
@@ -22,7 +22,7 @@
                         ref="resourceTree"
                         :default-expand-all='false'
                         show-checkbox
-                        
+                        style="font-size:14px"
                         node-key="id"
                         v-loading="dialogLoading"
                         :props="defaultMenuProps">

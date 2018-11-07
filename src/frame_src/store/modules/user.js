@@ -176,6 +176,10 @@ const user = {
           commit('SET_CODE', data.userCode)
           commit('SET_TOKEN', data.token)
           commit('SET_USERTYPE', data.userType)
+          if(data.roles.length!=0){
+            commit('SET_ROLE_LEVEL', data.roles[0])
+          }
+         
           resolve(response)
         }).catch(error => {
           reject(error)

@@ -8,6 +8,7 @@
       <el-row slot="body" :gutter="24" style="margin-bottom: 20px;">
         <el-col :span="6" :xs="24" :sm="24" :md="6" :lg="6" style="margin-bottom: 20px;">
           <el-tree v-if="menuTree"
+                  style="font-size:14px"
                   ref="menuTree"
                   :data="menuTree"
                   show-checkbox
