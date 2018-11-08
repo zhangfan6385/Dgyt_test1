@@ -29,7 +29,7 @@
           <!-- <img v-if='showPng=="1"'  class='user-avatar' src="../../../../frame_src/imgs/avatar.png">
             <img v-else class='user-avatar' src="../../../../frame_src/imgs/nvtou.png"> -->
           <svg-icon icon-class="user" style="color:white;width:25px;height:25px;vertical-align: middle;cursor: pointer;" />
-          <i class="el-icon-caret-bottom"></i>
+          
         </div>
         <!-- <svg-icon icon-class="user" style="color:white;width:25px;height:25px;vertical-align: middle;cursor: pointer;"/> -->
         <el-dropdown-menu slot="dropdown" v-if="menu_prop==='0'">
