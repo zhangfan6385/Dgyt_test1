@@ -31,7 +31,7 @@ function generateRouteStruc(menus) {
   for (const menu of menus) {
     const permission = {}
     permission.path = menu.MODULE_ROUTE
-    permission.hidden = !menu.MENU_PROP
+    permission.hidden =!Number(menu.MENU_PROP)
     permission.component = Layout
     permission.redirect = 'noredirect'
     permission.name = menu.MODULE_ROUTE
