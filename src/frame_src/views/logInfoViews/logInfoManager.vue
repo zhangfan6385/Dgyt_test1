@@ -16,7 +16,7 @@
       style="width: 100%">
         <el-table-column width="160px"  class="filter-item"  align="center" :label="'时间'">
         <template slot-scope="scope">
-          <span>{{scope.row.ACCESS_TIME}}</span>
+          <span>{{scope.row.ACCESS_TIME|parseTime}}</span>
         </template>
       </el-table-column>
        <el-table-column width="140px" class="link-type"  align="center" :label="'账号'">
@@ -30,7 +30,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column width="150px" align="center" :label="'组织机构'">
+      <el-table-column width="200px" align="center" :label="'组织机构'" :show-overflow-tooltip="true">
         <template slot-scope="scope">
           <span>{{scope.row.ORG_NAME}}</span>
         </template>
@@ -79,6 +79,7 @@ import {
   fetchLogInfoList
 } from '@/frame_src/api/logInfo'
 import waves from '@/frame_src/directive/waves' // 水波纹指令
+import { parseTime } from "@/frame_src/utils/index.js";
 const logOptions = [{ key: 0, log_name: '业务操作' }, { key: 1, log_name: '异常' }, { key: 2, log_name: '登录' }]// 0业务操作 1 异常 2 登录
 const logOptionsKeyValue = logOptions.reduce((acc, cur) => {
   acc[cur.key] = cur.log_name
@@ -89,6 +90,7 @@ export default {
   directives: {
     waves
   },
+ 
   data() {
     return {
       tableKey: 0,
@@ -133,7 +135,8 @@ export default {
   }, filters: {
     logFilter(type) {
       return logOptionsKeyValue[type]
-    }
+    },
+    parseTime
   },
   methods: {
     getList() {
