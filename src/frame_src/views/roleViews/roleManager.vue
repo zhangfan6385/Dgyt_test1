@@ -31,11 +31,11 @@
                 <el-input v-model="form.sysCode" auto-complete="off"></el-input>
               </el-form-item> -->
                 <el-form-item label="" :label-width="formLabelWidth">
-                  <el-button v-if="form.id==null" size="mini" type="primary" @click="onOkSubmit">{{$t('roleTable.add')}}
+                  <el-button v-if="form.id==null"  type="primary" @click="onOkSubmit">{{$t('roleTable.add')}}
                   </el-button>
-                  <el-button v-if="form.id!=null" size="mini" type="primary" @click="onUpdateSubmit">{{$t('roleTable.edit')}}
+                  <el-button v-if="form.id!=null"  type="primary" @click="onUpdateSubmit">{{$t('roleTable.edit')}}
                   </el-button>
-                  <el-button size="mini" type="danger" @click="deleteSelected" v-show="form.id && form.id!=null">{{$t('roleTable.delete')}}
+                  <el-button  type="danger" @click="deleteSelected" v-show="form.id && form.id!=null">{{$t('roleTable.delete')}}
                   </el-button>
                 </el-form-item>
               </el-form>
