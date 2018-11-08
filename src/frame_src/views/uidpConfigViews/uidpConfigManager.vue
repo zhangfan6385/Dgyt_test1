@@ -47,9 +47,9 @@
             <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="listQuery.page" :page-sizes="[10,20,30, 50]" :page-size="listQuery.limit" layout="total, sizes, prev, pager, next, jumper" :total="total">
             </el-pagination>
         </div>
-        <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
+        <el-dialog :title="textMap[dialogStatus]" width="495px" :visible.sync="dialogFormVisible">
 
-            <el-form :rules="rules" ref="dataForm" :model="temp" label-position="left" label-width="120px" style='width: 450px; margin-left:20px;'>
+            <el-form :rules="rules" ref="dataForm" :model="temp" label-position="left" label-width="90px" style='width: 450px; margin-left:20px;'>
                 <el-form-item v-if="dialogStatus=='create'" :label="$t('configTable.CONF_CODE')" prop="CONF_CODE">
                     <el-input v-model="temp.CONF_CODE"></el-input>
                 </el-form-item>
@@ -77,7 +77,7 @@
                 </el-form-item>
 
             </el-form>
-            <div slot="footer" class="dialog-footer">
+            <div slot="footer" align="center" class="dialog-footer">
                 <el-button @click="dialogFormVisible = false">{{$t('configTable.cancel')}}</el-button>
                 <el-button v-if="dialogStatus=='create'" type="primary" @click="createData">{{$t('configTable.confirm')}}</el-button>
                 <el-button v-else type="primary" @click="updateData">{{$t('configTable.confirm')}}</el-button>
