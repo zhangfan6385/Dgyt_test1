@@ -17,10 +17,10 @@
                     </el-col>
                 </el-row>
             </el-header>
-            <div style="width:100%;height:100%;" class="back">
+            <!-- <div style="width:100%;height:100%;" class="back"> -->
                 <el-row type="flex">
-                    <el-col :span="2"></el-col>
-                    <el-col :span="20">
+                    <!-- <el-col :span="2"></el-col> -->
+                    <el-col :span="24">
                         <el-main>
                             <div class="loginform">
                                 <div class="header">
@@ -76,11 +76,11 @@
                     </el-col>
                     <!-- <el-col :span="2"></el-col> -->
                 </el-row>
-            </div>
+            <!-- </div> -->
 
             <el-footer>
                 <div class="copyright">
-                    ©{{copyright}}&nbsp;版权所有
+                    <span v-if="copyright!=''">©{{copyright}}&nbsp;版权所有</span>
                 </div>
             </el-footer>
         </el-container>
@@ -348,11 +348,12 @@ export default {
         border-left: 0px;
         box-shadow: 0 0 60px 15px #2f409a inset;
         width: 100%; //1100px;
-        height: 550px;
-        background: url("../../../frame_src/imgs/loginback.png");
+        height: 100%;
+        background: url("../../../frame_src/imgs/loginback.jpg");
         background-repeat: no-repeat;
         //background-size:cover;
         background-position: center;
+        background-size:100% 100%;
         .loginform {
             margin-top: 5%;
             width: 390px;
