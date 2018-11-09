@@ -25,11 +25,11 @@
         </template>
       </el-table-column>
 
-      <el-table-column width="140px" align="center" label="发送内容">
+      <!-- <el-table-column width="140px" align="center" label="发送内容">
         <template slot-scope="scope">
           <span>{{scope.row.SYNC_CONTENT}}</span>
         </template>
-      </el-table-column>
+      </el-table-column> -->
 
       <el-table-column width="140px" align="center" label="发送结果">
         <template slot-scope="scope">
@@ -37,7 +37,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column width="140px" align="center" label="错误信息">
+      <el-table-column width="250px" align="center" label="错误信息">
         <template slot-scope="scope">
           <span>{{scope.row.ERROR_INFO}}</span>
         </template>

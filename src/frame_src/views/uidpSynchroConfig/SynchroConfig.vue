@@ -128,13 +128,13 @@
           <el-table-column width="140px" align="center" label="接收方地址" prop="RECEIVE_URL">
           </el-table-column>
 
-          <el-table-column width="140px" align="center" label="发送内容" prop="SYNC_CONTENT">
-          </el-table-column>
+          <!-- <el-table-column width="140px" align="center" label="发送内容" prop="SYNC_CONTENT">
+          </el-table-column> -->
 
           <el-table-column width="140px" align="center" label="发送结果" prop="SYNC_CONTENT">
           </el-table-column>
 
-          <el-table-column width="140px" align="center" label="错误信息" prop="ERROR_INFO">
+          <el-table-column  align="center" label="错误信息" prop="ERROR_INFO">
           </el-table-column>
 
         </el-table>

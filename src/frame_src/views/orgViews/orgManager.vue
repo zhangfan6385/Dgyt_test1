@@ -5,7 +5,7 @@
         <h5 v-if="!Useorg">本地组织机构</h5>
         <h5 v-else-if="Useorg">云组织机构</h5>
 
-        <el-button class="filter-item" style="margin-left: 10px;" @click="newAdd" type="primary" icon="el-icon-edit" v-if="!Useorg">添加</el-button>
+        <el-button class="filter-item" style="margin-left: 10px;" @click="btnnewAdd" type="primary" icon="el-icon-edit" v-if="!Useorg">添加</el-button>
       </h3>
       <h3 class="box-title" slot="header" style="width: 25%;">
         <el-button class="filter-item" type="primary" icon="el-icon-edit" @click="showUpload=true" v-if="!Useorg">上传</el-button>
@@ -200,10 +200,18 @@ export default {
 
         handleNodeClick(data) {
             // 把左侧树的选中数据赋值到右边form表单里。
-            this.form = data;
+            //this.form = data;
+            this.form = Object.assign({}, data); // copy obj
         },
         nodeClick(data){
             this.form.orgName=data.orgName;
+            this.form.orgCode=data.orgCode;
+        },
+         btnnewAdd() {
+            this.form.parentId=this.form.id
+            this.form.id=null;
+            this.form.orgShortName="";
+            this.form.remark="";
         },
         newAdd() {
             // 增加新的角色数据
