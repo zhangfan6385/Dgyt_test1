@@ -41,7 +41,7 @@ export const constantRouterMap = [
       component: _import('frame_src/views/dashboard/index'),
       name: 'dashboard',
       meta: { title: '首页', icon: 'home', noCache: true }
-    }]
+    },{ path: '/userinfoViews/user-password-manager',name:'修改密码', meta: { title: '修改密码', icon: 'home', noCache: true }, component: _import('frame_src/views/userinfoViews/userPasswordManager'), hidden: true }]
   }
 ]
 

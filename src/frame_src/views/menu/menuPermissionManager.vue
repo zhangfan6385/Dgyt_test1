@@ -23,6 +23,7 @@
                         show-checkbox
                         style="font-size:14px"
                         node-key="id"
+                        check-strictly='true'
                         v-loading="dialogLoading"
                         :props="defaultMenuProps">
                     </el-tree>

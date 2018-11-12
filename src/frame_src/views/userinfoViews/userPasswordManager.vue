@@ -91,7 +91,7 @@ export default {
           //  var userCode = this.$store.state.user.code //获取登陆信息的 俩种方式
           //   var name = this.$store.getters.name
           // this.listUpdate.userid = this.$store.state.user.userId
-          this.listUpdate.userid = this.$store.state.user.code;
+          this.listUpdate.userid = this.$store.state.user.userId;
           this.listUpdate.roleLevel=this.$store.state.user.roleLevel;
           updatePasswordData(this.listUpdate).then(response => {
             this.message = response.data.message
