@@ -60,7 +60,7 @@
             <span>{{scope.row.REMARK}}</span>
           </template>
         </el-table-column>
-        <el-table-column align="center" label="操作" width="260" class-name="small-padding fixed-width">
+        <el-table-column align="center" fixed="right" label="操作" width="260" class-name="small-padding fixed-width">
           <template slot-scope="scope">
             <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">{{$t('configTable.edit')}}</el-button>
             <el-button type="primary" size="mini" @click="handleResult(scope.row)" style="width:75px">{{$t('configTable.syncLog')}}</el-button>
@@ -75,7 +75,7 @@
     </div>
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
 
-      <el-form :rules="rules" ref="dataForm" :model="temp" label-position="left" label-width="160px" style='width: 580px; margin-left:20px;'>
+      <el-form :rules="rules" ref="dataForm" :model="temp" label-position="right" label-width="160px" style='width: 580px; margin-left:20px;'>
 
         <el-form-item label="接入系统-用户名" prop="USER_CODE">
           <el-input v-model="temp.USER_CODE" ></el-input>

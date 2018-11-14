@@ -49,7 +49,7 @@
         </div>
         <el-dialog :title="textMap[dialogStatus]" width="495px" :visible.sync="dialogFormVisible">
 
-            <el-form :rules="rules" ref="dataForm" :model="temp" label-position="left" label-width="90px" style='width: 450px; margin-left:20px;'>
+            <el-form :rules="rules" ref="dataForm" :model="temp" label-position="right" label-width="90px" style='width: 450px; margin-left:20px;padding-right:30px'>
                 <el-form-item v-if="dialogStatus=='create'" :label="$t('configTable.CONF_CODE')" prop="CONF_CODE">
                     <el-input v-model="temp.CONF_CODE"></el-input>
                 </el-form-item>

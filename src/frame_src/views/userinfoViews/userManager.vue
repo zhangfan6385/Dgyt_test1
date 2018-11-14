@@ -24,25 +24,27 @@
       </el-select>
       -->
               <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">{{$t('userTable.search')}}</el-button>
-              <el-button class="filter-item" style="margin-left: 10px;" @click="handleCreate" type="primary" icon="el-icon-edit">{{$t('userTable.add')}}</el-button>
-              <el-button class="filter-item" type="primary" :loading="downloadLoading" v-waves icon="el-icon-download" @click="handleDownload">{{$t('userTable.export')}}</el-button>
-              <el-button class="filter-item" type="primary" icon="el-icon-edit" @click="showUpload=true">上传</el-button>
+              <el-button class="filter-item" style="margin-left: 5px;" @click="handleCreate" type="primary" icon="el-icon-edit">{{$t('userTable.add')}}</el-button>
+              <el-button class="filter-item" style="margin-left: 5px;" type="primary" :loading="downloadLoading" v-waves icon="el-icon-download" @click="handleDownload">{{$t('userTable.export')}}</el-button>
+              <el-button class="filter-item" style="margin-left: 5px;" type="primary" icon="el-icon-edit" @click="showUpload=true">上传</el-button>
             </div>
             <!--主界面table-->
             <el-table :key='tableKey' :data="list" :header-cell-class-name="tableRowClassName" v-loading="listLoading" element-loading-text="给我一点时间" border fit highlight-current-row style="width: 100%">
-
-              <el-table-column width="110px" align="center" label="账号类型">
+            <el-table-column width="110px" fixed="left" align="center" label="姓名">
                 <template slot-scope="scope">
-                  <span>{{scope.row.AUTHENTICATION_TYPE | AUTHENTICATION_TYPEFilter}}</span>
+                  <span>{{scope.row.USER_NAME}}</span>
                 </template>
               </el-table-column>
-
-              <el-table-column width="200px" align="center" label="账号">
+              <el-table-column width="150px" align="center" label="账号">
                 <template slot-scope="scope">
                   <span>{{scope.row.USER_DOMAIN}}</span>
                 </template>
               </el-table-column>
-
+              <el-table-column width="100px" align="center" label="账号类型">
+                <template slot-scope="scope">
+                  <span>{{scope.row.AUTHENTICATION_TYPE | AUTHENTICATION_TYPEFilter}}</span>
+                </template>
+              </el-table-column>
               <!-- <el-table-column width="200px" align="center" label="密码">
                 <template slot-scope="scope">
                   <span>{{scope.row.USER_PASS}}</span>
@@ -54,13 +56,7 @@
                   <span>{{scope.row.USER_PASS}}</span>
                 </template>
               </el-table-column> -->
-
-              <el-table-column width="200px" align="center" label="姓名">
-                <template slot-scope="scope">
-                  <span>{{scope.row.USER_NAME}}</span>
-                </template>
-              </el-table-column>
-              <el-table-column width="200px" align="center" label="员工编号">
+              <el-table-column width="150px" align="center" label="员工编号">
                 <template slot-scope="scope">
                   <span>{{scope.row.USER_CODE}}</span>
                 </template>
@@ -89,7 +85,7 @@
         </template>
       </el-table-column>-->
 
-              <el-table-column width="110px" align="center" label="用户性别">
+              <el-table-column width="100px" align="center" label="用户性别">
                 <template slot-scope="scope">
                   <span>{{scope.row.USER_SEX | sexFilter}}</span>
                 </template>
@@ -156,9 +152,9 @@
        </el-table-column>
        -->
 
-              <el-table-column align="center" :label="$t('userTable.actions')" width="350" class-name="small-padding fixed-width">
+              <el-table-column align="center" fixed="right"  :label="$t('userTable.actions')" width="350" class-name="small-padding fixed-width">
                 <template slot-scope="scope">
-                  <el-button type="primary" size="small" @click="handleUpdate(scope.row)">{{$t('userTable.edit')}}</el-button>
+                  <el-button type="primary"  size="small" @click="handleUpdate(scope.row)">{{$t('userTable.edit')}}</el-button>
                   <el-button type="primary" size="small" @click="handleUserLogin(scope.row)">关联账号</el-button>
                   <el-button type="danger" size="small" @click="handleDelete(scope.row)" v-if='getRoleLevel'>删除</el-button>
                   <el-button type="danger" size="small" @click="handleToUser(scope.row)">{{$t('userTable.toUser')}}</el-button>
@@ -173,7 +169,7 @@
             <!--表单form-->
             <el-dialog :title="textMap[dialogStatus]" width="490px" :visible.sync="dialogFormVisible">
 
-              <el-form :rules="rules" ref="dataForm" :model="temp" label-position="left" label-width="100px" style='width: 400px; margin-left:20px;'>
+              <el-form :rules="rules" ref="dataForm" :model="temp" label-position="right" label-width="100px" style='width: 400px; margin-left:20px;'>
 
                 <el-form-item label="账号类型">
                   <el-select class="filter-item" style="width:100%" v-model="temp.AUTHENTICATION_TYPE" placeholder="Please select" @change="getvalue">
