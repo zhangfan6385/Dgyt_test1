@@ -13,18 +13,18 @@
           <el-card class="box-card">
             <div class="text item">
               <el-form :rules="rules" :model="form" ref="form">
-                <el-form-item :label="$t('roleTable.parent')" :label-width="formLabelWidth">
+                <el-form-item :label="$t('roleTable.parent')+'：'" :label-width="formLabelWidth">
                   <!--<el-input v-model="form.parentId" auto-complete="off"></el-input>-->
                   <el-select-tree v-model="form.parentId" :treeData="roleTree" :propNames="defaultProps" clearable placeholder="请选择父级">
                   </el-select-tree>
                 </el-form-item>
-                <el-form-item :label="$t('roleTable.groupCode')" prop="groupCode" :label-width="formLabelWidth">
+                <el-form-item :label="$t('roleTable.groupCode')+'：'" prop="groupCode" :label-width="formLabelWidth">
                   <el-input v-model="form.groupCode" auto-complete="off"></el-input>
                 </el-form-item>
-                <el-form-item :label="$t('roleTable.groupName')" prop="groupName" :label-width="formLabelWidth">
+                <el-form-item :label="$t('roleTable.groupName')+'：'" prop="groupName" :label-width="formLabelWidth">
                   <el-input v-model="form.groupName" auto-complete="off"></el-input>
                 </el-form-item>
-                <el-form-item :label="$t('roleTable.remark')" :label-width="formLabelWidth">
+                <el-form-item :label="$t('roleTable.remark')+'：'" :label-width="formLabelWidth">
                   <el-input v-model="form.remark" auto-complete="off"></el-input>
                 </el-form-item>
                 <!-- <el-form-item :label="$t('roleTable.sysCode')"  :label-width="formLabelWidth">

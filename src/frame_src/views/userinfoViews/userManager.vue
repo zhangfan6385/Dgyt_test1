@@ -171,37 +171,37 @@
 
               <el-form :rules="rules" ref="dataForm" :model="temp" label-position="right" label-width="100px" style='width: 400px; margin-left:20px;'>
 
-                <el-form-item label="账号类型">
+                <el-form-item label="账号类型：">
                   <el-select class="filter-item" style="width:100%" v-model="temp.AUTHENTICATION_TYPE" placeholder="Please select" @change="getvalue">
                     <el-option v-for="item in typeOptions" :key="item.key" :label="item.type_name" :value="item.key" :val="item">
                     </el-option>
                   </el-select>
                 </el-form-item>
 
-                <el-form-item label="账号" prop="USER_DOMAIN">
+                <el-form-item label="账号：" prop="USER_DOMAIN">
                   <el-input v-model="temp.USER_DOMAIN"></el-input>
                 </el-form-item>
-                <el-form-item label="用户类型" prop="USER_TYPE">
+                <el-form-item label="用户类型：" prop="USER_TYPE">
                   <el-radio v-model="temp.USER_TYPE" :label="0">管理员</el-radio>
                   <el-radio v-model="temp.USER_TYPE" :label="1">普通用户</el-radio>
                 </el-form-item>
-                <el-form-item ref="password" :label="$t('userTable.USER_PASS')" prop="USER_PASS">
+                <el-form-item ref="password" :label="$t('userTable.USER_PASS')+'：'" prop="USER_PASS">
                   <el-input v-model="temp.USER_PASS" type="password" auto-complete="off" :placeholder="passwordTips" :disabled="passwordVisible"></el-input>
                 </el-form-item>
 
-                <el-form-item ref="repassword" label="确认密码" prop="USER_PASS2">
+                <el-form-item ref="repassword" label="确认密码：" prop="USER_PASS2">
                   <el-input type="password" v-model="temp.USER_PASS2" auto-complete="off" :placeholder="passwordTips1" :disabled="passwordVisible"></el-input>
                 </el-form-item>
 
-                <el-form-item :label="$t('userTable.USER_NAME')" prop="USER_NAME">
+                <el-form-item :label="$t('userTable.USER_NAME')+'：'" prop="USER_NAME">
                   <el-input v-model="temp.USER_NAME"></el-input>
                 </el-form-item>
 
-                <el-form-item :label="$t('userTable.USER_CODE')" prop="USER_CODE">
+                <el-form-item :label="$t('userTable.USER_CODE')+'：'" prop="USER_CODE">
                   <el-input v-model="temp.USER_CODE"></el-input>
                 </el-form-item>
 
-                <el-form-item :label="$t('userTable.USER_SEX')">
+                <el-form-item :label="$t('userTable.USER_SEX')+'：'">
                   <el-select class="filter-item" style="width:100%" v-model="temp.USER_SEX" placeholder="Please select">
                     <el-option v-for="item in sexOptions" :key="item.key" :label="item.sex_name" :value="item.key">
                     </el-option>
@@ -213,29 +213,29 @@
                 <!--<el-form-item :label="$t('userTable.USER_ALIAS')" prop="USER_ALIAS">
           <el-input v-model="temp.USER_ALIAS" ></el-input>
         </el-form-item>-->
-                <el-form-item :label="$t('userTable.PHONE_OFFICE')" prop="PHONE_OFFICE">
+                <el-form-item :label="$t('userTable.PHONE_OFFICE')+'：'" prop="PHONE_OFFICE">
                   <el-input v-model="temp.PHONE_OFFICE"></el-input>
                 </el-form-item>
 
-                <el-form-item :label="$t('userTable.PHONE_MOBILE')" prop="PHONE_MOBILE">
+                <el-form-item :label="$t('userTable.PHONE_MOBILE')+'：'" prop="PHONE_MOBILE">
                   <el-input v-model="temp.PHONE_MOBILE"></el-input>
                 </el-form-item>
                 <!--<el-form-item :label="$t('userTable.PHONE_ORG')" prop="PHONE_ORG">
           <el-input v-model="temp.PHONE_ORG"></el-input>
         </el-form-item>-->
-                <el-form-item :label="$t('userTable.USER_EMAIL')" prop="USER_EMAIL">
+                <el-form-item :label="$t('userTable.USER_EMAIL')+'：'" prop="USER_EMAIL">
                   <el-input v-model="temp.USER_EMAIL"></el-input>
                 </el-form-item>
                 <!--<el-form-item :label="$t('userTable.EMAIL_OFFICE')" prop="EMAIL_OFFICE">
           <el-input v-model="temp.EMAIL_OFFICE"></el-input>
         </el-form-item>-->
-                <el-form-item :label="$t('userTable.FLAG')">
+                <el-form-item :label="$t('userTable.FLAG')+'：'">
                   <el-select class="filter-item" style="width:100%" v-model="temp.FLAG" placeholder="Please select">
                     <el-option v-for="item in flagOptions" :key="item.key" :label="item.flag_name" :value="item.key">
                     </el-option>
                   </el-select>
                 </el-form-item>
-                <el-form-item :label="$t('userTable.REMARK')">
+                <el-form-item :label="$t('userTable.REMARK')+'：'">
                   <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="备注" v-model="temp.REMARK">
                   </el-input>
                 </el-form-item>

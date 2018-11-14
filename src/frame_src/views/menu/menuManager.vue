@@ -19,33 +19,33 @@
           <el-card class="box-card">
             <div class="text item">
               <el-form :model="form" ref="form">
-                <el-form-item label="父级" :label-width="formLabelWidth">
+                <el-form-item label="父级：" :label-width="formLabelWidth">
                   <!--<el-input v-model="form.parentId" auto-complete="off"></el-input>-->
                   <el-select-tree v-model="form.MENU_ID_UPPER" :treeData.sync="menuSelectTree" :propNames="defaultProps" clearable
                                   placeholder="请选择父级">
                   </el-select-tree>
                 </el-form-item>
-                <el-form-item label="名称" :label-width="formLabelWidth">
+                <el-form-item label="名称：" :label-width="formLabelWidth">
                   <el-input v-model="form.MENU_NAME" auto-complete="off"></el-input>
                 </el-form-item>
-                <el-form-item label="路由" :label-width="formLabelWidth">
+                <el-form-item label="路由：" :label-width="formLabelWidth">
                   <el-input v-model="form.MODULE_ROUTE" auto-complete="off"></el-input>
                 </el-form-item>
-                <el-form-item label="相对链接" :label-width="formLabelWidth">
+                <el-form-item label="相对链接：" :label-width="formLabelWidth">
                   <el-input v-model="form.MODULE_URL" auto-complete="off"></el-input>
                 </el-form-item>
-                <el-form-item label="功能对象名" :label-width="formLabelWidth">
+                <el-form-item label="功能对象名：" :label-width="formLabelWidth">
                   <el-input v-model="form.MODULE_OBJ" auto-complete="off"></el-input>
                 </el-form-item>
-                <el-form-item label="是否显示" :label-width="formLabelWidth">
+                <el-form-item label="是否显示：" :label-width="formLabelWidth">
                   <el-radio class="radio" v-model="form.MENU_PROP" label="1">显示</el-radio>
                   <el-radio class="radio" v-model="form.MENU_PROP" label="0">不显示</el-radio>
                 </el-form-item>
-                <el-form-item label="图标" :label-width="formLabelWidth">
+                <el-form-item label="图标：" :label-width="formLabelWidth">
                   <svg-icon :icon-class="form.MENU_ICON"/>
                   <el-button type="text" @click="selectIconDialog=true">选择</el-button>
                 </el-form-item>
-                <el-form-item label="排序" :label-width="formLabelWidth">
+                <el-form-item label="排序：" :label-width="formLabelWidth">
                   <el-slider v-model="form.MENU_ORDER"></el-slider>
                 </el-form-item>
                 <el-form-item label="" :label-width="formLabelWidth">

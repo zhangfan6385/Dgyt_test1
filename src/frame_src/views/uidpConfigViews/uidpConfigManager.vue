@@ -49,14 +49,14 @@
         </div>
         <el-dialog :title="textMap[dialogStatus]" width="495px" :visible.sync="dialogFormVisible">
 
-            <el-form :rules="rules" ref="dataForm" :model="temp" label-position="right" label-width="90px" style='width: 450px; margin-left:20px;padding-right:30px'>
-                <el-form-item v-if="dialogStatus=='create'" :label="$t('configTable.CONF_CODE')" prop="CONF_CODE">
+            <el-form :rules="rules" ref="dataForm" :model="temp" label-position="right" label-width="100px" style='width: 450px; margin-left:20px;padding-right:30px'>
+                <el-form-item v-if="dialogStatus=='create'" :label="$t('configTable.CONF_CODE')+'：'" prop="CONF_CODE">
                     <el-input v-model="temp.CONF_CODE"></el-input>
                 </el-form-item>
-                <el-form-item v-else :label="$t('configTable.CONF_CODE')" prop="CONF_CODE">
+                <el-form-item v-else :label="$t('configTable.CONF_CODE')+'：'" prop="CONF_CODE">
                     <span>{{temp.CONF_CODE}}</span>
                 </el-form-item>
-                <el-form-item :label="$t('configTable.CONF_VALUE')" prop="CONF_VALUE">
+                <el-form-item :label="$t('configTable.CONF_VALUE')+'：'" prop="CONF_VALUE">
                     <el-input v-model="temp.CONF_VALUE" v-if="temp.CONF_CODE!='COLOR'"></el-input>
                     <el-radio-group v-model="temp.CONF_VALUE" v-else-if="temp.CONF_CODE==='COLOR'">
                         <el-radio :label="'#3A8EE6'"><span style="color:#3A8EE6">蓝色</span></el-radio>
@@ -72,7 +72,7 @@
           </div> -->
                 </el-form-item>
 
-                <el-form-item :label="$t('configTable.CONF_NAME')" prop="CONF_NAME">
+                <el-form-item :label="$t('configTable.CONF_NAME')+'：'" prop="CONF_NAME">
                     <el-input v-model="temp.CONF_NAME"></el-input>
                 </el-form-item>
 
