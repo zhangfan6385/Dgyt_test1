@@ -24,20 +24,25 @@
 
             <div class="text item">
               <el-form :rules="rules" :model="form" ref="form">
-                <el-form-item :label="$t('orgTable.parent')" :label-width="formLabelWidth">
+                <el-form-item :label="$t('orgTable.parent')+'：'" :label-width="formLabelWidth">
                   <!--<el-input v-model="form.parentId" auto-complete="off"></el-input>-->
                   <el-select-tree v-model="form.parentId" :treeData="roleTree" :propNames="defaultProps" clearable placeholder="请选择父级" prop="" @nodeClick="nodeClick">
                   </el-select-tree>
                 </el-form-item>
-                <el-form-item :label="$t('orgTable.orgCode')" prop="orgCode" :label-width="formLabelWidth">
-                  <el-input v-model="form.orgCode" auto-complete="off"></el-input>
+                <!-- <el-form-item v-if="form.parentId==null||form.parentId.length==0" :label="$t('orgTable.orgCode')" prop="orgCode" :label-width="formLabelWidth">
+                  <el-input v-model="form.orgCode" auto-complete="off" type="number" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode) ) )"></el-input>
+                </el-form-item> -->
+                <el-form-item :label="$t('orgTable.orgCode')+'：'" prop="orgCode" :label-width="formLabelWidth">
+                  <el-input v-model="form.orgCode" auto-complete="off" readonly="true" placeholder="系统自动生成"></el-input>
                 </el-form-item>
-                <el-form-item label="组织机构全称" prop="orgName" :label-width="formLabelWidth">
+
+                <el-form-item label="组织机构名称：" prop="orgName" :label-width="formLabelWidth">
                   <el-input v-model="form.orgName" auto-complete="off"></el-input>
                 </el-form-item>
 
-                <el-form-item label="组织机构简称" prop="ORG_SHORT_NAME" :label-width="formLabelWidth">
-                  <el-input v-model="form.orgShortName" auto-complete="off"></el-input>
+                <el-form-item label="组织机构简称：" prop="orgShortName" :label-width="formLabelWidth">
+                    <el-input v-model="form.orgShortName" auto-complete="off"></el-input>
+                  <!-- <el-input v- model="form.orgShortName" auto-complete="off" @change="initFullName"></el-input> -->
                 </el-form-item>
                 <!-- <el-col :span="12" :xs="24" :sm="24" :md="9" :lg="9" :xl="9">
                 <el-form-item :label="$t('orgTable.orgNameFull')" prop="orgNameFull" :label-width="formLabelWidth">
@@ -64,11 +69,11 @@
                 <el-input v-model="form.phoneFax" auto-complete="off"></el-input>
                 </el-form-item>
               </el-col>-->
-                <el-form-item label="是否有效" :label-width="formLabelWidth">
+                <el-form-item label="是否有效：" :label-width="formLabelWidth">
                   <el-radio class="radio" v-model="form.ISINVALID" label="1">有效</el-radio>
                   <el-radio class="radio" v-model="form.ISINVALID" label="0">无效</el-radio>
                 </el-form-item>
-                <el-form-item :label="$t('orgTable.remark')" :label-width="formLabelWidth">
+                <el-form-item :label="$t('orgTable.remark')+'：'" :label-width="formLabelWidth">
                   <el-input v-model="form.remark" auto-complete="off"></el-input>
                 </el-form-item>
                 <!-- <el-col :span="12" :xs="24" :sm="24" :md="9" :lg="9" :xl="9">-->
@@ -78,7 +83,7 @@
                   </el-button>
                   <el-button v-if="form.id!=null&&!Useorg"  type="primary" @click="onUpdateSubmit">{{$t('orgTable.edit')}}
                   </el-button>
-                  <el-button  type="danger" @click="deleteSelected" v-show="form.id && form.id!=null&&!Useorg">{{$t('orgTable.delete')}}
+                  <el-button  type="danger" @click="deleteSelected" v-show="form.orgCode && form.orgCode!=null&&!Useorg">{{$t('orgTable.delete')}}
                   </el-button>
 
                 </el-form-item>
@@ -147,10 +152,10 @@ export default {
             },
             roleTree: [],
             rules: {
-                orgCode: [
+                orgShortName: [
                     {
                         required: true,
-                        message: "组织结构代码不能为空",
+                        message: "组织结构简称不能为空",
                         trigger: "change"
                     }
                 ],
@@ -175,10 +180,11 @@ export default {
             listQuery: {
                 // sysCode: undefined// 回头注释掉
             },
+            tempOrgName:"",
             form: {
                 id: null, // id: null,
                 parentId: null, // parentId  orgid
-                orgCode: "", // name: '',
+                orgCode: null, // name: '',
                 orgName: "", // enName
                 orgNameFull: "", // enName
                 orgAddr: "", // enName
@@ -187,11 +193,21 @@ export default {
                 phoneFax: "",
                 ISINVALID: "",
                 remark: "",
-                orgShortName: null
+                orgShortName: "",
+                orgCodeUpper:""
             }
         };
     },
     methods: {
+initFullName(value){
+    var str=this.form.orgName;
+    if(value!=null&&value.length>0){
+       return this.form.orgName=this.tempOrgName+"/"+value;
+    }
+    else{
+       return this.form.orgName=str.substring(0,str.lastIndexOf("\/"));
+    }
+    },
         getorg() {
             GetTitle().then(response => {
                 this.Useorg = Boolean(response.data.cloudorg.CONF_VALUE);
@@ -202,23 +218,48 @@ export default {
             // 把左侧树的选中数据赋值到右边form表单里。
             //this.form = data;
             this.form = Object.assign({}, data); // copy obj
+            this.form.orgCodeUpper=data.orgCode;
         },
         nodeClick(data){
-            this.form.orgName=data.orgName;
-            this.form.orgCode=data.orgCode;
+            //this.tempOrgName=data.orgName;
+            //var codenum=data.children.length+1;
+            // this.form.orgName=data.orgName;
+            // this.form.orgCode=data.orgCode;
+            this.form.orgCodeUpper=data.orgCode;
+            //this.form.orgCode=data.orgCode+(Array(3).join("0")+codenum).slice(-3);
         },
          btnnewAdd() {
-            this.form.parentId=this.form.id
-            this.form.id=null;
-            this.form.orgShortName="";
-            this.form.remark="";
+            // this.form.parentId=this.form.id
+            // this.form.id=null;
+            // this.form.orgShortName="";
+            // this.form.remark="";
+
+
+ // 增加新的角色数据
+            this.$refs["form"].resetFields();
+            this.form = {
+                id: null,
+                orgCodeUpper:this.form.orgCodeUpper,
+                parentId: this.form.id, // parentId  orgid
+                orgCode: null, // name: '',
+                orgName: "", // enName
+                orgNameFull: "", // enName
+                orgAddr: "", // enName
+                phone: "", // enName
+                phoneS: "", // enName
+                phoneFax: "",
+                ISINVALID: "1",
+                remark: "",
+                orgShortName: ""
+            };
+
         },
         newAdd() {
             // 增加新的角色数据
             this.$refs["form"].resetFields();
             this.form = {
                 id: null,
-                parentId: null, // parentId  orgid
+                parentId:this.form.id,
                 orgCode: "", // name: '',
                 orgName: "", // enName
                 orgNameFull: "", // enName
@@ -290,13 +331,13 @@ export default {
         deleteSelected(id) {
             // 删除方法
 
-            this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
+            this.$confirm("是否确认删除该条记录?", "提示", {
                 confirmButtonText: "确定",
                 cancelButtonText: "取消",
                 type: "warning"
             })
                 .then(() => {
-                    this.listUpdate.id = this.form.id; // 传递id
+                    this.listUpdate.id = this.form.orgCode; // 传递id
                     this.listUpdate.field = "deletaStatus"; // 传递判断参数
                     updateOrgArticle(this.listUpdate).then(response => {
                         var message = response.data.message;
@@ -436,4 +477,11 @@ export default {
   background-color:rgb(170, 166, 166) !important;
   }
   .el-tree-node__content:hover{background-color:#c5c7c9 !important;}
+  input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+input[type="number"]{
+    -moz-appearance: textfield;
+}
 </style>
