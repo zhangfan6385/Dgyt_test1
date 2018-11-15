@@ -98,7 +98,7 @@
               <el-upload class="upload-demo" :action="urlUpload" :on-preview="handlePreview" :on-remove="handleRemove" :on-success="handleSuccess" :before-remove="beforeRemove" :headers="headers" :file-list="fileList">
                 <el-button class="filter-item" type="primary" icon="el-icon-edit">点击上传</el-button>
               </el-upload>
-              <a :href="urldownload" v-if="!Useorg">模板下載</a>
+              <a :href="urldownload" v-if="!Useorg">模板下载</a>
             </div>
           </el-card>
         </el-dialog>
