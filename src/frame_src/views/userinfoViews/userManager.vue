@@ -255,8 +255,8 @@
                   </el-input>
 
                   <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleUserFilter">{{$t('userTable.search')}}</el-button>
-                  <el-button class="filter-item" @click="updateRole" type="primary" icon="el-icon-edit">{{$t('roleTable.mount')}}</el-button>
-                  <el-button class="filter-item" @click="deleteRole" type="primary" icon="el-icon-edit">{{$t('userTable.deleteRole')}}</el-button>
+                  <el-button class="filter-item" @click="updateRole" type="primary" icon="el-icon-edit">关联</el-button>
+                  <el-button class="filter-item" @click="deleteRole" type="primary" icon="el-icon-edit">解除关联</el-button>
 
                 </div>
                 <el-table :key='tableKey' :data="userList" :header-cell-class-name="tableRowClassName" @selection-change="handleSelectionChange" v-loading="listUserLoading" element-loading-text="给我一点时间" border fit highlight-current-row style="width: 100%">

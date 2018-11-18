@@ -26,12 +26,12 @@
             <span>{{scope.row.SERVER_PORT}}</span>
           </template>
         </el-table-column>
-        <el-table-column width="140px" align="center" label="服务地址">
+        <el-table-column width="250px" align="center" label="服务地址">
           <template slot-scope="scope">
             <span>{{scope.row.SERVER_URL}}</span>
           </template>
         </el-table-column>
-        <el-table-column width="140px" align="center" label="认证地址">
+        <el-table-column width="250px" align="center" label="认证地址">
           <template slot-scope="scope">
             <span>{{scope.row.AUTHENTICATION_URL}}</span>
           </template>
@@ -49,11 +49,7 @@
           </template>
         </el-table-column>
 
-        <el-table-column width="140px" align="center" label="用户密码">
-          <template slot-scope="scope">
-            <span>{{scope.row.USER_PASS}}</span>
-          </template>
-        </el-table-column>
+        
 
         <el-table-column width="140px" align="center" label="备注">
           <template slot-scope="scope">
@@ -82,7 +78,7 @@
         </el-form-item>
 
         <el-form-item label="接入系统-用户密码：" prop="USER_PASS">
-          <el-input v-model="temp.USER_PASS"></el-input>
+          <el-input v-model="temp.USER_PASS" type="password"></el-input>
         </el-form-item>
 
         <el-form-item label="接入系统-服务器IP：" prop="SERVER_IP">
@@ -121,11 +117,11 @@
       <el-card class="box-card">
         <el-table :key='tableKey' :data="result" :header-cell-class-name="tableRowClassName" v-loading="listLoading" element-loading-text="给我一点时间" border fit highlight-current-row style="width: 100%">
 
-          <el-table-column width="140px" align="center" label="发送方地址" prop="SEND_URL">
+          <el-table-column width="250px" align="center" label="发送方地址" prop="SEND_URL">
 
           </el-table-column>
 
-          <el-table-column width="140px" align="center" label="接收方地址" prop="RECEIVE_URL">
+          <el-table-column width="250px" align="center" label="接收方地址" prop="RECEIVE_URL">
           </el-table-column>
 
           <!-- <el-table-column width="140px" align="center" label="发送内容" prop="SYNC_CONTENT">

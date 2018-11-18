@@ -15,19 +15,19 @@
         <el-card class="box-card">
             <el-table :key='tableKey' :data="list" :header-cell-class-name="tableRowClassName" v-loading="listLoading" element-loading-text="给我一点时间" border fit highlight-current-row style="width: 100%">
 
-                <el-table-column width="180px" align="center" :label="$t('configTable.CONF_CODE')">
+                <el-table-column width="200px" align="center" :label="$t('configTable.CONF_CODE')">
                     <template slot-scope="scope">
                         <span>{{scope.row.CONF_CODE}}</span>
                     </template>
                 </el-table-column>
 
-                <el-table-column width="200px" align="center" :label="$t('configTable.CONF_VALUE')">
+                <el-table-column width="230px" align="center" :label="$t('configTable.CONF_VALUE')">
                     <template slot-scope="scope">
                         <span>{{scope.row.CONF_VALUE}}</span>
                     </template>
                 </el-table-column>
 
-                <el-table-column width="300px" align="center" :label="$t('configTable.CONF_NAME')">
+                <el-table-column width="380px" align="center" :label="$t('configTable.CONF_NAME')">
                     <template slot-scope="scope">
                         <span>{{scope.row.CONF_NAME}}</span>
                     </template>

@@ -30,7 +30,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column width="200px" align="center" :label="'组织机构'" :show-overflow-tooltip="true">
+      <el-table-column width="280px" align="center" :label="'组织机构'" :show-overflow-tooltip="true">
         <template slot-scope="scope">
           <span>{{scope.row.ORG_NAME}}</span>
         </template>

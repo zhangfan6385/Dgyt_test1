@@ -297,9 +297,9 @@ export default {
 
     .logo {
         float: left;
-        margin: 0 20px;
+        margin: 2px 20px 0px 20px;
         span {
-            margin-left: 8px;
+            margin-left: 6px;
             font-size: 18px;
             font-weight: bold;
             color: #ffffff;
@@ -307,7 +307,7 @@ export default {
 
         img {
             vertical-align: top;
-            margin-top: 13px;
+            margin-top: 12px;
             height: 30px;
             width: 30px;
         }
