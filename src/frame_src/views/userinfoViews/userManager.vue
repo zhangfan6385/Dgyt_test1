@@ -713,6 +713,7 @@ export default {
                 PHONE_OFFICE: "",
                 PHONE_ORG: "",
                 USER_SEX: 1,
+                USER_EMAIL:'',
                 AUTHENTICATION_TYPE: 0,
                 FLAG: 1,
                 ASSOCIATED_ACCOUNT: "",
