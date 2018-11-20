@@ -1,85 +1,85 @@
 <template>
-  <div id="login-container" class="login-container">
-    <el-container>
-      <el-header>
-        <el-row type="flex">
-          <el-col :span="2"></el-col>
-          <el-col :span="10">
-            <div class="title">
-              <img src="../../../frame_src/imgs/logo.png">
-              {{sysmessage}}
-            </div>
-          </el-col>
-          <el-col :span="10">
-            <div class="info">
-              {{currentTime}}
-            </div>
-          </el-col>
-        </el-row>
-      </el-header>
-      <!-- <div style="width:100%;height:100%;" class="back"> -->
-      <el-main>
-        <div class="divbg">
-          <div class="loginform">
-            <div class="header">
-              <div class="logo">
-                用户登录
-              </div>
-            </div>
-            <div>
-              <el-form class="login-form" autoComplete="on" :model="loginForm" :rules="loginRules" ref="loginForm" label-position="left">
-                <el-input name="username" type="text" v-model="loginForm.username" autoComplete="on" placeholder="请输入账号">
-                  <template slot="prepend">
-                    <svg-icon icon-class="user" />
-                  </template>
-                  <el-dropdown class="show-pwd" @command="handleCommand" slot="append">
-                    <span class="el-dropdown-link">
-                      <span style="font-size:8px">{{radio}}</span>
-                      <i class="el-icon-arrow-down el-icon--right"></i>
-                    </span>
-                    <el-dropdown-menu slot="dropdown">
-                      <div v-for="(item,index) in list" :key="index">
-                        <el-dropdown-item :command="item.key"><span style="font-size:10px">{{item.key}}</span></el-dropdown-item>
-                      </div>
-                    </el-dropdown-menu>
-                  </el-dropdown>
-                </el-input>
-                <div class="verification">
-                  <span v-if="verification1===1">账号不能为空！</span>
+    <div id="login-container" class="login-container">
+        <el-container>
+            <el-header>
+                <el-row type="flex">
+                    <el-col :span="2"></el-col>
+                    <el-col :span="10">
+                        <div class="title">
+                            <img src="../../../frame_src/imgs/logo.png">
+                            {{sysmessage}}
+                        </div>
+                    </el-col>
+                    <el-col :span="10">
+                        <div class="info">
+                            {{currentTime}}
+                        </div>
+                    </el-col>
+                </el-row>
+            </el-header>
+            <!-- <div style="width:100%;height:100%;" class="back"> -->
+            <el-main>
+                <div class="divbg">
+                    <div class="loginform">
+                        <div class="header">
+                            <div class="logo">
+                                用户登录
+                            </div>
+                        </div>
+                        <div>
+                            <el-form class="login-form" autoComplete="on" :model="loginForm" :rules="loginRules" ref="loginForm" label-position="left">
+                                <el-input name="username" type="text" v-model="loginForm.username" autoComplete="on" placeholder="请输入账号">
+                                    <template slot="prepend">
+                                        <svg-icon icon-class="user" />
+                                    </template>
+                                    <el-dropdown class="show-pwd" @command="handleCommand" slot="append">
+                                        <span class="el-dropdown-link">
+                                            <span style="font-size:8px">{{radio}}</span>
+                                            <i class="el-icon-arrow-down el-icon--right"></i>
+                                        </span>
+                                        <el-dropdown-menu slot="dropdown">
+                                            <div v-for="(item,index) in list" :key="index">
+                                                <el-dropdown-item :command="item.key"><span style="font-size:10px">{{item.key}}</span></el-dropdown-item>
+                                            </div>
+                                        </el-dropdown-menu>
+                                    </el-dropdown>
+                                </el-input>
+                                <div class="verification">
+                                    <span v-if="verification1===1">账号不能为空！</span>
+                                </div>
+
+                                <el-input name="password" :type="passwordType" @keyup.enter.native="handleLogin" v-model="loginForm.password" autoComplete="on" placeholder="密码">
+                                    <template slot="prepend">
+                                        <svg-icon icon-class="password" />
+                                    </template>
+                                    <template slot="append">
+                                        <el-button icon="el-icon-view" @click="showPwd" />
+                                    </template>
+                                </el-input>
+                                <div class="verification">
+                                    <span v-if="verification2===1">密码不能为空！</span>
+                                    <span v-if="verification2===2">密码必须大于6位！</span>
+                                </div>
+
+                                <el-button type="primary" class="button" :loading="loading" @click.native.prevent="handleLogin">用户登录</el-button>
+
+                            </el-form>
+                        </div>
+                    </div>
                 </div>
+                <el-dialog width="40%" :title="$t('login.loginToUserCode')" :visible.sync="showDialog" append-to-body>
+                    <log-in-user :updateShowDialog='updateShowDialog' />
+                </el-dialog>
+            </el-main>
+            <!-- </div> -->
 
-                <el-input name="password" :type="passwordType" @keyup.enter.native="handleLogin" v-model="loginForm.password" autoComplete="on" placeholder="密码">
-                  <template slot="prepend">
-                    <svg-icon icon-class="password" />
-                  </template>
-                  <template slot="append">
-                    <el-button icon="el-icon-view" @click="showPwd" />
-                  </template>
-                </el-input>
-                <div class="verification">
-                  <span v-if="verification2===1">密码不能为空！</span>
-                  <span v-if="verification2===2">密码必须大于6位！</span>
+            <el-footer>
+                <div class="copyright">
+                    <span v-if="copyright!=''">©{{copyright}}&nbsp;版权所有</span>
                 </div>
-
-                <el-button type="primary" class="button" :loading="loading" @click.native.prevent="handleLogin">用户登录</el-button>
-
-              </el-form>
-            </div>
-          </div>
-        </div>
-        <el-dialog width="40%" :title="$t('login.loginToUserCode')" :visible.sync="showDialog" append-to-body>
-          <log-in-user :updateShowDialog='updateShowDialog' />
-        </el-dialog>
-      </el-main>
-      <!-- </div> -->
-
-      <el-footer>
-        <div class="copyright">
-          <span v-if="copyright!=''">©{{copyright}}&nbsp;版权所有</span>
-        </div>
-      </el-footer>
-    </el-container>
-  </div>
+            </el-footer>
+        </el-container>
+    </div>
 </template>
 
 <script>
@@ -331,7 +331,7 @@ body {
             float: right;
             margin-right: 20px;
             margin-top: 38px;
-            font-size: 13px;
+            font-size: 13px; 
             font-family: "微软雅黑";
             color: gray;
         }
@@ -351,17 +351,17 @@ body {
         height: 100%;
         //background: url("../../../frame_src/imgs/loginback.jpg");
         background-repeat: no-repeat;
-        background-position: center;
+        //background-position: center;
         padding: 0 0 0 0 !important;
-        background: url("../../../frame_src/imgs/repeat.png") 0 0 repeat-x;
+        background-color:#3e8ddc;
         margin: 0 auto;
         .divbg {
-            background: url("../../../frame_src/imgs/loginback1.jpg") fixed center
-                no-repeat;
+            background: url("../../../frame_src/imgs/loginback1.jpg") fixed
+                center no-repeat;
             min-width: 1366px;
+            //min-width: 500px;
             height: 100%;
             margin: 0 auto;
-            //background-size: 100% 100%;
         }
         .loginform {
             margin-top: 5%;
