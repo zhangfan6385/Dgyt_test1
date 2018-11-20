@@ -118,9 +118,11 @@ export default {
     methods: {
         handleNodeClick(data) {
             // 点击左侧树给右边form赋值
-            this.form = data;
+             this.form = Object.assign({}, data); // copy obj
+            //this.form = data;
         },
         newAdd() {
+             this.$refs["form"].resetFields();
             // 新增
             this.form = {
                 id: null,
@@ -131,6 +133,7 @@ export default {
                 sysCode: ""
                 // remarks
             };
+           
         },
         onOkSubmit() {
             // 创建角色信息
