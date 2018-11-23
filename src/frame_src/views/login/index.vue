@@ -310,6 +310,7 @@ body {
     height: 100%;
     .el-container {
         height: 100%;
+        min-width: 1366px;
     }
     .el-header {
         background-color: white;
@@ -356,11 +357,12 @@ body {
         background-color:#3e8ddc;
         margin: 0 auto;
         .divbg {
-            background: url("../../../frame_src/imgs/loginback1.jpg") fixed
+            background: url("../../../frame_src/imgs/pic9.png") fixed
                 center no-repeat;
-            min-width: 1366px;
+            //min-width: 1366px;
             //min-width: 500px;
             height: 100%;
+            background-size: auto 100%;
             margin: 0 auto;
         }
         .loginform {
